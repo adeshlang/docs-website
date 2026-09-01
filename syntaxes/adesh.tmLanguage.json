@@ -1,0 +1,178 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "AdeshLang",
+  "scopeName": "source.adesh",
+  "fileTypes": ["adesh"],
+  "injectionSelector": "L:source",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#template-strings" },
+    { "include": "#strings" },
+    { "include": "#chars" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#builtin-functions" },
+    { "include": "#function-calls" },
+    { "include": "#decorators" },
+    { "include": "#literals" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.documentation.adesh",
+          "begin": "/\\*\\*",
+          "end": "\\*/",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          }
+        },
+        {
+          "name": "comment.block.adesh",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          }
+        },
+        {
+          "name": "comment.line.double-slash.adesh",
+          "match": "//.*$",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          }
+        },
+        {
+          "name": "comment.line.hash.adesh",
+          "match": "#.*$",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.adesh" }
+          }
+        }
+      ]
+    },
+    "template-strings": {
+      "name": "string.template.adesh",
+      "begin": "`",
+      "end": "`",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.template.adesh" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.template.adesh" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.adesh",
+          "match": "\\\\."
+        },
+        {
+          "name": "meta.interpolation.adesh",
+          "begin": "\\$\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.interpolation.adesh" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.interpolation.adesh" }
+          },
+          "patterns": [
+            { "include": "#expression-content" }
+          ]
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.adesh",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.adesh" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.adesh" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.adesh",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "chars": {
+      "name": "string.quoted.single.adesh",
+      "begin": "'",
+      "end": "'",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.adesh" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.adesh" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.adesh",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.adesh",
+      "match": "\\b(?:0[xX][\\da-fA-F](?:_?[\\da-fA-F])*(?:u(?:8|16|32|64|128)|i(?:8|16|32|64|128))?|0[bB][01](?:_?[01])*(?:u(?:8|16|32|64|128)|i(?:8|16|32|64|128))?|0[oO][0-7](?:_?[0-7])*(?:u(?:8|16|32|64|128)|i(?:8|16|32|64|128))?|\\d+(?:_?\\d+)*(?:\\.\\d+(?:_?\\d+)*)?(?:[eE][+-]?\\d+(?:_?\\d+)*)?(?:u(?:8|16|32|64|128)|i(?:8|16|32|64|128)|f(?:32|64)|n)?)\\b",
+      "captures": {
+        "1": { "name": "constant.numeric.adesh" }
+      }
+    },
+    "keywords": {
+      "name": "keyword.control.adesh",
+      "match": "\\b(?:abstract|alloc|and|as|async|await|break|catch|class|compile|const|constructor|continue|decorator|default|defer|do|elif|else|emit|enum|expect_fail|export|extend|extends|extern|fn|for|free|from|get|if|ignore|implements|import|in|instanceof|int|interface|jump|let|match|new|not|of|on|operator|or|private|proceed|protected|public|raw|readonly|ref|region|require|return|runtime|sealed|self|set|share|spawn|static|strong|struct|super|test|this|throw|try|type|typecheck|typeof|uint|unsafe|vec|weak|while)\\b"
+    },
+    "types": {
+      "name": "storage.type.adesh",
+      "match": "\\b(?:Array|BigInt|Bool|Char|Complex|Int|Null|Number|Object|Option|Result|Set|Str|String|Tuple|Uint|bool|boolean|char|f32|f64|i128|i16|i32|i64|i8|never|string|u128|u16|u32|u64|u8|void)\\b"
+    },
+    "builtin-functions": {
+      "name": "support.function.adesh",
+      "match": "\\b(?:abs|assert|assert_eq|assert_ne|ceil|clone|copy|cos|drop|err|except|expect|exp|filter|floor|into|len|log|map|max|min|none|ok|panic|pop|pow|print|println|push|range|reduce|round|sin|sizeof|some|sqrt|tan|to_string|typeof|unwrap)\\b"
+    },
+    "function-calls": {
+      "name": "entity.name.function.adesh",
+      "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()"
+    },
+    "decorators": {
+      "name": "meta.annotation.adesh",
+      "match": "(@)([a-zA-Z_][a-zA-Z0-9_]*)",
+      "captures": {
+        "1": { "name": "punctuation.definition.annotation.adesh" },
+        "2": { "name": "entity.name.function.decorator.adesh" }
+      }
+    },
+    "literals": {
+      "name": "constant.language.adesh",
+      "match": "\\b(?:false|none|null|true|undefined)\\b"
+    },
+    "operators": {
+      "name": "keyword.operator.adesh",
+      "match": "\\*\\*=|<<=|>>=|\\|\\|=|\\^=|\/=|%=|\\*=|\\-=|\\+=|&=|!==|===|==|!=|>=|<=|=>|->|&&|\\|\\||\\?\\?=|\\?\\?|\\?\\.|\\.\\.\\.|\\.\\.|~\\/|::|<<|>>|\\+\\+|--|\\*\\*|[+\\-*/%!~<>&|^?=]"
+    },
+    "expression-content": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#keywords" },
+        { "include": "#types" },
+        { "include": "#function-calls" },
+        { "include": "#operators" }
+      ]
+    }
+  }
+}
