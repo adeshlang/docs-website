@@ -48,5 +48,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "browserslist": "^4.28.7",
+    "qs": "^6.16.0"
+  },
+  "resolutions": {
+    "browserslist": "^4.28.7",
+    "qs": "^6.16.0"
   }
 }
