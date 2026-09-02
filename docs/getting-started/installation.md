@@ -320,3 +320,30 @@ After successful installation:
 3. **[Language Basics](/language-guide/basics)** - Learn the syntax
 
 Happy coding! 🚀
+## Recommended installation
+
+Download the installer or portable archive for your operating system and
+architecture, install it, and verify the distribution:
+
+```bash
+adesh doctor
+adesh env --json
+```
+
+AdeshLang bundles and manages its own compatible LLVM/Clang/LLD toolchain in
+`toolchain/llvm`. Existing LLVM, Clang, GCC, MSYS2, and Visual Studio
+installations are not overwritten or added to the global PATH. Only the
+AdeshLang `bin` directory is added by an installer; portable archives do not
+modify PATH.
+
+The installed tools are `adesh` (language CLI), `adl` (package manager), and
+`als` (language server). Use `adesh toolchain current` to inspect the active
+toolchain, or `adesh toolchain --system`/`--system-toolchain` for an explicit
+advanced system-toolchain selection.
+
+## Environment and troubleshooting
+
+`ADESH_HOME`, `ADESH_TOOLCHAIN`, and `ADESH_LLVM` are optional overrides. The
+installation location is derived from the executable when they are unset.
+`adesh env --shell` prints shell-specific exports for PowerShell, CMD, Bash,
+Zsh, and Fish. Use `adesh repair` after moving files or an interrupted upgrade.
