@@ -73,7 +73,7 @@ export default function About(): JSX.Element {
                   border: '3px solid #38bdf8',
                   boxShadow: '0 0 25px rgba(56, 189, 248, 0.4)',
                 }}
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   // Fallback avatar if image fails to load externally
                   e.currentTarget.src = '/img/logo.svg';
                 }}

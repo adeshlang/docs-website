@@ -18,10 +18,16 @@
  *  10. CTA banner
  *  11. Keyframe animations & utilities
  *  12. Responsive
- *  13. Footer hiding (preserved)
+ *  13. Custom footer
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap');
+
+@font-face {
+  font-family: 'Samarkan';
+  src: url('/SAMAN___.TTF') format('truetype');
+  font-display: swap;
+}
 
 /* ──────────────────────────────────────────────
    1. DESIGN TOKENS — Material Design 3
@@ -438,10 +444,20 @@
 .hero-logo {
   width: 180px;
   height: 180px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 0.75rem;
   display: block;
   filter: drop-shadow(0 0 40px color-mix(in srgb, var(--md-primary) 45%, transparent));
   animation: fadeUp 0.6s var(--ease-standard) 0.1s both, floatLogo 6s ease-in-out infinite 0.7s;
+}
+
+.hero-brand-title {
+  font-family: 'Samarkan', cursive;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: #ffffff;
+  margin: 0 0 2rem;
+  animation: fadeUp 0.6s var(--ease-standard) 0.15s both;
 }
 
 .hero-title {
@@ -1286,7 +1302,91 @@
 }
 
 /* ──────────────────────────────────────────────
-   11. KEYFRAME ANIMATIONS & UTILITIES
+   13. BLOG COMING SOON
+   ────────────────────────────────────────────── */
+
+.blog-coming-soon {
+  position: relative;
+  display: grid;
+  min-height: calc(100vh - var(--ifm-navbar-height));
+  place-items: center;
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+.blog-coming-soon-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 700px);
+  padding: clamp(2.5rem, 7vw, 5rem);
+  text-align: center;
+  background: color-mix(in srgb, var(--md-surface-container-low) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-primary) 28%, var(--md-outline-variant));
+  border-radius: var(--shape-xl);
+  box-shadow: var(--elev-3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.blog-coming-soon-icon {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  place-items: center;
+  border-radius: var(--shape-md);
+  background: color-mix(in srgb, var(--md-primary) 15%, transparent);
+  color: var(--md-primary);
+  font-size: 2rem;
+  box-shadow: 0 0 28px color-mix(in srgb, var(--md-primary) 25%, transparent);
+}
+.blog-coming-soon-eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--md-primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.blog-coming-soon h1 {
+  margin: 0 0 1rem;
+  color: var(--md-on-surface);
+  font-family: var(--ifm-heading-font-family);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.blog-coming-soon p {
+  max-width: 540px;
+  margin: 0 auto 2rem;
+  color: var(--md-on-surface-variant);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.blog-coming-soon-orb {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.blog-coming-soon-orb-left {
+  top: 5%;
+  left: 5%;
+  background: var(--mesh-1);
+}
+.blog-coming-soon-orb-right {
+  right: 5%;
+  bottom: 5%;
+  background: var(--mesh-2);
+}
+
+/* ──────────────────────────────────────────────
+   14. KEYFRAME ANIMATIONS & UTILITIES
    ────────────────────────────────────────────── */
 
 @keyframes floatLogo {
@@ -1536,28 +1636,6 @@
   margin: 0 0 1.25rem;
   max-width: 280px;
 }
-.footer-socials {
-  display: flex;
-  gap: 10px;
-}
-.footer-social-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: var(--shape-sm);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  transition: all var(--dur-medium) var(--ease-standard);
-}
-.footer-social-btn:hover {
-  background: rgba(52, 211, 153, 0.12);
-  border-color: rgba(52, 211, 153, 0.3);
-  color: #34d399;
-  transform: translateY(-2px);
-}
 
 /* Link columns */
 .footer-col-title {
@@ -1617,7 +1695,7 @@
   margin: 0 auto;
   padding: 1.25rem 1.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
@@ -1625,21 +1703,6 @@
 .footer-copyright {
   font-size: 0.82rem;
   color: #64748b;
-}
-.footer-tech-badges {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.footer-badge {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: var(--shape-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
 }
 
 /* Footer responsive */
@@ -1665,15 +1728,11 @@
   }
 }
 
-/* ──────────────────────────────────────────────
-   14. FOOTER HIDING (preserved from original)
-   ────────────────────────────────────────────── */
-
-/* Hide footer ONLY on documentation pages (preserves footer on Landing, About, and Blog pages) */
-body:has([class*='docMainContainer']) footer.footer,
-body:has([class*='docItemContainer']) footer.footer,
-body:has([class*='docPage']) footer.footer,
-body[class*='docs-doc'] footer.footer,
-[class*='docMainContainer'] ~ footer.footer {
+/* Keep the custom footer out of documentation layouts as a fallback to the route guard. */
+body:has([class*='docMainContainer']) .landing-footer,
+body:has([class*='docItemContainer']) .landing-footer,
+body:has([class*='docPage']) .landing-footer,
+body[class*='docs-doc'] .landing-footer,
+[class*='docMainContainer'] ~ .landing-footer {
   display: none !important;
 }

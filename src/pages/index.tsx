@@ -238,7 +238,7 @@ function FeatureCard({ icon, title, body }: { icon: string; title: string; body:
    ────────────────────────────────────────────── */
 
 export default function Home(): JSX.Element {
-  const [activeTab, setActiveTab] = useState(snippets[0]);
+  const [activeTab, setActiveTab] = useState(snippets[0]!);
   const [copied, setCopied] = useState(false);
   const featuresRef = useReveal<HTMLDivElement>();
   const sandboxRef = useReveal<HTMLDivElement>();
@@ -288,11 +288,13 @@ export default function Home(): JSX.Element {
               className="hero-logo"
             />
 
-            <h1 className="hero-title">
+            <h1 className="hero-brand-title">AdeshLang</h1>
+
+            <h2 className="hero-title">
               Command. Code. Create.
               <br />
               <span className="gradient-text">High-Performance Programming</span>
-            </h1>
+            </h2>
 
             <p className="hero-subtitle">
               A modern, Rust-inspired language combining zero-cost compile-time memory safety, native Cranelift JIT compilation (10–230× speedups), explicit SIMD vectorization, and rich built-in networking libraries.
