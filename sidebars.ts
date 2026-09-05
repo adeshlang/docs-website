@@ -239,6 +239,20 @@ const sidebars: SidebarsConfig = {
         'tools/formatting',
         'tools/testing',
         'tools/ffi',
+        {
+          type: 'category',
+          label: 'ADL Package Manager',
+          link: { type: 'doc', id: 'tools/adl/adl-overview' },
+          items: [
+            'tools/adl/adl-overview',
+            'tools/adl/adl-manifest',
+            'tools/adl/adl-lockfile',
+            'tools/adl/adl-dependencies',
+            'tools/adl/adl-cli',
+            'tools/adl/adl-editor-support',
+            'tools/adl/adl-validation',
+          ],
+        },
       ],
     },
     {
