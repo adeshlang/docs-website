@@ -1736,3 +1736,155 @@ body[class*='docs-doc'] .landing-footer,
 [class*='docMainContainer'] ~ .landing-footer {
   display: none !important;
 }
+
+/* ──────────────────────────────────────────────
+    15. FLEXI SEARCH — docusaurus-search-local
+    AdeshLang themed search bar + modal
+   ────────────────────────────────────────────── */
+
+/* Navbar search wrapper */
+.navbar__search {
+  margin-left: 12px;
+}
+
+/* Search input: pill + glass + emerald focus */
+div[class*='searchBox'] input,
+.navbar__search-input,
+input[class*='searchInput'] {
+  border-radius: var(--shape-full) !important;
+  border: 1px solid var(--md-outline-variant) !important;
+  background: color-mix(in srgb, var(--md-surface-container) 88%, transparent) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 8px 14px 8px 36px !important;
+  font-size: 0.88rem !important;
+  font-family: var(--ifm-font-family-base) !important;
+  color: var(--md-on-surface) !important;
+  transition: border-color var(--dur-medium) var(--ease-standard),
+    box-shadow var(--dur-medium) var(--ease-standard),
+    background var(--dur-medium) var(--ease-standard) !important;
+  min-width: 220px;
+}
+
+div[class*='searchBox'] input::placeholder,
+input[class*='searchInput']::placeholder {
+  color: var(--md-on-surface-variant) !important;
+  opacity: 0.85;
+}
+
+div[class*='searchBox'] input:focus,
+input[class*='searchInput']:focus {
+  border-color: color-mix(in srgb, var(--md-primary) 55%, var(--md-outline-variant)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 16%, transparent), var(--elev-1) !important;
+  outline: none !important;
+}
+
+/* Search icon */
+div[class*='searchBox'] svg,
+.navbar__search svg {
+  color: var(--md-on-surface-variant) !important;
+  opacity: 0.9;
+}
+
+/* Shortcut hint (Ctrl+K) */
+div[class*='searchHintContainer'],
+kbd[class*='searchHint'] {
+  background: color-mix(in srgb, var(--md-surface-container-high) 90%, transparent) !important;
+  border: 1px solid var(--md-outline-variant) !important;
+  border-radius: 6px !important;
+  color: var(--md-on-surface-variant) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  padding: 2px 6px !important;
+  box-shadow: var(--elev-1) !important;
+}
+
+/* Search modal / dropdown */
+div[class*='searchModal'],
+div[class*='dropdownMenu'] {
+  border-radius: var(--shape-lg) !important;
+  border: 1px solid color-mix(in srgb, var(--md-primary) 16%, var(--md-outline-variant)) !important;
+  box-shadow: var(--elev-3) !important;
+  background: var(--md-surface-container-low) !important;
+  overflow: hidden;
+}
+
+/* Result items */
+div[class*='hitItem'],
+li[class*='suggestion'] {
+  border-radius: var(--shape-md) !important;
+  margin: 6px 8px !important;
+  border: 1px solid transparent !important;
+  transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard) !important;
+}
+
+div[class*='hitItem']:hover,
+li[class*='suggestion']:hover,
+div[class*='hitItem'][aria-selected='true'],
+li[class*='suggestion'][aria-selected='true'] {
+  background: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container)) !important;
+  border-color: color-mix(in srgb, var(--md-primary) 28%, transparent) !important;
+}
+
+/* Hit title + path */
+div[class*='hitTitle'],
+div[class*='hitPath'] {
+  font-family: var(--ifm-font-family-base) !important;
+}
+
+div[class*='hitTitle'] {
+  color: var(--md-on-surface) !important;
+  font-weight: 600 !important;
+}
+
+div[class*='hitPath'] {
+  color: var(--md-on-surface-variant) !important;
+  font-size: 0.78rem !important;
+}
+
+/* Highlighted terms */
+mark,
+div[class*='hit'] mark,
+span[class*='highlight'] {
+  background: color-mix(in srgb, var(--md-primary) 28%, transparent) !important;
+  color: var(--md-primary) !important;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* No results */
+div[class*='noResults'] {
+  color: var(--md-on-surface-variant) !important;
+  padding: 1.5rem !important;
+  text-align: center;
+}
+
+/* Search modal backdrop blur */
+div[class*='searchModalOverlay'] {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(11, 15, 25, 0.45) !important;
+}
+
+/* Algolia (when enabled) — mirror local theme */
+.DocSearch-Button {
+  border-radius: var(--shape-full) !important;
+  border: 1px solid var(--md-outline-variant) !important;
+  background: color-mix(in srgb, var(--md-surface-container) 88%, transparent) !important;
+}
+
+.DocSearch-Button:hover {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 14%, transparent) !important;
+}
+
+/* Mobile: full width search */
+@media (max-width: 996px) {
+  .navbar__search {
+    margin-left: auto;
+  }
+  div[class*='searchBox'] input,
+  input[class*='searchInput'] {
+    min-width: 0;
+    width: 100%;
+  }
+}

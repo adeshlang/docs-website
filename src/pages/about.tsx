@@ -1,13 +1,27 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
+import { SITE_URL, personSchema, breadcrumbSchema } from '../utils/seo';
 
 export default function About(): JSX.Element {
+  const personJsonLd = personSchema();
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+  ]);
+
   return (
     <Layout
       title="About AdeshLang & Creator Ajay Tainwala"
-      description="Learn about AdeshLang programming language design and its creator, Ajay Tainwala — Full Stack Developer & Software Engineer."
+      description="Learn about AdeshLang programming language design and its creator, Ajay Tainwala — Full Stack Developer & Software Engineer based in Bengaluru, India."
     >
+      <Head>
+        <link rel="canonical" href={`${SITE_URL}/about`} />
+        <meta name="keywords" content="AdeshLang, Ajay Tainwala, programming language creator, Bengaluru, Rust, compiler" />
+        <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+      </Head>
       <main style={{ padding: '4rem 1.5rem', maxWidth: '1000px', margin: '0 auto' }}>
         {/* Header Title */}
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>

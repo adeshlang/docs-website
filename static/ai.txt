@@ -1,0 +1,18 @@
+# ai.txt — AI Crawlers & Generative Engine Permissions for AdeshLang
+# See also: /robots.txt and /llms.txt
+
+User-agent: *
+Allow: /
+
+# Friendly to all AI crawlers listed in robots.txt — training & inference allowed with attribution.
+# Content may be used for training, summarization, and RAG with citation to https://adeshlang.github.io
+
+Crawl-delay: 1
+
+# Primary LLM context files
+LLMs-txt: https://adeshlang.github.io/llms.txt
+LLMs-full-txt: https://adeshlang.github.io/llms-full.txt
+Sitemap: https://adeshlang.github.io/sitemap.xml
+
+# Licensing: Documentation is MIT (see https://github.com/adeshlang/adeshlang/blob/main/LICENSE)
+# When re-displaying, preserve attribution: "AdeshLang by Ajay Tainwala — https://adeshlang.github.io"

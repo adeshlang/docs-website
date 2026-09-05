@@ -12,18 +12,169 @@ function pluginAdeshPrism() {
   };
 }
 
+// ---------------------------------------------------------------------------
+// SEO & GEO — Central site metadata
+// ---------------------------------------------------------------------------
+const SITE_URL = 'https://adeshlang.github.io';
+const SITE_TITLE = 'AdeshLang';
+const SITE_TAGLINE =
+  'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language';
+const SITE_DESCRIPTION =
+  'AdeshLang (आदेश) — a modern, Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedups), zero-cost compile-time memory safety, hardware SIMD, and batteries-included networking. Experimental, open-source, built with Rust.';
+const SITE_KEYWORDS = [
+  'AdeshLang',
+  'Adesh programming language',
+  'Rust-inspired language',
+  'Cranelift JIT',
+  'memory-safe language',
+  'systems programming',
+  'zero-cost abstractions',
+  'SIMD',
+  'AOT compilation',
+  'Bytecode VM',
+  'WebAssembly',
+  'compiler',
+  'programming language',
+  'high-performance language',
+  'India programming language',
+  'Bharat',
+].join(', ');
+const SITE_AUTHOR = 'Ajay Tainwala';
+const SOCIAL_IMAGE = 'img/social-card.jpg';
+
 const config: Config = {
-  title: 'AdeshLang',
-  tagline: 'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language',
+  title: SITE_TITLE,
+  tagline: SITE_TAGLINE,
   favicon: 'img/favicon.ico',
 
-  url: 'https://adeshlang.github.io',
+  url: SITE_URL,
   baseUrl: '/',
 
   organizationName: 'adeshlang',
   projectName: 'adeshlang',
 
+  trailingSlash: false,
+
   onBrokenLinks: 'warn',
+  onBrokenAnchors: 'warn',
+  onDuplicateRoutes: 'warn',
+
+  // SEO: ideal head hygiene — canonical, hreflang handled by Docusaurus core
+  headTags: [
+    // Primary SEO
+    {
+      tagName: 'meta',
+      attributes: { name: 'keywords', content: SITE_KEYWORDS },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'author', content: SITE_AUTHOR },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'creator', content: SITE_AUTHOR },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'publisher', content: 'AdeshLang Project' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'googlebot', content: 'index, follow' },
+    },
+    // GEO: explicit permissions for AI crawlers / LLM training discoverability
+    {
+      tagName: 'meta',
+      attributes: { name: 'ai-content-declaration', content: 'ai-crawl-allowed' },
+    },
+    // Theme
+    {
+      tagName: 'meta',
+      attributes: { name: 'theme-color', content: '#10b981' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'color-scheme', content: 'dark light' },
+    },
+    // Open Graph extras
+    {
+      tagName: 'meta',
+      attributes: { property: 'og:type', content: 'website' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { property: 'og:site_name', content: SITE_TITLE },
+    },
+    {
+      tagName: 'meta',
+      attributes: { property: 'og:locale', content: 'en_IN' },
+    },
+    // Twitter
+    {
+      tagName: 'meta',
+      attributes: { name: 'twitter:creator', content: '@adeshlang' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'twitter:site', content: '@adeshlang' },
+    },
+    // Performance: preconnect for Google Fonts
+    {
+      tagName: 'link',
+      attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    },
+    {
+      tagName: 'link',
+      attributes: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+    },
+    // Icons / Manifest
+    {
+      tagName: 'link',
+      attributes: { rel: 'apple-touch-icon', href: '/img/logo.png' },
+    },
+    {
+      tagName: 'link',
+      attributes: { rel: 'manifest', href: '/manifest.json' },
+    },
+    // GEO: discoverability for LLMs — llms.txt
+    {
+      tagName: 'link',
+      attributes: { rel: 'alternate', type: 'text/plain', title: 'LLMs.txt — AdeshLang for AI', href: '/llms.txt' },
+    },
+    // Verification placeholders — set via env or replace with real tokens
+    ...(process.env.GOOGLE_SITE_VERIFICATION
+      ? [
+          {
+            tagName: 'meta' as const,
+            attributes: { name: 'google-site-verification', content: process.env.GOOGLE_SITE_VERIFICATION },
+          },
+        ]
+      : []),
+    ...(process.env.BING_SITE_VERIFICATION
+      ? [
+          {
+            tagName: 'meta' as const,
+            attributes: { name: 'msvalidate.01', content: process.env.BING_SITE_VERIFICATION },
+          },
+        ]
+      : []),
+  ],
+
+  customFields: {
+    description: SITE_DESCRIPTION,
+    keywords: SITE_KEYWORDS,
+    author: SITE_AUTHOR,
+    // GEO manifest
+    geo: {
+      llmsTxt: '/llms.txt',
+      llmsFullTxt: '/llms-full.txt',
+      aiTxt: '/ai.txt',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -31,7 +182,42 @@ const config: Config = {
   },
 
   plugins: [pluginAdeshPrism],
-  themes: ['@docusaurus/theme-mermaid'],
+  // FLEXI SEARCH: offline local search indexes all docs/blog/pages.
+  // Searches on any key (title, content, headings, keywords, description) via Lunr-like tokenization.
+  // Falls back to Algolia when ALGOLIA_APP_ID is present; otherwise local is primary.
+  themes: [
+    '@docusaurus/theme-mermaid',
+    // Only inject local search when Algolia is NOT configured to avoid dual search bars.
+    // Set ALGOLIA_APP_ID env to prefer Algolia cloud; otherwise flexi local search auto-activates.
+    ...(process.env.ALGOLIA_APP_ID
+      ? []
+      : [
+          [
+            require.resolve('@easyops-cn/docusaurus-search-local'),
+            {
+              hashed: true,
+              language: ['en'],
+              highlightSearchTermsOnTargetPage: true,
+              explicitSearchResultPath: true,
+              searchResultLimits: 10,
+              searchResultContextMaxLength: 60,
+              searchBarShortcut: true,
+              searchBarShortcutHint: true,
+              searchBarPosition: 'right',
+              docsRouteBasePath: '/',
+              blogRouteBasePath: '/blog',
+              indexDocs: true,
+              indexBlog: true,
+              indexPages: true,
+              docsDir: ['docs'],
+              blogDir: ['blog'],
+              ignoreFiles: [],
+              // Expanded searchable content for true flexi search
+              useAllContextsWithNoSearchContext: true,
+            },
+          ] as const,
+        ]),
+  ],
 
   markdown: {
     mermaid: true,
@@ -48,20 +234,74 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
           routeBasePath: '/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: false,
+          // SEO: breadcrumbs + meta
+          breadcrumbs: true,
         },
         blog: {
           showReadingTime: true,
           editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+          feedOptions: {
+            type: ['rss', 'atom'],
+            title: 'AdeshLang Blog',
+            description: 'Engineering deep-dives on AdeshLang language design, compiler, and tooling.',
+            language: 'en',
+          },
+          onInlineTags: 'warn',
+          onInlineAuthors: 'warn',
         },
         theme: {
           customCss: './src/css/custom.css',
         },
+        sitemap: {
+          changefreq: 'weekly' as const,
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+          createSitemapItems: async (params: any) => {
+            const { defaultCreateSitemapItems, ...rest } = params;
+            let items = await defaultCreateSitemapItems(rest);
+            items = items.map((item: any) => {
+              if (item.url === SITE_URL + '/' || item.url === SITE_URL + '/intro') {
+                return { ...item, changefreq: 'daily', priority: 1.0 };
+              }
+              if (item.url.includes('/getting-started/') || item.url.includes('/language-guide/')) {
+                return { ...item, changefreq: 'weekly', priority: 0.8 };
+              }
+              if (item.url.includes('/blog')) {
+                return { ...item, changefreq: 'weekly', priority: 0.6 };
+              }
+              return item;
+            });
+            return items;
+          },
+        },
+        gtag: process.env.GTAG_ID
+          ? {
+              trackingID: process.env.GTAG_ID,
+              anonymizeIP: true,
+            }
+          : undefined,
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
-    image: 'img/social-card.jpg',
+    image: SOCIAL_IMAGE,
+    metadata: [
+      { name: 'keywords', content: SITE_KEYWORDS },
+      { name: 'author', content: SITE_AUTHOR },
+      { name: 'description', content: SITE_DESCRIPTION },
+      // GEO: hint for generative engines
+      { name: 'ai-content-declaration', content: 'ai-crawl-allowed' },
+    ],
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: true,
+      },
+    },
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,

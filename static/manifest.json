@@ -1,0 +1,26 @@
+{
+  "name": "AdeshLang — High-Performance Memory-Safe Programming Language",
+  "short_name": "AdeshLang",
+  "description": "AdeshLang (आदेश) — a Rust-inspired, high-performance programming language with Cranelift native JIT, zero-cost memory safety, SIMD, and networking.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["developer", "education", "programming"],
+  "orientation": "any"
+}

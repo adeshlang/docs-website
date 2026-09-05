@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import { Highlight, themes } from 'prism-react-renderer';
+import {
+  SITE_URL,
+  faqSchema,
+  howToSchema,
+  breadcrumbSchema,
+} from '../utils/seo';
 
 /* ──────────────────────────────────────────────
    Data
@@ -245,6 +252,58 @@ export default function Home(): JSX.Element {
   const backendRef = useReveal<HTMLDivElement>();
   const rustRef = useReveal<HTMLDivElement>();
 
+  // SEO & GEO — Structured data for homepage: FAQ + HowTo + Breadcrumb
+  // GEO: FAQPage is heavily used by generative engines for grounded answers
+  const faqJsonLd = faqSchema([
+    {
+      question: 'What is AdeshLang?',
+      answer:
+        'AdeshLang (आदेश — Command) is a modern, Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedups), zero-cost compile-time memory safety, hardware SIMD, and batteries-included networking. It is experimental and built with Rust in Bengaluru, India by Ajay Tainwala.',
+    },
+    {
+      question: 'Is AdeshLang production-ready?',
+      answer:
+        'No. AdeshLang is experimental. The Tree-Walk Interpreter is the primary face of development and source of truth. Other backends (Baseline JIT, Adaptive JIT, Native Cranelift JIT, AOT, Bytecode VM, WASM, GPU/MLIR) are under active development and not yet fully completed.',
+    },
+    {
+      question: 'What makes AdeshLang fast?',
+      answer:
+        'Native Cranelift JIT compiles LIR to native x86_64/ARM machine code at runtime via function pointers (10–230× faster than interpreter), AOT compilation (15–240×), plus explicit SIMD vectorization (AVX2 / ARM Neon) and auto-vectorization passes.',
+    },
+    {
+      question: 'How do I install AdeshLang?',
+      answer:
+        'Run curl -fsSL https://adeshlang.org/install.sh | sh, or download from GitHub releases. Then use adesh run main.adesh, adesh run --jit-native main.adesh for native JIT, or adesh build for AOT.',
+    },
+    {
+      question: 'Is AdeshLang memory-safe without garbage collection?',
+      answer:
+        'Yes. AdeshLang enforces compile-time ownership and move semantics with a borrow checker prior to codegen, eliminating data races, double-frees, and GC pause spikes with zero-cost abstractions.',
+    },
+    {
+      question: 'Where can I learn AdeshLang?',
+      answer:
+        'Start at https://adeshlang.github.io/getting-started/quick-start for a 5-minute guide, then follow the Learn Programming path, Language Guide, and examples catalog.',
+    },
+  ]);
+
+  const howToJsonLd = howToSchema({
+    name: 'How to install and run AdeshLang in 5 minutes',
+    description: 'Install AdeshLang and run your first program using the interpreter.',
+    url: `${SITE_URL}/getting-started/quick-start`,
+    steps: [
+      { name: 'Install AdeshLang', text: 'Run curl -fsSL https://adeshlang.org/install.sh | sh in your terminal.' },
+      { name: 'Create main.adesh', text: 'Create a file with fn main() { print("Hello, AdeshLang!"); }' },
+      { name: 'Run with interpreter', text: 'Execute adesh run main.adesh to see output.' },
+      { name: 'Try native JIT', text: 'Execute adesh run --jit-native main.adesh for Cranelift native speedup.' },
+    ],
+  });
+
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Documentation', url: '/intro' },
+  ]);
+
   const handleCopyCmd = () => {
     navigator.clipboard.writeText('curl -fsSL https://adeshlang.org/install.sh | sh');
     setCopied(true);
@@ -256,6 +315,13 @@ export default function Home(): JSX.Element {
       title="AdeshLang — High-Performance Memory-Safe Language"
       description="आदेश (Adesh) — Command. Code. Create. A Rust-inspired, high-performance programming language with Cranelift native JIT, zero-cost memory safety, and multi-backend support."
     >
+      <Head>
+        <link rel="canonical" href={`${SITE_URL}/`} />
+        <meta name="keywords" content="AdeshLang, programming language, Rust-inspired, Cranelift JIT, memory-safe, SIMD, compiler, AOT, WASM, systems programming" />
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+      </Head>
       <div className="landing-page">
         {/* ═══════════════ HERO ═══════════════ */}
         <header className="hero">
