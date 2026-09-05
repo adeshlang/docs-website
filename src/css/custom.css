@@ -1738,153 +1738,724 @@ body[class*='docs-doc'] .landing-footer,
 }
 
 /* ──────────────────────────────────────────────
-    15. FLEXI SEARCH — docusaurus-search-local
-    AdeshLang themed search bar + modal
+    15. FLEXI SEARCH & FULL-SIZED SEARCH MODAL
+    AdeshLang Command-Palette Search Modal + Trigger
    ────────────────────────────────────────────── */
 
-/* Navbar search wrapper */
-.navbar__search {
+/* Navbar Search Trigger */
+.adesh-search-nav-wrapper {
+  display: flex;
+  align-items: center;
   margin-left: 12px;
 }
 
-/* Search input: pill + glass + emerald focus */
-div[class*='searchBox'] input,
-.navbar__search-input,
-input[class*='searchInput'] {
-  border-radius: var(--shape-full) !important;
-  border: 1px solid var(--md-outline-variant) !important;
-  background: color-mix(in srgb, var(--md-surface-container) 88%, transparent) !important;
+.adesh-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: color-mix(in srgb, var(--md-surface-container) 88%, transparent);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--shape-full);
+  padding: 7px 14px 7px 12px;
+  font-family: var(--ifm-font-family-base);
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  min-width: 210px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 8px 14px 8px 36px !important;
-  font-size: 0.88rem !important;
-  font-family: var(--ifm-font-family-base) !important;
-  color: var(--md-on-surface) !important;
+  box-shadow: var(--elev-1);
   transition: border-color var(--dur-medium) var(--ease-standard),
-    box-shadow var(--dur-medium) var(--ease-standard),
-    background var(--dur-medium) var(--ease-standard) !important;
-  min-width: 220px;
+              box-shadow var(--dur-medium) var(--ease-standard),
+              background var(--dur-medium) var(--ease-standard),
+              transform var(--dur-fast) var(--ease-standard);
+  text-align: left;
 }
 
-div[class*='searchBox'] input::placeholder,
-input[class*='searchInput']::placeholder {
-  color: var(--md-on-surface-variant) !important;
-  opacity: 0.85;
+.adesh-search-trigger:hover {
+  border-color: color-mix(in srgb, var(--md-primary) 55%, var(--md-outline-variant));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 16%, transparent), var(--elev-2);
+  background: color-mix(in srgb, var(--md-surface-container-high) 95%, transparent);
+  color: var(--md-on-surface);
 }
 
-div[class*='searchBox'] input:focus,
-input[class*='searchInput']:focus {
-  border-color: color-mix(in srgb, var(--md-primary) 55%, var(--md-outline-variant)) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 16%, transparent), var(--elev-1) !important;
-  outline: none !important;
+.adesh-search-trigger-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--md-primary);
+  flex-shrink: 0;
 }
 
-/* Search icon */
-div[class*='searchBox'] svg,
-.navbar__search svg {
-  color: var(--md-on-surface-variant) !important;
-  opacity: 0.9;
+.adesh-search-svg-icon {
+  width: 17px;
+  height: 17px;
 }
 
-/* Shortcut hint (Ctrl+K) */
-div[class*='searchHintContainer'],
-kbd[class*='searchHint'] {
-  background: color-mix(in srgb, var(--md-surface-container-high) 90%, transparent) !important;
-  border: 1px solid var(--md-outline-variant) !important;
-  border-radius: 6px !important;
-  color: var(--md-on-surface-variant) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 0.72rem !important;
-  padding: 2px 6px !important;
-  box-shadow: var(--elev-1) !important;
+.adesh-search-trigger-text {
+  font-size: 0.88rem;
+  font-weight: 500;
+  flex: 1;
 }
 
-/* Search modal / dropdown */
-div[class*='searchModal'],
-div[class*='dropdownMenu'] {
-  border-radius: var(--shape-lg) !important;
-  border: 1px solid color-mix(in srgb, var(--md-primary) 16%, var(--md-outline-variant)) !important;
-  box-shadow: var(--elev-3) !important;
-  background: var(--md-surface-container-low) !important;
-  overflow: hidden;
+.adesh-search-shortcut-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  pointer-events: none;
 }
 
-/* Result items */
-div[class*='hitItem'],
-li[class*='suggestion'] {
-  border-radius: var(--shape-md) !important;
-  margin: 6px 8px !important;
-  border: 1px solid transparent !important;
-  transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard) !important;
-}
-
-div[class*='hitItem']:hover,
-li[class*='suggestion']:hover,
-div[class*='hitItem'][aria-selected='true'],
-li[class*='suggestion'][aria-selected='true'] {
-  background: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container)) !important;
-  border-color: color-mix(in srgb, var(--md-primary) 28%, transparent) !important;
-}
-
-/* Hit title + path */
-div[class*='hitTitle'],
-div[class*='hitPath'] {
-  font-family: var(--ifm-font-family-base) !important;
-}
-
-div[class*='hitTitle'] {
-  color: var(--md-on-surface) !important;
-  font-weight: 600 !important;
-}
-
-div[class*='hitPath'] {
-  color: var(--md-on-surface-variant) !important;
-  font-size: 0.78rem !important;
-}
-
-/* Highlighted terms */
-mark,
-div[class*='hit'] mark,
-span[class*='highlight'] {
-  background: color-mix(in srgb, var(--md-primary) 28%, transparent) !important;
-  color: var(--md-primary) !important;
-  padding: 0 2px;
-  border-radius: 3px;
-}
-
-/* No results */
-div[class*='noResults'] {
-  color: var(--md-on-surface-variant) !important;
-  padding: 1.5rem !important;
+.adesh-search-shortcut-badge kbd {
+  display: inline-block;
+  background: color-mix(in srgb, var(--md-surface-container-high) 90%, transparent);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 5px;
+  color: var(--md-on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 18px;
   text-align: center;
 }
 
-/* Search modal backdrop blur */
-div[class*='searchModalOverlay'] {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  background: rgba(11, 15, 25, 0.45) !important;
+/* ── Full-Sized Modal Backdrop & Dialog ── */
+.adesh-search-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(4, 7, 14, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 6vh, 4.5rem) 1.25rem 2rem;
+  animation: modalFadeIn 0.18s ease-out;
 }
 
-/* Algolia (when enabled) — mirror local theme */
-.DocSearch-Button {
-  border-radius: var(--shape-full) !important;
-  border: 1px solid var(--md-outline-variant) !important;
-  background: color-mix(in srgb, var(--md-surface-container) 88%, transparent) !important;
+.adesh-search-modal-dialog {
+  position: relative;
+  width: min(100%, 740px);
+  max-height: 85vh;
+  background: var(--md-surface-container-low);
+  border: 1px solid color-mix(in srgb, var(--md-primary) 30%, var(--md-outline-variant));
+  border-radius: var(--shape-xl);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px color-mix(in srgb, var(--md-primary) 18%, transparent);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPopUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.DocSearch-Button:hover {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 14%, transparent) !important;
+/* Modal Header & Search Input */
+.adesh-search-modal-header {
+  border-bottom: 1px solid var(--md-outline-variant);
+  background: color-mix(in srgb, var(--md-surface-container) 70%, transparent);
+  padding: 0.75rem 1.25rem;
 }
 
-/* Mobile: full width search */
+.adesh-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adesh-search-modal-icon {
+  color: var(--md-primary);
+  flex-shrink: 0;
+}
+
+.adesh-search-modal-input {
+  flex: 1;
+  font-family: var(--ifm-font-family-base);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--md-on-surface);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 8px 0;
+}
+
+.adesh-search-modal-input::placeholder {
+  color: var(--md-on-surface-variant);
+  opacity: 0.8;
+}
+
+.adesh-search-clear-btn {
+  background: color-mix(in srgb, var(--md-on-surface) 10%, transparent);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all var(--dur-fast) var(--ease-standard);
+}
+
+.adesh-search-clear-btn:hover {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.adesh-search-esc-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.adesh-search-esc-btn kbd {
+  background: color-mix(in srgb, var(--md-surface-container-high) 90%, transparent);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 6px;
+  color: var(--md-on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 7px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal Body */
+.adesh-search-modal-body {
+  overflow-y: auto;
+  padding: 1.25rem;
+  max-height: calc(85vh - 130px);
+  overscroll-behavior: contain;
+}
+
+.adesh-search-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--md-primary);
+  margin-bottom: 0.9rem;
+  padding: 0 4px;
+}
+
+.adesh-search-results-count {
+  font-size: 0.72rem;
+  color: var(--md-on-surface-variant);
+  font-weight: 500;
+}
+
+/* Results Hits List */
+.adesh-search-hits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.adesh-search-hit-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--shape-md);
+  background: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-standard),
+              border-color var(--dur-fast) var(--ease-standard),
+              transform var(--dur-fast) var(--ease-standard);
+}
+
+.adesh-search-hit-item:hover,
+.adesh-search-hit-item.selected {
+  background: color-mix(in srgb, var(--md-primary) 12%, var(--md-surface-container));
+  border-color: color-mix(in srgb, var(--md-primary) 50%, transparent);
+  transform: translateX(3px);
+}
+
+.adesh-search-hit-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--shape-xs);
+  background: color-mix(in srgb, var(--md-primary) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-primary) 25%, transparent);
+  color: var(--md-primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.adesh-search-hit-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.adesh-search-hit-breadcrumb {
+  font-size: 0.74rem;
+  color: var(--md-on-surface-variant);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adesh-search-hit-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adesh-search-hit-snippet {
+  font-size: 0.82rem;
+  color: var(--md-on-surface-variant);
+  margin-top: 3px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adesh-search-hit-mark {
+  background: color-mix(in srgb, var(--md-primary) 28%, transparent);
+  color: var(--md-primary);
+  font-weight: 700;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+.adesh-search-hit-action {
+  color: var(--md-on-surface-variant);
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-standard), opacity var(--dur-fast) var(--ease-standard);
+}
+
+.adesh-search-hit-item.selected .adesh-search-hit-action,
+.adesh-search-hit-item:hover .adesh-search-hit-action {
+  opacity: 1;
+  color: var(--md-primary);
+  transform: translateX(2px);
+}
+
+/* Quick Links Grid (when input is empty) */
+.adesh-search-quicklinks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.adesh-search-quicklink-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--shape-md);
+  background: var(--md-surface-container);
+  border: 1px solid var(--md-outline-variant);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-standard);
+}
+
+.adesh-search-quicklink-card:hover,
+.adesh-search-quicklink-card.selected {
+  background: color-mix(in srgb, var(--md-primary) 12%, var(--md-surface-container));
+  border-color: color-mix(in srgb, var(--md-primary) 45%, transparent);
+  transform: translateY(-2px);
+}
+
+.adesh-search-card-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.adesh-search-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.adesh-search-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adesh-search-card-desc {
+  font-size: 0.78rem;
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adesh-search-card-category {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--md-primary);
+  background: color-mix(in srgb, var(--md-primary) 12%, transparent);
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Loading & Empty States */
+.adesh-search-loading-state,
+.adesh-search-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--md-on-surface-variant);
+}
+
+.adesh-search-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid color-mix(in srgb, var(--md-primary) 20%, transparent);
+  border-top-color: var(--md-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+.adesh-search-empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.8;
+}
+
+.adesh-search-empty-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin-bottom: 0.5rem;
+}
+
+.adesh-search-empty-desc {
+  font-size: 0.88rem;
+  max-width: 420px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.adesh-search-empty-desc code {
+  color: var(--md-primary);
+  font-family: var(--font-mono);
+}
+
+/* Modal Footer */
+.adesh-search-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  border-top: 1px solid var(--md-outline-variant);
+  background: color-mix(in srgb, var(--md-surface-container) 80%, transparent);
+  font-size: 0.78rem;
+  color: var(--md-on-surface-variant);
+}
+
+.adesh-search-footer-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.adesh-search-shortcut-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.adesh-search-shortcut-item kbd {
+  background: color-mix(in srgb, var(--md-surface-container-high) 90%, transparent);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--md-on-surface-variant);
+}
+
+.adesh-search-footer-brand {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--md-primary);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPopUp {
+  from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ──────────────────────────────────────────────
+    16. MOBILE STICKY TOC & FLOATING OUTLINE BUTTON
+    Minimap overview sticky below navbar + right side icon
+   ────────────────────────────────────────────── */
+
+/* Hide mobile TOC components on desktop */
+@media (min-width: 997px) {
+  .adesh-mobile-toc-sticky-bar,
+  .adesh-mobile-floating-toc-container {
+    display: none !important;
+  }
+}
+
+/* Mobile viewport styles */
 @media (max-width: 996px) {
-  .navbar__search {
+  /* Search trigger on smaller screens */
+  .adesh-search-nav-wrapper {
     margin-left: auto;
   }
-  div[class*='searchBox'] input,
-  input[class*='searchInput'] {
-    min-width: 0;
-    width: 100%;
+
+  .adesh-search-trigger {
+    min-width: auto;
+    padding: 6px 12px;
   }
+
+  .adesh-search-shortcut-badge {
+    display: none;
+  }
+
+  .adesh-search-quicklinks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .adesh-search-modal-backdrop {
+    padding: 0;
+  }
+
+  .adesh-search-modal-dialog {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+
+  /* ── Sticky Sub-Navbar "On This Page" Bar ── */
+  .adesh-mobile-toc-sticky-bar {
+    position: sticky;
+    top: var(--ifm-navbar-height, 60px);
+    z-index: 90;
+    background: color-mix(in srgb, var(--md-surface) 92%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid color-mix(in srgb, var(--md-primary) 22%, var(--md-outline-variant));
+    border-top: 1px solid color-mix(in srgb, var(--md-outline-variant) 40%, transparent);
+    margin: 0 calc(var(--ifm-spacing-horizontal) * -1) 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    transition: all var(--dur-medium) var(--ease-standard);
+  }
+
+  .adesh-mobile-toc-sticky-bar.adesh-mobile-toc-expanded {
+    background: var(--md-surface);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .adesh-mobile-toc-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--md-on-surface);
+    text-align: left;
+  }
+
+  .adesh-mobile-toc-trigger-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .adesh-mobile-toc-icon {
+    color: var(--md-primary);
+    flex-shrink: 0;
+  }
+
+  .adesh-mobile-toc-label-wrap {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .adesh-mobile-toc-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--md-primary);
+  }
+
+  .adesh-mobile-toc-current-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--md-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+  }
+
+  .adesh-mobile-toc-chevron {
+    color: var(--md-on-surface-variant);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .adesh-mobile-toc-chevron-up {
+    transform: rotate(180deg);
+    color: var(--md-primary);
+  }
+
+  /* Collapsible Dropdown Content */
+  .adesh-mobile-toc-dropdown {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding: 0.75rem 1rem 1.25rem;
+    border-top: 1px solid var(--md-outline-variant);
+    background: var(--md-surface-container-low);
+    animation: slideDown 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .adesh-mobile-toc-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--md-on-surface-variant);
+  }
+
+  .adesh-mobile-toc-top-btn {
+    background: color-mix(in srgb, var(--md-primary) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--md-primary) 30%, transparent);
+    color: var(--md-primary);
+    border-radius: var(--shape-full);
+    padding: 3px 10px;
+    font-family: var(--ifm-font-family-base);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-standard);
+  }
+
+  .adesh-mobile-toc-top-btn:hover {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+
+  .adesh-mobile-toc-items-wrap ul {
+    list-style: none;
+    padding-left: 0.75rem;
+    margin: 0;
+    border-left: 2px solid color-mix(in srgb, var(--md-primary) 25%, var(--md-outline-variant));
+  }
+
+  .adesh-mobile-toc-items-wrap li {
+    margin: 6px 0;
+  }
+
+  .adesh-mobile-toc-items-wrap a {
+    font-size: 0.88rem;
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    display: block;
+    padding: 4px 8px;
+    border-radius: var(--shape-xs);
+    transition: all var(--dur-fast) var(--ease-standard);
+  }
+
+  .adesh-mobile-toc-items-wrap a:hover,
+  .adesh-mobile-toc-items-wrap a[class*='active'] {
+    color: var(--md-primary);
+    background: color-mix(in srgb, var(--md-primary) 10%, transparent);
+    font-weight: 600;
+  }
+
+  /* ── Floating Right-Side TOC Menu Icon ── */
+  .adesh-mobile-floating-toc-container {
+    position: fixed;
+    bottom: 22px;
+    right: 18px;
+    z-index: 110;
+  }
+
+  .adesh-mobile-floating-toc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 16px;
+    background: color-mix(in srgb, var(--md-surface-container-highest) 95%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid color-mix(in srgb, var(--md-primary) 50%, var(--md-outline-variant));
+    border-radius: var(--shape-full);
+    color: var(--md-primary);
+    font-family: var(--ifm-font-family-base);
+    font-weight: 700;
+    font-size: 0.84rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px color-mix(in srgb, var(--md-primary) 22%, transparent);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-standard);
+    animation: floatingPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .adesh-mobile-floating-toc-btn:hover,
+  .adesh-mobile-floating-toc-btn.active {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    border-color: var(--md-primary);
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--md-primary) 50%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .adesh-floating-toc-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatingPop {
+  from { opacity: 0; transform: scale(0.8) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
