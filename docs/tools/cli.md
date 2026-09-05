@@ -119,6 +119,21 @@ adesh repl
 
 ---
 
+### `adesh editor [file]`
+Launches the bundled cross-platform TUI code editor with LSP diagnostics, multiple buffer tabs, workspace explorer, and interactive backend runner.
+
+```bash
+# Open editor in current workspace
+adesh editor .
+
+# Open specific source file
+adesh editor src/main.adesh
+```
+
+For full details and keybindings, see the [TUI Code Editor Documentation](/tools/tui-editor).
+
+---
+
 ## Testing Options (`adesh run --test`)
 
 AdeshLang includes a built-in test runner.

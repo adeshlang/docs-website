@@ -82,6 +82,13 @@ const POPULAR_QUICK_LINKS = [
     icon: '💻',
   },
   {
+    title: 'TUI Code Editor',
+    path: '/tools/tui-editor',
+    description: 'Fast, native cross-platform terminal editor with LSP, runner, and file tree',
+    category: 'Tools',
+    icon: '🖥️',
+  },
+  {
     title: 'About AdeshLang',
     path: '/about',
     description: 'Project mission, architectural pillars, and roadmap',

@@ -235,6 +235,7 @@ const sidebars: SidebarsConfig = {
       label: 'Tools & Ecosystem',
       items: [
         'tools/cli',
+        'tools/tui-editor',
         'tools/als',
         'tools/formatting',
         'tools/testing',
