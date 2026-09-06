@@ -2,6 +2,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import buildRedirects from './redirects';
 
 function pluginAdeshPrism() {
   return {
@@ -181,7 +182,48 @@ const config: Config = {
     locales: ['en'],
   },
 
-  plugins: [pluginAdeshPrism],
+  plugins: [
+    pluginAdeshPrism,
+    // -----------------------------------------------------------------------
+    // Separate documentation spaces
+    //   /docs             – reference documentation (default docs instance)
+    //   /learn            – guided tutorial path
+    //   /learn-by-examples – example-driven learning
+    // -----------------------------------------------------------------------
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'learn',
+        path: 'learn',
+        routeBasePath: 'learn',
+        sidebarPath: './sidebars-learn.ts',
+        editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+        showLastUpdateTime: true,
+        showLastUpdateAuthor: false,
+        breadcrumbs: true,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'examples',
+        path: 'learn-by-examples',
+        routeBasePath: 'learn-by-examples',
+        sidebarPath: './sidebars-examples.ts',
+        editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+        showLastUpdateTime: true,
+        showLastUpdateAuthor: false,
+        breadcrumbs: true,
+      },
+    ],
+    // Seamless redirects from the pre-restructure URLs so nothing 404s
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: buildRedirects(),
+      },
+    ],
+  ],
   // FLEXI SEARCH: offline local search indexes all docs/blog/pages.
   // Searches on any key (title, content, headings, keywords, description) via Lunr-like tokenization.
   // Falls back to Algolia when ALGOLIA_APP_ID is present; otherwise local is primary.
@@ -204,12 +246,12 @@ const config: Config = {
               searchBarShortcut: true,
               searchBarShortcutHint: true,
               searchBarPosition: 'right',
-              docsRouteBasePath: '/',
+              docsRouteBasePath: ['/docs', '/learn', '/learn-by-examples'],
               blogRouteBasePath: '/blog',
               indexDocs: true,
               indexBlog: true,
               indexPages: true,
-              docsDir: ['docs'],
+              docsDir: ['docs', 'learn', 'learn-by-examples'],
               blogDir: ['blog'],
               ignoreFiles: [],
               // Expanded searchable content for true flexi search
@@ -233,7 +275,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
-          routeBasePath: '/',
+          routeBasePath: 'docs',
           showLastUpdateTime: true,
           showLastUpdateAuthor: false,
           // SEO: breadcrumbs + meta
@@ -263,10 +305,10 @@ const config: Config = {
             const { defaultCreateSitemapItems, ...rest } = params;
             let items = await defaultCreateSitemapItems(rest);
             items = items.map((item: any) => {
-              if (item.url === SITE_URL + '/' || item.url === SITE_URL + '/intro') {
+              if (item.url === SITE_URL + '/' || item.url === SITE_URL + '/docs') {
                 return { ...item, changefreq: 'daily', priority: 1.0 };
               }
-              if (item.url.includes('/getting-started/') || item.url.includes('/language-guide/')) {
+              if (item.url.includes('/learn/') || item.url.includes('/docs/language-guide/') || item.url === SITE_URL + '/learn' || item.url === SITE_URL + '/learn-by-examples') {
                 return { ...item, changefreq: 'weekly', priority: 0.8 };
               }
               if (item.url.includes('/blog')) {
@@ -316,9 +358,23 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'learnSidebar',
+          docsPluginId: 'learn',
           position: 'left',
-          label: 'Documentation',
+          label: 'Learn',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'examplesSidebar',
+          docsPluginId: 'examples',
+          position: 'left',
+          label: 'Learn by Examples',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'docsSidebar',
+          position: 'left',
+          label: 'Docs',
         },
         { to: '/about', label: 'About', position: 'left' },
         { to: '/blog', label: 'Blog', position: 'left' },
@@ -333,19 +389,19 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Learn',
           items: [
             {
+              label: 'Learning Roadmap',
+              to: '/learn',
+            },
+            {
               label: 'Quick Start',
-              to: '/getting-started/quick-start',
+              to: '/learn/getting-started/quick-start',
             },
             {
-              label: 'Language Guide',
-              to: '/language-guide/basics',
-            },
-            {
-              label: 'Backends',
-              to: '/backends/overview',
+              label: 'Learn by Examples',
+              to: '/learn-by-examples',
             },
           ],
         },
@@ -366,6 +422,14 @@ const config: Config = {
           title: 'More',
           items: [
             {
+              label: 'Documentation',
+              to: '/docs',
+            },
+            {
+              label: 'Language Guide',
+              to: '/docs/language-guide/basics',
+            },
+            {
               label: 'About Project',
               to: '/about',
             },
@@ -374,7 +438,7 @@ const config: Config = {
               to: '/blog',
             },
             {
-              label: 'Examples',
+              label: 'Examples Repository',
               href: 'https://github.com/adeshlang/adeshlang/tree/main/examples',
             },
           ],

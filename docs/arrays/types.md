@@ -1,8 +1,7 @@
 ---
-id: arrays-types
+id: types
 title: Array Types & Memory Layouts
 sidebar_label: Types & Memory Layouts
-slug: /arrays/types
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

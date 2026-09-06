@@ -283,14 +283,14 @@ export default function Home(): JSX.Element {
     {
       question: 'Where can I learn AdeshLang?',
       answer:
-        'Start at https://adeshlang.github.io/getting-started/quick-start for a 5-minute guide, then follow the Learn Programming path, Language Guide, and examples catalog.',
+        'Start at https://adeshlang.github.io/learn/getting-started/quick-start for a 5-minute guide, then follow the Learn roadmap, Language Guide, and examples catalog.',
     },
   ]);
 
   const howToJsonLd = howToSchema({
     name: 'How to install and run AdeshLang in 5 minutes',
     description: 'Install AdeshLang and run your first program using the interpreter.',
-    url: `${SITE_URL}/getting-started/quick-start`,
+    url: `${SITE_URL}/learn/getting-started/quick-start`,
     steps: [
       { name: 'Install AdeshLang', text: 'Run curl -fsSL https://adeshlang.org/install.sh | sh in your terminal.' },
       { name: 'Create main.adesh', text: 'Create a file with fn main() { print("Hello, AdeshLang!"); }' },
@@ -376,11 +376,14 @@ export default function Home(): JSX.Element {
             </div>
 
             <div className="hero-ctas">
-              <Link className="btn-filled" to="/getting-started/quick-start">
+              <Link className="btn-filled" to="/learn/getting-started/quick-start">
                 Get Started →
               </Link>
-              <Link className="btn-outlined" to="/intro">
-                Read Documentation
+              <Link className="btn-outlined" to="/learn">
+                Learn AdeshLang
+              </Link>
+              <Link className="btn-outlined" to="/docs">
+                Documentation
               </Link>
               <a
                 className="btn-outlined"
@@ -622,11 +625,11 @@ export default function Home(): JSX.Element {
             Follow our 5-minute Quick Start guide or explore the progressive learning path.
           </p>
           <div className="cta-buttons">
-            <Link className="btn-filled" to="/getting-started/quick-start">
+            <Link className="btn-filled" to="/learn/getting-started/quick-start">
               Start Learning Now →
             </Link>
-            <Link className="btn-outlined" to="/intro">
-              Read Language Specs
+            <Link className="btn-outlined" to="/docs">
+              Read the Reference Docs
             </Link>
           </div>
         </section>

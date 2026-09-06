@@ -254,5 +254,5 @@ for addr in ["user@example.com", "bad@", "@x.com", "no-at-sign"] {
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins)
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins)

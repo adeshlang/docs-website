@@ -2,7 +2,6 @@
 id: cli
 title: Command-Line Interface (CLI) Reference
 sidebar_label: CLI Reference
-slug: /tools/cli
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
@@ -130,7 +129,7 @@ adesh editor .
 adesh editor src/main.adesh
 ```
 
-For full details and keybindings, see the [TUI Code Editor Documentation](/tools/tui-editor).
+For full details and keybindings, see the [TUI Code Editor Documentation](/docs/tools/tui-editor).
 
 ---
 

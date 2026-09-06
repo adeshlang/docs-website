@@ -1,8 +1,7 @@
 ---
-id: arrays-nested-and-tuples
+id: nested-and-tuples
 title: Nested Arrays & Tuples
 sidebar_label: Nested & Tuples
-slug: /arrays/nested-and-tuples
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

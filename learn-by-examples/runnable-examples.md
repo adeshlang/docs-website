@@ -1,8 +1,7 @@
 ---
-id: examples
+id: runnable-examples
 title: Runnable Code Examples Catalog
-sidebar_label: Code Examples
-slug: /examples
+sidebar_label: Runnable Examples
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
@@ -84,6 +83,7 @@ adesh run --test examples/01_Basics/test.adesh
 
 ## Related Documentation
 
-- [Getting Started Guide](/getting-started/quick-start)
-- [Learn Programming Roadmaps](/learn/learn-programming)
-- [Standard Library Overview](/builtin/overview)
+- [Learn by Examples Catalog](/learn-by-examples) — complete programs with terminal output and breakdowns
+- [Getting Started Guide](/learn/getting-started/quick-start) — install and run your first program
+- [Learn Programming Roadmaps](/learn) — the beginner path
+- [Standard Library Overview](/docs/builtin/overview) — builtin libraries reference

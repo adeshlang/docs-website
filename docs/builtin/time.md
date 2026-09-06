@@ -410,4 +410,4 @@ print("Report took:", elapsed.toString());
 - [Builtin Libraries Overview](overview)
 - [Process Library](process) — timeouts take `Duration` values
 - [Math Library](math) — `Math.round`/`Math.floor` used by time conversions
-- [Standard Library Overview](../stdlib/overview)
+- [Standard Library Overview](overview)

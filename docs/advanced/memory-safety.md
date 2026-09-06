@@ -375,8 +375,8 @@ struct Node {
 
 ## Next Steps
 
-- **[Ownership & Borrowing](/advanced/ownership-borrowing)** - Deep dive into ownership rules
-- **[Concurrency](/stdlib/concurrency)** - Thread-safe memory sharing
-- **[Async/Await](/advanced/async-await)** - Asynchronous memory patterns
+- **[Ownership & Borrowing](/docs/advanced/ownership-borrowing)** - Deep dive into ownership rules
+- **[Concurrency](/docs/builtin/concurrency)** - Thread-safe memory sharing
+- **[Async/Await](/docs/advanced/async-await)** - Asynchronous memory patterns
 
 Master AdeshLang's memory system for writing safe, high-performance code! 🚀

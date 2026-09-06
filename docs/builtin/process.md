@@ -403,5 +403,5 @@ print("Quick run OK:", quick.success());
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins) — quick reference including `process*` primitives
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins) — quick reference including `process*` primitives

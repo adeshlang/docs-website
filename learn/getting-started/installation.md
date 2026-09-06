@@ -307,7 +307,7 @@ export PATH="/path/to/llvm/bin:$PATH"
 
 ### Getting Help
 
-- Check [FAQ](/faq) section
+- Check [FAQ](/docs/faq) section
 - Browse existing [GitHub Issues](https://github.com/adeshlang/adeshlang/issues)
 - Create a new issue with detailed error messages
 
@@ -315,9 +315,9 @@ export PATH="/path/to/llvm/bin:$PATH"
 
 After successful installation:
 
-1. **[Quick Start](/getting-started/quick-start)** - Your first AdeshLang program
-2. **[First Program](/getting-started/first-program)** - Build a complete application
-3. **[Language Basics](/language-guide/basics)** - Learn the syntax
+1. **[Quick Start](/learn/getting-started/quick-start)** - Your first AdeshLang program
+2. **[First Program](/learn/getting-started/first-program)** - Build a complete application
+3. **[Language Basics](/docs/language-guide/basics)** - Learn the syntax
 
 Happy coding! 🚀
 ## Recommended installation

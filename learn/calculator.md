@@ -500,12 +500,12 @@ fn get_numbers() {
 
 | Path | Description |
 |------|-------------|
-| **Language Guide** | [Basics](/language-guide/basics) — Deep dive into syntax |
-| **Memory Safety** | [Ownership](/advanced/memory-safety) — AdeshLang's superpower |
-| **OOP** | [Classes](/advanced/oop) — Object-oriented programming |
-| **Async** | [Async/Await](/advanced/async-await) — Concurrent programming |
-| **Backends** | [Native JIT](/backends/native-jit) — 100x+ speedups |
-| **Examples** | [400+ examples](/examples) — Learn by reading code |
+| **Language Guide** | [Basics](/docs/language-guide/basics) — Deep dive into syntax |
+| **Memory Safety** | [Ownership](/docs/advanced/memory-safety) — AdeshLang's superpower |
+| **OOP** | [Classes](/docs/advanced/oop) — Object-oriented programming |
+| **Async** | [Async/Await](/docs/advanced/async-await) — Concurrent programming |
+| **Backends** | [Native JIT](/docs/backends/native-jit) — 100x+ speedups |
+| **Examples** | [400+ examples](/learn-by-examples/runnable-examples) — Learn by reading code |
 
 ## Final Challenge
 

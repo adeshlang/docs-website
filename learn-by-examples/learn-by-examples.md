@@ -1,8 +1,8 @@
 ---
 id: learn-by-examples
-title: Learn by Examples Catalog
+title: Learn by Examples
 sidebar_label: Learn by Examples
-slug: /learn/learn-by-examples
+slug: /
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
@@ -11,9 +11,36 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Comprehensive, runnable code catalog synthesized from the official examples repository" />
 
-Welcome to the **Learn by Examples Catalog**. This guide compiles all language constructs, paradigms, runtime features, standard libraries, and memory safety rules of AdeshLang. 
+Welcome to the **Learn by Examples Catalog** — the fastest way to see how AdeshLang actually looks and behaves. Instead of explaining rules in the abstract, every topic below is shown as a **complete, runnable program** with its **verified terminal output**, followed by a short breakdown of the constructs it uses.
 
-The catalog is organized in **alphabetical order** by topic category. Each section provides a unified master program (`.adesh`), the verified terminal execution output from the compiler runtime, and a deep-dive explanation of all functions, keywords, types, and semantics demonstrated.
+## How to read this catalog
+
+1. **Read the program.** Every section is one self-contained `.adesh` file.
+2. **Read the output.** The terminal output below it is what the interpreter actually prints.
+3. **Read the breakdown.** Each bullet explains one keyword, type, or function the program uses.
+4. **Run it yourself.** Copy the program into a file and execute `adesh run file.adesh`. Change one thing, run again, and watch what changes.
+
+> If you want more programs than this catalog holds, the [Runnable Examples Catalog](/learn-by-examples/runnable-examples) lists 100+ verified examples from the official `examples/` repository, organized by library and algorithm.
+
+## Table of contents
+
+| Section | Topic | Key ideas you will see |
+|---------|-------|------------------------|
+| [1](#1-arrays-tuples--collections) | Arrays, Tuples & Collections | `map`, `filter`, `reduce`, `HashMap` |
+| [2](#2-async--concurrency) | Async & Concurrency | `async fn`, `await`, `Parallel.map` |
+| [3](#3-basics-variables--type-system) | Basics, Variables & Type System | annotations, `as` casting, `??` |
+| [4](#4-borrowing-ownership--memory-safety) | Borrowing & Memory Safety | `&` references, ownership moves |
+| [5](#5-conditionals--control-flow) | Conditionals & Control Flow | `if`/`elif`/`else`, loops, `forEach` |
+| [6](#6-decorators--compile-time-directives) | Decorators | `@log` and friends |
+| [7](#7-defer-statement--scope-teardown) | Defer & Scope Teardown | `defer`, LIFO cleanup |
+| [8](#8-enums--pattern-matching) | Enums & Pattern Matching | `enum`, `match` |
+| [9](#9-error-handling--exception-guarding) | Error Handling | `try` / `catch` / `throw` |
+| [10](#10-functions-closures--recursion) | Functions & Closures | recursion, first-class functions |
+| [11](#11-generics--type-aliases) | Generics & Type Aliases | `<T>`, `type` |
+| [12](#12-object-oriented-programming-oop--extensions) | OOP & Extensions | `class`, `extends`, `extend on` |
+| [13](#13-standard-library-ecosystem-crypto-fs-http-json-math-regex-time) | Standard Library | `Math`, `Crypto`, `JSON` |
+
+New to the language? Start with section [3](#3-basics-variables--type-system) (Basics), then move through [5](#5-conditionals--control-flow), [10](#10-functions-closures--recursion), and [1](#1-arrays-tuples--collections) in order — that is the same progression as the [Learn roadmap](/learn).
 
 ---
 

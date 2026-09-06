@@ -275,9 +275,9 @@ The type system is not an isolated topic. It intersects with:
 
 To continue, read the deeper language chapters, especially:
 
-- [Functions](/language-guide/functions)
-- [Generics](/language-guide/generics)
-- [Structs and Classes](/language-guide/structs-classes)
-- [Error Handling](/language-guide/error-handling)
-- [Semantics and Rules](/language-guide/semantics-rules)
+- [Functions](/docs/language-guide/functions)
+- [Generics](/docs/language-guide/generics)
+- [Structs and Classes](/docs/language-guide/structs-classes)
+- [Error Handling](/docs/language-guide/error-handling)
+- [Semantics and Rules](/docs/language-guide/semantics-rules)
 

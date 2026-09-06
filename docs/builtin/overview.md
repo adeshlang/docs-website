@@ -87,5 +87,5 @@ Every builtin library follows the same mental model: **import the namespace, the
 
 ## Related
 
-- [Standard Library Overview](../stdlib/overview) — the full list of global built-in functions.
-- [Built-in Functions](../stdlib/builtins) — quick reference for global functions and namespaces.
+- [Standard Library Overview](overview) — the full list of global built-in functions.
+- [Built-in Functions](builtins) — quick reference for global functions and namespaces.

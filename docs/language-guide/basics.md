@@ -483,10 +483,10 @@ This pattern keeps code readable and predictable as it grows.
 
 Continue with the deeper language reference:
 
-- [Type System](/language-guide/type-system)
-- [Functions](/language-guide/functions)
-- [Control Flow](/language-guide/control-flow)
-- [Semantics and Rules](/language-guide/semantics-rules)
-- [Modules and Imports](/language-guide/modules-imports)
+- [Type System](/docs/language-guide/type-system)
+- [Functions](/docs/language-guide/functions)
+- [Control Flow](/docs/language-guide/control-flow)
+- [Semantics and Rules](/docs/language-guide/semantics-rules)
+- [Modules and Imports](/docs/language-guide/modules-imports)
 
 Once these basics feel natural, the rest of the language becomes significantly easier to understand and extend.

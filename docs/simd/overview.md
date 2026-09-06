@@ -1,8 +1,7 @@
 ---
-id: simd-overview
+id: overview
 title: SIMD & Vector Compute Overview
 sidebar_label: SIMD Overview
-slug: /simd/overview
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

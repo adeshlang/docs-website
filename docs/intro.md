@@ -3,7 +3,7 @@ id: intro
 title: Welcome to AdeshLang
 description: A complete guide to AdeshLang, a Rust-inspired, multi-backend programming language built for clarity, safety, and performance.
 sidebar_label: Introduction
-slug: /intro
+slug: /
 ---
 
 # Welcome to AdeshLang
@@ -175,46 +175,20 @@ This approach is familiar to developers from many languages, but AdeshLang adds 
 
 ---
 
-## Documentation map
+## Where to go next
 
-Use this site as a structured guide:
+Pick the path that matches what you want to do right now:
 
-- [Quick Start](/getting-started/quick-start) — install and run your first program
-- [Learn Programming](/learn/learn-programming) — beginner-first lessons
-- [Language Guide](/language-guide/basics) — deeper language reference
-- [Advanced Features](/advanced/memory-safety) — safety, ownership, async, OOP, and more
-- [Backends](/backends/overview) — interpreter, VM, JIT, AOT, GPU, WASM
-- [Standard Library](/stdlib/overview) — builtins and runtime modules
-- [Examples](/examples) — runnable demonstrations and use cases
-
----
-
-## Why developers choose it
-
-AdeshLang is for people who want a language that is:
-
-- approachable enough for teaching and prototyping
-- precise enough for serious software engineering
-- fast enough for compute-heavy workloads
-- flexible enough to run on multiple targets
-
-It is not built around one narrow niche. Instead, it aims to be a general-purpose language that can evolve from first program to production system.
-
----
-
-## Getting started
-
-The next step is straightforward: install the toolchain, write a basic script, and run it. Once you have that working, the rest of the language opens naturally.
-
-Go to [Quick Start](/getting-started/quick-start) to begin.
-
----
-
-## Status and direction
-
-The project is designed as a language ecosystem rather than a single runtime. That means its documentation and implementation are intended to grow together: syntax, tooling, execution backends, standard library, and language semantics all support one another.
-
-AdeshLang is best understood as a long-term platform for learning, experimentation, and performance-oriented development.
+| If you want to... | Go to... |
+|-------------------|----------|
+| **Learn programming from zero** | [Learn](/learn) — guided roadmap |
+| **Run your first program in 5 minutes** | [Quick Start](/learn/getting-started/quick-start) |
+| **See complete, runnable programs** | [Learn by Examples](/learn-by-examples) |
+| **Understand the language deeply** | [Language Guide](/docs/language-guide/basics) |
+| **Explore execution backends** | [Backends Overview](/docs/backends/overview) |
+| **Look up the standard library** | [Stdlib Overview](/docs/builtin/overview) |
+| **Contribute to AdeshLang** | [Contributing Guide](/docs/contributing) |
+| **Get a question answered** | [FAQ](/docs/faq) |
 
 ---
 
@@ -222,20 +196,10 @@ AdeshLang is best understood as a long-term platform for learning, experimentati
 
 - GitHub repository: [github.com/adeshlang/adeshlang](https://github.com/adeshlang/adeshlang)
 - Issue tracker: [GitHub Issues](https://github.com/adeshlang/adeshlang/issues)
-- Standard library docs: [Builtins and modules](/stdlib/overview)
-- Performance and optimizer guides: [Performance](/performance/optimization)
+- Standard library docs: [Builtins and modules](/docs/builtin/overview)
+- Performance and optimizer guides: [Performance](/docs/performance/optimization)
 
 Welcome to the language. The best way to understand it is to build with it.
-
-
-| If you want to... | Go to... |
-|-------------------|----------|
-| **Learn programming from zero** | [Learn Programming](/learn/learn-programming) |
-| **Get running in 5 minutes** | [Quick Start](/getting-started/quick-start) |
-| **Understand the language deeply** | [Language Basics](/language-guide/basics) |
-| **Explore execution backends** | [Backends Overview](/backends/overview) |
-| **See real code examples** | [Examples Catalog](/examples) |
-| **Contribute to AdeshLang** | [Contributing Guide](/contributing) |
 
 ---
 

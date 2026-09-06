@@ -333,6 +333,6 @@ Env.remove("MY_MODE");
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins)
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins)
 - [FS Library](fs) — filesystem operations and `Path` integration

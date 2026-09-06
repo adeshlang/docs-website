@@ -370,5 +370,5 @@ print("bytes written:", len(sink.toString()));   // 14
 
 - [Builtin Libraries Overview](overview)
 - [Process Library](process) — `ProcessStream` gives interactive stdin/stdout on child processes
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins) — quick reference including `io_*` primitives
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins) — quick reference including `io_*` primitives

@@ -522,4 +522,4 @@ print("formatted:", Math.formatDecimal(Math.factorial(20), 0));
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
+- [Standard Library Overview](overview)

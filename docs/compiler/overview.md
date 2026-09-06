@@ -1,8 +1,7 @@
 ---
-id: compiler-overview
+id: overview
 title: Compiler Architecture Overview
 sidebar_label: Architecture Overview
-slug: /compiler/overview
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

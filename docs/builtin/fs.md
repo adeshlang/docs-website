@@ -395,5 +395,5 @@ fs.delete("backups");
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins) — quick reference including `fs.*`
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins) — quick reference including `fs.*`

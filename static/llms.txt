@@ -16,13 +16,13 @@
 ## Documentation
 
 ### Getting Started
-- [Introduction](https://adeshlang.github.io/intro): What is AdeshLang, philosophy, architecture, multi-backend overview
-- [Quick Start](https://adeshlang.github.io/getting-started/quick-start): Install and run your first program in 5 minutes
-- [Installation](https://adeshlang.github.io/getting-started/installation): Detailed install for Windows/macOS/Linux
-- [First Program](https://adeshlang.github.io/getting-started/first-program): Hello world walkthrough
+- [Introduction](https://adeshlang.github.io/docs): What is AdeshLang, philosophy, architecture, multi-backend overview
+- [Quick Start](https://adeshlang.github.io/learn/getting-started/quick-start): Install and run your first program in 5 minutes
+- [Installation](https://adeshlang.github.io/learn/getting-started/installation): Detailed install for Windows/macOS/Linux
+- [First Program](https://adeshlang.github.io/learn/getting-started/first-program): Hello world walkthrough
 
 ### Learn Programming (Beginner Path)
-- [Learn Programming Overview](https://adeshlang.github.io/learn/learn-programming)
+- [Learn Programming Overview](https://adeshlang.github.io/learn)
 - [Hello World](https://adeshlang.github.io/learn/hello-world)
 - [Variables](https://adeshlang.github.io/learn/variables)
 - [Conditionals](https://adeshlang.github.io/learn/conditionals)
@@ -30,67 +30,67 @@
 - [Functions](https://adeshlang.github.io/learn/functions)
 - [Collections](https://adeshlang.github.io/learn/collections)
 - [Calculator Project](https://adeshlang.github.io/learn/calculator)
-- [Learn by Examples](https://adeshlang.github.io/learn/learn-by-examples)
+- [Learn by Examples](https://adeshlang.github.io/learn-by-examples)
 
 ### Language Guide
-- [Basics](https://adeshlang.github.io/language-guide/basics)
-- [Variables](https://adeshlang.github.io/language-guide/variables)
-- [Type System](https://adeshlang.github.io/language-guide/type-system)
-- [Control Flow](https://adeshlang.github.io/language-guide/control-flow)
-- [Functions](https://adeshlang.github.io/language-guide/functions)
-- [Structs & Classes](https://adeshlang.github.io/language-guide/structs-classes)
-- [Enums & Pattern Matching](https://adeshlang.github.io/language-guide/enums-pattern-matching)
-- [Generics](https://adeshlang.github.io/language-guide/generics)
-- [Error Handling](https://adeshlang.github.io/language-guide/error-handling)
-- [Async & Concurrency](https://adeshlang.github.io/language-guide/async-concurrency)
-- [Keywords Reference](https://adeshlang.github.io/language-guide/keywords)
-- [Arrays & Tuples Overview](https://adeshlang.github.io/arrays/overview)
+- [Basics](https://adeshlang.github.io/docs/language-guide/basics)
+- [Variables](https://adeshlang.github.io/docs/language-guide/variables)
+- [Type System](https://adeshlang.github.io/docs/language-guide/type-system)
+- [Control Flow](https://adeshlang.github.io/docs/language-guide/control-flow)
+- [Functions](https://adeshlang.github.io/docs/language-guide/functions)
+- [Structs & Classes](https://adeshlang.github.io/docs/language-guide/structs-classes)
+- [Enums & Pattern Matching](https://adeshlang.github.io/docs/language-guide/enums-pattern-matching)
+- [Generics](https://adeshlang.github.io/docs/language-guide/generics)
+- [Error Handling](https://adeshlang.github.io/docs/language-guide/error-handling)
+- [Async & Concurrency](https://adeshlang.github.io/docs/language-guide/async-concurrency)
+- [Keywords Reference](https://adeshlang.github.io/docs/language-guide/keywords)
+- [Arrays & Tuples Overview](https://adeshlang.github.io/docs/arrays/overview)
 
 ### Memory & Safety
-- [Memory Safety](https://adeshlang.github.io/advanced/memory-safety)
-- [Ownership & Borrowing](https://adeshlang.github.io/advanced/ownership-borrowing)
-- [ARC](https://adeshlang.github.io/advanced/arc)
-- [OOP](https://adeshlang.github.io/advanced/oop)
-- [Async-Await](https://adeshlang.github.io/advanced/async-await)
+- [Memory Safety](https://adeshlang.github.io/docs/advanced/memory-safety)
+- [Ownership & Borrowing](https://adeshlang.github.io/docs/advanced/ownership-borrowing)
+- [ARC](https://adeshlang.github.io/docs/advanced/arc)
+- [OOP](https://adeshlang.github.io/docs/advanced/oop)
+- [Async-Await](https://adeshlang.github.io/docs/advanced/async-await)
 
 ### Backends
-- [Backends Overview](https://adeshlang.github.io/backends/overview)
-- [Interpreter](https://adeshlang.github.io/backends/interpreter)
-- [Bytecode VM](https://adeshlang.github.io/backends/bytecode-vm)
-- [JIT](https://adeshlang.github.io/backends/jit)
-- [Native JIT (Cranelift)](https://adeshlang.github.io/backends/native-jit)
-- [AOT](https://adeshlang.github.io/backends/aot)
-- [WebAssembly](https://adeshlang.github.io/backends/webassembly)
-- [GPU / MLIR](https://adeshlang.github.io/backends/gpu-mlir)
+- [Backends Overview](https://adeshlang.github.io/docs/backends/overview)
+- [Interpreter](https://adeshlang.github.io/docs/backends/interpreter)
+- [Bytecode VM](https://adeshlang.github.io/docs/backends/bytecode-vm)
+- [JIT](https://adeshlang.github.io/docs/backends/jit)
+- [Native JIT (Cranelift)](https://adeshlang.github.io/docs/backends/native-jit)
+- [AOT](https://adeshlang.github.io/docs/backends/aot)
+- [WebAssembly](https://adeshlang.github.io/docs/backends/webassembly)
+- [GPU / MLIR](https://adeshlang.github.io/docs/backends/gpu-mlir)
 
 ### Standard Library
-- [Stdlib Overview](https://adeshlang.github.io/builtin/overview)
-- [Collections](https://adeshlang.github.io/builtin/collections)
-- [Math](https://adeshlang.github.io/builtin/math)
-- [JSON](https://adeshlang.github.io/builtin/json)
-- [HTTP](https://adeshlang.github.io/builtin/http)
-- [File System](https://adeshlang.github.io/builtin/fs)
-- [Networking (TCP/UDP)](https://adeshlang.github.io/builtin/net)
-- [WebSocket](https://adeshlang.github.io/builtin/websocket)
-- [Crypto](https://adeshlang.github.io/builtin/crypto)
-- [Regex](https://adeshlang.github.io/builtin/regex)
+- [Stdlib Overview](https://adeshlang.github.io/docs/builtin/overview)
+- [Collections](https://adeshlang.github.io/docs/builtin/collections)
+- [Math](https://adeshlang.github.io/docs/builtin/math)
+- [JSON](https://adeshlang.github.io/docs/builtin/json)
+- [HTTP](https://adeshlang.github.io/docs/builtin/http)
+- [File System](https://adeshlang.github.io/docs/builtin/fs)
+- [Networking (TCP/UDP)](https://adeshlang.github.io/docs/builtin/net)
+- [WebSocket](https://adeshlang.github.io/docs/builtin/websocket)
+- [Crypto](https://adeshlang.github.io/docs/builtin/crypto)
+- [Regex](https://adeshlang.github.io/docs/builtin/regex)
 
 ### Tools & Ecosystem
-- [CLI](https://adeshlang.github.io/tools/cli)
-- [ALS — Adesh Language Server](https://adeshlang.github.io/tools/als)
-- [Formatting](https://adeshlang.github.io/tools/formatting)
-- [ADL Package Manager](https://adeshlang.github.io/tools/adl/adl-overview)
+- [CLI](https://adeshlang.github.io/docs/tools/cli)
+- [ALS — Adesh Language Server](https://adeshlang.github.io/docs/tools/als)
+- [Formatting](https://adeshlang.github.io/docs/tools/formatting)
+- [ADL Package Manager](https://adeshlang.github.io/docs/tools/adl/adl-overview)
 
 ### Performance & Advanced
-- [Optimization](https://adeshlang.github.io/performance/optimization)
-- [Benchmarks](https://adeshlang.github.io/performance/benchmarks)
-- [SIMD Overview](https://adeshlang.github.io/simd/simd-overview)
+- [Optimization](https://adeshlang.github.io/docs/performance/optimization)
+- [Benchmarks](https://adeshlang.github.io/docs/performance/benchmarks)
+- [SIMD Overview](https://adeshlang.github.io/docs/simd/simd-overview)
 
 ### Community
 - [About](https://adeshlang.github.io/about): Creator Ajay Tainwala, project story
-- [FAQ](https://adeshlang.github.io/faq)
-- [Contributing](https://adeshlang.github.io/contributing)
-- [Examples Catalog](https://adeshlang.github.io/examples)
+- [FAQ](https://adeshlang.github.io/docs/faq)
+- [Contributing](https://adeshlang.github.io/docs/contributing)
+- [Examples Catalog](https://adeshlang.github.io/learn-by-examples/runnable-examples)
 - [GitHub](https://github.com/adeshlang/adeshlang)
 
 ## Optional — Full Context

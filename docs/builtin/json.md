@@ -235,5 +235,5 @@ print("guarded:", JSON.tryParse(bad) == null ? "returned null" : "unexpected");
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
-- [JSON Module](../stdlib/json) — short module overview
+- [Standard Library Overview](overview)
+- [JSON Module](json) — short module overview

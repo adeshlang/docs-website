@@ -440,6 +440,6 @@ print("round-trip intact:", Encoding.hexEncode(received) == Encoding.hexEncode(p
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Standard Library Overview](../stdlib/overview)
+- [Standard Library Overview](overview)
 - [Crypto Library](crypto) — hashing/encryption primitives that produce and consume byte arrays
 - [IO Library](io) — streaming and binary I/O, including endian-aware serialization

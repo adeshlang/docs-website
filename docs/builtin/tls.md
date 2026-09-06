@@ -494,4 +494,4 @@ Common examples for the TLS library can be found in the repository examples unde
 - [Net Library](net) — raw network primitives and socket creation
 - [Crypto Library](crypto) — hashing, signatures, and certificate-related cryptography
 - [DNS Library](dns) — name resolution and domain validation
-- [Standard Library Overview](../stdlib/overview) — the full set of language-builtins
+- [Standard Library Overview](overview) — the full set of language-builtins

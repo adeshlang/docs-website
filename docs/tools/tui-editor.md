@@ -2,7 +2,6 @@
 id: tui-editor
 title: Bundled TUI Code Editor
 sidebar_label: TUI Code Editor
-slug: /tools/tui-editor
 description: Fast, lightweight, cross-platform terminal code editor bundled with AdeshLang featuring LSP diagnostics, multiple buffers, file explorer, and interactive backend runner.
 ---
 

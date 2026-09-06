@@ -1837,10 +1837,10 @@ body[class*='docs-doc'] .landing-footer,
 
 .adesh-search-modal-dialog {
   position: relative;
-  width: 90vw;
-  max-width: 90vw;
-  height: 90vh;
-  max-height: 90vh;
+  width: 90%;
+  max-width: 90%;
+  height: 85%;
+  max-height: 85%;
   background: var(--md-surface-container-low);
   border: 1px solid color-mix(in srgb, var(--md-primary) 35%, var(--md-outline-variant));
   border-radius: var(--shape-xl);
@@ -2256,27 +2256,40 @@ body[class*='docs-doc'] .landing-footer,
   }
 
   .adesh-search-modal-dialog {
-    width: 92vw;
-    max-width: 92vw;
-    height: 92vh;
-    max-height: 92vh;
+    width: 90%;
+    max-width: 90%;
+    height: 85%;
+    max-height: 85%;
   }
 
   .adesh-search-quicklinks-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
+
+  /* Never clip quicklink card text on tablets/small laptops */
+  .adesh-search-card-title {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
+
+  .adesh-search-card-desc {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (max-width: 640px) {
   .adesh-search-modal-backdrop {
-    padding: 3vh 2vw;
+    padding: 3vh 3vw;
   }
 
   .adesh-search-modal-dialog {
-    width: 96vw;
-    max-width: 96vw;
-    height: 94vh;
-    max-height: 94vh;
+    width: 90%;
+    max-width: 90%;
+    height: 85%;
+    max-height: 85%;
     border-radius: var(--shape-lg);
   }
 
@@ -2294,6 +2307,18 @@ body[class*='docs-doc'] .landing-footer,
 
   .adesh-search-quicklinks-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Let hit rows wrap instead of clipping on phones */
+  .adesh-search-hit-snippet {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
+
+  .adesh-search-hit-breadcrumb {
+    white-space: normal;
+    overflow: visible;
   }
 
   .adesh-search-modal-footer {

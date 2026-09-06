@@ -1,8 +1,7 @@
 ---
-id: arrays-overview
+id: overview
 title: Arrays Overview
 sidebar_label: Overview
-slug: /arrays/overview
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
@@ -129,6 +128,6 @@ Explore complete runnable array scripts in the codebase:
 
 ## Next Steps
 
-- **[Arrays by Type](/arrays/types)** — Detailed type inference algorithms, primitive specialization, and memory overhead tables.
-- **[Array Builtin Operations](/arrays/operations)** — Comprehensive API reference for `push`, `pop`, `map`, `filter`, `reduce`, `slice`, and SIMD vector operations.
-- **[Nested Arrays & Tuples](/arrays/nested-and-tuples)** — Multidimensional matrices, heterogeneous tuples, and destructuring syntax.
+- **[Arrays by Type](/docs/arrays/types)** — Detailed type inference algorithms, primitive specialization, and memory overhead tables.
+- **[Array Builtin Operations](/docs/arrays/operations)** — Comprehensive API reference for `push`, `pop`, `map`, `filter`, `reduce`, `slice`, and SIMD vector operations.
+- **[Nested Arrays & Tuples](/docs/arrays/nested-and-tuples)** — Multidimensional matrices, heterogeneous tuples, and destructuring syntax.

@@ -150,7 +150,7 @@ export default function About(): JSX.Element {
           <p style={{ opacity: 0.8, marginBottom: '1.5rem' }}>
             Reach out via email at <a href="mailto:ajaytainwala@outlook.com" style={{ color: '#34d399', fontWeight: 600 }}>ajaytainwala@outlook.com</a> or visit the <a href="https://github.com/adeshlang/adeshlang" style={{ color: '#38bdf8', fontWeight: 600 }}>GitHub repository</a>.
           </p>
-          <Link className="btn-primary-glow" to="/getting-started/quick-start">
+          <Link className="btn-primary-glow" to="/learn/getting-started/quick-start">
             Explore Quick Start Guide →
           </Link>
         </section>

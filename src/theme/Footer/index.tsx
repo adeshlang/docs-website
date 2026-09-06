@@ -5,11 +5,11 @@ import { useLocation } from '@docusaurus/router';
 
 const footerLinks = [
   {
-    title: 'Docs',
+    title: 'Learn',
     items: [
-      { label: 'Quick Start', to: '/getting-started/quick-start' },
-      { label: 'Language Guide', to: '/language-guide/basics' },
-      { label: 'Backends', to: '/backends/overview' },
+      { label: 'Learning Roadmap', to: '/learn' },
+      { label: 'Quick Start', to: '/learn/getting-started/quick-start' },
+      { label: 'Learn by Examples', to: '/learn-by-examples' },
     ],
   },
   {
@@ -22,12 +22,10 @@ const footerLinks = [
   {
     title: 'More',
     items: [
+      { label: 'Documentation', to: '/docs' },
+      { label: 'Language Guide', to: '/docs/language-guide/basics' },
       { label: 'About Project', to: '/about' },
       { label: 'Blog', to: '/blog' },
-      {
-        label: 'Examples',
-        href: 'https://github.com/adeshlang/adeshlang/tree/main/examples',
-      },
     ],
   },
 ];

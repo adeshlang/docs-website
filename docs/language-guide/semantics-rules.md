@@ -114,4 +114,4 @@ Some APIs are conceptually parallel but may run sequentially today for correctne
 - [Language Basics](basics)
 - [Type System](type-system)
 - [Control Flow](control-flow)
-- [Built-in Functions](../stdlib/builtins)
+- [Built-in Functions](/docs/builtin/builtins)

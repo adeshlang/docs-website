@@ -158,6 +158,6 @@ adesh run --test --backend-check main.adesh
 
 ## What's Next?
 
-- Explore [Learn Programming](/learn/learn-programming) for a step-by-step introduction to programming concepts.
-- Read [Execution Backends](/backends/overview) to understand the Interpreter, JIT, and AOT compilation targets.
-- Browse the [Standard Library Reference](/builtin/overview) to see built-in networking, file system, and cryptography modules.
+- Explore [Learn Programming](/learn) for a step-by-step introduction to programming concepts.
+- Read [Execution Backends](/docs/backends/overview) to understand the Interpreter, JIT, and AOT compilation targets.
+- Browse the [Standard Library Reference](/docs/builtin/overview) to see built-in networking, file system, and cryptography modules.

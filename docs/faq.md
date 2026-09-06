@@ -57,7 +57,7 @@ cargo build --release
 # Binary location: target/release/adesh
 ```
 
-See [Installation Guide](getting-started/installation) for detailed platform-specific instructions.
+See [Installation Guide](/learn/getting-started/installation) for detailed platform-specific instructions.
 
 ### What are the system requirements?
 
@@ -91,7 +91,7 @@ pacman -S mingw-w64-x86_64-mlir mingw-w64-x86_64-gcc
 # Then build as above
 ```
 
-See [Windows Installation](getting-started/installation#windows) for complete guide.
+See [Windows Installation](/learn/getting-started/installation#windows) for complete guide.
 
 ## Language Features
 

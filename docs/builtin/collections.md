@@ -459,6 +459,6 @@ print("Unique users: " + str(seen.len()));
 ## Related
 
 - [Builtin Libraries Overview](overview)
-- [Built-in Functions](../stdlib/builtins) — the global `map`, `filter`, `reduce` reference
-- [Collections (Learn)](../learn/collections) — arrays, objects, tuples, and functional methods
-- [Standard Library Overview](../stdlib/overview)
+- [Built-in Functions](builtins) — the global `map`, `filter`, `reduce` reference
+- [Collections (Learn)](/learn/collections) — arrays, objects, tuples, and functional methods
+- [Standard Library Overview](overview)

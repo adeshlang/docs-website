@@ -45,30 +45,47 @@ bun run serve
 ```
 docs-website/
 ├── blog/                    # Blog posts (optional)
-├── docs/                   # Documentation files
-│   ├── intro.md           # Introduction page
-│   ├── getting-started/   # Getting started guides
-│   ├── language-guide/    # Language reference
-│   ├── advanced/          # Advanced topics
-│   ├── backends/          # Execution backends
-│   ├── stdlib/            # Standard library
-│   ├── tools/             # Tools and ecosystem
-│   ├── performance/       # Performance optimization
-│   ├── examples.md        # Examples catalog
-│   ├── faq.md             # FAQ
-│   └── contributing.md    # Contributing guide
+├── docs/                    # Reference documentation (route: /docs)
+│   ├── intro.md             # Welcome / overview page
+│   ├── language-guide/      # Language reference
+│   ├── advanced/            # Advanced topics
+│   ├── backends/            # Execution backends
+│   ├── builtin/             # Standard library
+│   ├── tools/               # Tools and ecosystem
+│   ├── performance/         # Performance optimization
+│   ├── faq.md               # FAQ
+│   └── contributing.md      # Contributing guide
+├── learn/                   # Guided tutorial (route: /learn)
+│   ├── learn-programming.md # Learning roadmap hub
+│   ├── getting-started/     # Quick start, installation, first program
+│   └── hello-world, variables, conditionals, loops, functions,
+│       collections, calculator
+├── learn-by-examples/       # Example-driven learning (route: /learn-by-examples)
+│   ├── learn-by-examples.md # Master code catalog
+│   └── runnable-examples.md # Runnable examples from the repo
 ├── src/
-│   ├── css/               # Custom CSS
+│   ├── css/                 # Custom CSS
 │   │   └── custom.css
-│   └── pages/             # Custom pages
+│   └── pages/               # Custom pages
 ├── static/
-│   └── img/               # Static images
+│   └── img/                 # Static images
 │       ├── logo.svg
 │       └── favicon.ico
-├── sidebars.ts            # Sidebar configuration
-├── docusaurus.config.ts   # Site configuration
+├── sidebars.ts              # Reference docs sidebar
+├── sidebars-learn.ts        # /learn sidebar
+├── sidebars-examples.ts     # /learn-by-examples sidebar
+├── redirects.ts             # Old → new URL redirects
+├── docusaurus.config.ts     # Site configuration
 └── package.json
 ```
+
+The site is split into **three documentation spaces** so each has a clear focus:
+
+| Route | Content | Sidebar |
+|---|---|---|
+| `/learn` | Step-by-step tutorial for beginners | `sidebars-learn.ts` |
+| `/learn-by-examples` | Complete programs with outputs & breakdowns | `sidebars-examples.ts` |
+| `/docs` | Full reference documentation | `sidebars.ts` |
 
 ## Features
 
@@ -87,7 +104,7 @@ docs-website/
 
 ### Adding New Documentation
 
-1. Create a new `.md` or `.mdx` file in the appropriate `docs/` subdirectory
+1. Create a new `.md` or `.mdx` file in the appropriate content folder (`docs/`, `learn/`, or `learn-by-examples/`)
 2. Add frontmatter at the top:
    ```markdown
    ---
@@ -96,25 +113,29 @@ docs-website/
    sidebar_label: My Doc
    ---
    ```
-3. Update `sidebars.ts` to include the new document
+3. Update the matching sidebar file (`sidebars.ts`, `sidebars-learn.ts`, or `sidebars-examples.ts`)
 
 ### Updating Sidebar
 
-Edit `sidebars.ts` to modify the navigation structure:
+Edit `sidebars.ts` to modify the reference navigation structure:
 
 ```typescript
 const sidebars: SidebarsConfig = {
-  tutorialSidebar: [
+  docsSidebar: [
     'intro',
     {
       type: 'category',
-      label: 'Getting Started',
-      items: ['getting-started/quick-start', 'getting-started/installation'],
+      label: 'Language Guide',
+      items: ['language-guide/basics', 'language-guide/variables'],
     },
     // ... more categories
   ],
 };
 ```
+
+:::note
+If you rename or move a document, update the old URL in `redirects.ts` so bookmarked and indexed URLs keep working.
+:::
 
 ### Custom Styling
 
@@ -169,11 +190,12 @@ print(add(5, 3));  // Output: 8
 
 ### Linking
 
-Use relative links within the documentation:
+Prefer root-absolute links between the three spaces, and relative links within `docs/`:
 
 ```markdown
-[Quick Start](getting-started/quick-start)
-[Memory Safety](advanced/memory-safety)
+[Quick Start](/learn/getting-started/quick-start)
+[Memory Safety](/docs/advanced/memory-safety)
+[Learn by Examples](/learn-by-examples)
 ```
 
 ## Troubleshooting

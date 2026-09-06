@@ -1,8 +1,7 @@
 ---
-id: arrays-operations
+id: operations
 title: Array Builtin Operations & API Reference
 sidebar_label: Builtin Operations & API Reference
-slug: /arrays/operations
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

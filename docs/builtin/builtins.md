@@ -19,7 +19,7 @@ let config = {port: 8080};
 print(config.getOr("host", "localhost"));
 ```
 
-See the complete [Native Datatype API Reference](/language-guide/datatype-methods).
+See the complete [Native Datatype API Reference](/docs/language-guide/datatype-methods).
 
 ## Core Functions
 
@@ -36,7 +36,6 @@ print("Hello", { color: "#00FF00", bold: true });
 println("Line 1"); println("Line 2");
 eprint("Error:", "Something went wrong");
 ```
-
 ### Type Inspection
 
 | Function | Description | Parameters | Returns |
@@ -450,4 +449,5 @@ For larger APIs, see dedicated pages:
 - **[FS Module](fs)** — Filesystem operations
 - **[HTTP Module](http)** — HTTP client
 - **[Concurrency](concurrency)** — Threading, channels, mutexes
+- **[Full Builtin Library List](overview)** — every builtin library reference
 - **[Testing Framework](../tools/testing)** — Test framework

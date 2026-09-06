@@ -376,5 +376,5 @@ print("Key length: " + str(len(key)) + " bytes");
 
 - [Builtin Libraries Overview](overview)
 - [Math Library](math) — `Math.random()`, `Math.randomInt()`, `Math.randomRange()`
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins)
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins)

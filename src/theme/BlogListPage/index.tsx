@@ -20,7 +20,7 @@ export default function BlogListPage(): JSX.Element {
             We are preparing deep dives into language design, compiler engineering,
             performance, and the future of AdeshLang.
           </p>
-          <Link className="btn-filled" to="/intro">
+          <Link className="btn-filled" to="/docs">
             Explore the Documentation
           </Link>
         </section>

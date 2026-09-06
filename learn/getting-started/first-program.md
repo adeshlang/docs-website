@@ -133,7 +133,7 @@ adesh build --release convert.adesh -o convert
 ## 6. Next Steps
 
 Now that you have written and compiled your first programs, explore the foundational concepts of the language:
-- [Language Basics](../language-guide/basics)
-- [Variables & Types](../language-guide/variables)
-- [Memory Safety & Zero-GC](../advanced/memory-safety)
-- [Standard Library Overview](../builtin/overview)
+- [Language Basics](/docs/language-guide/basics)
+- [Variables & Types](/docs/language-guide/variables)
+- [Memory Safety & Zero-GC](/docs/advanced/memory-safety)
+- [Standard Library Overview](/docs/builtin/overview)

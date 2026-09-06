@@ -1,8 +1,7 @@
 ---
-id: networking-overview
+id: overview
 title: Networking & Internet Protocols Overview
 sidebar_label: Networking Overview
-slug: /networking/overview
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';

@@ -298,5 +298,5 @@ if config.isFile() {
 - [Builtin Libraries Overview](overview)
 - [FS Library](fs) — filesystem operations that accept `Path` objects
 - [Env Library](env) — directory and executable methods that return `Path`
-- [Standard Library Overview](../stdlib/overview)
-- [Built-in Functions](../stdlib/builtins)
+- [Standard Library Overview](overview)
+- [Built-in Functions](builtins)

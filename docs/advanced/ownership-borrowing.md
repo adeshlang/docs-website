@@ -134,4 +134,4 @@ let worker_ref = shared_data.clone();
 print("Strong reference count:", shared_data.strong_count());
 ```
 
-See the [`advanced/arc`](/advanced/arc) documentation page for deep reference counting patterns.
+See the [`advanced/arc`](/docs/advanced/arc) documentation page for deep reference counting patterns.
