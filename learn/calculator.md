@@ -1,7 +1,7 @@
 ---
 id: calculator
 title: Building a Calculator - Complete Project
-sidebar_label: 7. Calculator Project
+sidebar_label: 10. Calculator Project
 ---
 
 # Building a Calculator — Putting It All Together
@@ -484,22 +484,29 @@ fn get_numbers() {
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                 LEARN PROGRAMMING COMPLETE                  │
+│                 LEARN PROGRAMMING SO FAR                    │
 ├─────────────────────────────────────────────────────────────┤
 │  1. Hello World     →  First program, print, strings       │
 │  2. Variables       →  let, types, mutability, arrays      │
-│  3. Conditionals    →  if/else, comparisons, logic         │
-│  4. Loops           →  for/while, break/continue, patterns │
-│  5. Functions       →  fn, parameters, return, closures    │
-│  6. Collections     →  arrays, objects, map/filter/reduce  │
-│  7. Calculator      →  Complete project integrating all    │
+│  3. Operators       →  + - * / %, == ===, ??, ?.          │
+│  4. Conditionals    →  if/else, comparisons, logic         │
+│  5. Loops           →  for/while, break/continue, patterns │
+│  6. Functions       →  fn, parameters, return, closures    │
+│  7. Higher-order    →  callbacks, factories, composition   │
+│  8. Recursion       →  self-calls, tail calls, multiple ✅ │
+│  9. Collections     →  arrays, objects, map/filter/reduce  │
+│ 10. Calculator      →  Complete project integrating all    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ## Where to Go Next
 
+The calculator consolidated **lessons 1–9**. The course continues with text,
+types, and data modeling:
+
 | Path | Description |
 |------|-------------|
+| **Next lesson** | [Strings & Text](/learn/strings) — interpolation, templates, methods |
 | **Language Guide** | [Basics](/docs/language-guide/basics) — Deep dive into syntax |
 | **Memory Safety** | [Ownership](/docs/advanced/memory-safety) — AdeshLang's superpower |
 | **OOP** | [Classes](/docs/advanced/oop) — Object-oriented programming |

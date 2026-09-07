@@ -1,7 +1,7 @@
 ---
 id: loops
 title: Repeating Tasks - For and While Loops
-sidebar_label: 4. Loops
+sidebar_label: 5. Loops
 ---
 
 # Repeating Tasks — For and While Loops

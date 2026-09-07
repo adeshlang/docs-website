@@ -1,7 +1,7 @@
 ---
 id: capstone
 title: Capstone Project - Build a Task Manager CLI
-sidebar_label: 16. Capstone Project
+sidebar_label: 27. Capstone Project
 ---
 
 # Capstone — Build a Task Manager CLI
@@ -48,9 +48,9 @@ type Task = {
 };
 ```
 
-- `type Task = { ... }` declares an **object type** (from [Lesson 10](/learn/structs-enums)).
+- `type Task = { ... }` declares an **object type** (from [Lesson 13](/learn/structs-enums)).
 - `completedAt: f64?` is a **nullable field** — `null` until the task is done
-  (from [Lesson 9](/learn/types)).
+  (from [Lesson 12](/learn/types)).
 
 ## Step 2 — The manager class (encapsulation, helpers, methods)
 
@@ -106,13 +106,13 @@ class TaskManager {
 
 Notice the **helper methods** prefixed `_`: `_formatPriority` and `_padNumber`.
 Keeping formatting logic in private methods keeps `listTasks` readable (from
-[Lesson 11](/learn/oop)).
+[Lesson 14](/learn/oop)).
 
 ## Step 3 — CLI handlers (functions, guard clauses, validation)
 
 Each command is a function that validates its arguments and dispatches to the
-manager (from [Lesson 12](/learn/error-handling) and
-[Lesson 5](/learn/functions)):
+manager (from [Lesson 15](/learn/error-handling) and
+[Lesson 6](/learn/functions)):
 
 ```adesh
 fn handleAdd(manager: TaskManager, args: [string]) {

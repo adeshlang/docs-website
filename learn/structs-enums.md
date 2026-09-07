@@ -1,7 +1,7 @@
 ---
 id: structs-enums
 title: Structs, Enums & Pattern Matching - Modeling Data
-sidebar_label: 10. Structs, Enums & Matching
+sidebar_label: 13. Structs, Enums & Matching
 ---
 
 # Structs, Enums & Pattern Matching — Modeling Data
@@ -45,6 +45,12 @@ print(laptop.name);       // Premium Laptop
 print(laptop.price.amount); // 29.99
 ```
 
+**Output:**
+```
+Premium Laptop
+29.99
+```
+
 That is exactly `examples/structures/ecommerce_example.adesh`, which models a
 complete e-commerce system with nested structs (`Order` holds a `Customer` and
 a `Product`).
@@ -67,6 +73,11 @@ extend on Point {
 
 let p = Point { x: 3.0, y: 4.0 };
 print(p.magnitude());    // 5.0
+```
+
+**Output:**
+```
+5.0
 ```
 
 ## Enums: a value that is one of several variants
@@ -100,6 +111,13 @@ print(move.tag);         // Move
 print(move.value);       // [100, 200]  (multiple payloads become an array)
 ```
 
+**Output:**
+```
+North
+Move
+[100, 200]
+```
+
 ## `Option` and `Result`: the two enums you will use every day
 
 AdeshLang ships two enums that turn "a missing value" and "a possible failure"
@@ -110,6 +128,12 @@ let some = Some("Ajay");
 let none = None();
 print(some.tag);   // Some
 print(none.tag);   // None
+```
+
+**Output:**
+```
+Some
+None
 ```
 
 ```adesh
@@ -145,7 +169,10 @@ match current {
 }
 ```
 
-Output: `Active session: Session_89`
+**Output:**
+```
+Active session: Session_89
+```
 
 Matching on a `Result`:
 
@@ -163,6 +190,11 @@ match res {
     Result.Ok(value) => print("Got:", value),
     Result.Err(msg)  => print("Error:", msg)
 }
+```
+
+**Output:**
+```
+Error: Division by zero
 ```
 
 Pattern matching replaces whole `if/elif/else` chains and, when used with
@@ -188,6 +220,11 @@ let alice = Customer {
 };
 
 print(alice.name, alice.email);
+```
+
+**Output:**
+```
+Alice Johnson alice@example.com
 ```
 
 ## Practice
@@ -218,6 +255,11 @@ match g {
     Grade.Fair => print("Keep practicing."),
     Grade.Poor => print("Ask for help — everyone starts somewhere.")
 }
+```
+
+**Output:**
+```
+Nice work!
 ```
 
 ## Summary

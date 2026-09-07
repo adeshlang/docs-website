@@ -1,7 +1,7 @@
 ---
 id: memory-safety
 title: Memory Safety, Ownership & Borrowing
-sidebar_label: 13. Memory Safety & Ownership
+sidebar_label: 16. Memory Safety & Ownership
 ---
 
 # Memory Safety, Ownership & Borrowing
@@ -23,6 +23,11 @@ fn main() {
 
     // ... scope ends, 'data' is freed automatically
 }
+```
+
+**Output:**
+```
+[1, 2, 3]
 ```
 
 No garbage collector pauses, no manual `free` needed. Simple programs just
@@ -47,6 +52,11 @@ takeOwnership(c);
 // print(c.id);   // ❌ ERROR: 'c' was moved into takeOwnership
 ```
 
+**Output:**
+```
+Got container with id 42
+```
+
 ## Borrowing with `&`: share without giving up
 
 A **reference** `&` lets you *lend* a value to a function while keeping
@@ -62,6 +72,12 @@ inspect(&c);              // lend it temporarily
 print("Owner still has it:", c.id);   // ✅ still usable
 ```
 
+**Output:**
+```
+Inspecting container id: 42
+Owner still has it: 42
+```
+
 This is the exact valid-borrow pattern from
 `examples/memory/borrow_ok.adesh`:
 
@@ -74,6 +90,11 @@ let r2 = &p;   // another shared read — fine
 print(*r1, *r2);
 
 free(p);       // owned pointer, freed by us
+```
+
+**Output:**
+```
+42 42
 ```
 
 ## The two rules, remembered by one phrase
@@ -93,6 +114,11 @@ let mr = &p2;       // compiler sees the mutation below → exclusive borrow
 *mr = 100;          // mutate through the reference
 print(*mr);
 free(p2);
+```
+
+**Output:**
+```
+100
 ```
 
 ## What the compiler rejects
@@ -134,6 +160,11 @@ print(*a);                  // 42
 // when a and b drop, the count reaches 0 and the value frees
 ```
 
+**Output:**
+```
+42
+```
+
 `examples/arc/` has 23 files demonstrating reference-counted sharing,
 including the [tree structure with smart pointers](/learn/memory-safety#smart-pointers-in-real-code)
 below.
@@ -165,6 +196,11 @@ let root = TreeNode();
 let child = TreeNode();
 root.addChild(child);
 print(child.parent.value);     // root's value
+```
+
+**Output:**
+```
+root
 ```
 
 `Weak` prevents reference-count cycles (a parent holding a child holding the
@@ -203,5 +239,6 @@ You rarely manage memory by hand in AdeshLang. The mental model is:
 
 ## Next Step
 
-Now let's make programs that do many things at once — **async, concurrency,
-and parallelism**. Continue to **[Async & Concurrency](/learn/async-concurrency)** →
+Sometimes you need to pull the lever yourself — now let's talk about
+**manual memory** with `alloc`/`free` and the `unsafe` block. Continue to
+**[Manual Memory & unsafe](/learn/manual-memory)** →

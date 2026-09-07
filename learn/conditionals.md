@@ -1,7 +1,7 @@
 ---
 id: conditionals
 title: Making Decisions - If, Else, Comparisons
-sidebar_label: 3. Conditionals
+sidebar_label: 4. Conditionals
 ---
 
 # Making Decisions — If, Else, Comparisons
@@ -30,6 +30,14 @@ print(age >= 18);    // true
 print(age < 18);     // false
 ```
 
+**Output:**
+```
+true
+false
+true
+false
+```
+
 > **Note:** Use `==` for comparison, `=` is for assignment!
 
 ## The `if` Statement
@@ -44,7 +52,10 @@ if (score >= 60) {
 }
 ```
 
-**Output:** `You passed!`
+**Output:**
+```
+You passed!
+```
 
 If condition is false, the block is skipped:
 
@@ -57,7 +68,10 @@ if (score >= 60) {
 print("Done checking.");  // Always runs
 ```
 
-**Output:** `Done checking.`
+**Output:**
+```
+Done checking.
+```
 
 ## The `else` Block
 
@@ -73,7 +87,10 @@ if (score >= 60) {
 }
 ```
 
-**Output:** `Fail`
+**Output:**
+```
+Fail
+```
 
 ## The `elif` Chain
 
@@ -95,7 +112,10 @@ if (score >= 90) {
 }
 ```
 
-**Output:** `Grade: B`
+**Output:**
+```
+Grade: B
+```
 
 > **Key:** Only the **first** matching block runs. Order matters!
 
@@ -131,6 +151,11 @@ if (!(age >= 18)) {
 }
 ```
 
+**Output:**
+```
+Entry allowed
+```
+
 ## Nested Conditions
 
 Conditions inside conditions:
@@ -150,7 +175,10 @@ if (logged_in) {
 }
 ```
 
-**Output:** `Welcome, Administrator!`
+**Output:**
+```
+Welcome, Administrator!
+```
 
 ## Practical Examples
 
@@ -167,6 +195,11 @@ if (guess == secret) {
 } else {
     print("Too low! Try higher.");
 }
+```
+
+**Output:**
+```
+Too high! Try lower.
 ```
 
 ### Example 2: Login System
@@ -186,6 +219,11 @@ if (username == input_user && password == input_pass) {
 }
 ```
 
+**Output:**
+```
+Incorrect password
+```
+
 ### Example 3: Temperature Advisor
 
 ```adesh
@@ -202,6 +240,11 @@ if (temp < 0) {
 } else {
     print("Hot! Stay hydrated.");
 }
+```
+
+**Output:**
+```
+Cool. Light sweater.
 ```
 
 ### Example 4: Simple Calculator
@@ -228,6 +271,11 @@ if (op == "+") {
 }
 ```
 
+**Output:**
+```
+Result: 2
+```
+
 ## Ternary Expression (One-Liner)
 
 For simple choices, use the ternary operator:
@@ -240,6 +288,12 @@ print(status);    // Adult
 let score = 85;
 let result = (score >= 60) ? "Pass" : "Fail";
 print(result);    // Pass
+```
+
+**Output:**
+```
+Adult
+Pass
 ```
 
 **Syntax:** `condition ? value_if_true : value_if_false`
@@ -272,6 +326,20 @@ for v in falsy {
         print(v, "is falsy");
     }
 }
+```
+
+**Output:**
+```
+1 is truthy
+hello is truthy
+true is truthy
+-5 is truthy
+[1] is truthy
+{a: 1} is truthy
+0 is falsy
+ is falsy
+false is falsy
+null is falsy
 ```
 
 ## Common Patterns
@@ -310,12 +378,23 @@ if (0 <= x && x <= 100) {  // Works too
 }
 ```
 
+**Output:**
+```
+In range 0-100
+In range
+```
+
 ### Default Value
 
 ```adesh
 let input = null;
 let value = (input != null) ? input : "default";
 print(value);    // default
+```
+
+**Output:**
+```
+default
 ```
 
 ## Quick Reference
@@ -348,6 +427,16 @@ let scores = [95, 87, 72, 65, 58, 100];
 for s in scores {
     print("Score:", s, "→ Grade:", get_grade(s));
 }
+```
+
+**Output:**
+```
+Score: 95 → Grade: A
+Score: 87 → Grade: B
+Score: 72 → Grade: C
+Score: 65 → Grade: D
+Score: 58 → Grade: F
+Score: 100 → Grade: A
 ```
 
 ## Summary

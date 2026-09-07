@@ -1,7 +1,7 @@
 ---
 id: oop
 title: Object-Oriented Programming - Classes, Inheritance, and More
-sidebar_label: 11. OOP
+sidebar_label: 14. OOP
 ---
 
 # Object-Oriented Programming — Classes, Inheritance, and More
@@ -36,6 +36,12 @@ p.greet();          // Hello, my name is Ajay
 print(p.isAdult()); // true
 ```
 
+**Output:**
+```
+Hello, my name is Ajay
+true
+```
+
 That is exactly `examples/oop/class.adesh`. Note the constructor is a function
 named after the class, and `new` creates the instance.
 
@@ -66,6 +72,11 @@ class BankAccount {
 let acct = new BankAccount(100);
 acct.deposit(50);
 print(acct.getBalance());    // 150
+```
+
+**Output:**
+```
+150
 ```
 
 Access modifiers (`public`, `private`, `protected`) and `get`/`set` properties
@@ -99,6 +110,12 @@ class Circle extends Shape {
 let c = new Circle("Unit Circle", 2.0);
 c.describe();                    // Shape: Unit Circle
 print(c.area());                 // 12.566370614359172
+```
+
+**Output:**
+```
+Shape: Unit Circle
+12.566370614359172
 ```
 
 `extends` gives the child all parent fields and methods; `super(...)` chains
@@ -135,6 +152,13 @@ p.birthday();          // Happy birthday, Priya! Now 18
 print(p.canVote());    // true
 ```
 
+**Output:**
+```
+false
+Happy birthday, Priya! Now 18
+true
+```
+
 This is the exact `extend on` syntax from `examples/extend/01_basic_extend.adesh`.
 
 ## Interfaces: contracts any class can fulfill
@@ -167,6 +191,12 @@ display(new Book());
 display(new Magazine());
 ```
 
+**Output:**
+```
+Book: 'The Rust Programming Language' by Steve Klabnik
+Magazine: Tech Monthly (Issue #42)
+```
+
 Both `Book` and `Magazine` satisfy `Printable`, so `display` accepts either.
 From `examples/interfaces/01_basic_interfaces.adesh`.
 
@@ -194,6 +224,13 @@ print(add(2, 3));
 //   → Calling: add
 //   ← Result: 5
 // 5
+```
+
+**Output:**
+```
+  → Calling: add
+  ← Result: 5
+5
 ```
 
 Decorators appear throughout `examples/decorators/` — logging, caching,
@@ -235,6 +272,11 @@ extend on LibraryItem {
 
 let book = new LibraryItem("1984");
 book.stamp();
+```
+
+**Output:**
+```
+📚 Item: 1984
 ```
 
 ## Summary

@@ -18,6 +18,11 @@ Traditionally, the first program in any language prints "Hello, World!" to the s
 print("Hello, World!");
 ```
 
+**Output:**
+```
+Hello, World!
+```
+
 ## Run It
 
 Open a terminal in the folder where you saved the file:
@@ -71,6 +76,14 @@ print(true);           // Input: true → Output: true
 print(3.14);           // Input: 3.14 → Output: 3.14
 ```
 
+**Output:**
+```
+Hello
+42
+true
+3.14
+```
+
 ### Strings
 
 Text in programming is called a **string** (a string of characters).
@@ -92,6 +105,13 @@ Each line of action ends with `;`. It tells AdeshLang "this instruction is compl
 print("Line 1");    // Statement 1
 print("Line 2");    // Statement 2
 print("Line 3");    // Statement 3
+```
+
+**Output:**
+```
+Line 1
+Line 2
+Line 3
 ```
 
 Without `;`, AdeshLang gets confused about where one instruction ends and the next begins.
@@ -120,6 +140,13 @@ print("Apple", "Banana", "Cherry", { sep: ", " });
 print("Loading", { end: "..." });
 print("Done!");
 // Output: Loading...Done!
+```
+
+**Output:**
+```
+Name: Alice Age: 30
+Apple, Banana, Cherry
+Loading...Done!
 ```
 
 ## Summary

@@ -1,7 +1,7 @@
 ---
 id: functions
 title: Functions - Reusable Code Blocks
-sidebar_label: 5. Functions
+sidebar_label: 6. Functions
 ---
 
 # Functions — Reusable Code Blocks
@@ -32,6 +32,25 @@ greet("Bob");
 greet("Charlie");
 ```
 
+**Output:**
+```
+=== Welcome ===
+Hello, Alice!
+=== Welcome ===
+=== Welcome ===
+Hello, Bob!
+=== Welcome ===
+=== Welcome ===
+Hello, Alice!
+=== Welcome ===
+=== Welcome ===
+Hello, Bob!
+=== Welcome ===
+=== Welcome ===
+Hello, Charlie!
+=== Welcome ===
+```
+
 ## Basic Function Syntax
 
 ```adesh
@@ -51,6 +70,11 @@ fn say_hello() {
 say_hello();    // Call the function
 ```
 
+**Output:**
+```
+Hello!
+```
+
 ### Function with Parameters
 
 ```adesh
@@ -60,6 +84,12 @@ fn greet(name) {
 
 greet("Alice");   // Hello, Alice!
 greet("Bob");     // Hello, Bob!
+```
+
+**Output:**
+```
+Hello, Alice!
+Hello, Bob!
 ```
 
 ### Function with Return Value
@@ -73,6 +103,11 @@ let result = add(5, 3);
 print(result);    // 8
 ```
 
+**Output:**
+```
+8
+```
+
 ### Multiple Parameters
 
 ```adesh
@@ -82,6 +117,12 @@ fn rectangle_area(width, height) {
 
 print(rectangle_area(5, 3));    // 15
 print(rectangle_area(10, 4));   // 40
+```
+
+**Output:**
+```
+15
+40
 ```
 
 ## Return Values
@@ -99,6 +140,11 @@ fn max(a, b) {
 print(max(10, 20));   // 20
 ```
 
+**Output:**
+```
+20
+```
+
 ### Implicit Return (Last Expression)
 
 ```adesh
@@ -107,6 +153,11 @@ fn add(a, b) {
 }
 
 print(add(2, 3));    // 5
+```
+
+**Output:**
+```
+5
 ```
 
 ### Early Return
@@ -121,6 +172,12 @@ fn divide(a, b) {
 
 print(divide(10, 2));   // 5
 print(divide(10, 0));   // Error: Division by zero
+```
+
+**Output:**
+```
+5
+Error: Division by zero
 ```
 
 ## Parameters and Arguments
@@ -138,6 +195,11 @@ fn greet(name, age) {    // name, age are parameters
 greet("Alice", 25);      // "Alice", 25 are arguments
 ```
 
+**Output:**
+```
+Alice is 25 years old
+```
+
 ## Default Parameters
 
 ```adesh
@@ -147,6 +209,12 @@ fn greet(name, greeting = "Hello") {
 
 greet("Alice");           // Hello, Alice!
 greet("Bob", "Hi");       // Hi, Bob!
+```
+
+**Output:**
+```
+Hello, Alice!
+Hi, Bob!
 ```
 
 ## Scope in Functions
@@ -165,6 +233,13 @@ fn demo() {
 demo();
 print(global_var);        // ✅ Can access global
 // print(local_var);     // ❌ Error! local_var doesn't exist here
+```
+
+**Output:**
+```
+I'm global
+I'm local
+I'm global
 ```
 
 ## Practical Examples
@@ -186,6 +261,14 @@ print("6 * 7 =", multiply(6, 7));   // 42
 print("20 / 4 =", divide(20, 4));   // 5
 ```
 
+**Output:**
+```
+5 + 3 = 8
+10 - 4 = 6
+6 * 7 = 42
+20 / 4 = 5
+```
+
 ### Example 2: String Utilities
 
 ```adesh
@@ -204,6 +287,13 @@ fn is_palindrome(text) {
 print(reverse("hello"));           // olleh
 print(is_palindrome("racecar"));   // true
 print(is_palindrome("hello"));     // false
+```
+
+**Output:**
+```
+olleh
+true
+false
 ```
 
 ### Example 3: Array Helpers
@@ -235,6 +325,13 @@ print("Avg:", average(scores));        // 87.8
 print("Max:", find_max(scores));       // 96
 ```
 
+**Output:**
+```
+Sum: 439
+Avg: 87.8
+Max: 96
+```
+
 ### Example 4: Recursive Function
 
 A function that calls itself:
@@ -248,6 +345,11 @@ fn factorial(n) {
 print(factorial(5));    // 120 (5*4*3*2*1)
 ```
 
+**Output:**
+```
+120
+```
+
 ```adesh
 fn fibonacci(n) {
     if (n <= 1) return n;
@@ -257,6 +359,20 @@ fn fibonacci(n) {
 for i in 0..10 {
     print(fibonacci(i));   // 0 1 1 2 3 5 8 13 21 34
 }
+```
+
+**Output:**
+```
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
 ```
 
 ## Functions as Values
@@ -274,6 +390,12 @@ operation = multiply;
 print(operation(5, 3));     // 15
 ```
 
+**Output:**
+```
+8
+15
+```
+
 ### Passing Functions to Functions
 
 ```adesh
@@ -288,6 +410,12 @@ print(apply_twice(double, 5));      // 20 (5*2*2)
 print(apply_twice(increment, 5));   // 7 (5+1+1)
 ```
 
+**Output:**
+```
+20
+7
+```
+
 ## Anonymous Functions (Closures)
 
 ```adesh
@@ -300,6 +428,12 @@ print(greet("World"));    // Hello, World!
 // Short form
 let square = fn(x) { x * x; };
 print(square(4));         // 16
+```
+
+**Output:**
+```
+Hello, World!
+16
 ```
 
 ## Built-in Higher-Order Functions
@@ -318,6 +452,13 @@ print(evens);      // [2, 4]
 // reduce - combine to single value
 let sum = reduce(numbers, 0, fn(acc, x) { acc + x; });
 print(sum);        // 15
+```
+
+**Output:**
+```
+[2, 4, 6, 8, 10]
+[2, 4]
+15
 ```
 
 ## Best Practices
@@ -384,6 +525,15 @@ print(calculate(10, "+", 5));    // 15
 print(calculate(10, "/", 0));    // null
 ```
 
+**Output:**
+```
+2^8 = 256
+Is 42 even? true
+Is 7 odd? true
+15
+null
+```
+
 ## Summary
 
 ✅ **You learned:**
@@ -399,4 +549,4 @@ print(calculate(10, "/", 0));    // null
 
 ## Next Step
 
-Now let's work with **collections** — arrays and objects! Continue to **[Collections](/learn/collections)** →
+Functions are values too — now let's master **higher-order functions** (callbacks, closures, and composition)! Continue to **[Higher-Order Functions](/learn/higher-order-functions)** →

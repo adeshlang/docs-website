@@ -1,7 +1,7 @@
 ---
 id: types
 title: Types & Type System - Numbers, Booleans, and More
-sidebar_label: 9. Types & Type System
+sidebar_label: 12. Types & Type System
 ---
 
 # Types & Type System — Numbers, Booleans, and More
@@ -56,6 +56,18 @@ print(sizeof([1,2,3]));  // depends on array tier (see below)
 print(sizeof("hello"));  // 5 (plus string header)
 ```
 
+**Output:**
+```
+number
+number
+string
+boolean
+array
+object
+27
+5
+```
+
 ## Numeric types and why they matter
 
 AdeshLang has the same wide range as Rust: choose the smallest type that
@@ -85,6 +97,12 @@ let whole: i64 = raw as i64;           // 42  (truncates the decimal)
 print(whole);
 ```
 
+**Output:**
+```
+300
+42
+```
+
 That exact pattern — casting in arithmetic to avoid overflow — comes from
 `examples/functions/01_basic_functions.adesh`.
 
@@ -106,6 +124,14 @@ print(arr1 == arr2);    // false (different array objects, even if equal content
 print(arr1 === arr2);   // false (not the same object)
 ```
 
+**Output:**
+```
+true
+false
+true
+false
+```
+
 > Use `===` when you need to be sure both value and type match.
 
 ## Nullability: `?` and `??`
@@ -120,6 +146,11 @@ let resolved = host ?? "127.0.0.1";   // ?? gives a default when null
 print(resolved);  // 127.0.0.1
 ```
 
+**Output:**
+```
+127.0.0.1
+```
+
 `??` — null coalescing — appears in database configs all over the real
 examples (`examples/syntax/test_nullish_coalescing.adesh`):
 
@@ -127,6 +158,11 @@ examples (`examples/syntax/test_nullish_coalescing.adesh`):
 let config = { host: null, port: 8080 };
 let host = config.host ?? "localhost";
 print(host);   // localhost
+```
+
+**Output:**
+```
+localhost
 ```
 
 ## Optional chaining `?.`
@@ -142,6 +178,13 @@ print(emptyUser?.profile?.name);   // null, no crash
 
 let partial = { profile: null };
 print(partial?.profile?.name);     // null
+```
+
+**Output:**
+```
+Alice
+null
+null
 ```
 
 From `examples/syntax/test_optional_chaining.adesh`.
@@ -168,6 +211,12 @@ let large = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
 print(large.metadata_size());    // dynamic tier
 ```
 
+**Output:**
+```
+2
+24
+```
+
 ## Tuples and destructuring
 
 A tuple is a fixed-size group of values:
@@ -184,6 +233,14 @@ print(x, y, z);        // 10 20 30
 
 let typed: (u8, i32, f64, string) = (42u8, 1000i32, 3.14, "hello");
 let (a, b, c, d): (u8, i32, f64, string) = typed;
+```
+
+**Output:**
+```
+10
+10
+30
+10 20 30
 ```
 
 From `examples/arrays/tuple_examples.adesh` and
@@ -207,6 +264,11 @@ fn findScore(list: ScoreMap, v: i32): i32 {
     return -1;
 }
 print(findScore(scores, 200));   // 200
+```
+
+**Output:**
+```
+200
 ```
 
 See `docs/language-guide/type-aliases` for the full reference.
@@ -240,6 +302,14 @@ print(maybe ?? "default");
 let pair = ("tag", 1);
 let (label, num): (string, i32) = pair;
 print(label, num);
+```
+
+**Output:**
+```
+Speed: 88 units per hour
+Max temp: 42 °C
+default
+tag 1
 ```
 
 ## Summary

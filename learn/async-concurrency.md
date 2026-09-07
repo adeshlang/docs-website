@@ -1,7 +1,7 @@
 ---
 id: async-concurrency
 title: Async, Concurrency & Parallelism
-sidebar_label: 14. Async & Concurrency
+sidebar_label: 21. Async & Concurrency
 ---
 
 # Async, Concurrency & Parallelism
@@ -46,6 +46,14 @@ print("Worker returned:", result);
 // Worker returned: 42
 ```
 
+**Output:**
+```
+Hello from worker thread!
+Main thread continues...
+Worker returned: 42
+```
+(order may vary)
+
 From `examples/Libraries/concurrency/01_basic_thread.adesh` and `02_thread_join.adesh`.
 
 ## Passing messages with channels
@@ -66,6 +74,11 @@ thread.spawn(fn() {
 }).join();
 
 print(rx.recv().value);    // 42
+```
+
+**Output:**
+```
+42
 ```
 
 That is `examples/Libraries/concurrency/12_channels.adesh` verbatim. The
@@ -90,6 +103,11 @@ let g = mutex.lock();
 print(g.value.get());      // 2  (both increments applied safely)
 ```
 
+**Output:**
+```
+2
+```
+
 From `examples/Libraries/concurrency/06_mutex.adesh` and `05_shared_arc.adesh`.
 
 ## Atomics: lock-free counters
@@ -105,6 +123,11 @@ let h2 = thread.spawn(fn() { counter.fetch_add(1); });
 h1.join();
 h2.join();
 print(counter.load());    // 2
+```
+
+**Output:**
+```
+2
 ```
 
 From `examples/Libraries/concurrency/11_atomic_counter.adesh`.
@@ -123,11 +146,21 @@ print(f.get());               // 99
 pool.shutdown();
 ```
 
+**Output:**
+```
+99
+```
+
 And for data-parallel work, AdeshLang's iterator is parallel:
 
 ```adesh
 let out = thread.parallel_map([1, 2, 3, 4], fn(x) { return x * 2; });
 print(out);                   // [2, 4, 6, 8]
+```
+
+**Output:**
+```
+[2, 4, 6, 8]
 ```
 
 From `examples/Libraries/concurrency/14_thread_pool.adesh` and `18_parallel_map.adesh`.
@@ -150,6 +183,11 @@ async fn main() {
 await main();
 ```
 
+**Output:**
+```
+data_123
+```
+
 `Promise.all` runs several tasks and waits for all:
 
 ```adesh
@@ -161,12 +199,22 @@ let all = await Promise.all([pa, pb, pc]);
 print(all);                     // A B C
 ```
 
+**Output:**
+```
+[A, B, C]
+```
+
 And `.then()` chains:
 
 ```adesh
 let p = Promise(fn(resolve, reject) { resolve(10); });
 let chained = p.then(fn(v) { return v * 2; }).then(fn(v) { return v + 5; });
 print(await chained);           // 25
+```
+
+**Output:**
+```
+25
 ```
 
 All of this is from `examples/async/full_async_demo.adesh`, which exercises
@@ -220,6 +268,5 @@ about.
 
 ## Next Step
 
-Now let's tour the **standard library** — the surprisingly complete toolkit
-(Math, JSON, FS, regex, time, random, crypto) that ships inside AdeshLang.
-Continue to **[Standard Library Tour](/learn/stdlib-tour)** →
+Now that programs do things, let's **prove** they do them correctly — the
+built-in testing system. Continue to **[Testing](/learn/testing)** →

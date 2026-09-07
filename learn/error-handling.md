@@ -1,7 +1,7 @@
 ---
 id: error-handling
 title: Error Handling & Cleanup - try, catch, throw, defer
-sidebar_label: 12. Error Handling
+sidebar_label: 15. Error Handling
 ---
 
 # Error Handling & Cleanup — `try`, `catch`, `throw`, `defer`
@@ -36,6 +36,11 @@ try {
 // Caught exception: DivisionByZeroError: denominator cannot be 0
 ```
 
+**Output:**
+```
+Caught exception: DivisionByZeroError: denominator cannot be 0
+```
+
 That is the very first error example in `examples/errors/error.adesh`.
 
 ## The full pattern
@@ -55,6 +60,12 @@ try {
     print("Failed to load config:", err);
     print("Starting with defaults...");
 }
+```
+
+**Output:**
+```
+Failed to load config: ConfigNotFound: app.json
+Starting with defaults...
 ```
 
 The program keeps running and can fall back to defaults — exactly what a real
@@ -82,6 +93,12 @@ try {
     print("Error code:", err.code);      // INSUFFICIENT_FUNDS
     print("Tried to spend:", err.amount);
 }
+```
+
+**Output:**
+```
+Error code: INSUFFICIENT_FUNDS
+Tried to spend: 500
 ```
 
 ## Validation with guard clauses
@@ -140,6 +157,14 @@ try {
 // Caught: Something failed mid-way
 ```
 
+**Output:**
+```
+Opening file: data.txt
+Processing: data.txt
+Closing file: data.txt
+Caught: Something failed mid-way
+```
+
 This is the exact pattern in `examples/defer/resource_cleanup.adesh` and
 `examples/defer/basic_defer.adesh`.
 
@@ -155,6 +180,13 @@ demo();
 // cleanup 3   (last registered, runs first)
 // cleanup 2
 // cleanup 1
+```
+
+**Output:**
+```
+cleanup 3
+cleanup 2
+cleanup 1
 ```
 
 LIFO (last-in, first-out) matches how resources nest: close the inner
@@ -181,6 +213,11 @@ match result {
     Some(name) => print("Found:", name),
     None()     => print("User not found")
 }
+```
+
+**Output:**
+```
+User not found
 ```
 
 When a function returns `null` for "not found", combine with `??`:
@@ -218,6 +255,12 @@ try {
 
 validateEmail("ok@example.com");
 print("All good!");
+```
+
+**Output:**
+```
+Invalid email: Email too short
+All good!
 ```
 
 Run it, then change `defer` to appear in a real cleanup scenario and watch it

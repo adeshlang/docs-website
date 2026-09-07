@@ -1,7 +1,7 @@
 ---
 id: collections
 title: Collections - Arrays, Objects, and More
-sidebar_label: 6. Collections
+sidebar_label: 9. Collections
 ---
 
 # Collections — Working with Multiple Values
@@ -32,6 +32,14 @@ print(fruits[2]);    // cherry (last)
 print(fruits[3]);    // null (out of bounds = null)
 ```
 
+**Output:**
+```
+apple
+banana
+cherry
+null
+```
+
 ### Modifying Elements
 
 ```adesh
@@ -41,6 +49,11 @@ colors[1] = "yellow";
 print(colors);    // ["red", "yellow", "blue"]
 ```
 
+**Output:**
+```
+["red", "yellow", "blue"]
+```
+
 ### Array Properties
 
 ```adesh
@@ -48,6 +61,12 @@ let arr = [10, 20, 30];
 
 print(len(arr));       // 3 (length)
 print(arr.length());   // 3 (method form)
+```
+
+**Output:**
+```
+3
+3
 ```
 
 ### Array Methods
@@ -87,6 +106,22 @@ print(slice);    // [2, 3]
 
 // Join to string
 print(nums.join(", "));     // "1, 2, 3"
+```
+
+**Output:**
+```
+[1, 2, 3, 4]
+4
+[1, 2, 3]
+[0, 1, 2, 3]
+0
+[1, 2, 3]
+true
+false
+1
+-1
+[2, 3]
+1, 2, 3
 ```
 
 ## Objects — Key-Value Pairs
@@ -129,6 +164,13 @@ let key = "email";
 print(user[key]);      // bob@example.com
 ```
 
+**Output:**
+```
+Bob
+30
+bob@example.com
+```
+
 ### Modifying Properties
 
 ```adesh
@@ -145,12 +187,22 @@ print(car);
 // { brand: "Toyota", year: 2021, color: "blue", doors: 4 }
 ```
 
+**Output:**
+```
+{ brand: "Toyota", year: 2021, color: "blue", doors: 4 }
+```
+
 ### Deleting Properties
 
 ```adesh
 let obj = { a: 1, b: 2, c: 3 };
 delete obj.b;
 print(obj);    // { a: 1, c: 3 }
+```
+
+**Output:**
+```
+{ a: 1, c: 3 }
 ```
 
 ### Checking Properties
@@ -161,6 +213,13 @@ let user = { name: "Alice", age: 25 };
 print("name" in user);      // true
 print("email" in user);     // false
 print(user.hasOwnProperty("age"));  // true
+```
+
+**Output:**
+```
+true
+false
+true
 ```
 
 ### Object Methods
@@ -176,6 +235,13 @@ print(Object.values(person));  // ["Alice", 25]
 
 // Get key-value pairs
 print(Object.entries(person)); // [["name", "Alice"], ["age", 25]]
+```
+
+**Output:**
+```
+["name", "age"]
+["Alice", 25]
+[["name", "Alice"], ["age", 25]]
 ```
 
 ## Nested Collections
@@ -201,6 +267,14 @@ for user in users {
 }
 ```
 
+**Output:**
+```
+Alice is 25
+Bob is 30
+Charlie is 35
+Found Bob!
+```
+
 ### Object with Arrays
 
 ```adesh
@@ -215,6 +289,12 @@ let school = {
 
 print(school.students[0]);         // Alice
 print(school.grades.math[1]);      // 85
+```
+
+**Output:**
+```
+Alice
+85
 ```
 
 ### Multi-dimensional Arrays
@@ -238,6 +318,24 @@ for row in grid {
     }
     print("");  // newline
 }
+```
+
+**Output:**
+```
+1
+6
+8
+1
+2
+3
+
+4
+5
+6
+
+7
+8
+9
 ```
 
 ## Functional Array Methods
@@ -276,6 +374,17 @@ let allPositive = every(numbers, fn(x) { x > 0; });
 print(allPositive); // true
 ```
 
+**Output:**
+```
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+[2, 4, 6, 8, 10]
+55
+6
+5
+false
+true
+```
+
 ## Strings as Collections
 
 Strings behave like arrays of characters:
@@ -302,6 +411,22 @@ print(words);    // ["apple", "banana", "cherry"]
 
 // Join array to string
 print(words.join(" | "));     // apple | banana | cherry
+```
+
+**Output:**
+```
+5
+H
+o
+HELLO
+hello
+true
+true
+true
+HeLlo
+HelloHelloHello
+["apple", "banana", "cherry"]
+apple | banana | cherry
 ```
 
 ## Practical Example: Contact Manager
@@ -347,6 +472,17 @@ let found = find_contact("Bob");
 if (found) {
     print("Found:", found.name, found.email);
 }
+```
+
+**Output:**
+```
+=== All Contacts ===
+Alice : 555-1234 ( alice@email.com )
+Bob : 555-5678 ( bob@email.com )
+Charlie : 555-9012 ( charlie@email.com )
+
+=== Search ===
+Found: Bob bob@email.com
 ```
 
 ## Quick Reference

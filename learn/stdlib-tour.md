@@ -1,7 +1,7 @@
 ---
 id: stdlib-tour
 title: The Standard Library Tour
-sidebar_label: 15. Standard Library Tour
+sidebar_label: 23. Standard Library Tour
 ---
 
 # The Standard Library Tour
@@ -281,5 +281,5 @@ print("Token hash matches:", loaded.token == Crypto.sha256(token));
 
 ## Next Step
 
-Time to put it all together: the **Capstone — Task Manager CLI**.
-Continue to **[Capstone Project](/learn/capstone)** →
+That was part one — the standard library still has **Encoding, Compression,
+IO, Env, and Process**. Continue to **[Standard Library II](/learn/stdlib-2)** →

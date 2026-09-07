@@ -77,6 +77,13 @@ let flag = true;
 print(typeof flag);  // "boolean"
 ```
 
+**Output:**
+```
+number
+string
+boolean
+```
+
 ## Reassignment — Changing Values
 
 In AdeshLang, **variables are mutable by default** — just assign a new value:
@@ -90,6 +97,13 @@ print("Score:", score);    // Score: 10
 
 score = score + 5;
 print("Score:", score);    // Score: 15
+```
+
+**Output:**
+```
+Score: 0
+Score: 10
+Score: 15
 ```
 
 No `mut` keyword needed! Just use `=` to update.
@@ -107,6 +121,15 @@ print("Divide:", a / b);    // 3.333...
 print("Modulo:", a % b);    // 1 (remainder)
 ```
 
+**Output:**
+```
+Add: 13
+Subtract: 7
+Multiply: 30
+Divide: 3.3333333333333335
+Modulo: 1
+```
+
 ## String Operations
 
 ```adesh
@@ -119,6 +142,13 @@ print(first + ", " + last);   // Hello, World
 // String length
 let word = "AdeshLang";
 print("Length:", len(word));  // Length: 9
+```
+
+**Output:**
+```
+Hello World
+Hello, World
+Length: 9
 ```
 
 ## Collections: Arrays and Objects
@@ -138,6 +168,13 @@ numbers.push(6);
 print(numbers);                     // [1, 2, 3, 4, 5, 6]
 ```
 
+**Output:**
+```
+First: 1
+Length: 5
+[1, 2, 3, 4, 5, 6]
+```
+
 ### Objects — Key-Value Pairs
 
 ```adesh
@@ -155,6 +192,13 @@ person.email = "alice@example.com";
 person.age = 26;
 
 print(person);                      // { name: "Alice", age: 26, city: "New York", email: "alice@example.com" }
+```
+
+**Output:**
+```
+Name: Alice
+Age: 25
+{ name: "Alice", age: 26, city: "New York", email: "alice@example.com" }
 ```
 
 ## Practice Exercise
@@ -189,6 +233,18 @@ print("Hobbies:", hobbies);
 print("Favorites:", favorites);
 ```
 
+**Output:**
+```
+=== MY PROFILE ===
+Name: Your Name
+Age: 20
+Height: 5.8
+Coder? true
+
+Hobbies: [coding, reading, gaming]
+Favorites: { color: "blue", food: "pizza", language: "AdeshLang" }
+```
+
 Run it:
 ```bash
 adesh run profile.adesh
@@ -215,4 +271,4 @@ adesh run profile.adesh
 
 ## Next Step
 
-Now let's make programs that **make decisions**! Continue to **[Making Decisions](/learn/conditionals)** →
+Now let's meet the **operators** that compute with our values! Continue to **[Operators & Expressions](/learn/operators)** →
