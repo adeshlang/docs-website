@@ -212,8 +212,16 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Compiler Architecture',
+      collapsed: false,
       items: [
         'compiler/overview',
+        'compiler/lexer-parser',
+        'compiler/semantic-analysis',
+        'compiler/borrow-checker',
+        'compiler/ir',
+        'compiler/codegen',
+        'compiler/runtime',
+        'compiler/memory-management',
       ],
     },
     {

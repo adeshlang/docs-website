@@ -212,21 +212,32 @@ print("CSV string: ", csv); // "rust, adesh, compiler"
 
 ---
 
-## 4. Hardware SIMD Acceleration Builtins
+## 4. Hardware SIMD Acceleration
 
-For numerical processing and vector math, AdeshLang provides SIMD vector instructions leveraging hardware AVX2 / ARM Neon vector registers:
+For numerical processing and vector math, AdeshLang provides SIMD vector
+instructions leveraging hardware AVX2 / ARM Neon vector registers. Arrays
+support **element-wise operators**, and the `Simd` namespace provides
+reductions — all tested in the interpreter:
 
 ```adesh
+import Simd;
+
 let vec_a: [f32] = [1.0, 2.0, 3.0, 4.0];
 let vec_b: [f32] = [5.0, 6.0, 7.0, 8.0];
 
-// Parallel SIMD Vector Addition
-let vec_sum = vadd(vec_a, vec_b);
-print("SIMD vadd result: ", vec_sum); // [6.0, 8.0, 10.0, 12.0]
+// Parallel SIMD Vector Addition via element-wise operator
+let vec_sum = vec_a + vec_b;
+print("SIMD vector sum: ", vec_sum); // [6, 8, 10, 12]
 
-// Fused Multiply-Add: (a * b) + c
-let vec_fma = vmul_add(vec_a, vec_b, [1.0, 1.0, 1.0, 1.0]);
-print("SIMD FMA result:  ", vec_fma);
+// Reductions
+let row = [1.0, 2.0, 3.0, 4.0];
+let col = [4.0, 3.0, 2.0, 1.0];
+print("SIMD dot:        ", Simd.dot(row, col));   // 20
+print("SIMD mean:       ", Simd.mean([10.0, 20.0, 30.0])); // 20
+
+// Instance API
+let vx = Simd.vector(vec_a);
+print("SIMD scale:      ", vx.scale(3.0)); // [3, 6, 9, 12]
 ```
 
 ---

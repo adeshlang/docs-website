@@ -69,7 +69,7 @@ export let PI = 3.14159;
 
 // 2. Class Definition
 class Counter {
-  fn init(n) {
+  Counter(n) {
     this.n = n;
   }
 

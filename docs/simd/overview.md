@@ -13,6 +13,18 @@ import BackendSupport from '@site/src/components/BackendSupport';
 
 SIMD (**Single Instruction, Multiple Data**) allows AdeshLang to execute arithmetic, logical, and bitwise operations across contiguous vector datasets simultaneously using dedicated CPU vector registers (x86_64 **AVX2 / AVX-512**, ARM **NEON**, and WebAssembly **SIMD128**).
 
+:::info Two SIMD surfaces
+The interpreter and JIT expose SIMD through two surfaces:
+
+- **Today, in the interpreter**: plain arrays with element-wise operators
+  (`v1 + v2`, `alpha * x + y`) plus the `Simd` namespace (`Simd.dot`,
+  `Simd.mean`, `Simd.vector`). See [Array Vector Operations](#4-array-vector-operations).
+- **Compiler IR level**: native vector *types* (`f32x4`, `f64x4`, `i32x8`,
+  …) defined in the SIMD IR layer (lowered to AVX2/NEON via Cranelift/LLVM).
+  These typed forms are the target of the JIT/AOT backends; they are still
+  evolving and not yet interpreter-callable syntax.
+:::
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │                   Scalar vs SIMD Model                   │
@@ -122,22 +134,43 @@ fn blend_rgba_chunk(foreground: &[u8; 32], background: &[u8; 32], alpha: u8) -> 
 
 ---
 
-## 4. Array Vector Methods
+## 4. Array Vector Operations
 
-AdeshLang also provides high-level array vector helpers for rapid prototyping:
+AdeshLang also provides high-level array vector helpers for rapid prototyping.
+Plain arrays support **element-wise operators**, and the `Simd` namespace
+offers reductions. All of the following run in the interpreter and are
+SIMD-vectorized by the compiler:
 
 ```adesh
+import Simd;
+
 let v1 = [1.0, 2.0, 3.0, 4.0];
 let v2 = [10.0, 20.0, 30.0, 40.0];
 
 // Element-wise addition using vectorized instructions
-let result = v1.vadd(v2);
-print(result); // [11.0, 22.0, 33.0, 44.0]
+let result = v1 + v2;
+print(result); // [11, 22, 33, 44]
 
-// Fused multiply-accumulate
-let scaled = v1.vmul_add(v2, 5.0);
-print(scaled);
+// SAXPY-style: y = alpha * x + y  (natural operator syntax)
+let alpha = 2.5;
+let x = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0];
+let y = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0];
+let saxpy = alpha * x + y;
+print(saxpy); // [12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100]
+
+// Reductions via the Simd namespace
+let row = [1.0, 2.0, 3.0, 4.0];
+let col = [4.0, 3.0, 2.0, 1.0];
+print(Simd.dot(row, col));        // 20
+print(Simd.mean([10.0, 20.0]));   // 15
+
+// Instance API
+let vx = Simd.vector(x);
+print(vx.scale(2.0));             // [2, 4, 6, 8, 10, 12, 14, 16]
 ```
+
+These come straight from
+[`examples/numerics/matrix_operations.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/numerics/matrix_operations.adesh).
 
 ---
 

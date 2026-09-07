@@ -58,7 +58,7 @@ The `TaskManager` class owns the task array and every operation:
 
 ```adesh
 class TaskManager {
-    fn init() {
+    TaskManager() {
         this.tasks = [];
         this.nextId = 1;
     }
@@ -189,6 +189,54 @@ Then run it:
 
 ```bash
 adesh task_manager.adesh
+```
+
+**Output (condensed — the real run prints the full help text):**
+```
+📚 Demo Mode: Adding sample tasks...
+
+✅ Sample tasks added!
+
+📖 Available Commands:
+  add <title> [desc] [priority]  - Add a new task
+  list [filter]                  - List tasks (all/completed/pending)
+  complete <id>                  - Mark task as completed
+  delete <id>                    - Delete a task
+  show <id>                      - Show task details
+  stats                          - Show statistics
+  help                           - Show this help
+  …
+
+📋 Task List
+
+  ID  | Status | Priority | Title
+  ────┼────────┼──────────┼─────────────────────
+     1 | ✓ Done | 🔴 High  | Write documentation
+     2 | ○ Todo | 🔴 High  | Fix bug #42
+     3 | ○ Todo | 🟡 Medium| Code review
+
+➜ Command: add 'Deploy to production' 'Version 2.0 release' high
+✅ Task added successfully!
+   ID: 4
+   Title: Deploy to production
+   Priority: high
+
+➜ Command: list pending
+📋 Task List (pending)
+
+  ID  | Status | Priority | Title
+  ────┼────────┼──────────┼─────────────────────
+     2 | ○ Todo | 🔴 High  | Fix bug #42
+     3 | ○ Todo | 🟡 Medium| Code review
+     4 | ○ Todo | 🔴 High  | Deploy to production
+
+➜ Command: stats
+  📊 Statistics:
+     Total tasks: 4
+     Completed: 1
+     Pending: 3
+     High priority: 3
+     Completion rate: 25.0%
 ```
 
 You get a magazine-style console output: box-drawing banners, emoji status

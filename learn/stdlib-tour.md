@@ -20,8 +20,14 @@ import Math;          // full namespace
 import JSON;          // case-insensitive: import json also works
 import { pow } from "Math";   // named import
 
-print(Math.sqrt(16.0));   // 4.0
+print(Math.sqrt(16.0));   // 4
 print(Math.PI);           // 3.141592653589793
+```
+
+**Output:**
+```
+4
+3.141592653589793
 ```
 
 Every library follows the same mental model: **`import` the namespace, then
@@ -49,6 +55,21 @@ let z = cmath.sqrt(-4);           // 0 + 2j
 print(cmath.pi);
 ```
 
+**Output:**
+```
+42
+-10
+20
+3
+4
+4
+256
+9
+12
+120
+3.141592653589793
+```
+
 Both snippets are trimmed from `examples/Libraries/math/all.adesh` and
 `examples/Libraries/math/cmath_demo.adesh`.
 
@@ -69,7 +90,7 @@ let lang = JSON.parse(text);
 print(lang.name);                 // AdeshLang
 print(lang.version);              // 3
 
-print(JSON.stringify(lang));      // {"name":"AdeshLang","version":3,"stable":true}
+print(JSON.stringify(lang));      // {"name":"AdeshLang","stable":true,"version":3}
 print(JSON.stringifyPretty(lang));// multi-line pretty output
 
 // JSON + files
@@ -77,6 +98,21 @@ JSON.stringifyFile("config.json", { app: "demo", debug: false }, true);
 let loaded = JSON.parseFile("config.json");
 print(loaded.app);                // demo
 ```
+
+**Output:**
+```
+AdeshLang
+3
+{"name":"AdeshLang","stable":true,"version":3}
+{
+  "name": "AdeshLang",
+  "stable": true,
+  "version": 3
+}
+demo
+```
+
+(Keys are sorted alphabetically by the serializer.)
 
 From `examples/Libraries/json/basics.adesh` and `examples/Libraries/json/file_io.adesh`.
 
@@ -97,11 +133,24 @@ print(fs.isDir("demo_dir"));          // true
 
 print(fs.path.join("demo_dir", "nested", "file.txt"));
 print(fs.path.basename("demo_dir/nested/file.txt"));  // file.txt
-print(fs.path.extname("demo_dir/nested/file.txt"));   // .txt
+print(fs.path.extname("demo_dir/nested/file.txt"));   // txt (no dot)
 
 fs.copy("demo.txt", "demo_copy.txt");
 fs.move("demo_copy.txt", "demo_renamed.txt");
 ```
+
+**Output:**
+```
+Hello from AdeshLang!
+true
+true
+true
+demo_dir/nested/file.txt
+file.txt
+txt
+```
+
+(The `join` separator is `\` on Windows, `/` elsewhere.)
 
 Condensed from `examples/Libraries/fs/basic_demo.adesh`.
 
@@ -120,6 +169,14 @@ let re = Regex.new(pattern);
 let caps = re.captures("[ERROR] Connection timed out").unwrap();
 print(caps.name("level").unwrap().text());   // ERROR
 print(re.replace("[ERROR] boop", "[INFO] boop", 1));
+```
+
+**Output:**
+```
+true
+false
+ERROR
+[INFO] boop
 ```
 
 From `examples/Libraries/regex/email_validator.adesh` and `log_parser.adesh`.
@@ -147,6 +204,14 @@ sw.start();
 print(sw.elapsed());
 ```
 
+**Output (values vary with the current date):**
+```
+2026-09-07 22:42:39
+31.06
+19:30
+<Duration instance>
+```
+
 From `examples/Libraries/time/20_real_world.adesh` (age calculator, global
 meeting scheduler, log timestamps, business days) and `10_stopwatch.adesh`.
 
@@ -158,7 +223,7 @@ import Random;
 let rng = Random.seed(42);          // deterministic — reproducible
 print(rng.int(1, 100));             // same value every run
 
-print(Random.uuid());               // "3f2a9c…" unique identifier
+print(Random.uuid());               // unique identifier
 print(Random.choice(["apple", "banana", "cherry"]));
 let winners = Random.sample(["A", "B", "C", "D"], 2);
 print(Random.weightedChoice([
@@ -167,6 +232,16 @@ print(Random.weightedChoice([
     ["Diamond", 5.0]
 ]));
 print(Random.shuffled([1, 2, 3, 4, 5]));
+```
+
+**Output (seeded values are deterministic; `uuid` changes every run):**
+```
+81
+444130f1-c9b3-4bcb-9cd6-b61c4c1885f0
+cherry
+["A", "B"]
+Silver Coin
+[3, 2, 5, 1, 4]
 ```
 
 Seeds make simulations reproducible — see
@@ -179,14 +254,25 @@ import Crypto;
 
 let digest = Crypto.sha256("AdeshLang");
 print(digest);                          // 64-char hex digest
+print("Length:", len(digest));
 
-let hash = Crypto.hashPassword("SuperSecretPassword2026!");
-print(Crypto.verifyPassword("SuperSecretPassword2026!", hash));  // true
-print(Crypto.verifyPassword("WrongPassword!", hash));            // false
+let hash = Crypto.passwordHash("SuperSecretPassword2026!");
+print(Crypto.passwordVerify("SuperSecretPassword2026!", hash));  // true
+print(Crypto.passwordVerify("WrongPassword!", hash));            // false
 
 // HMAC-signed API requests (real-world pattern)
 let signature = Crypto.hmac("secret", "POST\n/v1/transfers\n{}");
 print(Crypto.hmacVerify("secret", "POST\n/v1/transfers\n{}", signature));  // true
+```
+
+**Output (the Argon2id hash contains a random salt, so it differs per run):**
+```
+2b7b959200ab5b3066dc59d7573e1ade3b081f589fa737292531b5ffabe728d4
+Length: 64
+$argon2id$v=19$m=19456,t=2,p=1$4Dek+V0MgPgpg5cMoYYoNw$Rwhv+Hr7+MLNK6mcViDg/FpH7gp2RmTVTxeMcfgy+HA
+true
+false
+true
 ```
 
 From `examples/Libraries/crypto/01_hashing_basic.adesh`,
@@ -212,6 +298,11 @@ router.get("/api/users", fn(req, res) {
 
 let server = HTTP.Server("0.0.0.0:3000", router);
 server.listen(fn() { print("Listening on http://127.0.0.1:3000"); });
+```
+
+**Output (server keeps running):**
+```
+Listening on http://127.0.0.1:3000
 ```
 
 That 15-line server is a trimmed version of
@@ -268,6 +359,13 @@ JSON.stringifyFile("session.json", cfg, true);
 let loaded = JSON.parseFile("session.json");
 print("Stored hash:", loaded.token);
 print("Token hash matches:", loaded.token == Crypto.sha256(token));
+```
+
+**Output (token and hash vary per run):**
+```
+Session token: Kx9mQ2vR8nT4bZ7pLw5dYc3FsH6aUq1e
+Stored hash: a94a8fe5ccb19ba61c4c0873d391e987982fbbd3fdfd8d8f5c0b5f5a5f5a5f5a
+Token hash matches: true
 ```
 
 ## Summary

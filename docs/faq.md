@@ -137,7 +137,7 @@ class BankAccount {
     private balance: f64;
     public owner: string;
     
-    fn init(owner: string, initial: f64) {
+    BankAccount(owner: string, initial: f64) {
         self.owner = owner;
         self.balance = initial;
     }

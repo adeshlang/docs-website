@@ -179,7 +179,7 @@ below.
 
 ```adesh
 class TreeNode {
-    fn init(value) {
+    TreeNode(value) {
         this.value = value;
         this.children = [];
         this.parent = null;    // Weak back-reference, breaks cycles
@@ -192,8 +192,8 @@ class TreeNode {
     }
 }
 
-let root = TreeNode();
-let child = TreeNode();
+let root = TreeNode("root");
+let child = TreeNode("child");
 root.addChild(child);
 print(child.parent.value);     // root's value
 ```

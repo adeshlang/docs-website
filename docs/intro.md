@@ -186,6 +186,7 @@ Pick the path that matches what you want to do right now:
 | **See complete, runnable programs** | [Learn by Examples](/learn-by-examples) |
 | **Understand the language deeply** | [Language Guide](/docs/language-guide/basics) |
 | **Explore execution backends** | [Backends Overview](/docs/backends/overview) |
+| **See how the compiler works** | [Compiler Architecture](/docs/compiler/overview) — from lexer to codegen |
 | **Look up the standard library** | [Stdlib Overview](/docs/builtin/overview) |
 | **Contribute to AdeshLang** | [Contributing Guide](/docs/contributing) |
 | **Get a question answered** | [FAQ](/docs/faq) |

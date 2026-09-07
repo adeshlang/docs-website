@@ -49,3 +49,17 @@ graph TD
 1. **Source of Truth Integrity**: Semantic analysis runs on desugared HIR before LIR lowering.
 2. **Compile-Time Safety**: Borrow checking and move analysis reject illegal reference alias operations prior to code generation.
 3. **Multi-Backend Portability**: LIR serves as the unified input for Interpreter, Bytecode VM, JIT, and AOT compilation targets.
+
+## Inside the pipeline
+
+Each stage has its own deep-dive page:
+
+| Stage | Deep dive |
+|---|---|
+| Source text → tokens → AST | [Lexer & Parser](/docs/compiler/lexer-parser) |
+| HIR + type checking + symbol resolution | [Semantic Analysis & HIR](/docs/compiler/semantic-analysis) |
+| Ownership, borrows, drops — compile-time safety | [Memory Safety Analysis](/docs/compiler/borrow-checker) |
+| HIR → MIR → VIR, optimization & SIMD passes | [The IR Pipeline](/docs/compiler/ir) |
+| VIR → interpreter / JIT / AOT / WASM | [Codegen & Backends](/docs/compiler/codegen) |
+| Runtime values, environments, async services | [Runtime & Value Model](/docs/compiler/runtime) |
+| Allocators, arenas, Arc, cycle detection | [Memory Management](/docs/compiler/memory-management) |

@@ -38,7 +38,7 @@ Doubled: [20, 40, 60, 80]
     label: 'OOP & Safety',
     title: 'Encapsulation & Exception Safety',
     code: `class Counter {
-  fn init(initial_count) {
+  Counter(initial_count) {
     this.count = initial_count;
   }
 
@@ -76,10 +76,10 @@ Body: { "url": "https://httpbin.org/get" }
     code: `let v1 = [1.0, 2.0, 3.0, 4.0];
 let v2 = [10.0, 20.0, 30.0, 40.0];
 
-// Vector addition using hardware intrinsics
-let result = v1.vadd(v2);
+// Element-wise vector addition via SIMD operators
+let result = v1 + v2;
 print("Vector Sum:", result);`,
-    output: `Vector Sum: [11.0, 22.0, 33.0, 44.0]
+    output: `Vector Sum: [11, 22, 33, 44]
 [AVX2 / ARM Neon vector lane pass active]`,
   },
   {
@@ -114,7 +114,7 @@ const features = [
   {
     icon: '🏎️',
     title: 'Hardware SIMD Acceleration',
-    body: 'First-class vector operations (<code>vadd</code>, <code>vmul_add</code>, broadcasting) and auto-vectorization passes leveraging AVX2 and ARM Neon vector instructions.',
+    body: 'First-class vector operations — element-wise <code>+</code>/<code>*</code> on arrays, the <code>Simd</code> namespace (<code>dot</code>, <code>sum</code>, <code>mean</code>), and auto-vectorization passes leveraging AVX2 and ARM Neon vector instructions.',
   },
   {
     icon: '🌐',
