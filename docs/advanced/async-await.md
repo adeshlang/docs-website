@@ -141,7 +141,7 @@ Iterate asynchronously over incoming event streams, file chunks, or WebSocket me
 import { websocket } from "builtin";
 
 async fn listen_to_feed() -> Result<(), Error> {
-    let mut ws = await websocket::connect("wss://feed.example.com/prices")?;
+    let ws = await websocket::connect("wss://feed.example.com/prices")?;
     
     // Asynchronously consume messages as they arrive
     while let Some(msg) = await ws.next() {

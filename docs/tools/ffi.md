@@ -96,10 +96,10 @@ extern "C" {
 }
 
 fn get_current_epoch() -> i64 {
-    let mut tv = TimeVal { tv_sec: 0, tv_usec: 0 };
+    let tv = TimeVal { tv_sec: 0, tv_usec: 0 };
     let null_tz: *mut TimeZone = null;
     
-    let res = unsafe { gettimeofday(&mut tv, null_tz) };
+    let res = unsafe { gettimeofday(&tv, null_tz) };
     if res == 0 {
         return tv.tv_sec;
     }

@@ -1,277 +1,109 @@
 ---
 id: modules-imports
-title: Modules and Imports
-description: How to organize code into modules, import namespaces and symbols, and reuse standard library functionality in AdeshLang.
-sidebar_label: Modules & Imports
+title: "Module System, Symbol Tables & Dependency Graph Specification"
+description: "Formal specification of module resolution, namespace symbol tables, import/export semantics, circular dependency detection, and link-time optimization (LTO)."
+sidebar_label: "Modules & Import System"
 ---
 
-# Modules and Imports
+# Module System, Symbol Tables & Dependency Graph Specification
 
-As programs become larger, it is not practical to keep everything in a single file. AdeshLang supports modular organization so code can be separated into files, reused across projects, and composed cleanly.
-
-This page explains the common import patterns, the structure of module usage, and how to think about reusable code in a real project.
-
----
-
-## Why modules matter
-
-Modules help with:
-
-- separating responsibilities
-- reusing functions and data structures
-- organizing library code
-- keeping larger codebases maintainable
-- hiding implementation details behind a clear interface
-
-A module in AdeshLang is typically a source file that exports reusable names and can then be imported elsewhere.
+This document specifies the module system architecture, file resolution rules, symbol table visibility, circular dependency detection algorithms, and cross-module optimization boundaries in AdeshLang.
 
 ---
 
-## Import basics
+## 1. Compilation Unit & Module Hierarchy
 
-The general import pattern looks like this:
+A module in AdeshLang corresponds to a distinct source file (`.adesh`) or directory package containing a module manifest. Every file creates an isolated, top-level **Lexical Symbol Namespace**.
 
-```adesh
-import "./helpers.adesh" as Helpers;
 ```
-
-This imports the file as a namespace named `Helpers`, so its exported contents are accessed through that namespace.
-
-```adesh
-let total = Helpers.format_currency(42);
-print(total);
+[ Root Module: main.adesh ]
+       |
+       +---> [ import { net } from "builtin" ]     (Standard Library Module)
+       |
+       +---> [ import { Worker } from "./worker" ] (Relative File Module)
 ```
 
 ---
 
-## Local file modules
+## 2. Export & Import Semantics
 
-Importing a local file is the standard way to split code into reusable units.
-
-```adesh
-import "./math_utils.adesh" as MathUtils;
-
-let area = MathUtils.circle_area(10);
-print(area);
-```
-
-### Example module
-
-`math_utils.adesh`:
+### 2.1 Explicit Symbol Export
+Symbols declared within a module are private to that module's compilation unit by default. Symbols become accessible to importing modules when qualified with the `export` keyword:
 
 ```adesh
-fn circle_area(radius: f64): f64 {
-    return 3.14159 * radius * radius;
-}
-```
+// File: math_utils.adesh
+export const PI: f64 = 3.1415926535;
 
-Then in another file:
-
-```adesh
-import "./math_utils.adesh" as MathUtils;
-
-print(MathUtils.circle_area(3));
-```
-
-This pattern keeps your business logic and helper functions separate.
-
----
-
-## Destructured imports
-
-If you want to import only specific items, you can pull them directly into local scope.
-
-```adesh
-import { sqrt, pow, PI } from Math;
-
-print(sqrt(25.0));
-print(PI * pow(3, 2));
-```
-
-This is convenient when you want direct access to a few API functions without a namespace prefix.
-
----
-
-## Builtin and standard library imports
-
-AdeshLang exposes a set of standard libraries and namespaces, such as:
-
-- `Math`
-- `FS`
-- `Path`
-- `Process`
-- `JSON`
-- `IO`
-- `Time`
-- `Regex`
-- `Env`
-- `Random`
-- `Collections`
-- `Crypto`
-- `Encoding`
-- `Compression`
-- `Net`
-- `URL`
-- `DNS`
-
-### Example
-
-```adesh
-import Math;
-import DNS;
-
-print(Math.sqrt(16));
-let ips = DNS.resolve("google.com");
-```
-
-The standard library API is designed to make common system and application tasks easier without adding heavy syntax overhead.
-
----
-
-## Namespace import pattern
-
-A namespace import gives structure to a module’s exported API.
-
-```adesh
-import Net;
-
-let result = Net.request("https://example.com");
-print(result);
-```
-
-This is often the preferred style for larger libraries because it keeps names clear and avoids collisions.
-
----
-
-## Relative imports
-
-Relative imports are resolved from the current file location.
-
-```adesh
-import "./helpers.adesh" as Helpers;
-import "../common/config.adesh" as Config;
-```
-
-### Good practice
-
-- keep file-level imports predictable
-- avoid deep relative chains when a clearer module structure is possible
-- prefer a consistent directory layout for project modules
-
----
-
-## Exporting module members
-
-A module usually exposes the names it wants to share with other code.
-
-```adesh
-fn add(a: i64, b: i64): i64 {
-    return a + b;
+export fn calculate_area(radius: f64) -> f64 {
+    return PI * radius * radius;
 }
 
-fn multiply(a: i64, b: i64): i64 {
-    return a * b;
-}
+fn internal_helper() { ... } // Private: Not exported
 ```
 
-The imported file then exposes those functions to callers when the module is loaded.
-
----
-
-## API-style reference
-
-| Import style | Syntax | Use case |
-|---|---|---|
-| Namespace import | `import Math;` | Use a library as a named namespace |
-| File import | `import "./lib.adesh" as Lib;` | Reuse a local module |
-| Destructured import | `import { sqrt, PI } from Math;` | Bring a few members into scope |
-| Mixed usage | `Lib.fn()` or `sqrt()` | Either structured or direct access |
-
----
-
-## Common usage patterns
-
-### 1. Helper modules
+### 2.2 Import Binding Specifications
+Import statements bind exported symbols into the caller's symbol table:
 
 ```adesh
-import "./strings.adesh" as Strings;
+// Named Import
+import { calculate_area, PI } from "./math_utils";
 
-print(Strings.uppercase("hello"));
+// Alias Import
+import { calculate_area as get_area } from "./math_utils";
+
+// Namespace Import
+import * as MathUtils from "./math_utils";
 ```
 
-### 2. Shared configuration
+Imported bindings are immutable aliases to the exported module symbol table slots.
 
-```adesh
-import "./config.adesh" as Config;
+---
 
-print(Config.app_name);
+## 3. Module Resolution & Search Algorithm
+
+When resolving `import ... from "target"`, the compiler executes a 4-tier module path resolution lookup algorithm:
+
+```
+                          [ Resolving import "path" ]
+                                       |
+                   +-------------------+-------------------+
+                   | Is Relative Path? ("./" or "../")     |
+                   v                                       v
+         [ Resolves relative to ]                [ Search Module Search Paths ]
+         [ Current File Dir     ]                          |
+                                                           +---> 1. Standard Built-in Modules ("builtin", "stdlib")
+                                                           +---> 2. Project ADL Package Directory ("node_modules" / ".adl")
+                                                           +---> 3. Global ADL Package Path ($ADESH_PATH)
 ```
 
-### 3. Standard library access
+If resolution fails at all tiers, compilation halts with error `E0060: Cannot resolve module target`.
 
-```adesh
-import Math;
-import Env;
+---
 
-let x = Math.sqrt(9);
-let user = Env.get("USER");
+## 4. Circular Dependency Detection Algorithm
+
+During AST analysis, the compiler constructs a directed **Module Dependency Graph** $G = (V, E)$, where vertices $V$ represent modules and directed edges $E = (u, v)$ represent an `import` from module $u$ to module $v$.
+
+### 4.1 DFS Topological Cycle Detection
+Before code generation, Tarjan's Strongly Connected Components algorithm performs a Depth-First Search (DFS) traversal:
+
+```text
+Algorithm DFS_Detect_Cycles(module_u):
+    State[module_u] = VISITING
+    For each dependency_v in Imports(module_u):
+        If State[dependency_v] == VISITING:
+            TRAP_FATAL_ERROR("E0061: Circular dependency detected: " + CyclePath(dependency_v -> module_u))
+        Else If State[dependency_v] == UNVISITED:
+            DFS_Detect_Cycles(dependency_v)
+    State[module_u] = VISITED
 ```
 
----
-
-## Import rules and semantics
-
-A good mental model is:
-
-- import brings a module or namespace into scope
-- exported names become accessible through that namespace or directly
-- module boundaries help reduce global clutter
-- local modules are typically resolved relative to the importing file
-
-This mirrors the way modern languages manage code organization: modules represent a unit of code, imports define access, and names stay explicit.
+Circular module dependencies are strictly rejected at compile time.
 
 ---
 
-## Best practices
+## 5. Link-Time Optimization (LTO) & Cross-Module Boundaries
 
-- put related utilities in their own module
-- use namespace imports for bigger libraries
-- use destructuring only for a small number of selected APIs
-- avoid circular dependency chains when possible
-- keep files and import paths consistent across the project
-
----
-
-## Related examples and source references
-
-### Examples
-
-- project examples under `examples/modules/`
-- project example files and standard library usage patterns in `examples/stdlib/`
-
-### Source references
-
-The module system and import mechanics are implemented in the compiler frontend and runtime loader. If you want to go deeper, inspect the project source tree around:
-
-- `src/main.rs`
-- `src/frontend/`
-- `src/runtime/`
-- `src/stdlib/`
-
-This gives you a direct view of how source files are discovered, parsed, and bound to runtime APIs.
-
----
-
-## Summary
-
-Modules and imports are how AdeshLang scales beyond tiny scripts. They let you split code into clear units, reuse functions and libraries, and build larger programs without mixing unrelated responsibilities into one file.
-
-The most important patterns are:
-
-- namespace imports for libraries
-- file imports for project modules
-- destructured imports for a few specific symbols
-- clear and maintainable relative paths
-
-Once you understand imports, the language becomes much easier to structure and extend over time.
-
+When compiling with Link-Time Optimization enabled (`--lto`), the compiler retains intermediate bitcode representation across modules:
+- **Cross-Module Inlining**: Functions marked `@inline` in external modules are inlined directly into calling module basic blocks.
+- **Dead Code Elimination (DCE)**: Unreferenced exported functions are stripped from the final executable binary, reducing binary footprint.

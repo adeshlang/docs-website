@@ -7,7 +7,7 @@ description: The `let` keyword binds a variable.
 
 # `let`
 
-The `let` keyword introduces a variable binding. Bindings are immutable by default; add `mut` to allow reassignment.
+The `let` keyword introduces a variable binding. Variables declared with `let` are mutable by default.
 
 ---
 
@@ -16,7 +16,7 @@ The `let` keyword introduces a variable binding. Bindings are immutable by defau
 ```adesh
 let name = "Alice";        // inferred string
 let count: i32 = 100;      // explicit type
-let mut counter = 0;       // mutable
+let counter = 0;           // reassignable
 counter += 1;
 ```
 

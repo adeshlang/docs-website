@@ -1,117 +1,103 @@
 ---
 id: semantics-rules
-title: Semantics and Rules
-sidebar_label: Semantics and Rules
+title: "Formal Memory Safety & Borrow Checker Specification"
+description: "Formal specification of AdeshLang ownership semantics, destructive move invariants, Drop glue, Aliasing XOR Mutability theorem, and Non-Lexical Lifetimes (NLL)."
+sidebar_label: "Memory Safety & Borrow Checker"
 ---
 
-# Semantics and Rules
+# Formal Memory Safety & Borrow Checker Specification
 
-This page explains how AdeshLang behaves at runtime and which rules are important for writing predictable code.
+This document provides the formal mathematical and architectural specification of AdeshLang's compile-time memory safety invariants, destructive move semantics, Drop glue generation, and Borrow Checker specification.
 
-## 1. Execution Model
+---
 
-AdeshLang supports multiple backends (interpreter, VM, JIT, native JIT, AOT, WASM). The language intent is consistent across backends: same source should produce the same result.
+## 1. Ownership System Invariants
 
-## 2. Values and Truthiness
+Memory safety in AdeshLang is guaranteed at compile time without a Garbage Collector (GC) through strict enforcement of three core ownership invariants:
 
-Common falsy values in conditions:
+1. **Single Owner Invariant**: Every value in an AdeshLang program has exactly one owner variable binding at any given point in execution.
+2. **Deterministic Lifetime Invariant**: When the owner binding goes out of scope, the value's heap memory is deterministically deallocated.
+3. **Move Transfer Invariant**: Assigning a value to another binding or passing it by value transfers ownership, invalidating the source binding (**Destructive Move**).
 
-- `false`
-- `null`
-- `0`
+---
 
-Everything else is treated as truthy in normal control flow.
+## 2. Destructive Move Semantics & Drop Glue
+
+When ownership of a heap-backed variable is assigned or passed to a function, the source variable is marked as uninitialized in the compiler's bitmask status map:
 
 ```adesh
-if 0 {
-    print("not expected");
-} else {
-    print("0 is falsy");
+let a = Container { id: 100 };
+let b = a; // Ownership MOVED to 'b'. Variable 'a' is now uninitialized.
+
+// print(a.id); // COMPILE ERROR E0030: Use of moved value 'a'
+```
+
+### 2.1 Compiler SSA Lowering & Drop Flags
+During compilation, the AST transformer inserts conditional **Drop Flags** for variables whose initialization status depends on runtime branching:
+
+```text
+[ Scope Exit ]
+      |
+      v
+[ Check Drop Flag for 'a' ]
+      |
+   +--+--+
+   |     |
+ (1)     (0)
+   v     v
+[Run]   [Skip]  --> Deallocate heap buffer iff Drop Flag == 1
+```
+
+If a value has been moved, its Drop Flag is set to `0`, preventing double-free runtime vulnerabilities.
+
+---
+
+## 3. Borrow Checker Formal Specification
+
+AdeshLang supports referencing values without transferring ownership through **Borrowing**. Borrowing semantics are enforced by the compiler's Borrow Checker pass.
+
+### 3.1 Aliasing XOR Mutability Theorem
+The Borrow Checker guarantees memory safety across all execution paths by enforcing the **Aliasing XOR Mutability Theorem**:
+
+```text
+For all active references r_1, r_2 to value V:
+  (is_shared(r_1) AND is_shared(r_2)) XOR (is_exclusive(r_1) AND r_2 == NULL)
+```
+
+- **Shared Borrows (Read-Only)**: Unlimited concurrent read-only references are permitted simultaneously. No mutations are allowed while shared references exist.
+- **Exclusive Borrows (Mutable)**: Exactly one exclusive reference is permitted at any time. No other references (read-only or exclusive) may coexist.
+
+```adesh
+let data = DataBuffer::new();
+
+read(data);  // Shared borrow
+read(data);  // Shared borrow (Valid: Multiple readers allowed)
+
+update(data); // Exclusive borrow (Valid: Borrow Checker infers exclusive access)
+```
+
+---
+
+## 4. Non-Lexical Lifetimes (NLL) Analysis Graph
+
+AdeshLang utilizes **Non-Lexical Lifetimes (NLL)**. A reference's lifetime is not restricted to its enclosing lexical block `{ ... }`. Instead, a reference's lifetime is computed as the Control Flow Graph (CFG) region extending from its point of creation to its **last actual usage**:
+
+```adesh
+fn process() {
+    let data = DataBuffer::new();
+    
+    let ref1 = &data;
+    print(ref1.size); // <-- LAST USE of 'ref1'. Lifetime of 'ref1' ENDS HERE.
+    
+    update(data);     // VALID: 'ref1' is no longer active in the CFG, 
+                      // so exclusive mutation is permitted!
 }
 ```
 
-## 3. Assignment and Mutation
+### 4.1 CFG Lifetime Calculation Algorithm
+1. Construct the Control Flow Graph (CFG) for the function body.
+2. For each reference `r`, identify the set of basic block instruction points `P_use(r)` where `r` is read or dereferenced.
+3. Compute the lifetime region `L(r)` as the smallest connected sub-graph of CFG nodes containing `P_use(r)` and reachable from the creation point of `r`.
+4. Verify that for any exclusive borrow `r_ex`, `L(r_ex) ∩ L(r') == ∅` for all other active references `r'`.
 
-- `let` declares a binding
-- Re-assignment uses `=`
-- Objects and arrays are mutable through property/index assignment
-
-```adesh
-let obj = { count: 1 };
-obj.count = obj.count + 1;
-
-let arr = [10, 20, 30];
-arr[1] = 99;
-```
-
-## 4. Ownership and Compile-Time Safety
-
-AdeshLang enforces compile-time memory safety checks before execution. Ownership and borrow-style constraints are validated before backend execution.
-
-Practical effect:
-
-- Unsafe patterns are rejected early
-- Runtime behavior is more deterministic
-
-## 5. Function Rules
-
-- Functions are first-class values
-- Closures capture values from outer scope
-- `return` exits function immediately
-- Parameter defaults are supported in many patterns
-
-```adesh
-fn add(a, b = 2) {
-    return a + b;
-}
-```
-
-## 6. Error and Exception Flow
-
-Use `try`/`catch` for failure handling and `throw` to raise errors.
-
-```adesh
-try {
-    throw "failure";
-} catch (e) {
-    print("caught", e);
-}
-```
-
-## 7. Null Safety Helpers
-
-AdeshLang provides concise null-safe operators:
-
-- `??` nullish coalescing
-- `?.` optional chaining
-
-```adesh
-let user = null;
-let name = user?.profile?.name ?? "guest";
-print(name);
-```
-
-## 8. Concurrency Semantics
-
-Core async behavior:
-
-- `Promise(...)`
-- `sleep(ms)` and `delay(ms)`
-- `setTimeout`, `setInterval`, clear variants
-- channel and parallel helpers in concurrency examples
-
-Some APIs are conceptually parallel but may run sequentially today for correctness and portability.
-
-## 9. Practical Rules of Thumb
-
-- Prefer clear expressions over dense one-liners
-- Be explicit with numeric casts when crossing widths
-- Use built-ins like `type`, `len`, `hasKey` for robust checks
-- Test backend-sensitive logic in the backend you deploy
-
-## 10. Related Pages
-
-- [Language Basics](basics)
-- [Type System](type-system)
-- [Control Flow](control-flow)
-- [Built-in Functions](/docs/builtin/builtins)
+This analysis eliminates artificial borrow conflicts while guaranteeing zero dangling references, zero data races, and zero use-after-free bugs at compile time.

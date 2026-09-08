@@ -317,15 +317,14 @@ print(a);  // ✅ OK
 ### Common error: "cannot borrow as mutable"
 
 ```adesh
-let ref1 = &data;
-let ref2 = &mut data;  // ❌ Error
+read(data);
+write(data);  // ❌ Error: cannot borrow mutably while read-borrowed
 
 // Fix: Scope borrows separately
 {
-    let ref1 = &data;
-    use(ref1);
+    read(data);
 }
-let ref2 = &mut data;  // ✅ OK now
+write(data);  // ✅ OK now
 ```
 
 ## Community & Support

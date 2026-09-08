@@ -1,110 +1,124 @@
 ---
 id: error-handling
-title: Exception & Error Handling
-sidebar_label: Error Handling
+title: "Monadic Error Model vs Stack Unwinding Architecture"
+description: "Formal specification of AdeshLang error handling architectures: Result/Option monadic zero-cost error propagation vs native DWARF/SEH stack unwinding exceptions."
+sidebar_label: "Error Handling Architecture"
 ---
 
-# Exception & Error Handling
+# Monadic Error Model vs Stack Unwinding Architecture
 
-AdeshLang implements a structured exception-handling subsystem using `try`, `catch`, and `throw`. It allows applications to signal, capture, inspect, and recover from runtime failures gracefully without crashing process threads.
+This document specifies AdeshLang's dual error handling models: zero-cost monadic error propagation using `Result<T, E>` / `Option<T>` and target-native stack unwinding exception tables (`try`/`catch`/`throw`).
 
 ---
 
-## 1. The `throw` Statement
+## 1. Dual Error Handling Model Overview
 
-The `throw` statement raises an exception, halting standard control flow and initiating stack unwinding.
+AdeshLang provides two complementary error handling mechanisms suited for different operational requirements:
 
-### Syntax & Mechanics
-
-```adesh
-throw <expression>;
 ```
-
-- **Expression Payload**: `throw` accepts any valid AdeshLang expression — strings, numbers, objects, or custom error structs.
-- **Stack Unwinding**: When `throw` executes, the runtime immediately unwinds the call stack frame by frame, looking for the nearest enclosing `try ... catch` block. If no handler is found, the process terminates with an unhandled exception panic log.
-
-### Examples
-
-```adesh
-// Throwing a simple string message
-fn validatePositive(val) {
-    if (val <= 0) {
-        throw "Value must be strictly positive!";
-    }
-    return val;
-}
-
-// Throwing a structured error object
-fn processTransaction(amount, balance) {
-    if (amount > balance) {
-        throw {
-            code: "ERR_INSUFFICIENT_FUNDS",
-            requested: amount,
-            available: balance,
-            timestamp: 1718000000
-        };
-    }
-    return balance - amount;
-}
+                                  +-----------------------+
+                                  |  Error Propagation    |
+                                  +-----------------------+
+                                              |
+                   +--------------------------+--------------------------+
+                   |                                                     |
+         +-------------------+                                 +-------------------+
+         | Monadic Propagation|                                 | Stack Unwinding   |
+         | (Result / Option) |                                 | (try/catch/throw) |
+         +-------------------+                                 +-------------------+
+         | - Zero runtime cost|                                 | - Out-of-band     |
+         | - Explicit checks |                                 | - Deep call-stack |
+         | - No unwinding    |                                 |   unwinding       |
+         +-------------------+                                 +-------------------+
 ```
 
 ---
 
-## 2. The `try ... catch` Block
+## 2. Monadic Error Propagation (`Result<T, E>` & `Option<T>`)
 
-Use `try ... catch` to guard code blocks and recover from thrown exceptions.
+Monadic error propagation represents operations that can fail as explicit, stack-allocated **Tagged Union** values without runtime exception overhead:
 
-### Syntax & Mechanics
+```adesh
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+enum Option<T> {
+    Some(T),
+    None,
+}
+```
+
+### 2.1 `Result<T, E>` Memory Layout
+`Result<T, E>` is represented in memory as a 1-byte discriminant tag followed by a max-payload union buffer (`max(sizeof(T), sizeof(E))`):
+
+```
+Result<T, E> Memory Layout
++-------------------------+-----------------------------------------------------+
+|  Discriminant Tag (1B)  |  Payload Union Buffer (max(sizeof(T), sizeof(E)))   |
++-------------------------+-----------------------------------------------------+
+|  0 = Ok(T), 1 = Err(E)  |  Stores either T payload or E error payload         |
++-------------------------+-----------------------------------------------------+
+```
+
+---
+
+## 3. Early Return Operator (`?`) Compiler Lowering
+
+The `?` operator provides syntactic sugar for unwrapping `Ok(T)` or early-returning `Err(E)` from the enclosing function:
+
+```adesh
+fn read_and_parse(filename: string) -> Result<i64, Error> {
+    let text = read_file(filename)?; // Early returns Err if read_file fails
+    let num = parse_int(text)?;     // Early returns Err if parse_int fails
+    return Ok(num);
+}
+```
+
+### 3.1 Desugared AST Lowering
+The compiler desugars `expr?` into a `match` basic block:
+
+```adesh
+let num = match parse_int(text) {
+    Result::Ok(val) => val,
+    Result::Err(err) => return Result::Err(err),
+};
+```
+
+---
+
+## 4. Native Stack Unwinding Exception Architecture (`try` / `catch` / `throw`)
+
+For unexpected runtime faults or deep call-stack errors, AdeshLang implements native unwinding exceptions:
 
 ```adesh
 try {
-    // Protected Scope: Code that may throw an exception
-} catch (err) {
-    // Exception Handler Scope: Evaluated if an exception is caught
-}
-```
-
-1. **Protected Scope**: The `try` block executes standard statements.
-2. **Exception Interception**: If an exception is thrown anywhere inside the `try` block (or inside functions called from within it), execution in the `try` block immediately halts.
-3. **Handler Scope**: Control transfers to the `catch` block. The thrown exception payload is bound to the declared error variable parameter (`err`).
-
-### Pin-to-Pin Example
-
-```adesh
-fn parseConfig(jsonStr) {
-    if (len(jsonStr) == 0) {
-        throw "Config string cannot be empty";
-    }
-    // Assume JSON.parse throws on invalid syntax
-    return JSON.parse(jsonStr);
-}
-
-try {
-    let cfg = parseConfig("");
-    print("Parsed Port:", cfg.port);
+    execute_risky_operation();
 } catch (e) {
-    print("Failed to load config:", e);
+    print(f"Caught exception: {e.message}");
 }
 ```
 
----
+### 4.1 Exception Frame Tables (DWARF / SEH)
+`try`/`catch` blocks do not execute instruction-level overhead during normal execution ("Zero-Cost Exceptions"). Instead, the compiler generates binary exception tables:
+- **Linux/macOS**: DWARF `.eh_frame` and `.gcc_except_table` landing pads.
+- **Windows**: Structured Exception Handling (SEH) `.pdata` and `.xdata` exception directories.
 
-## 3. Nested `try ... catch` Blocks & Exception Re-throwing
+### 4.2 Two-Phase Stack Unwinding Algorithm
 
-Exceptions can be caught at granular levels or re-thrown to higher caller scopes.
+When a `throw` statement or hardware signal occurs, the runtime execution system executes a two-phase stack unwind:
 
-```adesh
-fn ServiceHandler(req) {
-    try {
-        try {
-            processTransaction(req.amount, req.balance);
-        } catch (innerErr) {
-            print("Internal handler caught error:", innerErr.code);
-            // Re-throw to caller
-            throw innerErr;
-        }
-    } catch (outerErr) {
-        print("Outer service handler logging failure:", outerErr.code);
-    }
-}
+```
+[ Throw Exception ]
+        |
+        v
+[ Phase 1: Search Phase ] ----> Traverse stack frames to locate matching 'catch' landing pad.
+        |
+        v
+[ Phase 2: Cleanup Phase ] ---> Re-traverse stack frames from throw site to landing pad,
+                                executing scope-exit 'defer' blocks and Drop Glue for each frame.
+        |
+        v
+[ Jump to Landing Pad ] ------> Transfer CPU execution to 'catch' block.
 ```

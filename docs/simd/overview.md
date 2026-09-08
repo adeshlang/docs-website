@@ -94,8 +94,8 @@ let fma_res = a.fma(b, scalar_factor);
 @noalloc
 fn simd_dot_product_f32(a: &[f32], b: &[f32]) -> f32 {
     let len = a.len();
-    let mut vec_acc = f32x8::splat(0.0);
-    let mut i = 0;
+    let vec_acc = f32x8::splat(0.0);
+    let i = 0;
 
     // Process 8 floating-point numbers per cycle
     while i + 8 <= len {
@@ -106,7 +106,7 @@ fn simd_dot_product_f32(a: &[f32], b: &[f32]) -> f32 {
     }
 
     // Reduce vector lanes to single scalar sum
-    let mut total = vec_acc.horizontal_sum();
+    let total = vec_acc.horizontal_sum();
 
     // Process remaining tail elements
     while i < len {

@@ -99,17 +99,17 @@ For integration tests requiring setup and teardown of database connections, temp
 struct DatabaseTestSuite {
     db: DatabaseConnection,
 
-    before_each(&mut self) {
+    before_each(self) {
         self.db = DatabaseConnection::open_in_memory();
         self.db.migrate();
     }
 
-    after_each(&mut self) {
+    after_each(self) {
         self.db.close();
     }
 
     @test
-    fn test_insert_and_query(&mut self) {
+    fn test_insert_and_query(self) {
         self.db.execute("INSERT INTO users (name) VALUES ('Alice')");
         let count = self.db.query_scalar("SELECT COUNT(*) FROM users");
         assert_eq(count, 1);

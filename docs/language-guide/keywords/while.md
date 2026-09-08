@@ -14,7 +14,7 @@ The `while` keyword begins a conditional loop. It evaluates a condition before e
 ## Syntax & Example
 
 ```adesh
-let mut n = 10;
+let n = 10;
 while n > 0 {
     print(n);
     n -= 1;

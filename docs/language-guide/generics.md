@@ -1,85 +1,66 @@
 ---
 id: generics
-title: Generics & Parametric Polymorphism
-sidebar_label: Generics
-description: Generic functions, structs, traits, type bounds, and zero-cost monomorphization in AdeshLang.
+title: "Generics Architecture & Monomorphization Engine"
+description: "Formal specification of AdeshLang generic instantiation, compile-time monomorphization, trait bounds, symbol mangling, and dynamic trait objects."
+sidebar_label: "Generics & Monomorphization"
 ---
 
-# Generics & Parametric Polymorphism
+# Generics Architecture & Monomorphization Engine
 
-Generics allow you to write flexible, reusable code that works with any data type while preserving full compile-time type safety and maximum execution performance.
+This document defines the compile-time monomorphization engine, generic type resolution, trait bound validation, symbol name mangling algorithms, and dynamic trait object dispatch in AdeshLang.
+
+---
+
+## 1. Generics Architecture Overview
+
+AdeshLang supports generic functions, structs, enums, and traits:
 
 ```adesh
 struct Stack<T> {
-    elements: [T],
+    items: [T],
 }
-```
 
----
-
-## 1. Generic Functions
-
-Declare generic type parameters inside angle brackets `<T>`:
-
-```adesh
-// Generic swap function working on any type T
-fn swap<T>(a: &mut T, b: &mut T) {
+fn swap<T>(a: &T, b: &T) {
     let temp = *a;
     *a = *b;
     *b = temp;
 }
+```
 
-fn main() {
-    let mut x = 10;
-    let mut y = 20;
-    swap(&mut x, &mut y);
-    print(f"x: {x}, y: {y}"); // x: 20, y: 10
+AdeshLang implements **Compile-Time Monomorphization** for generics. Generic code incurs zero runtime performance penalty; every concrete type instantiation generates dedicated, fully optimized native assembly machine code.
 
-    let mut str1 = "World";
-    let mut str2 = "Hello";
-    swap(&mut str1, &mut str2);
-    print(f"{str1} {str2}"); // Hello World
-}
+---
+
+## 2. Compile-Time Monomorphization Engine
+
+Monomorphization executes during the semantic and IR generation phases:
+
+```
+[ Generic Template ]           [ Concrete Instantiations ]           [ Native Assembly Code ]
+  fn swap<T>(a, b)    ---->     Instantiate swap<i64>       ---->     fn swap_i64(a, b)
+                                Instantiate swap<f64>       ---->     fn swap_f64(a, b)
+```
+
+### 2.1 Monomorphization Processing Pipeline
+1. **Instantiation Discovery**: The compiler scans the AST for all calls to generic functions or uses of generic data structures, recording concrete type arguments (`T = i64`, `T = string`).
+2. **AST Template Cloned**: For each unique concrete type combination, a specialized duplicate of the function or struct AST is generated.
+3. **Type Substitution**: Type parameters (`T`) are substituted with target concrete types.
+4. **Symbol Name Mangling**: The compiler assigns a unique mangled symbol name for the linker:
+
+```text
+Mangled Symbol Name = _Adesh_M_ + ModuleName + _ + FunctionName + _ + TypeHashes
+```
+
+```text
+swap<i64>   --> _Adesh_M_main_swap_i64
+swap<f64>   --> _Adesh_M_main_swap_f64
 ```
 
 ---
 
-## 2. Generic Structs & Classes
+## 3. Trait Bounds & Static Constraints
 
-Structs can be parameterized by one or more generic types:
-
-```adesh
-struct KeyValuePair<K, V> {
-    key: K,
-    value: V,
-}
-
-struct Stack<T> {
-    items: [T],
-
-    pub fn new() -> Stack<T> {
-        return Stack { items: [] };
-    }
-
-    pub fn push(&mut self, item: T) {
-        self.items.push(item);
-    }
-
-    pub fn pop(&mut self) -> Option<T> {
-        return self.items.pop();
-    }
-
-    pub fn is_empty(&self) -> bool {
-        return self.items.len() == 0;
-    }
-}
-```
-
----
-
-## 3. Trait Bounds & Constraints
-
-You can restrict generic parameters to types that implement specific traits using the `: Trait` syntax:
+Generic parameters can enforce interface contracts via Trait Bounds (`: Trait`):
 
 ```adesh
 trait Printable {
@@ -90,40 +71,43 @@ trait Comparable<T> {
     fn compare(&self, other: &T) -> i32;
 }
 
-// Function requires T to implement Printable
-fn print_item<T: Printable>(item: &T) {
+// Enforce T implements both Printable and Comparable
+fn process_item<T: Printable + Comparable<T>>(item: &T) {
     print(item.format());
 }
+```
 
-// Multiple trait bounds using +
-fn find_max<T: Comparable<T> + Clone>(items: &[T]) -> Option<T> {
-    if items.is_empty() {
-        return None;
-    }
-    let mut max_val = items[0].clone();
+### 3.1 Static Dispatch Verification
+Trait bounds are verified during semantic analysis. The type checker verifies that the concrete type implements every required trait method. Because bounds are checked at compile time, call sites dispatch method invocations directly without runtime VTable lookups (**Static Dispatch**).
+
+---
+
+## 4. Dynamic Trait Objects (`dyn Trait`)
+
+When heterogeneous collections or runtime dynamic dispatch are explicitly required, AdeshLang supports dynamic trait objects (`dyn Trait`):
+
+```adesh
+fn print_dynamic_items(items: [&dyn Printable]) {
     for item in items {
-        if item.compare(&max_val) > 0 {
-            max_val = item.clone();
-        }
+        print(item.format()); // Dynamic VTable Dispatch
     }
-    return Some(max_val);
 }
+```
+
+### 4.1 Trait Object Fat Pointer Layout (16 Bytes)
+A `dyn Trait` dynamic reference is stored as a 16-byte Fat Pointer:
+
+```
+dyn Trait Fat Pointer (16 bytes)
++------------------------------------+------------------------------------+
+|  Data Pointer (8 Bytes)            |  VTable Pointer (8 Bytes)          |
++------------------------------------+------------------------------------+
+  Points to heap/stack concrete value  Points to Trait VTable for target type
 ```
 
 ---
 
-## 4. Zero-Cost Monomorphization
+## 5. Code Bloat Mitigation
 
-AdeshLang implements generics using **monomorphization**:
-- During compilation, the compiler generates a specialized, optimized version of the generic function or struct for each concrete type used in your program.
-- Generic code runs at **100% the speed of hand-written type-specific code**.
-- **Zero runtime dispatch overhead** and zero boxing penalty.
-
-```
-Source Generic:
-fn identity<T>(val: T) -> T { val }
-
-Monomorphized Machine Code:
-fn identity_i64(val: i64) -> i64 { val }
-fn identity_string(val: string) -> string { val }
-```
+To mitigate executable binary size expansion from extensive monomorphization, the compiler performs **Pointer Instantiation Merging**:
+- Generic instantiations over pointer-like types (`&String`, `&ClassInstance`, `*u8`) share a single underlying machine code template operating over `*void` raw pointers, casting data types at instruction boundaries.

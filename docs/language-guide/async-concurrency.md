@@ -1,162 +1,119 @@
 ---
 id: async-concurrency
-title: Concurrency, Threads & Channels
-sidebar_label: Concurrency & Threads
-description: Multi-threading, message passing with channels, shared state with Arc/Mutex, and compile-time data race safety in AdeshLang.
+title: "Async State Machines, Task Schedulers & Concurrency Primitives"
+description: "Formal specification of stackless async state machine transformations, executor poll loops, work-stealing schedulers, and atomic synchronization primitives."
+sidebar_label: "Async & Concurrency Model"
 ---
 
-# Concurrency, Threads & Channels
+# Async State Machines, Task Schedulers & Concurrency Primitives
 
-AdeshLang provides **fearless concurrency**: compile-time guarantees that eliminate data races, null pointer dereferences, and use-after-free bugs across multi-threaded applications without requiring a garbage collector.
-
-```
-┌───────────────────────────────────────────────────────────┐
-│                    Concurrency Models                     │
-├─────────────────────────────┬─────────────────────────────┤
-│   Message Passing Channels  │  Thread-Safe Shared State   │
-│  (mpsc::channel send/recv)  │   (Arc<T> + Mutex/RwLock)   │
-└─────────────────────────────┴─────────────────────────────┘
-```
+This document specifies the compiler transformation of `async` functions into stackless state machines, task executor polling loops, work-stealing thread schedulers, and physical memory layouts of synchronization primitives (`Arc`, `Mutex`, `RwLock`).
 
 ---
 
-## 1. Spawning Native OS Threads
+## 1. Stackless Async State Machine Transformation
 
-Use `adesh_std::thread::spawn` to launch concurrent operating system threads:
+Functions annotated with `async` do not execute synchronously to completion. Instead, the compiler transforms an `async fn` into an anonymous **Stackless State Machine Struct**:
 
 ```adesh
-import { adesh_std::thread } from "adesh_std";
-
-fn main() {
-    let handle = thread::spawn(|| {
-        for i in 1..=5 {
-            print(f"Background thread step {i}");
-            thread::sleep_ms(100);
-        }
-        return 42;
-    });
-
-    print("Main thread working...");
-    
-    // Wait for the background thread to finish and retrieve return value
-    let result = handle.join().unwrap();
-    print(f"Thread finished with result: {result}");
+async fn fetch_payload(url: string) -> Result<string, Error> {
+    let connection = await connect(url)?;
+    let response = await connection.get()?;
+    return Ok(response.body);
 }
 ```
 
+### 1.1 Compiler State Machine Lowering
+The compiler desugaring pass transforms the function body into an enum-like state machine struct storing local variables across suspension points:
+
+```
+[ Async State Machine Memory Layout ]
++-------------------------------------------------------+
+|  Offset 0x00: Current State Tag (u32: 0, 1, 2, Complete)|
++-------------------------------------------------------+
+|  Offset 0x08: Parameter 'url' (24-byte string header) |
++-------------------------------------------------------+
+|  Offset 0x20: Future 1 'connection' (State 1 storage) |
++-------------------------------------------------------+
+|  Offset 0x38: Future 2 'response'   (State 2 storage) |
++-------------------------------------------------------+
+```
+
+Each `await` boundary marks a state transition breakpoint.
+
 ---
 
-## 2. Message Passing with Channels
+## 2. Executor Poll Loop Semantics (`Poll::Ready` / `Poll::Pending`)
 
-Channels provide safe communication between threads using the **producer-consumer model**:
+An `async` task implements a `poll(cx: &mut Context)` interface:
 
 ```adesh
-import { adesh_std::sync::mpsc } from "adesh_std";
-import { adesh_std::thread } from "adesh_std";
-
-fn main() {
-    // Create a multi-producer, single-consumer channel
-    let (sender, receiver) = mpsc::channel<string>();
-
-    // Spawn producer thread 1
-    let s1 = sender.clone();
-    thread::spawn(move || {
-        s1.send("Message from Worker 1").unwrap();
-    });
-
-    // Spawn producer thread 2
-    let s2 = sender.clone();
-    thread::spawn(move || {
-        s2.send("Message from Worker 2").unwrap();
-    });
-
-    // Drop original sender so receiver knows when all channels close
-    drop(sender);
-
-    // Consume messages in main thread
-    for msg in receiver {
-        print(f"Main received: {msg}");
-    }
+enum Poll<T> {
+    Ready(T),
+    Pending,
 }
 ```
 
----
-
-## 3. Shared State with `Arc<T>` and `Mutex<T>`
-
-When multiple threads must read and write to the same shared data, use **Atomic Reference Counting (`Arc`)** combined with a mutual exclusion lock (`Mutex`):
-
-```adesh
-import { adesh_alloc::Arc } from "adesh_alloc";
-import { adesh_std::sync::Mutex } from "adesh_std";
-import { adesh_std::thread } from "adesh_std";
-
-fn main() {
-    // Wrap counter in Mutex and Arc
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = [];
-
-    for _ in 0..10 {
-        let counter_ref = counter.clone(); // 2ns atomic clone
-        
-        let handle = thread::spawn(move || {
-            for _ in 0..1000 {
-                let mut guard = counter_ref.lock().unwrap();
-                *guard += 1;
-                // Mutex guard is automatically unlocked when dropped!
-            }
-        });
-        
-        handles.push(handle);
-    }
-
-    // Wait for all 10 worker threads to finish
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    print(f"Final counter value: {*counter.lock().unwrap()}"); // Expected: 10,000
-}
-```
+### 2.1 Execution Poll Step
+When a task executor polls an async state machine:
+1. If the target operation is ready, `poll()` returns `Poll::Ready(value)` and advances the internal State Tag (`State_n -> State_(n+1)`).
+2. If the operation would block (e.g., waiting for I/O socket readiness), `poll()` registers a `Waker` callback in the OS event loop (epoll / kqueue / IOCP) and returns `Poll::Pending`.
+3. Execution returns immediately to the executor thread without blocking the CPU thread stack.
 
 ---
 
-## 4. Atomic Types for Lock-Free Concurrency
+## 3. Multi-Threaded Work-Stealing Task Scheduler
 
-For high-throughput primitive operations without lock contention, use atomic types:
+Concurrent tasks spawned via `spawn(async move { ... })` are managed by a multi-threaded **Work-Stealing Task Scheduler**:
 
-```adesh
-import { adesh_std::sync::atomic::{AtomicI64, Ordering} } from "adesh_std";
-import { adesh_alloc::Arc } from "adesh_alloc";
-
-fn main() {
-    let requests = Arc::new(AtomicI64::new(0));
-    
-    let r = requests.clone();
-    thread::spawn(move || {
-        r.fetch_add(1, Ordering::SeqCst);
-    });
-
-    print(f"Total requests: {requests.load(Ordering::SeqCst)}");
-}
 ```
+Global Shared Task Queue
+[ Task_A ] [ Task_B ] [ Task_C ]
+     |
+     v
++------------------------+------------------------+
+|  Worker Thread 0       |  Worker Thread 1       |
+|  Local Queue: [Task_D] |  Local Queue: [Empty]  |
++------------------------+------------------------+
+                             ^
+                             | (Steals Task_D via Lock-Free Deque)
+```
+
+- Each worker thread maintains a local lock-free double-ended queue (deque).
+- When a worker thread exhausts its local queue, it steals tasks from sibling worker queues, maintaining high CPU cache locality and balanced core utilization.
 
 ---
 
-## 5. Compile-Time Data Race Prevention (`Send` & `Sync`)
+## 4. Synchronization Primitives & Atomic Layouts
 
-The AdeshLang compiler analyzes types to ensure thread safety at compile time:
+### 4.1 `Arc<T>` Memory Layout (Atomically Reference Counted)
+`Arc<T>` enables shared ownership of heap memory across threads:
 
-- **`Send`**: Indicates ownership of a value can be transferred safely across thread boundaries.
-- **`Sync`**: Indicates multiple threads can safely reference the value concurrently (`&T`).
-
-```adesh
-// Non-thread-safe reference counting (Rc) is NOT Send/Sync:
-let rc = Rc::new(100);
-
-// COMPILE ERROR: `Rc<i32>` cannot be sent between threads safely.
-// Hint: Use `Arc<T>` for multi-threaded reference counting.
-thread::spawn(move || {
-    print(*rc);
-});
 ```
+Arc<T> Heap Allocation Layout
++-------------------------------------------------------+
+| Offset 0x00: Strong Reference Count (Atomic u64)      |
++-------------------------------------------------------+
+| Offset 0x08: Weak Reference Count   (Atomic u64)      |
++-------------------------------------------------------+
+| Offset 0x10: Wrapped Value T                          |
++-------------------------------------------------------+
+```
+
+Reference increments (`Arc::clone`) and decrements execute via lock-free atomic hardware instructions (`lock xadd` on x86_64) using Sequential Consistency (`SeqCst`) memory barriers.
+
+### 4.2 `Mutex<T>` Layout
+`Mutex<T>` enforces exclusive mutual exclusion across threads:
+
+```
+Mutex<T> Memory Layout
++-------------------------------------------------------+
+| Offset 0x00: OS Mutex Lock State (Atomic u32 / futex) |
++-------------------------------------------------------+
+| Offset 0x04: Padding Bytes (4 Bytes)                  |
++-------------------------------------------------------+
+| Offset 0x08: Inner Data Payload T                     |
++-------------------------------------------------------+
+```
+
+Acquiring a mutex lock compiles to an atomic Compare-And-Swap (`lock cmpxchg`) operation. If lock contention occurs, the calling thread is suspended via OS `futex` syscalls (`sys_futex` on Linux) to prevent CPU spinning.

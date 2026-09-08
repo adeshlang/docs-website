@@ -336,10 +336,12 @@ installations are not overwritten or added to the global PATH. Only the
 AdeshLang `bin` directory is added by an installer; portable archives do not
 modify PATH.
 
-The installed tools are `adesh` (language CLI), `adl` (package manager), and
-`als` (language server). Use `adesh toolchain current` to inspect the active
-toolchain, or `adesh toolchain --system`/`--system-toolchain` for an explicit
-advanced system-toolchain selection.
+The installed tools are `adesh` (language CLI), `adl` (package manager),
+`als` (language server), and `adesh-editor` (cross-platform TUI code editor).
+Use `adesh toolchain current` to inspect the active toolchain, or
+`adesh toolchain --system`/`--system-toolchain` for an explicit advanced
+system-toolchain selection. You can also launch the TUI editor using either
+`adesh editor` or directly via the `adesh-editor` CLI command.
 
 ## Environment and troubleshooting
 

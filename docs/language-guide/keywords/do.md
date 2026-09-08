@@ -14,7 +14,7 @@ The `do` keyword introduces the body of a `do...while` loop, which executes its 
 ## Syntax & Example
 
 ```adesh
-let mut i = 0;
+let i = 0;
 do {
     print(i);
     i += 1;

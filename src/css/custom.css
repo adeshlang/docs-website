@@ -2488,6 +2488,13 @@ body[class*='docs-doc'] .landing-footer,
     bottom: 22px;
     right: 18px;
     z-index: 110;
+    transition: transform var(--dur-medium) var(--ease-standard), opacity var(--dur-medium) var(--ease-standard);
+  }
+
+  .adesh-mobile-floating-toc-container.at-bottom {
+    transform: translateY(80px);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .adesh-mobile-floating-toc-btn {

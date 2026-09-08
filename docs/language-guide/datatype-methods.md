@@ -1,156 +1,114 @@
 ---
 id: datatype-methods
-title: Built-in Data Type Methods
-sidebar_label: Type Methods & Iterators
-description: Comprehensive reference for built-in methods on strings, arrays, hash maps, sets, numbers, and functional iterators in AdeshLang.
+title: "Built-in Data Structure Operations & Dispatch Semantics"
+description: "Formal specification of memory layouts, growth algorithms, Swiss-table hashing, and method dispatch mechanics for AdeshLang built-in collections."
+sidebar_label: "Data Structure Operations"
 ---
 
-# Built-in Data Type Methods
+# Built-in Data Structure Operations & Dispatch Semantics
 
-AdeshLang provides an extensive suite of built-in methods on all core data types, enabling expressive functional programming and high-performance data manipulation.
+This document specifies the internal memory layouts, allocation algorithms, hash table architectures, and compiler method dispatch mechanisms for AdeshLang's core collection types.
 
 ---
 
-## 1. String Methods
+## 1. Array / Vector (`[T]`) Memory Architecture
 
-Strings in AdeshLang are UTF-8 encoded, immutable, and zero-allocation slice-friendly:
+Arrays in AdeshLang are stored as contiguous dynamic heap buffers governed by a 24-byte stack descriptor:
 
-```adesh
-let s = "  Hello, AdeshLang!  ";
-
-// Length and inspection
-let len = s.len();                        // Byte length
-let char_count = s.chars().len();          // Unicode character count
-let is_empty = s.is_empty();              // false
-
-// Trimming & Case conversion
-let trimmed = s.trim();                   // "Hello, AdeshLang!"
-let upper = trimmed.to_uppercase();       // "HELLO, ADESHLANG!"
-let lower = trimmed.to_lowercase();       // "hello, adeshlang!"
-
-// Search & Substring
-let has_adesh = trimmed.contains("Adesh"); // true
-let starts = trimmed.starts_with("Hello"); // true
-let ends = trimmed.ends_with("!");        // true
-let index = trimmed.find("Adesh");        // Some(7)
-
-// Splitting & Replacement
-let parts = trimmed.split(", ");          // ["Hello", "AdeshLang!"]
-let replaced = trimmed.replace("Adesh", "Rust"); // "Hello, RustLang!"
-let slice = &trimmed[0..5];               // "Hello" (zero-copy string slice &str)
+```
+Stack Descriptor (24 bytes)                  Heap Allocation Buffer
++-------------------------------+      +-----------------------------------------+
+| Data Pointer (8 bytes) ------|----> | T_0 | T_1 | T_2 | T_3 | ... | Uninit   |
+| Element Count (8 bytes = 4)   |      +-----------------------------------------+
+| Capacity (8 bytes = 8)        |      |<----------- Length ------------>|
++-------------------------------+      |<---------------- Capacity ------------->|
 ```
 
----
+### 1.1 Buffer Growth Algorithm
+When `push()` is called and `length == capacity`, the runtime allocates a new heap buffer using a growth multiplier factor of **1.5x**:
 
-## 2. Array / Vec Methods
-
-Arrays (`[T]`) and dynamic vectors support both imperative mutation and functional chaining:
-
-```adesh
-let mut numbers = [10, 20, 30, 40, 50];
-
-// Basic Operations
-numbers.push(60);                         // Append element
-let last = numbers.pop();                 // Some(60)
-numbers.insert(0, 5);                     // Insert at index 0: [5, 10, 20, 30, 40, 50]
-let removed = numbers.remove(0);          // Remove at index 0: 5
-
-// Querying
-let count = numbers.len();                // 5
-let contains_30 = numbers.contains(30);   // true
-let first_opt = numbers.first();          // Some(10)
-let last_opt = numbers.last();            // Some(50)
-
-// In-place transformations
-numbers.reverse();                        // [50, 40, 30, 20, 10]
-numbers.sort();                           // [10, 20, 30, 40, 50]
+```text
+Capacity_new = floor(Capacity_old * 1.5) + 2
 ```
 
-### Functional Iterator Methods
+Existing buffer elements are migrated via `memcpy` (for POD types) or move-constructors, after which the old buffer is deallocated.
 
-```adesh
-let nums = [1, 2, 3, 4, 5, 6];
+### 1.2 Out-of-Bounds Protection
+Array indexing (`arr[i]`) compiles to a bounds-checking instruction:
 
-// Map, Filter, and Fold
-let doubled_evens = nums
-    .filter(fn(x) => x % 2 == 0)
-    .map(fn(x) => x * 2);                // [4, 8, 12]
-
-let sum = nums.fold(0, fn(acc, x) => acc + x); // 21
-
-// Finding and Matching
-let first_large = nums.find(fn(x) => x > 4); // Some(5)
-let all_positive = nums.all(fn(x) => x > 0); // true
-let any_odd = nums.any(fn(x) => x % 2 != 0); // true
+```text
+COMPARE   index, descriptor.length
+JUMP_GE   .L_bounds_trap  // Traps if index >= length
 ```
+
+If `index >= length`, the execution environment emits fatal error `E0012: Out of bounds array index access`.
 
 ---
 
-## 3. HashMap / Map Methods
+## 2. HashMap Hashing Architecture (Swiss Table Layout)
 
-Key-value hash collections with $O(1)$ amortized lookups:
+AdeshLang `HashMap<K, V>` collections implement the **Swiss Table** hash table architecture utilizing SIMD-accelerated control byte metadata probing.
+
+```
+Control Byte Metadata Array (ctrl_ptr)
++------+------+------+------+------+------+------+------+
+| H2_0 | H2_1 | EMPTY| H2_3 | DEL  | H2_5 | EMPTY| H2_7 |  <-- 1 byte per slot
++------+------+------+------+------+------+------+------+
+                                 |
+                                 v
+Slot Array (slots_ptr)           | (Calculated index offset)
++-------------------------------------------------------+
+|  Slot 0: { Key_0, Val_0 }                             |
+|  Slot 1: { Key_1, Val_1 }                             |
+|  Slot 3: { Key_3, Val_3 }                             |
++-------------------------------------------------------+
+```
+
+### 2.1 Hash Breakdown & Probe Groups
+For every inserted key, a 64-bit SipHash or WyHash digest is generated:
+- **H1 (Top 57 Bits)**: Determines the probe group index.
+- **H2 (Bottom 7 Bits)**: Stored in the control byte array (`ctrl_ptr`) as a 7-bit metadata fingerprint (`0x00`–`0x7F`). Special control bytes denote `EMPTY` (`0xFF`) and `DELETED` (`0xFE`).
+
+### 2.2 SIMD Probing & Load Factor
+Lookups execute a single 16-byte SIMD vector comparison (`_mm_cmpeq_epi8` on x86_64 or `vceqq_s8` on ARM NEON) matching 16 slots concurrently in a single CPU instruction cycle. 
+
+The maximum allowable load factor is **87.5% (7/8)**. Exceeding this threshold triggers an immediate table resize and hash bucket re-indexing.
+
+---
+
+## 3. HashSet Architecture
+
+`HashSet<T>` is implemented as a thin wrapper over `HashMap<T, ()>`, utilizing the identical Swiss Table control-byte probing architecture while omitting value storage bytes.
+
+---
+
+## 4. Method Dispatch & Iteration Lowering
+
+### 4.1 Monomorphic Direct Method Dispatch
+Built-in collection methods (`push`, `pop`, `len`, `get`, `contains`) are bound directly at compile time. The compiler inline-lowers these calls directly into native assembly or VM opcodes, eliminating dynamic vtable dispatch overhead:
 
 ```adesh
-import { adesh_alloc::HashMap } from "adesh_alloc";
+let numbers = [10, 20, 30];
+numbers.push(40); // Compiles directly to IR opcode OP_ARRAY_PUSH
+```
 
-let mut user_scores = HashMap::new();
+### 4.2 Functional Pipeline Lowering
+Functional collection methods (`map`, `filter`, `fold`) are zero-cost abstractions. High-level iterator chains are monomorphized and desugared into single-pass imperatively optimized loops:
 
-// Insertion and update
-user_scores.insert("Alice", 95);
-user_scores.insert("Bob", 88);
+```adesh
+// High-level declarative chain
+let evens = nums.filter(fn(x) => x % 2 == 0).map(fn(x) => x * 2);
+```
 
-// Lookup
-let alice_score = user_scores.get("Alice");   // Some(95)
-let charlie = user_scores.get("Charlie");     // None
-let score_or_default = user_scores.get_or("Bob", 0); // 88
-
-// Membership & Size
-let exists = user_scores.contains_key("Bob"); // true
-let size = user_scores.len();                 // 2
-
-// Iterating keys, values, and entries
-for (key, val) in user_scores.entries() {
-    print(f"{key}: {val}");
+Desugared Compiler IR output:
+```text
+let evens = [];
+let i = 0;
+while i < nums.len {
+    let x = nums[i];
+    if x % 2 == 0 {
+        evens.push(x * 2);
+    }
+    i += 1;
 }
-
-user_scores.remove("Bob");                    // Removes "Bob"
-user_scores.clear();                          // Empties map
-```
-
----
-
-## 4. HashSet / Set Methods
-
-Unordered collection of unique items:
-
-```adesh
-import { adesh_alloc::HashSet } from "adesh_alloc";
-
-let mut set_a = HashSet::from([1, 2, 3, 4]);
-let set_b = HashSet::from([3, 4, 5, 6]);
-
-set_a.insert(5);
-let is_member = set_a.contains(2);            // true
-
-// Set Algebra
-let union_set = set_a.union(&set_b);          // {1, 2, 3, 4, 5, 6}
-let intersect = set_a.intersection(&set_b);   // {3, 4, 5}
-let diff = set_a.difference(&set_b);          // {1, 2}
-```
-
----
-
-## 5. Numeric Primitive Methods
-
-```adesh
-let val = -42.75;
-
-let absolute = val.abs();                     // 42.75
-let rounded = val.round();                    // -43.0
-let floor_val = val.floor();                  // -43.0
-let ceil_val = val.ceil();                    // -42.0
-let clamped = val.clamp(0.0, 100.0);          // 0.0
-
-let sqrt_res = 144.0.sqrt();                  // 12.0
-let pow_res = 2.0.pow(8.0);                   // 256.0
 ```

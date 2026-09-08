@@ -54,7 +54,7 @@ AdeshLang includes a built-in benchmark runner via `@benchmark`:
 import { adesh_alloc::Arc } from "adesh_alloc";
 
 @benchmark
-fn bench_arc_clone_and_drop(b: &mut Bencher) {
+fn bench_arc_clone_and_drop(b: Bencher) {
     let data = Arc::new([1, 2, 3, 4, 5, 6, 7, 8]);
     
     b.iter(|| {
@@ -64,7 +64,7 @@ fn bench_arc_clone_and_drop(b: &mut Bencher) {
 }
 
 @benchmark
-fn bench_simd_dot_product(b: &mut Bencher) {
+fn bench_simd_dot_product(b: Bencher) {
     let a = f32x8::splat(1.5);
     let b_vec = f32x8::splat(2.5);
     

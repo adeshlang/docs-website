@@ -1,44 +1,34 @@
 ---
 id: type-aliases
-title: Type Aliases & Custom Types
-sidebar_label: Type Aliases
-description: Creating expressive domain types, generic aliases, function signatures, and union type aliases in AdeshLang.
+title: "Type Aliases & Higher-Kinded Function Signatures"
+description: "Formal specification of type alias expansion, generic type aliases, and closure function pointer memory representations in AdeshLang."
+sidebar_label: "Type Aliases & Signatures"
 ---
 
-# Type Aliases & Custom Types
+# Type Aliases & Higher-Kinded Function Signatures
 
-Type aliases allow you to give new, meaningful domain names to existing primitive or complex types using the `type` keyword. They improve readability, encapsulate complex types, and simplify refactoring across large systems.
-
-```adesh
-type UserID = u64;
-type SessionToken = string;
-type Coordinates = (f64, f64);
-```
+This document defines the formal rules for compile-time type alias expansion, generic type aliasing, and the memory representation of higher-kinded function pointers in AdeshLang.
 
 ---
 
-## 1. Basic Type Aliases
+## 1. Type Alias Expansion Mechanics
 
-Type aliases establish a synonym for an underlying type with zero runtime cost:
+A type alias introduces a new identifier name for an existing concrete or generic type expression using the `type` keyword:
 
 ```adesh
-type Port = u16;
-type Milliseconds = u64;
-type IPAddress = string;
-
-fn connect_to_server(host: IPAddress, port: Port, timeout: Milliseconds) -> bool {
-    print(f"Connecting to {host}:{port} with timeout {timeout}ms");
-    return true;
-}
-
-fn main() {
-    let server_ip: IPAddress = "192.168.1.100";
-    let server_port: Port = 8080;
-    let timeout_ms: Milliseconds = 5000;
-
-    connect_to_server(server_ip, server_port, timeout_ms);
-}
+type Kilobytes = u64;
+type Matrix = [[f64]];
 ```
+
+### 1.1 Zero-Cost Compile-Time Expansion
+Type aliases are purely compile-time concepts. They do not introduce new runtime types, vtables, or memory overhead. During semantic analysis, the compiler replaces every alias identifier with its fully expanded target type:
+
+```
+[ Code Source ]               [ Semantic Analysis ]             [ Lowered Type ]
+  let size: Kilobytes = 512;  -->  Expand Kilobytes -> u64  -->  let size: u64 = 512;
+```
+
+Type equivalence between an alias and its underlying target type is **symmetric and reflexive**: `Kilobytes` and `u64` are completely interchangeable in function parameter signatures, casts, and return types.
 
 ---
 
@@ -47,82 +37,40 @@ fn main() {
 Type aliases can accept generic type parameters:
 
 ```adesh
-import { adesh_alloc::HashMap } from "adesh_alloc";
+type ResultMap<K, V> = HashMap<K, Result<V, string>>;
+type Point2D<T> = (T, T);
+```
 
-// Simplify complex nested generic signatures
-type Cache<K, V> = HashMap<K, (V, u64)>; // Key -> (Value, ExpirationTimestamp)
-type AsyncResult<T> = Result<T, Error>;
-type Pair<T> = (T, T);
+### 2.1 Monomorphization of Generic Aliases
+When a generic type alias is instantiated, the type checker substitutes the concrete type parameters into the underlying type template during type resolution:
 
-fn create_cache<K, V>() -> Cache<K, V> {
-    return HashMap::new();
-}
-
-fn get_min_max(points: [f64]) -> Pair<f64> {
-    let mut min = points[0];
-    let mut max = points[0];
-    for p in points {
-        if p < min { min = p; }
-        if p > max { max = p; }
-    }
-    return (min, max);
-}
+```adesh
+let coordinates: Point2D<f64> = (10.5, 20.25);
+// Expanded internally to: (f64, f64)
 ```
 
 ---
 
-## 3. Function Signature Aliases
+## 3. Function Type Signatures & Memory Representation
 
-Type aliases are especially helpful for defining readable callback and handler signatures:
+Type aliases are frequently utilized to define clean function pointer and callback signatures:
 
 ```adesh
-// Define high-level callback signatures
 type EventHandler = fn(event_type: string, payload: [u8]) -> bool;
-type Comparator<T> = fn(a: &T, b: &T) -> i32;
-type Transform<T, R> = fn(item: T) -> R;
-
-struct EventDispatcher {
-    handlers: [EventHandler],
-
-    pub fn register_handler(&mut self, handler: EventHandler) {
-        self.handlers.push(handler);
-    }
-
-    pub fn dispatch(&self, event: string, data: [u8]) {
-        for handler in self.handlers {
-            handler(event, data);
-        }
-    }
-}
+type Predicate<T> = fn(item: &T) -> bool;
 ```
 
----
+### 3.1 Function Pointer Memory Layout (16-Byte Fat Pointer)
+Function types in AdeshLang (`fn(A) -> B`) are stored in memory as **16-byte Fat Pointers** consisting of a code address pointer and an environment context pointer:
 
-## 4. Union / Algebraic Aliases
-
-You can combine multiple distinct types into a single named sum type:
-
-```adesh
-type JsonScalar = string | i64 | f64 | bool | null;
-
-fn print_scalar(val: JsonScalar) {
-    match val {
-        s: string => print(f"String: {s}"),
-        i: i64 => print(f"Integer: {i}"),
-        f: f64 => print(f"Float: {f}"),
-        b: bool => print(f"Boolean: {b}"),
-        null => print("Null value"),
-    }
-}
+```
+Function Pointer / Closure Layout (16 bytes)
++------------------------------------+------------------------------------+
+|  Code Address Pointer (8 Bytes)    |  Environment Context Pointer (8B)  |
++------------------------------------+------------------------------------+
+  Points to native instructions        Points to captured heap values
+  or VM function block stub.           (or 0x00 for top-level functions).
 ```
 
----
-
-## 5. Type Aliases vs Structs (When to Use Which)
-
-| Feature | Type Alias (`type X = Y`) | Struct (`struct X { ... }`) |
-|---------|---------------------------|----------------------------|
-| **Runtime Overhead** | Zero | Zero |
-| **Nominal Type Safety** | Transparent / Structural equivalence | Strict nominal typing |
-| **Methods & Traits** | Cannot implement distinct methods | Can implement methods and traits |
-| **Best Used For** | Aliasing primitives, tuples, callbacks, complex generics | Data models, domain entities, OOP abstractions |
+- **Top-level functions**: The environment pointer is set to null (`0x0000000000000000`).
+- **Closures**: The environment pointer references an allocated stack or heap capture context struct holding captured variable references.

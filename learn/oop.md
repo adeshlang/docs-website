@@ -120,7 +120,7 @@ Shape: Unit Circle
 
 `extends` gives the child all parent fields and methods; `super(...)` chains
 the parent constructor. From `examples/oop/inheritance_test.adesh` and the
-[learn-by-examples catalog](/learn-by-examples#12-object-oriented-programming-oop--extensions).
+[learn-by-examples catalog](/learn-by-examples/oop).
 
 ## Extension methods: `extend on`
 

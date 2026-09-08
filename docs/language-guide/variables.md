@@ -1,129 +1,151 @@
 ---
 id: variables
-title: Variables, Mutability & Scope
-sidebar_label: Variables & Mutability
-description: Variable bindings, mutability semantics, type inference, shadowing, scope lifetimes, and multi-variable assignments in AdeshLang.
+title: "Variables, Storage Classes & Memory Layout"
+description: "Formal specification of variable declarations, mutability semantics, stack/heap storage classes, shadowing, and scope lifetimes in AdeshLang."
+sidebar_label: "Variables & Storage"
 ---
 
-# Variables, Mutability & Scope
+# Variables, Storage Classes & Memory Layout
 
-In AdeshLang, variables are **immutable by default**. This design prevents accidental state corruption and simplifies concurrent, race-free programming.
-
----
-
-## 1. Declaring Variables with `let`
-
-Declare variables using the `let` keyword:
-
-```adesh
-let name = "Alice";       // Inferred as string
-let age = 30;             // Inferred as i64
-let ratio = 3.14159;      // Inferred as f64
-let is_admin = false;     // Inferred as bool
-```
-
-### Explicit Type Annotations
-
-You can optionally provide explicit type annotations:
-
-```adesh
-let count: i32 = 100;
-let balance: f64 = 4500.50;
-let active: bool = true;
-let label: string = "Production";
-```
+This specification defines the variable binding model, storage allocation classes, stack slot alignment, lexical scoping rules, and memory representations in AdeshLang.
 
 ---
 
-## 2. Mutability with `mut`
+## 1. Variable Binding Semantics
 
-By default, variables cannot be reassigned after initialization. To allow modification, add the `mut` modifier:
+In AdeshLang, variable bindings are introduced using the `let`, `const`, or `readonly` keywords.
+
+### 1.1 `let` Bindings (Mutable by Default)
+Variables declared with `let` create reassignable bindings within their enclosing lexical scope. No explicit `mut` keyword is required or permitted:
 
 ```adesh
-// Immutable:
-let score = 10;
-// score = 20; // COMPILE ERROR: Cannot reassign to immutable variable `score`
-
-// Mutable:
-let mut counter = 0;
+let counter: i64 = 0;
 counter += 1;
-counter = 42;
-print(counter); // Prints: 42
+counter = 100; // Valid: binding is reassigned in-place
+```
+
+### 1.2 `const` Bindings (Compile-Time Constants)
+`const` bindings declare immutable values evaluated strictly at compile time. They require explicit type annotations and must be initialized with constant expressions:
+
+```adesh
+const BUFFER_CAPACITY: usize = 1024 * 64; // Evaluated at compile time
+const PROT_FLAGS: u32 = 0x07;
+```
+
+`const` values do not occupy stack frame slots at runtime; the compiler substitutes their immediate scalar values directly into instruction payloads or read-only data segments (`.rodata`).
+
+### 1.3 `readonly` Bindings (Runtime Immutability)
+`readonly` bindings enforce runtime write protection on dynamic values initialized at runtime:
+
+```adesh
+let input_val = fetch_user_input();
+readonly let frozen_config = parse_config(input_val);
+// frozen_config.port = 8080; // COMPILE ERROR: Cannot mutate readonly binding
 ```
 
 ---
 
-## 3. Constants with `const`
+## 2. Storage Classes & Memory Layout
 
-Constants are evaluated at compile time, must have an explicit type, and can be placed in global or local scopes:
+Every variable binding belongs to one of two physical memory allocation storage classes: **Stack Frame Storage** or **Heap Allocation Descriptors**.
 
-```adesh
-const MAX_BUFFER_SIZE: usize = 1024 * 1024; // 1MB
-const DEFAULT_TIMEOUT_SECONDS: u64 = 30;
-const APP_NAME: string = "AdeshServer";
+```
+  Stack Frame (8-byte aligned slots)              Heap Segment
++------------------------------------+      +-----------------------+
+|  Slot 0: [ counter (i64 = 100) ]   |      |  Array Allocation     |
++------------------------------------+      |  [ 10, 20, 30, 40 ]   |
+|  Slot 1: [ buffer descriptor ] ----|----> +-----------------------+
+|           - ptr:  0x7FFF00A0       |      |  Length: 4            |
+|           - len:  4                |      |  Capacity: 8          |
+|           - cap:  8                |      +-----------------------+
++------------------------------------+
+```
+
+### 2.1 Stack Slot Allocation
+Primitive types (`i8`–`i64`, `u8`–`u64`, `f32`, `f64`, `bool`) are stored directly on the active CPU execution stack frame within 8-byte aligned slots. Pass-by-value copies the stack slot data directly.
+
+### 2.2 Heap Allocation Descriptors
+Dynamic types (`string`, `[T]`, `{ k: V }`, `class` instances) store a 24-byte fat pointer descriptor on the stack frame, pointing to contiguous backing memory allocated on the heap:
+
+```cpp
+// Internal C++ Representation of Array Descriptor on Stack
+struct ArrayDescriptor {
+    uint8_t*  data_ptr;  // 8 bytes: Pointer to heap buffer
+    uint64_t  length;    // 8 bytes: Active element count
+    uint64_t  capacity;  // 8 bytes: Allocated buffer capacity
+};
 ```
 
 ---
 
-## 4. Variable Shadowing
+## 3. Variable Shadowing Mechanics
 
-AdeshLang allows you to declare a new variable with the same name as a previous variable in the same or an inner scope:
+AdeshLang permits variable shadowing, where a new binding redeclares an existing identifier in the same or an inner lexical scope:
 
 ```adesh
-let raw_input = "  120  ";
+let data: string = "  4096  ";
 
-// Shadow raw_input with trimmed string
-let raw_input = raw_input.trim();
+// 1. Shadow 'data' with trimmed string view
+let data: string = data.trim();
 
-// Shadow again with parsed integer type
-let raw_input: i64 = raw_input.parse_int().unwrap();
-
-print(raw_input * 2); // Prints: 240
+// 2. Shadow 'data' with parsed integer type
+let data: u64 = data.parse_uint().unwrap();
 ```
 
-Shadowing lets you transform values and types without inventing artificial names like `raw_input_trimmed` or `raw_input_as_int`.
+### 3.1 Implementation Semantics
+Shadowing does not mutate the existing memory slot in-place. Instead:
+1. The compiler creates a new entry in the current scope's symbol table.
+2. Subsequent identifier references bind to the newest symbol table entry.
+3. The previous binding remains stored in its stack slot until its enclosing lexical scope terminates, ensuring memory safety for existing references.
 
 ---
 
-## 5. Scope & Lexical Lifetimes
+## 4. Lexical Scoping & Scope-Exit Lifetimes
 
-Variables exist only within the block (`{ ... }`) where they are declared:
+Variables exist strictly within the lexical block `{ ... }` where they are declared.
 
 ```adesh
-fn main() {
-    let outer = "I am outside";
+fn process_payload() {
+    let outer_var = 100;
 
     {
-        let inner = "I am inside";
-        print(outer); // Valid
-        print(inner); // Valid
-    } // `inner` is dropped here deterministically (0ns GC)
+        let inner_buffer = [1, 2, 3, 4];
+        print(inner_buffer[0]);
+    } // <-- inner_buffer scope terminates here.
+      // Heap buffer memory is deterministically deallocated (Drop glue).
 
-    print(outer); // Valid
-    // print(inner); // COMPILE ERROR: `inner` is not found in this scope
+    // print(inner_buffer); // COMPILE ERROR: Undefined symbol 'inner_buffer'
 }
 ```
 
+When execution leaves a lexical scope, the compiler automatically injects **Drop Glue** instructions to release any heap buffers associated with descriptors declared within that scope.
+
 ---
 
-## 6. Multi-Variable Declarations & Variable Swapping
+## 5. Multi-Variable Unpacking & Register Swapping
 
-AdeshLang supports declaring, unpacking, and swapping multiple variables in a single statement without temporary variables:
+AdeshLang supports multi-variable declaration, destructuring, and zero-cost variable swapping:
 
 ```adesh
-// Declare multiple variables simultaneously
-let x, y, z = 10, 20, 30;
+// Declaration & Destructuring
+let x: i32, y: string = 500, "Active";
 
-// Typed multi-variable declaration
-let a: i32, b: string = 100, "Ready";
+// Zero-Cost Variable Swapping
+let a = 0xA;
+let b = 0xB;
 
-// Safe zero-cost variable swapping
-let mut first = "A";
-let mut second = "B";
-
-first, second = second, first;
-
-print(f"first: {first}, second: {second}"); // Output: first: B, second: A
+a, b = b, a;
 ```
 
-Under the hood, expressions on the right-hand side are evaluated into compiler temporary registers before bindings are updated, guaranteeing memory safety without race conditions or data corruption.
+### 5.1 SSA Intermediate Representation
+During compilation, variable swaps are transformed into Static Single Assignment (SSA) virtual registers:
+
+```llvm
+; Lowered SSA LLVM IR Representation for `a, b = b, a`
+%reg_b = load i64, i64* %b_slot
+%reg_a = load i64, i64* %a_slot
+store i64 %reg_b, i64* %a_slot
+store i64 %reg_a, i64* %b_slot
+```
+
+This guarantees zero data corruption and eliminates the overhead of manual temporary variable creation.

@@ -1,324 +1,125 @@
 ---
 id: functions
-title: Functions and Callables
-description: Complete reference for function declarations, parameters, return semantics, closures, higher-order functions, async calls, and runtime behavior in AdeshLang.
-sidebar_label: Functions
+title: "Function Specifications, ABI & Stack Frame Layout"
+description: "Formal specification of function definitions, System V / Win64 calling conventions, stack frame layout, closures, and optimization attributes."
+sidebar_label: "Functions, ABI & Call Stack"
 ---
 
-# Functions and Callables
+# Function Specifications, ABI & Stack Frame Layout
 
-Functions are one of the core concepts in AdeshLang. They are not just syntax sugar for one-off code blocks — they are first-class values that can be assigned, passed around, returned, and composed.
-
-This makes AdeshLang usable both as a straightforward scripting language and as a structured language for reusable code, libraries, and complex application logic.
+This document specifies function parameter mechanics, System V AMD64 / Windows x64 calling conventions, stack frame layouts, closure capture structures, and compiler optimization attributes in AdeshLang.
 
 ---
 
-## Function declaration syntax
+## 1. Function Definition & Signature Syntax
 
-The most common form is:
+Functions are declared using the `fn` keyword. Type annotations on parameters and return values define contract boundaries checked during compilation:
 
 ```adesh
-fn name(param1: Type1, param2: Type2): ReturnType {
-    // body
-    return value;
+fn calculate_thrust(mass: f64, acceleration: f64) -> f64 {
+    return mass * acceleration;
 }
 ```
 
-### Minimal example
+---
 
-```adesh
-fn greet(name: string): string {
-    return "Hello, " + name + "!";
-}
+## 2. ABI & Calling Conventions
 
-let message = greet("Alice");
-print(message);
-```
+AdeshLang complies with native target ABI specifications:
+- **Linux / macOS**: System V AMD64 ABI
+- **Windows**: Microsoft x64 Software Convention
 
-This pattern is the standard approach for writing reusable logic in AdeshLang.
+### 2.1 Register Parameter Assignment (x86_64)
+
+| Parameter Index | System V AMD64 Register | Windows x64 Register | Floating Point Register |
+| :--- | :--- | :--- | :--- |
+| Parameter 1 | `RDI` | `RCX` | `XMM0` |
+| Parameter 2 | `RSI` | `RDX` | `XMM1` |
+| Parameter 3 | `RDX` | `R8` | `XMM2` |
+| Parameter 4 | `RCX` | `R9` | `XMM3` |
+| Parameter 5+ | Stack Frame Offset | Stack Frame Offset | Stack Frame Offset |
+
+Return values are passed in `RAX` (integers/pointers) or `XMM0` (floats). Compound structures exceeding 16 bytes are returned via a caller-allocated hidden pointer passed in `RDI` / `RCX`.
 
 ---
 
-## Parameter semantics
+## 3. Physical Call Stack Frame Anatomy
 
-### Required parameters
+When a function call is executed, a new stack frame is pushed onto the thread call stack adhering to 16-byte alignment constraints:
 
-```adesh
-fn multiply(x: i64, y: i64): i64 {
-    return x * y;
-}
-
-print(multiply(4, 5));
+```
+Higher Memory Addresses
++------------------------------------------+
+|  Incoming Arguments (Params 5, 6, ...)   |
++------------------------------------------+
+|  Return Address (8 bytes)                |  <-- Pushed by CALL instruction
++------------------------------------------+
+|  Saved Frame Pointer (RBP, 8 bytes)      |  <-- Pushed by prologue
++------------------------------------------+  <-- Current RBP points here
+|  Local Variables & Spill Slots           |
+|  (8-byte aligned stack slots)            |
++------------------------------------------+
+|  Saved Callee-Saved Registers (RBX, R12) |
++------------------------------------------+
+|  Outgoing Argument Area                  |  <-- 16-Byte Aligned RSP
++------------------------------------------+
+Lower Memory Addresses
 ```
 
-### Typed and untyped parameters
+### 3.1 Function Prologue and Epilogue
 
-```adesh
-fn add(a: i64, b: i64): i64 {
-    return a + b;
-}
+```asm
+; Standard Prologue
+push rbp
+mov  rbp, rsp
+sub  rsp, 32         ; Reserve local stack slots (16-byte aligned)
 
-fn add_loose(a, b) {
-    return a + b;
-}
+; Function Epilogue
+mov  rsp, rbp
+pop  rbp
+ret                  ; Pop return address and jump
 ```
-
-The first function is explicit and self-documenting. The second relies on inference or dynamic-style flexibility. In practice, typed parameters are better for API clarity and compiler validation.
-
-### Default parameter values
-
-```adesh
-fn pow(base: i64, exponent: i64 = 2): i64 {
-    let result = 1;
-    let i = 0;
-
-    while i < exponent {
-        result = result * base;
-        i = i + 1;
-    }
-
-    return result;
-}
-
-print(pow(3));      // 9
-print(pow(3, 3));   // 27
-```
-
-The value after `=` is used when the caller omits that argument.
 
 ---
 
-## Return values
+## 4. Closure Memory Architecture & Capture Structs
 
-A function can return a value explicitly with `return`.
+Anonymous functions and lambdas (`fn(x) => x + 1` or `|x| x + capture`) that capture variables from their outer environment are represented as **16-byte Closure Fat Pointers**:
 
-```adesh
-fn factorial(n: i64): i64 {
-    if n <= 1 {
-        return 1;
-    }
-
-    return n * factorial(n - 1);
-}
+```
+Closure Fat Pointer (16 bytes)
++----------------------------------+----------------------------------+
+|  Code Address Pointer (8 Bytes)  |  Environment Pointer (8 Bytes)   |
++----------------------------------+----------------------------------+
+                 |                                 |
+                 v                                 v
+        [ Native Instructions ]         [ Environment Capture Struct ]
+                                        +-----------------------------+
+                                        | Captured Var A (i64)        |
+                                        | Captured Var B (Ref Pointer)|
+                                        +-----------------------------+
 ```
 
-### Early returns
-
-Early return is useful when a function should terminate at a specific condition:
-
-```adesh
-fn find_positive(numbers: [i64]): i64 {
-    for num in numbers {
-        if num > 0 {
-            return num;
-        }
-    }
-
-    return 0;
-}
-```
-
-### Expression-bodied behavior
-
-Some languages support the final expression as an implicit return. AdeshLang follows a clear, explicit pattern where `return` is still the common choice for readability and predictability. This keeps semantics easy to reason about in larger codebases.
+### 4.1 Capture Semantics
+- **By-Value Capture**: Primitive types or values explicitly copied are stored directly inside the heap-allocated Environment Capture Struct.
+- **By-Reference Capture**: Non-copied dynamic structures store a reference pointer inside the Environment Capture Struct, verified by the borrow checker to prevent dangling stack references.
 
 ---
 
-## Function calls and evaluation
+## 5. Compiler Optimization Attributes
 
-A function call looks like normal invocation syntax:
-
-```adesh
-let result = add(10, 20);
-print(result);
-```
-
-Function calls are expressions, so they can be nested into larger expressions:
+Functions accept specialized optimization annotations to direct compiler lowering:
 
 ```adesh
-print(add(2, 3) * 10);
-```
-
-This matches the general idea that code should compose naturally instead of requiring awkward wrapper statements.
-
----
-
-## Anonymous functions and lambda expressions
-
-AdeshLang supports function values directly.
-
-```adesh
-let inc = fn(x) {
-    return x + 1;
-};
-
-let square = x => x * x;
-
-print(inc(10));
-print(square(8));
-```
-
-### Why this matters
-
-Anonymous functions give you a way to define behavior inline and pass it around as data.
-
-This is especially useful in:
-
-- list transformation
-- filters and reducers
-- callbacks
-- closures
-- asynchronous processing
-
----
-
-## Closures
-
-Functions can capture values from the surrounding scope.
-
-```adesh
-fn make_adder(base: i64): fn(i64): i64 {
-    return fn(x: i64): i64 {
-        return x + base;
-    };
-}
-
-let add10 = make_adder(10);
-print(add10(5));
-print(add10(20));
-```
-
-Here, the returned function closes over `base` even after `make_adder` has finished executing. That is one of the major reasons function values are so useful in real-world application design.
-
----
-
-## Higher-order functions
-
-AdeshLang is designed to work naturally with list-oriented functional patterns.
-
-```adesh
-let xs = [1, 2, 3, 4, 5];
-
-let evens = filter(xs, fn(x) { return x % 2 == 0; });
-let doubled = map(evens, fn(x) { return x * 2; });
-let sum = reduce(doubled, fn(a, b) { return a + b; }, 0);
-
-print(evens);
-print(doubled);
-print(sum);
-```
-
-### Typical higher-order usage patterns
-
-- `map` to transform each item
-- `filter` to keep elements matching a predicate
-- `reduce` to combine items into a single result
-- custom callback functions for iteration and pipelines
-
-This is an important part of AdeshLang’s usability in data processing and scripting tasks.
-
----
-
-## Recursion
-
-Recursion is supported as long as the function terminates correctly.
-
-```adesh
-fn factorial(n: i64): i64 {
-    if n <= 1 {
-        return 1;
-    }
-
-    return n * factorial(n - 1);
-}
-
-print(factorial(5));
-```
-
-Recursion is commonly used for tree traversal, mathematical definitions, and divide-and-conquer algorithms.
-
----
-
-## Async functions
-
-AdeshLang supports asynchronous function patterns with `async fn` and `await`.
-
-```adesh
-async fn delayed_log(msg: string) {
-    await sleep(100);
-    print(msg);
+@inline
+@noalloc
+fn vector_dot(a: [f32; 4], b: [f32; 4]) -> f32 {
+    return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] + a[3]*b[3];
 }
 ```
 
-### Behavior
-
-- `async fn` marks a function as asynchronous
-- `await` pauses execution until the awaited task resolves
-- async code is useful for timers, I/O, and concurrency-oriented workflows
-
-This allows AdeshLang to support non-blocking design without requiring a completely different programming style.
-
----
-
-## API-style reference
-
-| Construct | Example | Purpose |
-|---|---|---|
-| Named function | `fn add(a, b) { ... }` | Reusable block of logic |
-| Typed function | `fn add(a: i64, b: i64): i64` | Stronger API contracts |
-| Default parameter | `fn pow(base, exp = 2)` | Optional call arguments |
-| Anonymous function | `let f = fn(x) { ... }` | Inline callable value |
-| Arrow function | `let square = x => x * x` | Shorter function literal |
-| Closure | `fn make_adder(base) { return fn(x) { ... } }` | Captures outer state |
-| Recursive function | `fn fact(n) { ... }` | Self-referential logic |
-| Async function | `async fn load()` | Non-blocking execution |
-
----
-
-## Best practices
-
-- prefer typed parameters for public APIs
-- keep functions short and focused
-- use `return` consistently for clarity
-- prefer named functions for reusable logic
-- use closures for callbacks and scoped behavior
-- avoid deep recursion when iterative logic is clearer
-
----
-
-## Related examples and source references
-
-### Examples
-
-- `examples/functions/01_basic_functions.adesh`
-- `examples/functions/02_higher_order.adesh`
-- `examples/functions/nested_functions.adesh`
-
-### Source concepts
-
-The runtime and compiler support for functions is represented across the language implementation, including parsing and execution logic in the project source tree, especially around the compiler frontend and runtime evaluator.
-
-For reference, inspect the project sources under:
-
-- `src/main.rs`
-- `src/runtime/`
-- `src/frontend/`
-- `src/stdlib/`
-
-This gives you a direct path from the language reference to the actual implementation and examples.
-
----
-
-## Summary
-
-Functions are the main abstraction mechanism in AdeshLang. They support:
-
-- clear modularity
-- reusable logic
-- data transformation
-- higher-order programming
-- asynchronous behavior
-- closure-based state management
-
-Once you understand functions, most of the rest of the language becomes easier to reason about because it builds on the same compositional model.
-
+| Attribute | Compiler Action & Constraints |
+| :--- | :--- |
+| `@inline` | Forces full inlining of function body at all call sites, eliminating CALL instruction overhead. |
+| `@noalloc` | Verifies at compile time that the function contains zero heap allocations (`alloc`, dynamic array expansion, string concat). |
+| `@pure` | Enforces pure functional semantics: no side-effects, no global/captured mutable state, output depends strictly on parameters. |

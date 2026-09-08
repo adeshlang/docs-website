@@ -53,7 +53,7 @@ fn fibonacci(n: i64) -> i64 {
 @noalloc
 @inline
 fn compute_vector_dot(a: [f32; 4], b: [f32; 4]) -> f32 {
-    let mut sum: f32 = 0.0;
+    let sum: f32 = 0.0;
     for i in 0..4 {
         sum += a[i] * b[i];
     }

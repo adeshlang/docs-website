@@ -15,7 +15,7 @@ The `await` keyword suspends the current `async` context until the awaited value
 
 ```adesh
 async fn fetchAll(urls: [string]) -> [string] {
-    let mut results = [];
+    let results = [];
     for url in urls {
         let body = await fetch(url);
         results.push(body);

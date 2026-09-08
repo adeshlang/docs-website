@@ -1,492 +1,123 @@
 ---
 id: basics
-title: Language Basics
-description: Core syntax, variables, expressions, blocks, comments, and fundamental patterns in AdeshLang.
-sidebar_label: Basics
+title: "Language Syntax & Execution Model"
+description: "Formal specification of AdeshLang lexical structure, tokenization, statement grammar, evaluation order, and compilation pipeline."
+sidebar_label: "Syntax & Execution Model"
 ---
 
-# Language Basics
+# Language Syntax & Execution Model
 
-This page introduces the everyday syntax and structure used in almost every AdeshLang program. It explains the fundamental building blocks that make complex programs possible.
-
----
-
-## Your first program
-
-```adesh
-print("Hello, World!");
-```
-
-This is the simplest form of a working AdeshLang script. A program can start by emitting output, evaluating a value, or defining reusable logic.
+This specification details the formal lexical grammar, statement termination rules, expression evaluation order, and compiler processing stages for AdeshLang programs.
 
 ---
 
-## File style and statement conventions
+## 1. Lexical Architecture
 
-AdeshLang programs typically use `.adesh` files and follow a familiar block-based structure.
+### 1.1 Source Character Encoding
+AdeshLang source code is represented as a stream of UTF-8 encoded bytes. Non-UTF-8 byte sequences encountered during lexing trigger a fatal compile-time error (`E0001: Invalid UTF-8 sequence`).
 
-### Core conventions
+### 1.2 Whitespace and Line Terminators
+Whitespace characters (Space `U+0020`, Horizontal Tab `U+0009`, Carriage Return `U+000D`, and Line Feed `U+000A`) serve to separate tokens and are otherwise ignored by the lexer, except when enclosed in string literals.
 
-- files use the `.adesh` extension
-- statements are usually terminated with `;`
-- blocks use braces like `{ ... }`
-- comments use `//`
-- indentation is used for readability and organization
+### 1.3 Comments
+The lexer recognizes two forms of comments:
+- **Line Comments**: Introduced by `//` and extending to the end of the current line (`U+000A` or `U+000D`).
+- **Block Comments**: Enclosed within `/*` and `*/`. Block comments support arbitrary nesting (`/* outer /* inner */ outer */`) and are resolved by a lexer stack counter.
 
-```adesh
-// This is a comment.
-let message = "Hi";
+### 1.4 Identifiers and Keywords
+Identifiers must begin with an ASCII letter (`a-z`, `A-Z`) or an underscore (`_`), followed by zero or more alphanumeric ASCII characters or underscores. 
 
-if message != null {
-    print(message);
-}
-```
-
-A style that is easy to scan visually is important in any language, especially when programs grow from a few lines into larger systems.
+AdeshLang reserves **83 identifier spellings** as language keywords. When the lexer encounters an identifier matching a reserved spelling, it emits a dedicated keyword token rather than a general `Token::Identifier`. See [Keywords Reference](./keywords) for the complete table.
 
 ---
 
-## Variables and binding
+## 2. Compiler Execution Pipeline
 
-Variables are declared using `let`.
+AdeshLang source code undergoes four discrete compilation phases prior to target execution:
 
-```adesh
-let x = 42;
-let name = "Alice";
+```
++------------------+     +------------------+     +------------------+     +------------------+
+|  Source Code     | --> |   Lexical Analysis| --> | Abstract Syntax  | --> | Type Checking &  |
+|  (.adesh file)   |     |   (Token Stream) |     | Tree (AST Graph) |     | Semantic Analysis|
++------------------+     +------------------+     +------------------+     +------------------+
+                                                                                    |
+                                                                                    v
+                                                                           +------------------+
+                                                                           | Backend Codegen  |
+                                                                           | (VM / JIT IR)    |
+                                                                           +------------------+
 ```
 
-### Optional explicit type annotations
-
-```adesh
-let count: i64 = 100;
-let price: f64 = 19.99;
-let active: bool = true;
-let label: string = "Ready";
-```
-
-This can improve clarity when the type contract matters, especially around APIs and structured software.
-
-### Multi-Variable Declarations & Variable Swapping
-
-AdeshLang supports declaring and assigning multiple variables concurrently without requiring tuple parentheses `()`:
-
-```adesh
-// Multi-variable declaration
-let a, b, c = 10, 20, 30;
-
-// Typed multi-variable declaration
-let x: i32, y: f64 = 100, 3.14159;
-
-// Variable swapping without temporary variables
-a, b = b, a; // Swaps 'a' and 'b' safely
-```
-
-RHS expressions in multi-variable assignments and swaps are evaluated **first** into zero-cost temporary storage before variable bindings are updated, ensuring complete ownership and memory safety during variable swaps.
+1. **Lexical Analysis**: Converted into a high-density, contiguous token array with source location metadata (line, column, byte offset).
+2. **Abstract Syntax Tree (AST) Parsing**: Top-down operator precedence (Pratt) parsing constructs an immutable AST graph validating block structure, operator associativity, and grammar correctness.
+3. **Semantic Analysis & Symbol Resolution**: Scopes are checked, symbols resolved in lexical environments, and Hindley-Milner bidirectional type inference determines type bounds and verifies borrow invariants.
+4. **Target Code Generation**: Lowered into AdeshLang Bytecode VM instructions or Cranelift JIT Intermediate Representation (IR) nodes depending on execution target flags (`--jit`, `--bytecode`, `--aot`).
 
 ---
 
-## Primitive values
+## 3. Statement Grammar & Semicolon Rules
 
-AdeshLang supports the usual scalar data types.
+### 3.1 Statement Termination
+AdeshLang utilizes explicit semicolon termination for expression statements, variable bindings, imports, and control flow exits:
 
 ```adesh
-let n = 42;             // integer
-let pi = 3.14159;       // floating-point value
-let ok = true;          // boolean
-let message = "Adesh"; // string
-let missing = null;     // no value
+let total: f64 = 100.0; // Binding statement
+total += 25.5;           // Expression statement
+return total;            // Control flow exit statement
 ```
 
-### Numeric literal syntax
+### 3.2 Block Expressions
+A block consists of a sequence of statements enclosed in curly braces `{ ... }`. Blocks introduce a new lexical scope. The final expression inside a block without a trailing semicolon evaluates as the value of the block expression:
 
 ```adesh
-let dec = 42;
-let hex = 0xFF;
-let bin = 0b1010;
-let exp = 1.2e3;
-
-let small = 200u8;
-let signed = -10i32;
-```
-
-This makes it easy to work with both general numbers and precise binary or fixed-width values.
-
----
-
-## Collections and composite values
-
-AdeshLang includes several collection types for grouping related values. The most commonly used are arrays, tuples, and objects. Arrays are the primary container for ordered sequences, while objects model named records and tuples represent fixed-position data.
-
-### Arrays
-
-Arrays are ordered, indexable collections of values. They are the core data structure for lists, buffers, results, and nested data. In AdeshLang, array literals are written with square brackets, and the first element is at index `0`.
-
-```adesh
-let values = [1, 2, 3, 4];
-let names = ["Ada", "Linus", "Grace"];
-let mixed = [1, "two", true, 3.14];
-```
-
-#### Creating arrays
-
-```adesh
-let empty = [];
-let numbers = [10, 20, 30, 40, 50];
-let words = ["hello", "world", "from", "Adesh"];
-let nested = [[1, 2], [3, 4], [5, 6]];
-```
-
-The array literal form is the default and works well for general list-building. Arrays may contain values of mixed types, although typed arrays are also supported when a program wants stronger constraints.
-
-#### Accessing elements
-
-```adesh
-let fruits = ["apple", "banana", "cherry"];
-
-print(fruits[0]); // apple
-print(fruits[1]); // banana
-print(fruits[2]); // cherry
-```
-
-Indexing uses zero-based numbering. This is the same convention used across many modern languages and makes it natural to work with sequences in loops and pipelines.
-
-```adesh
-let numbers = [10, 20, 30, 40];
-print(numbers[3]); // 40
-```
-
-If an index is out of range, AdeshLang raises an error or reports the access as invalid, depending on the backend and the execution mode. This helps catch bugs before they silently corrupt logic.
-
-```adesh
-let a = [10, 20, 30];
-
-try {
-    print(a[99]);
-} catch (e) {
-    print("index out of bounds:", e);
-}
-```
-
-#### Reading length and size
-
-The built-in `len(...)` helper returns the count of elements in an array.
-
-```adesh
-let numbers = [5, 10, 15, 20];
-print(len(numbers)); // 4
-```
-
-Arrays also support direct length-style access patterns depending on the runtime surface in use:
-
-```adesh
-let numbers = [7, 8, 9];
-print(numbers.length);
-```
-
-This is useful when checking whether a collection is empty, iterating in range-based loops, or validating data before processing.
-
-```adesh
-let values = [1, 2, 3];
-if len(values) > 0 {
-    print("array is not empty");
-}
-```
-
-#### Mutating arrays
-
-Arrays are mutable: values can be replaced or appended after creation.
-
-```adesh
-let colors = ["red", "green", "blue"];
-colors[1] = "yellow";
-print(colors); // ["red", "yellow", "blue"]
-```
-
-Appending a value adds it to the end of the array.
-
-```adesh
-let nums = [1, 2, 3];
-nums.push(4);
-print(nums); // [1, 2, 3, 4]
-```
-
-Removing the last item is equally common:
-
-```adesh
-let nums = [1, 2, 3, 4];
-let last = nums.pop();
-print(last); // 4
-print(nums); // [1, 2, 3]
-```
-
-You can also add and remove from the front of the list:
-
-```adesh
-let nums = [2, 3, 4];
-nums.unshift(1);
-print(nums); // [1, 2, 3, 4]
-
-let first = nums.shift();
-print(first); // 1
-print(nums); // [2, 3, 4]
-```
-
-These operations are useful for queue-like data, buffering, or processing streams where the head or tail of the list matters.
-
-#### Searching and comparing values
-
-AdeshLang provides pattern-based checks for array membership and positions.
-
-```adesh
-let nums = [10, 20, 30, 40];
-
-print(nums.includes(20)); // true
-print(nums.includes(999)); // false
-print(nums.indexOf(30)); // 2
-print(nums.indexOf(999)); // -1
-```
-
-The `includes` call checks whether a value exists; `indexOf` returns the first matching index, or `-1` when the item is not present.
-
-```adesh
-let names = ["Ada", "Grace", "Linus"];
-print(names.includes("Grace")); // true
-print(names.indexOf("Linus")); // 2
-```
-
-#### Slicing, joining, and transformations
-
-Arrays can be sliced into subranges and joined into strings.
-
-```adesh
-let nums = [10, 20, 30, 40, 50];
-let slice = nums.slice(1, 4);
-print(slice); // [20, 30, 40]
-
-print(nums.join(", ")); // "10, 20, 30, 40, 50"
-```
-
-The `slice(start, end)` pattern takes a contiguous portion of the array. This is valuable for working with partial datasets without modifying the original collection.
-
-Arrays also mesh naturally with functional style and iteration operations:
-
-```adesh
-let nums = [1, 2, 3, 4];
-let doubled = map(nums, fn(x) {
-    return x * 2;
-});
-
-print(doubled); // [2, 4, 6, 8]
-```
-
-This shows the same list can be processed declaratively instead of manually looping over every element.
-
-#### Typed and fixed-size arrays
-
-When a program needs stronger guarantees, arrays can be declared with a specific element type and, in some cases, a fixed capacity.
-
-```adesh
-let ints: [i32] = [1, 2, 3, 4];
-let bytes: [u8; 4] = [10, 20, 30, 40];
-```
-
-This signals intent to the compiler and runtime. A typed array is useful when a function is meant to operate on integers, bytes, or other machine-level values. Fixed-capacity arrays are useful for bounded buffers and systems-style data layouts.
-
-```adesh
-let values: [i32; 6] = [1, 2, 3, 4];
-print(values.length); // 4
-print(values.capacity); // 6
-```
-
-These forms are especially relevant in performance-sensitive code, memory-heavy workloads, and backend-specific optimization scenarios.
-
-#### Nested arrays
-
-Arrays can hold other arrays, which is a natural way to represent matrices, tables, and grouped records.
-
-```adesh
-let matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-];
-
-print(matrix[1][2]); // 6
-```
-
-Nested arrays are common in scientific code, game grids, table-driven data, and any workload that needs multiple dimensions of ordered values.
-
-#### Spread syntax
-
-A common pattern is to build an array by combining existing ones:
-
-```adesh
-let xs = [1, 2, 3];
-let ys = [4, 5, 6];
-let merged = [...xs, ...ys];
-print(merged); // [1, 2, 3, 4, 5, 6]
-```
-
-This is especially useful for composing configuration data, combining results from multiple stages, or passing multiple values into a function or literal.
-
-#### Practical array rules
-
-- Arrays are zero-indexed.
-- `len(arr)` gives the number of elements.
-- Arrays can be mutated in place.
-- Out-of-range indexing is rejected instead of silently producing garbage.
-- Nested arrays are valid and often used for structured data.
-- Arrays are one of the primary building blocks for data processing and control flow.
-
-Arrays are foundational in AdeshLang: they are the language's standard way to store lists, process data in order, and form larger structured values.
-
-### Tuples
-
-```adesh
-let point = (10, 20);
-let data = (1, "two", true);
-```
-
-### Objects
-
-```adesh
-let user = {
-    name: "Ravi",
-    age: 30,
-    active: true
+let adjusted_score = {
+    let base = 50;
+    let bonus = 15;
+    base + bonus // Block expression yields 65
 };
-
-print(user.name);
 ```
-
-### Spread composition
-
-```adesh
-let xs = [1, 2, 3];
-let ys = [...xs, 4, 5];
-print(ys);
-```
-
-Collections are one of the main ways programs represent larger real-world data.
 
 ---
 
-## Expressions and operators
+## 4. Expression Evaluation & Multi-Variable Registers
 
-AdeshLang supports the usual arithmetic and comparison operations.
+### 4.1 Evaluation Order
+Expressions are evaluated strict left-to-right. In binary operations (`A op B`), operand `A` is fully evaluated before operand `B`.
+
+### 4.2 Short-Circuit Logic
+Logical AND (`&&` / `and`) and Logical OR (`||` / `or`) operations employ short-circuit evaluation:
+- If LHS of `&&` evaluates to `false`, RHS is not evaluated.
+- If LHS of `||` evaluates to `true`, RHS is not evaluated.
+
+### 4.3 RHS Evaluation & Multi-Variable Swapping
+For multi-variable declarations and unpacking statements (`let a, b = x, y` or `a, b = b, a`), all Right-Hand Side (RHS) expressions are evaluated first into temporary SSA compiler virtual registers before any Left-Hand Side (LHS) bindings are updated:
 
 ```adesh
-let x = 10;
-let y = 5;
+let a = 10;
+let b = 20;
 
-let sum = x + y;
-let diff = x - y;
-let product = x * y;
-let quotient = x / y;
-let remainder = x % y;
-
-let ok = x > y && x != 0;
+// Evaluation sequence:
+// 1. Temp_0 = b (20)
+// 2. Temp_1 = a (10)
+// 3. a = Temp_0 (20)
+// 4. b = Temp_1 (10)
+a, b = b, a;
 ```
 
-These operators are the heart of conditionals, data processing, and calculations within a program.
+This guarantees complete isolation during variable mutation and prevents aliasing side-effects or race conditions during multi-assignment operations.
 
 ---
 
-## Control flow
+## 5. Primitive Literals & Memory Bit Patterns
 
-### If statements
-
-```adesh
-let score = 85;
-
-if score >= 90 {
-    print("Excellent");
-} elif score >= 70 {
-    print("Good");
-} else {
-    print("Try again");
-}
-```
-
-### Loops
-
-```adesh
-for i in 1..5 {
-    print(i);
-}
-```
-
-Range-based loops are a very common pattern in AdeshLang code and a central part of beginner-friendly iteration.
-
----
-
-## Functions
-
-Functions organize logic and allow reuse.
-
-```adesh
-fn add(a: i64, b: i64): i64 {
-    return a + b;
-}
-
-let total = add(10, 20);
-print(total);
-```
-
-This is the basis of modularity: code becomes reusable rather than duplicated.
-
----
-
-## Common built-ins
-
-AdeshLang includes a set of runtime helpers for everyday work.
-
-```adesh
-print(type(42));          // "number"
-print(len([1, 2, 3]));    // 3
-print(hasKey({ a: 1 }, "a"));
-
-let doubled = map([1, 2, 3], fn(x) {
-    return x * 2;
-});
-
-print(doubled);
-```
-
-These helpers are designed to make common tasks smaller and easier to reason about in real programs.
-
----
-
-## Writing good AdeshLang code
-
-A typical AdeshLang program follows a straightforward flow:
-
-1. declare variables
-2. build functions
-3. apply conditionals
-4. iterate through data
-5. print or return a result
-
-This pattern keeps code readable and predictable as it grows.
-
-### Beginner best practices
-
-- choose descriptive variable names
-- keep each function focused on one job
-- prefer explicit types when semantics matter
-- test small snippets before larger programs
-- read compiler messages carefully
-
----
-
-## Next steps
-
-Continue with the deeper language reference:
-
-- [Type System](/docs/language-guide/type-system)
-- [Functions](/docs/language-guide/functions)
-- [Control Flow](/docs/language-guide/control-flow)
-- [Semantics and Rules](/docs/language-guide/semantics-rules)
-- [Modules and Imports](/docs/language-guide/modules-imports)
-
-Once these basics feel natural, the rest of the language becomes significantly easier to understand and extend.
+| Literal Type | Syntax Example | Memory Bit Pattern / Type Mapping |
+| :--- | :--- | :--- |
+| Decimal Integer | `42` | Native 64-bit signed int (`i64`) by default |
+| Hexadecimal Integer | `0xFF_00_12` | Two's complement integer, `_` ignored |
+| Binary Integer | `0b1010_1100` | Exact bit pattern |
+| Typed Suffix | `255u8`, `-10i32` | Explicit bit-width encoding (`u8`, `i32`) |
+| IEEE Floating-Point | `3.14159`, `1.2e-5` | 64-bit IEEE 754 double precision (`f64`) |
+| UTF-8 String | `"AdeshLang\n"` | Heap string buffer pointer descriptor |
+| Raw String | `raw"C:\System\Path"` | Verbatim character sequence, escape chars ignored |
+| Boolean | `true`, `false` | 8-bit byte (`0x01` = true, `0x00` = false) |
+| Null Sentinel | `null` | Zero pointer (`0x0000000000000000`) |

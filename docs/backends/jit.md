@@ -51,7 +51,7 @@ Long-running loops inside cold functions are upgraded mid-execution without wait
 
 ```adesh
 fn process_large_dataset(data: [f64]) -> f64 {
-    let mut sum: f64 = 0.0;
+    let sum: f64 = 0.0;
     
     // Loop begins in Tier-1. After 1,000 iterations, OSR seamlessly
     // hot-swaps the active stack frame to the Tier-2 SIMD-vectorized version!

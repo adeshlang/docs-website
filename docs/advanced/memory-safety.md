@@ -64,8 +64,8 @@ update(data);   // ✅ Exclusive mutable borrow
 ```
 
 **Borrowing Rules:**
-- ✅ Multiple immutable borrows (`&T`) allowed simultaneously
-- ✅ Only one mutable borrow (`&mut T`) at a time
+- ✅ Multiple immutable borrows allowed simultaneously
+- ✅ Only one mutable borrow at a time
 - ❌ Can't have immutable and mutable borrows together
 
 ### 4. Lifetimes
@@ -229,7 +229,7 @@ AdeshLang prevents these errors **at compile time**:
 
 3. **Data Races**
    ```adesh
-   let mut x = 0;
+   let x = 0;
    
    spawn_thread(|| {
        x = 1;  // ❌ Compile error: data race prevented
@@ -345,16 +345,15 @@ use(b);  // ✅ OK
 ### Pitfall 2: Borrow Checker Errors
 
 ```adesh
-let mut data = Data::new();
-let ref1 = &data;
-let ref2 = &mut data;  // ❌ Error: can't mutably borrow while immutably borrowed
+let data = Data::new();
+read(data);
+update(data);  // ❌ Error: can't mutably borrow while immutably borrowed
 
 // Solution: Scope borrows separately
 {
-    let ref1 = &data;
-    use(ref1);
-}  // ref1 dropped
-let ref2 = &mut data;  // ✅ OK now
+    read(data);
+}  // borrow ended
+update(data);  // ✅ OK now
 ```
 
 ### Pitfall 3: Circular References

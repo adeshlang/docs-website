@@ -5,13 +5,19 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 export default function DocItemTOCMobile(props: any): JSX.Element {
   const isBrowser = useIsBrowser();
   const [showFloatingButton, setShowFloatingButton] = useState<boolean>(false);
+  const [isAtBottom, setIsAtBottom] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isBrowser) return;
 
     const handleScroll = () => {
-      setShowFloatingButton(window.scrollY > 160);
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+
+      setShowFloatingButton(scrollY > 160);
+      setIsAtBottom(windowHeight + scrollY >= scrollHeight - 140);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -44,9 +50,9 @@ export default function DocItemTOCMobile(props: any): JSX.Element {
         <DocItemTOCMobileOriginal {...props} />
       </div>
 
-      {/* ── Floating Right-Side TOC Menu Icon (Accessible even from the bottom) ── */}
+      {/* ── Floating Right-Side TOC Menu Icon (Disappears at page bottom) ── */}
       {showFloatingButton && (
-        <div className="adesh-mobile-floating-toc-container">
+        <div className={`adesh-mobile-floating-toc-container${isAtBottom ? ' at-bottom' : ''}`}>
           <button
             type="button"
             className="adesh-mobile-floating-toc-btn"

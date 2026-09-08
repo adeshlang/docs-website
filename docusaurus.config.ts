@@ -197,7 +197,7 @@ const config: Config = {
         path: 'learn',
         routeBasePath: 'learn',
         sidebarPath: './sidebars-learn.ts',
-        editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+        editUrl: 'https://github.com/adeshlang/docs-website/tree/main/',
         showLastUpdateTime: true,
         showLastUpdateAuthor: false,
         breadcrumbs: true,
@@ -210,7 +210,7 @@ const config: Config = {
         path: 'learn-by-examples',
         routeBasePath: 'learn-by-examples',
         sidebarPath: './sidebars-examples.ts',
-        editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+        editUrl: 'https://github.com/adeshlang/docs-website/tree/main/',
         showLastUpdateTime: true,
         showLastUpdateAuthor: false,
         breadcrumbs: true,
@@ -274,7 +274,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+          editUrl: 'https://github.com/adeshlang/docs-website/tree/main/',
           routeBasePath: 'docs',
           showLastUpdateTime: true,
           showLastUpdateAuthor: false,
@@ -283,7 +283,7 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/adeshlang/adeshlang/tree/main/docs-website/',
+          editUrl: 'https://github.com/adeshlang/docs-website/tree/main/',
           feedOptions: {
             type: ['rss', 'atom'],
             title: 'AdeshLang Blog',

@@ -37,9 +37,9 @@ import { async } from "builtin";
 
 async fn handle_connection(stream: net::TcpStream) {
     defer stream.close();
-    let mut buffer = [0u8; 1024];
+    let buffer = [0u8; 1024];
 
-    while let Ok(bytes_read) = await stream.read(&mut buffer) {
+    while let Ok(bytes_read) = await stream.read(&buffer) {
         if bytes_read == 0 {
             break; // Connection closed cleanly by client
         }
@@ -90,10 +90,10 @@ import { net } from "builtin";
 
 fn run_udp_server() -> Result<(), Error> {
     let socket = net::UdpSocket::bind("0.0.0.0:9000")?;
-    let mut buffer = [0u8; 512];
+    let buffer = [0u8; 512];
 
     while true {
-        let (bytes_received, peer_addr) = socket.recv_from(&mut buffer)?;
+        let (bytes_received, peer_addr) = socket.recv_from(&buffer)?;
         print(f"Received {bytes_received} bytes from {peer_addr}");
 
         // Send response packet
@@ -118,7 +118,7 @@ fn main() -> Result<(), Error> {
     let tcp_stream = net::TcpStream::connect("api.github.com:443")?;
     
     // Perform TLS 1.3 handshake with ALPN negotiation
-    let mut tls_stream = tls::TlsConnector::new()
+    let tls_stream = tls::TlsConnector::new()
         .enable_sni(true)
         .connect("api.github.com", tcp_stream)?;
 
@@ -161,7 +161,7 @@ async fn fetch_weather(city: string) -> Result<f64, Error> {
 import { websocket } from "builtin";
 
 async fn connect_realtime_feed() -> Result<(), Error> {
-    let mut ws = await websocket::connect("wss://stream.binance.com/ws/btcusdt@trade")?;
+    let ws = await websocket::connect("wss://stream.binance.com/ws/btcusdt@trade")?;
     defer ws.close();
 
     while let Some(message) = await ws.receive() {

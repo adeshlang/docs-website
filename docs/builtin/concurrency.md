@@ -78,7 +78,7 @@ import { Mutex, RwLock, Arc } from "stdlib/concurrency";
 let shared_data = Arc::new(Mutex::new(0));
 
 {
-    let mut lock = shared_data.lock().unwrap();
+    let lock = shared_data.lock().unwrap();
     *lock += 10;
 } // Automatically unlocked here!
 
