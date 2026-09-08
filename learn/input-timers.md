@@ -91,6 +91,77 @@ City: Delhi
 Chosen city: Delhi
 ```
 
+## Interactive TUI Widgets
+
+AdeshLang includes terminal widgets that render interactive UI in raw mode:
+
+### 1. 2D Table & Grid Selector (`input.table`)
+
+Navigate rows and columns with arrow keys (`↑` `↓` `←` `→`) and press `Enter` to select a cell:
+
+```adesh
+let headers = ["Service", "Port", "Status"];
+let rows = [
+    ["Auth Gateway", "8080", "Healthy"],
+    ["Billing API",  "9000", "Degraded"],
+    ["Worker Queue", "5672", "Healthy"]
+];
+
+let sel = input.table("Select Service Record:", headers, rows);
+
+print("Cell value :", sel.value);          // or sel.cell
+print("Coordinates:", sel.row, sel.col);   // row & col index
+print("Column Name:", sel.header);         // or sel.colName
+print("Row Data   :", sel.rowData);        // ["Auth Gateway", "8080", "Healthy"]
+print("Column Data:", sel.colData);        // ["Auth Gateway", "Billing API", "Worker Queue"]
+print("Row Object :", sel.rowObject);      // { Service: "Auth Gateway", Port: "8080", Status: "Healthy" }
+```
+
+### 2. Calendar Datepicker & DateTime Picker
+
+```adesh
+// 3-field datepicker: Tab cycles YEAR, MONTH, DAY; arrows adjust
+let date = input.datepicker("Release Date:");
+print("Picked date:", date); // e.g. "2026-04-14"
+
+// 6-field datetime picker: YEAR, MONTH, DAY, HOUR, MIN, SEC
+let stamp = input.datetime("Deployment Timestamp:");
+print("Picked timestamp:", stamp); // e.g. "2026-04-14 15:30:00"
+```
+
+### 3. PIN & OTP Verification Pad
+
+Discrete security digit boxes `[ ● ] [ ● ] [ ● ] [ ● ]` that auto-confirm when filled:
+
+```adesh
+let pin = input.pin("Enter 4-Digit Security PIN:", 4);
+if pin == "9876" {
+    print("✓ Access authorized");
+}
+```
+
+### 4. Split-Pane Visual Diff Editor
+
+Interactive side-by-side terminal code/patch editor:
+
+```adesh
+let patched = input.diff("let x = 10;", "let x = 20;");
+print("Saved patch:\n" + patched);
+```
+
+### 5. Automated Testing with `input.mock`
+
+Queue predetermined mock values so interactive scripts run headlessly in CI/CD or unit tests:
+
+```adesh
+input.mock(["Alice", "2026-04-14", "9876"]);
+
+let name = input("Name:");
+let date = input.datepicker("Date:");
+let pin  = input.pin("PIN:", 4);
+print("Automated test passed:", name, date, pin);
+```
+
 ## Multiline and piped input
 
 `examples/input/multiline_input.adesh` reads several lines; `piped_input.adesh`

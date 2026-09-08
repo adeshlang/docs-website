@@ -191,6 +191,7 @@ const sidebars: SidebarsConfig = {
         'builtin/overview',
         'builtin/builtins',
         'builtin/print',
+        'builtin/input',
         'builtin/collections',
         'builtin/math',
         'builtin/json',

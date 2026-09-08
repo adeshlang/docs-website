@@ -414,10 +414,40 @@ fn slow() { sleep(100); }
 
 ---
 
+## Interactive Input & TUI Subsystem
+
+| Function / Builtin | Description | Parameters | Returns |
+| :--- | :--- | :--- | :--- |
+| `input(prompt?, options?)` | Read stdin with validation options (`regex`, `notEmpty`, `min`, `max`, `masked`, `onSubmit`) | `prompt?: string`, `options?: object` | `string` |
+| `input.confirm(prompt)` | Interactive boolean prompt (`(y/N)` or `(Y/n)`) | `prompt: string` | `boolean` |
+| `input.password(prompt)` | Masked password input | `prompt: string` | `string` |
+| `input.select(prompt, options)` | Interactive single-choice list | `prompt: string`, `options: array` | `string` |
+| `input.checkbox(prompt, options)` | Interactive multi-choice checkboxes (Space toggle) | `prompt: string`, `options: array` | `array<string>` |
+| `input.radio(prompt, options)` | Interactive radio selector | `prompt: string`, `options: array` | `string` |
+| `input.fuzzy(prompt, options)` | Interactive fuzzy search selector | `prompt: string`, `options: array` | `string` |
+| `input.datepicker(prompt)` | Interactive 3-field calendar date picker (`YEAR`, `MONTH`, `DAY`) | `prompt: string` | `string` (`YYYY-MM-DD`) |
+| `input.datetime(prompt)` | Interactive 6-field timestamp picker (`Y-M-D H:M:S`) | `prompt: string` | `string` (`YYYY-MM-DD HH:MM:SS`) |
+| `input.diff(orig, mod)` | Visual split-pane side-by-side patch editor | `orig: string`, `mod: string` | `string` |
+| `input.table(prompt?, headers, data)` | 2D data grid selector with `.row`, `.col`, `.value`, `.cell`, `.header`, `.rowData`, `.colData`, `.rowObject`, `.headers`, `.grid` | `headers: array`, `data: array` | `object` |
+| `input.pin(prompt, length?)` | Discrete PIN/OTP digit box pad (`[ ● ] [ ● ] [ ● ] [ ● ]`) | `prompt: string`, `length?: number` | `string` |
+| `input.slider(prompt, options)` | Interactive visual horizontal gauge slider | `prompt: string`, `options: object` | `number` |
+| `input.color(prompt)` | Interactive RGB color component selector | `prompt: string` | `string` (`#RRGGBB`) |
+| `input.hotkey(prompt)` | Keyboard shortcut & modifier listener | `prompt: string` | `string` (`"Ctrl+S"`) |
+| `input.tree(prompt, root)` | Hierarchical collapsible tree explorer | `prompt: string`, `root: object` | `string` |
+| `input.form(fields)` | Multi-field structured form | `fields: array<object>` | `object` |
+| `input.mock(values)` | Automated mock input queue for testing | `values: array<any>` | `void` |
+
+See [Interactive Input & TUI Widgets](input) for full documentation and keybindings.
+
+---
+
 ## Quick Reference: All Global Functions
 
 ```
 print, println, eprint
+input, input.confirm, input.password, input.select, input.checkbox, input.radio, input.form
+input.fuzzy, input.slider, input.color, input.hotkey, input.datepicker, input.datetime
+input.diff, input.table, input.tree, input.pin, input.mock
 type, len, hasKey, capacity, metadata_size
 set, makeSet, tuple, complex, Error, error, alloc
 map, filter, reduce
@@ -446,6 +476,7 @@ fs.path.join, fs.path.basename, fs.path.dirname, fs.path.extname
 
 For larger APIs, see dedicated pages:
 - **[Print Function](print)** — Complete formatting, styling, pretty-print options
+- **[Interactive Input & TUI](input)** — 18+ interactive terminal input widgets, data grid, date/datetime pickers, visual diff, and PIN pad
 - **[FS Module](fs)** — Filesystem operations
 - **[HTTP Module](http)** — HTTP client
 - **[Concurrency](concurrency)** — Threading, channels, mutexes

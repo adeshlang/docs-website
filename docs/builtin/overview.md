@@ -63,9 +63,11 @@ Every builtin library follows the same mental model: **import the namespace, the
 | `http` | `http` | HTTP client requests | Documented |
 | `concurrency` | `parallel_*` | Parallel helpers and threading | Documented |
 | `print` | global | Rich console output, styling, and pretty-print | Documented |
+| [Input & TUI](input) | `input.*` | 18+ Interactive terminal widgets: prompts, selectors, datepicker, datetime, visual diff, table with sub-properties, PIN/OTP pad, slider, color, hotkey, and test mocks | Documented |
 
 ## Library reference pages
 
+- [Input & TUI Library](input) — complete reference for `input`, `input.table`, `input.datepicker`, `input.datetime`, `input.diff`, `input.pin`, and all 18 interactive widgets.
 - [Math Library](math) — complete reference for the `Math` and `cmath` namespaces.
 - [FS Library](fs) — complete reference for the `fs`, `fs.path`, `fs.async`, `fs.tx`, `fs.snapshot`, `fs.batch`, and `fs.fsql` namespaces.
 - [Path Library](path) — complete reference for the `Path` class, components, and builder.

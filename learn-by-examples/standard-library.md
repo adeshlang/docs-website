@@ -119,3 +119,41 @@ Parsed First Role: admin
 
 * **`JSON.stringify(obj)`**: Converts native maps/structs/objects into JSON string representation.
 * **`JSON.parse(str)`**: Decodes JSON strings back into dynamic AdeshLang value structures.
+
+---
+
+## 4. Interactive Input & TUI Widgets (`input.*`)
+
+AdeshLang provides terminal-native TUI widgets: table grid selectors, date/datetime pickers, visual diff editors, and security PIN verification.
+
+### Code Example
+
+```adesh
+// 1. Interactive 2D Table Selection
+let headers = ["ID", "Service", "Status"];
+let data = [
+    ["srv-01", "Gateway", "Healthy"],
+    ["srv-02", "Worker",  "Running"]
+];
+let sel = input.table("Select Service:", headers, data);
+print("Selected Row:", sel.row, "Column:", sel.header, "Value:", sel.value);
+print("Row Map:", sel.rowObject["Service"]);
+
+// 2. Calendar Date Picker (Year, Month, Day navigation)
+let releaseDate = input.datepicker("Release Date:");
+print("Scheduled Date:", releaseDate);
+
+// 3. Security PIN Verification Pad
+let pin = input.pin("Enter 4-digit PIN:", 4);
+print("Verified PIN:", pin);
+```
+
+### Breakdown
+
+* **`input.table(headers, data)`**: Interactive 2D grid returning coordinates, cell value, column header, row array, and row key-value map.
+* **`input.datepicker(prompt)`**: 3-field interactive ASCII calendar with leap-year bounds.
+* **`input.datetime(prompt)`**: 6-field timestamp picker (`YYYY-MM-DD HH:MM:SS`).
+* **`input.diff(orig, mod)`**: Visual split-pane terminal diff/patch editor.
+* **`input.pin(prompt, length)`**: Discrete masked PIN/OTP digit boxes.
+* **`input.mock(values)`**: Queue mock responses for automated test suites.
+
