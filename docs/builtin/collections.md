@@ -23,25 +23,44 @@ The **Collections** builtin library provides 15 high-performance, memory-safe da
 import Collections;              // or import "std:Collections" as Collections;
 ```
 
+
+## Generic Type Safety Compatibility
+
+All `Collections` data structures support compile-time and runtime generic type annotations (`<T>`, `<K, V>`). Supplying generic parameters ensures production-grade type safety by validating and coercing elements inserted into the collection:
+
+```adesh
+import Collections;
+
+// Single generic parameter <T>
+let numbers = Collections.Vec<u8>();
+let set = Collections.HashSet<string>();
+let stack = Collections.Stack<i32>();
+
+// Dual generic parameters <K, V>
+let map = Collections.HashMap<u8, bool>();
+let cache = Collections.BTreeMap<string, f64>();
+let pq = Collections.PriorityQueue<string, f64>();
+```
+
 ## Selection guide
 
 | Requirement | Constructor | Complexity |
 | :--- | :--- | :--- |
-| Dynamic growable sequence | `Collections.Vec()` | `O(1)` amortized push/pop, `O(1)` access |
+| Dynamic growable sequence | `Collections.Vec<T>()` | `O(1)` amortized push/pop, `O(1)` access |
 | Non-owning view of a sequence | `Collections.Slice(arr, start?, end?)` | `O(1)` index |
-| Double-ended queue | `Collections.VecDeque()` | `O(1)` push/pop at both ends |
-| Fast key-value mapping | `Collections.HashMap()` | expected `O(1)` |
-| Unique value set | `Collections.HashSet()` | expected `O(1)` |
-| Sorted key-value mapping | `Collections.BTreeMap()` | `O(log N)` |
-| Sorted unique set | `Collections.BTreeSet()` | `O(log N)` |
-| Max-heap | `Collections.BinaryHeap()` | `O(log N)` push/pop, `O(1)` peek |
-| Explicit priority queue | `Collections.PriorityQueue()` | `O(log N)` push/pop |
+| Double-ended queue | `Collections.VecDeque<T>()` | `O(1)` push/pop at both ends |
+| Fast key-value mapping | `Collections.HashMap<K, V>()` | expected `O(1)` |
+| Unique value set | `Collections.HashSet<T>()` | expected `O(1)` |
+| Sorted key-value mapping | `Collections.BTreeMap<K, V>()` | `O(log N)` |
+| Sorted unique set | `Collections.BTreeSet<T>()` | `O(log N)` |
+| Max-heap | `Collections.BinaryHeap<T>()` | `O(log N)` push/pop, `O(1)` peek |
+| Explicit priority queue | `Collections.PriorityQueue<T, P>()` | `O(log N)` push/pop |
 | Compact bit array | `Collections.BitSet()` | `O(1)` set/test/clear |
 | Fixed-capacity stream buffer | `Collections.RingBuffer(cap)` | `O(1)` push/pop |
-| FIFO queue | `Collections.Queue()` | `O(1)` enqueue/dequeue |
-| LIFO stack | `Collections.Stack()` | `O(1)` push/pop |
-| Insertion-ordered map | `Collections.OrderedMap()` | expected `O(1)` |
-| Insertion-ordered set | `Collections.OrderedSet()` | expected `O(1)` |
+| FIFO queue | `Collections.Queue<T>()` | `O(1)` enqueue/dequeue |
+| LIFO stack | `Collections.Stack<T>()` | `O(1)` push/pop |
+| Insertion-ordered map | `Collections.OrderedMap<K, V>()` | expected `O(1)` |
+| Insertion-ordered set | `Collections.OrderedSet<T>()` | expected `O(1)` |
 
 ---
 
@@ -50,7 +69,7 @@ import Collections;              // or import "std:Collections" as Collections;
 ```adesh
 import Collections;
 
-let v = Collections.Vec();
+let v = Collections.Vec<i32>();
 v.push(10);
 v.push(20);
 v.push(30);

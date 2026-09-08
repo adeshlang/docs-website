@@ -60,15 +60,15 @@ Reduced (sum): 100
 
 ## 2. Standard Library Collections (`HashMap`, `HashSet`, `VecDeque`)
 
-The `Collections` standard library (`import Collections;`) provides 15 specialized data structures implemented in optimized Rust binaries.
+The `Collections` standard library (`import Collections;`) provides 15 specialized data structures with full generic type compatibility (`<T>`, `<K, V>`).
 
 ### Code Example
 
 ```adesh
 import Collections;
 
-// 1. HashMap: Key-Value storage
-let scores = Collections.HashMap();
+// 1. HashMap: Key-Value storage with generics <string, i32>
+let scores = Collections.HashMap<string, i32>();
 scores.insert("Alice", 95);
 scores.insert("Bob", 88);
 scores.insert("Charlie", 92);
@@ -76,8 +76,8 @@ scores.insert("Charlie", 92);
 print("Alice's score:", scores.get("Alice"));
 print("HashMap size:", scores.len());
 
-// 2. HashSet: Unique set membership
-let set = Collections.HashSet();
+// 2. HashSet: Unique set membership with generics <string>
+let set = Collections.HashSet<string>();
 set.insert("apple");
 set.insert("banana");
 set.insert("apple"); // Duplicate skipped automatically
@@ -86,8 +86,8 @@ print("Set contains 'apple':", set.contains("apple"));
 print("Set contains 'orange':", set.contains("orange"));
 print("Set unique count:", set.len());
 
-// 3. VecDeque: Double-ended queue
-let queue = Collections.VecDeque();
+// 3. VecDeque: Double-ended queue with generics <string>
+let queue = Collections.VecDeque<string>();
 queue.push_back("job_1");
 queue.push_back("job_2");
 print("Dequeued front item:", queue.pop_front());
