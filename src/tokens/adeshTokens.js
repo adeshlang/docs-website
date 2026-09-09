@@ -65,7 +65,6 @@ export const KEYWORDS = [
   'public',
   'raw',
   'readonly',
-  'ref',
   'region',
   'require',
   'return',

@@ -130,6 +130,7 @@ const sidebars: SidebarsConfig = {
         'language-guide/keywords/typecheck',
         'language-guide/keywords/emit',
         'language-guide/keywords/require',
+        'language-guide/keywords/proceed',
         'language-guide/keywords/test',
         'language-guide/keywords/ignore',
         'language-guide/keywords/expect-fail',
@@ -207,7 +208,10 @@ const sidebars: SidebarsConfig = {
         'builtin/random',
         'builtin/env',
         'builtin/url',
+        'builtin/websocket',
         'builtin/concurrency',
+        'builtin/simd',
+        'builtin/atp',
       ],
     },
     {

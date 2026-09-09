@@ -133,7 +133,7 @@
     },
     "keywords": {
       "name": "keyword.control.adesh",
-      "match": "\\b(?:abstract|alloc|and|as|async|await|break|catch|class|compile|const|constructor|continue|decorator|default|defer|do|elif|else|emit|enum|expect_fail|export|extend|extends|extern|fn|for|free|from|get|if|ignore|implements|import|in|instanceof|int|interface|jump|let|match|new|not|of|on|operator|or|private|proceed|protected|public|raw|readonly|ref|region|require|return|runtime|sealed|self|set|share|spawn|static|strong|struct|super|test|this|throw|try|type|typecheck|typeof|uint|unsafe|vec|weak|while)\\b"
+      "match": "\\b(?:abstract|alloc|and|as|async|await|break|catch|class|compile|const|constructor|continue|decorator|default|defer|do|elif|else|emit|enum|expect_fail|export|extend|extends|extern|fn|for|free|from|get|if|ignore|implements|import|in|instanceof|int|interface|jump|let|match|new|not|of|on|operator|or|private|proceed|protected|public|raw|readonly|region|require|return|runtime|sealed|self|set|share|spawn|static|strong|struct|super|test|this|throw|try|type|typecheck|typeof|uint|unsafe|vec|weak|while)\\b"
     },
     "types": {
       "name": "storage.type.adesh",

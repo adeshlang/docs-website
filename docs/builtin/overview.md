@@ -60,8 +60,11 @@ Every builtin library follows the same mental model: **import the namespace, the
 | [URL](url) | `URL` | WHATWG URL parsing, protocol/host components, normalization, and URLSearchParams query parameter manipulation | Documented |
 | [DNS](dns) | `DNS` | High-performance DNS resolution, record queries (A, AAAA, MX, TXT, NS, CNAME, SOA, SRV, CAA), service discovery, LRU caching, and rebinding policy | Documented |
 | [TLS](tls) | `TLS` | Secure TLS client/server connections, certificate verification, ALPN negotiation, STARTTLS wrapping, and handshake diagnostics | Documented |
-| `http` | `http` | HTTP client requests | Documented |
-| `concurrency` | `parallel_*` | Parallel helpers and threading | Documented |
+| [WebSocket](websocket) | `WebSocket` | RFC 6455 WebSocket client/server, handshake, frame handling, binary/text messages, TLS wss, broadcast/rooms | Documented |
+| [HTTP](http) | `http` | HTTP client requests, response handling, headers, middleware | Documented |
+| [Concurrency](concurrency) | `parallel_*` | Parallel helpers, channels, Mutex/RwLock, worker pools, atomics | Documented |
+| [SIMD](simd) | `Simd` | Hardware SIMD vectors — `vec4<f32>`, `f32x4` aliases, `Simd.*` reductions, auto-vectorization, fused ops | Documented |
+| [ATP](atp) | `Atp` | Adesh Transport Protocol — Ed25519 identity, 19 frame types, fragmentation, congestion control, game-state sync | Documented |
 | `print` | global | Rich console output, styling, and pretty-print | Documented |
 | [Input & TUI](input) | `input.*` | 18+ Interactive terminal widgets: prompts, selectors, datepicker, datetime, visual diff, table with sub-properties, PIN/OTP pad, slider, color, hotkey, and test mocks | Documented |
 
@@ -86,6 +89,11 @@ Every builtin library follows the same mental model: **import the namespace, the
 - [URL Library](url) — complete reference for the `URL` namespace: WHATWG URL parsing and URLSearchParams manipulation.
 - [DNS Library](dns) — complete reference for the `DNS` namespace: hostname resolution, record queries (A, AAAA, MX, TXT, NS, CNAME, SOA, SRV, CAA), service discovery, LRU caching, and security policies.
 - [TLS Library](tls) — complete reference for secure TLS clients, server listeners, STARTTLS wrapping, certificate verification, ALPN negotiation, and handshake tracing.
+- [WebSocket Library](websocket) — complete reference for RFC 6455 clients/servers, frame types, close codes, TLS, broadcast/rooms.
+- [SIMD Library](simd) — complete reference for `Simd` vectors, lane ops, auto-vectorization, and fused pipelines.
+- [ATP Library](atp) — complete reference for Adesh Transport Protocol — identity, streams, frames, reliability, game-state sync.
+- [Concurrency Library](concurrency) — complete reference for scheduler, channels, Mutex/RwLock, Barrier, atomics.
+- [URL Library](url) — complete reference for WHATWG URL and URLSearchParams (supplement to Net/DNS/TLS).
 
 ## Related
 

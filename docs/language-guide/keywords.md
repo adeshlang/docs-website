@@ -2,12 +2,12 @@
 id: keywords
 title: Keywords
 sidebar_label: Keywords
-description: Reference for the 83 documented language keywords in AdeshLang.
+description: Reference for the 84 documented language keywords in AdeshLang (including proceed, extend on).
 ---
 
 # Keywords
 
-AdeshLang documents **83 language keywords** here. Every identifier that matches one of these spellings is tokenized as the corresponding keyword token rather than as an ordinary identifier, so none of them may be used as a variable, function, type, or parameter name.
+AdeshLang documents **84 language keywords** here. Every identifier that matches one of these spellings is tokenized as the corresponding keyword token rather than as an ordinary identifier, so none of them may be used as a variable, function, type, or parameter name.
 
 Each keyword below links to a reference with an explanation, syntax/example, and use cases.
 
@@ -38,14 +38,14 @@ Keyword matching is case sensitive. `int` and `Int` are two distinct reserved sp
 | 17 | `break` | Control Flow | Exits the nearest loop. | [break](./keywords/break) |
 | 18 | `continue` | Control Flow | Skips to the next loop iteration. | [continue](./keywords/continue) |
 | 19 | `jump` | Control Flow | Unconditional/local jump (context-specific). | [jump](./keywords/jump) |
-| 20 | `extend` | Object-Oriented Programming | Extends a type with additional members. | [extend](./keywords/extend) |
-| 21 | `extends` | Object-Oriented Programming | Declares inheritance in a class header. | [extends](./keywords/extends) |
+| 20 | `extend` | Object-Oriented Programming | Retroactive extension — `extend on Type` / `extend Name on Type` (no VTable, monomorphic). | [extend](./keywords/extend) |
+| 21 | `extends` | Object-Oriented Programming | Single-inheritance class header — `class Dog extends Animal`. | [extends](./keywords/extends) |
 | 22 | `extern` | FFI & Linkage | Declares external/FFI linkage. | [extern](./keywords/extern) |
 | 23 | `private` | Object-Oriented Programming | Most restrictive visibility modifier. | [private](./keywords/private) |
 | 24 | `protected` | Object-Oriented Programming | Inheritance-aware visibility modifier. | [protected](./keywords/protected) |
 | 25 | `public` | Object-Oriented Programming | Fully visible access modifier. | [public](./keywords/public) |
 | 26 | `super` | Object-Oriented Programming | References the parent type/member. | [super](./keywords/super) |
-| 27 | `on` | Async & Concurrency | Event handler / message handler clause. | [on](./keywords/on) |
+| 27 | `on` | Object-Oriented Programming | Mandatory target marker in `extend … on Type`. | [on](./keywords/on) |
 | 28 | `for` | Control Flow | Iterator loop. | [for](./keywords/for) |
 | 29 | `in` | Control Flow | Iteration membership clause. | [in](./keywords/in) |
 | 30 | `of` | Control Flow | Value-iteration clause. | [of](./keywords/of) |
@@ -101,13 +101,14 @@ Keyword matching is case sensitive. `int` and `Int` are two distinct reserved sp
 | 80 | `test` | Testing | Declares a test. | [test](./keywords/test) |
 | 81 | `ignore` | Testing | Marks a test to be ignored. | [ignore](./keywords/ignore) |
 | 82 | `expect_fail` | Testing | Marks a test expected to fail. | [expect_fail](./keywords/expect-fail) |
-| 83 | `_` | Wildcard / Placeholder | Wildcard/placeholder token (not an identifier). | [_ (underscore)](./keywords/underscore) |
+| 83 | `proceed` | Metaprogramming & Compile-time | Decorator continuation — `call.proceed()` inside `runtime` phase. | [proceed](./keywords/proceed) |
+| 84 | `_` | Wildcard / Placeholder | Wildcard/placeholder token (not an identifier). | [_ (underscore)](./keywords/underscore) |
 
 ---
 
 ## Special directive: `$cImport`
 
-In addition to the 83 documented keywords above, the lexer recognizes a single special directive, `$cImport`, which is tokenized as the `CImport` token and used for FFI/C interop. It is **not** counted among the 83 identifier keywords because it begins with `$` and is not part of the identifier-keyword mapping table. See [FFI](../tools/ffi) for usage.
+In addition to the 84 documented keywords above, the lexer recognizes a single special directive, `$cImport`, which is tokenized as the `CImport` token and used for FFI/C interop. It is **not** counted among the 84 identifier keywords because it begins with `$` and is not part of the identifier-keyword mapping table. See [FFI](../tools/ffi) for usage.
 
 ```adesh
 $cImport "stdio.h";
@@ -123,3 +124,5 @@ Several reserved tokens have narrow or context-specific parser support in the cu
 - **`_`** is a wildcard/placeholder token, not an ordinary identifier, and cannot be used as a binding name in the usual way. See [_ (underscore)](./keywords/underscore).
 - **`Int`** is case-sensitive and distinct from `int`; both map to the same integer-type token. See [Int](./keywords/int-type).
 - A number of memory-safety and metaprogramming keywords (`region`, `share`, `strong`, `weak`, `alloc`, `free`, `compile`, `runtime`, `typecheck`, `emit`, `require`, `jump`) are reserved for current or experimental features and may have limited parser support.
+- **`extend` without `on`** — writing `extend Type { … }` is a compile error; always use `extend on Type` or `extend Name on Type`. See [extend](./keywords/extend) and [on](./keywords/on).
+- **`proceed`** is only meaningful as `call.proceed()` inside a decorator `runtime(call)` phase. See [proceed](./keywords/proceed).

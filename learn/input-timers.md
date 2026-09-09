@@ -149,16 +149,19 @@ let patched = input.diff("let x = 10;", "let x = 20;");
 print("Saved patch:\n" + patched);
 ```
 
-### 5. Automated Testing with `input.mock`
+### 5. Automated Testing with `input.mock` & Chained `.mock()`
 
 Queue predetermined mock values so interactive scripts run headlessly in CI/CD or unit tests:
 
 ```adesh
-input.mock(["Alice", "2026-04-14", "9876"]);
+// Direct chained mocking:
+let name = input("Name:").mock(["Alice"]);
+let date = input.datepicker("Date:").mock(["2026-04-14"]);
+let pin  = input.pin("PIN:", 4).mock(["9876"]);
 
-let name = input("Name:");
-let date = input.datepicker("Date:");
-let pin  = input.pin("PIN:", 4);
+// Or pre-queue with input.mock():
+// input.mock(["Alice", "2026-04-14", "9876"]);
+
 print("Automated test passed:", name, date, pin);
 ```
 

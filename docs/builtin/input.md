@@ -309,12 +309,31 @@ print("TLS Enabled:", config.ssl);
 
 ---
 
-## 8. Headless Testing with `input.mock`
+## 8. Headless Testing with `input.mock` & Chained `.mock()`
 
-When running automated test suites or CI/CD pipelines where no interactive terminal is present, `input.mock` queues predetermined responses. Any subsequent call to `input(...)` or any `input.*` widget will consume the next mock value without blocking.
+When running automated test suites or CI/CD pipelines where no interactive terminal is present, AdeshLang provides two intuitive mocking paradigms:
+
+### A. Inline Chained `.mock()` (Recommended)
+You can directly chain `.mock(...)` next to any `input(...)` or `input.*` function for clear, self-documenting tests:
 
 ```adesh
-// Queue mock responses for automated test
+// Direct chained mocking on any input widget
+let name     = input("Enter your name:").mock(["Ajay"]);
+let city     = input("Enter city:").mock("Bangalore");
+let branch   = input.select("Branch:", ["main", "dev"]).mock(["main"]);
+let pin      = input.pin("PIN:", 4).mock(["9876"]);
+let approved = input.confirm("Proceed?").mock([true]);
+let date     = input.datepicker("Release Date:").mock(["2026-04-14"]);
+let table    = input.table("Select Service:", headers, rows).mock(["0"]);
+
+print("Tested inputs:", name, branch, pin, date);
+```
+
+### B. Global Queue `input.mock`
+You can also pre-populate a sequential queue of mock responses prior to execution:
+
+```adesh
+// Queue mock responses for automated test suite
 input.mock([
     "Alice",         // consumed by input("Name:")
     "main",          // consumed by input.select(...)
