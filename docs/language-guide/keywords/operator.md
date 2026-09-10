@@ -18,7 +18,7 @@ struct Vec2 {
     x: f64,
     y: f64,
 
-    pub operator fn +(other: Vec2) -> Vec2 {
+    pub operator fn +(other: Vec2): Vec2 {
         return Vec2 { x: self.x + other.x, y: self.y + other.y };
     }
 }

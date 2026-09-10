@@ -103,28 +103,28 @@ The iterator may borrow the collection. Mutating the collection's size during it
 ### Example 1 — Arrays, ranges, and early exit
 
 ```adesh
-fn sum_array(xs: [i32]) -> i32 {
+fn sum_array(xs: [i32]): i32 {
     let total = 0;
     for item in xs { total += item; }
     return total;
 }
 print(sum_array([1, 2, 3, 4])); // 10
 
-fn sum_range(n: i32) -> i32 {
+fn sum_range(n: i32): i32 {
     let total = 0;
     for i in 0..n { total += i; }   // exclusive upper bound
     return total;
 }
 print(sum_range(5)); // 0+1+2+3+4 = 10
 
-fn sum_inclusive(n: i32) -> i32 {
+fn sum_inclusive(n: i32): i32 {
     let total = 0;
     for i in 0..=n { total += i; }  // inclusive
     return total;
 }
 print(sum_inclusive(5)); // 15
 
-fn find_first(xs: [i32], want: i32) -> i32? {
+fn find_first(xs: [i32], want: i32): i32? {
     for i, v in xs.enumerate() {
         if v == want { return i; }
     }
@@ -173,7 +173,7 @@ fn demo_collections() {
 ### Example 3 — Async iteration, `spawn` inside loops, and nested loops
 
 ```adesh
-async fn fetch_many(urls: [string]) -> [string] {
+async fn fetch_many(urls: [string]): [string] {
     // Sequential: each await suspends until that fetch completes
     let out: [string] = [];
     for url in urls {
@@ -183,7 +183,7 @@ async fn fetch_many(urls: [string]) -> [string] {
     return out;
 }
 
-async fn fetch_many_concurrent(urls: [string]) -> [string] {
+async fn fetch_many_concurrent(urls: [string]): [string] {
     // Concurrent: spawn inside the for loop, then join
     let handles = [];
     for url in urls { handles.push(spawn fetch(url)); }
@@ -192,7 +192,7 @@ async fn fetch_many_concurrent(urls: [string]) -> [string] {
     return out;
 }
 
-fn matrix_iter(rows: [[i32]]) -> i32 {
+fn matrix_iter(rows: [[i32]]): i32 {
     let total = 0;
     for row in rows {
         for val in row {

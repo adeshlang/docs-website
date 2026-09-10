@@ -64,7 +64,7 @@ decorator audit_trail(level: string) {
 }
 
 @audit_trail("CRITICAL")
-fn transfer_funds(from: string, to: string, amount: f64) -> bool {
+fn transfer_funds(from: string, to: string, amount: f64): bool {
     print(f"Transferring ${amount} from {from} to {to}");
     return true;
 }
@@ -101,7 +101,7 @@ decorator cache(ttl: int) {
 
 @require_auth("admin")
 @cache(60)
-fn get_profile(id: string) -> Profile {
+fn get_profile(id: string): Profile {
     return db.fetch(id);
 }
 ```

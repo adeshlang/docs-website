@@ -29,7 +29,7 @@ type_expr        ::= ident ("[" type "]" | "<" type ("," type)* ">")?
 ### 1. Expression assertion — `typecheck x is T;`
 
 ```adesh
-fn identity<T>(x: T) -> T { return x; }
+fn identity<T>(x: T): T { return x; }
 let v = identity(42);
 typecheck v is i32; // compile-time assert: fails build if v is not i32
 ```
@@ -140,7 +140,7 @@ typecheck cfg is Config;
 typecheck cfg.port is u16;
 
 // Generic helper: require that T implements a shape
-fn first<T>(arr: [T]) -> T { return arr[0]; }
+fn first<T>(arr: [T]): T { return arr[0]; }
 typecheck first([1, 2, 3]) is i64; // inferred i64 from DynamicArray::infer_concrete_type (ast.rs:304)
 typecheck first(["a", "b"]) is string;
 
@@ -172,15 +172,15 @@ decorator numeric(target) {
 }
 
 @numeric
-fn add(a: i32, b: i64) -> i64 { return a as i64 + b; } // ok — both params numeric
+fn add(a: i32, b: i64): i64 { return a as i64 + b; } // ok — both params numeric
 
 // @numeric
-// fn bad(s: string) -> string { return s; } // compile fails:
+// fn bad(s: string): string { return s; } // compile fails:
 // // TypeError at bad:1:1 — typecheck failed: expected 'Numeric', found 'string'
 // // hint: consider changing param type to i32/f64 or removing @numeric
 
 @numeric
-fn scale(v: f64, factor: f64) -> f64 { return v * factor; } // ok
+fn scale(v: f64, factor: f64): f64 { return v * factor; } // ok
 
 print(scale(2.0, 3.0)); // 6.0
 ```
@@ -216,14 +216,14 @@ decorator map_numeric(target) {
 }
 
 @map_numeric
-fn doubled(arr: [i32]) -> [i32] {
+fn doubled(arr: [i32]): [i32] {
     return arr.map(x => x * 2);
 }
 
 print(doubled([1, 2, 3])); // [2,4,6]
 // If someone writes:
 // @map_numeric
-// fn bad2(arr: [string]) -> [string] { return arr; }
+// fn bad2(arr: [string]): [string] { return arr; }
 // typecheck phase error: expected 'Numeric' for element type, found 'string'
 ```
 

@@ -15,11 +15,11 @@ The `self` keyword refers to the current type or self receiver. It is commonly u
 
 ```adesh
 interface Comparable {
-    fn compare(other: &Self) -> i32;
+    fn compare(other: &Self): i32;
 }
 
 struct Order(value: i64): Comparable {
-    pub fn compare(other: &Order) -> i32 {
+    pub fn compare(other: &Order): i32 {
         if self.value < other.value { return -1; }
         if self.value > other.value { return 1; }
         return 0;

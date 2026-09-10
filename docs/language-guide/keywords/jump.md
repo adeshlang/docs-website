@@ -83,7 +83,7 @@ Some code paths require `jump` to target computed addresses or to escape normal 
 // Illustrative structured use — jump as a conservative replacement for deeply nested breaks.
 // Most style guides would prefer refactoring to early returns; this shows the mechanics.
 
-fn find_first_positive(nums: [i32]) -> i32 {
+fn find_first_positive(nums: [i32]): i32 {
     let result: i32 = -1;
     // Use a sentinel label and jump to centralize exit logic.
     // Note: if label syntax varies by branch, the target is an expr resolver.
@@ -101,7 +101,7 @@ print(find_first_positive([-3, -1, 0, 5, 2])); // 5
 print(find_first_positive([-2, -3]));          // -1
 
 // Idiomatic alternative without jump (preferred):
-fn find_first_positive_idiomatic(nums: [i32]) -> i32 {
+fn find_first_positive_idiomatic(nums: [i32]): i32 {
     for n in nums { if (n > 0) { return n; } }
     return -1;
 }
@@ -115,7 +115,7 @@ fn find_first_positive_idiomatic(nums: [i32]) -> i32 {
 // Compiler-generated/unsafe trampolines may compute a jump target at runtime.
 // This pattern is legitimate inside `unsafe` + `region` where pointer targets are stable.
 
-unsafe fn dispatch(op: u8, handlers: [fn() -> void]) {
+unsafe fn dispatch(op: u8, handlers: [fn(): void]) {
     // handlers is a fixed array of entry points; jump selects one.
     // Bounds check first — jump itself does not validate the target.
     if (op >= handlers.len() as u8) {
@@ -129,7 +129,7 @@ unsafe fn dispatch(op: u8, handlers: [fn() -> void]) {
 
 // Safe wrapper that validates before delegating to the unsafe trampoline
 fn safe_dispatch(op: u8) {
-    let table: [fn() -> void] = [() => print("op0"), () => print("op1"), () => print("op2")];
+    let table: [fn(): void] = [() => print("op0"), () => print("op1"), () => print("op2")];
     unsafe { dispatch(op, table); }
 }
 
@@ -153,7 +153,7 @@ fn safe_dispatch_match(op: u8) {
 
 ```adesh
 // Anti-pattern: using jump to simulate loops
-fn count_with_jump(n: i32) -> i32 {
+fn count_with_jump(n: i32): i32 {
     let i: i32 = 0;
     loop_start:
     if (i >= n) { jump loop_end; }
@@ -168,13 +168,13 @@ print(count_with_jump(5)); // 5 — works, but unreadable and defeats analysis
 // Preferred: structured loops cover the same behavior with safety guarantees.
 // `defer` and `region` cleanup reason about these forms; they cannot reason about arbitrary jumps.
 
-fn count_structured(n: i32) -> i32 {
+fn count_structured(n: i32): i32 {
     let i: i32 = 0;
     while (i < n) { i += 1; }
     return i;
 }
 
-fn count_for(n: i32) -> i32 {
+fn count_for(n: i32): i32 {
     let c: i32 = 0;
     for _ in 0..n { c += 1; }
     return c;

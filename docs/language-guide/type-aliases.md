@@ -49,7 +49,7 @@ Type equivalence between an alias and its underlying target type is **symmetric,
 
 ```adesh
 type UserId = u64;
-fn get_user(id: UserId) -> string { return f"user:{id}"; }
+fn get_user(id: UserId): string { return f"user:{id}"; }
 let raw: u64 = 42;
 print(get_user(raw));          // OK: u64 <: UserId
 let aliased: UserId = raw;     // OK: same representation
@@ -63,7 +63,7 @@ The simplest form re-exports an existing type under a domain-specific name:
 ```adesh
 type FileDescriptor = i32;
 type JsonString = string;
-type Callback = fn(event: string) -> bool;
+type Callback = fn(event: string): bool;
 type IntList = [i64];
 ```
 
@@ -155,7 +155,7 @@ Record aliases are **structurally typed**: two aliases with identical fields are
 type Point2D = { x: f64, y: f64 }
 type Point3D = { x: f64, y: f64, z: f64 }
 
-fn len2(p: Point2D) -> f64 { return p.x + p.y; }
+fn len2(p: Point2D): f64 { return p.x + p.y; }
 let p3: Point3D = { x: 1.0, y: 2.0, z: 3.0 };
 // len2(p3); // May be allowed via structural coercion depending on strictness flag
 ```
@@ -171,7 +171,7 @@ type ResultMap<K, V> = HashMap<K, Result<V, string>>;
 type Point2D<T> = (T, T);
 type Pair<A, B> = { first: A, second: B }
 type Maybe<T> = T?;
-type Callback<T> = fn(value: T) -> bool;
+type Callback<T> = fn(value: T): bool;
 ```
 
 ### 3.1 Monomorphization of Generic Aliases
@@ -217,7 +217,7 @@ Generic alias variance follows the same rules as generic structs (`src/parsing/v
 
 ```
 type ReadOnly<T> = { value: T }        // Covariant in T (read-only)
-type Handler<T> = fn(T) -> bool         // Contravariant in T
+type Handler<T> = fn(T): bool         // Contravariant in T
 type Pair<A,B> = { first: A, second: B} // Invariant if mutable
 ```
 
@@ -300,14 +300,14 @@ Construction { timeout: X }
 Type aliases are frequently used to define clean function pointer and callback signatures:
 
 ```adesh
-type EventHandler = fn(event_type: string, payload: [u8]) -> bool;
-type Predicate<T> = fn(item: &T) -> bool;
-type Mapper<A, B> = fn(value: A) -> B;
+type EventHandler = fn(event_type: string, payload: [u8]): bool;
+type Predicate<T> = fn(item: &T): bool;
+type Mapper<A, B> = fn(value: A): B;
 ```
 
 ### 5.1 Function Pointer Memory Layout (16-Byte Fat Pointer)
 
-Function types in AdeshLang (`fn(A) -> B`) are stored in memory as **16-byte fat pointers** consisting of a code address pointer and an environment context pointer:
+Function types in AdeshLang (`fn(A): B`) are stored in memory as **16-byte fat pointers** consisting of a code address pointer and an environment context pointer:
 
 ```
 Function Pointer / Closure Layout (16 bytes)
@@ -338,8 +338,8 @@ call fn_ptr:
 While AdeshLang does not support full higher-kinded types (HKT) in the Haskell sense, generic aliases that wrap type constructors are idiomatic:
 
 ```adesh
-type Handler<T> = fn(T) -> Result<T, string>;
-type Store<T> = { get: fn(key: string) -> T?, set: fn(key: string, value: T) -> bool };
+type Handler<T> = fn(T): Result<T, string>;
+type Store<T> = { get: fn(key: string): T?, set: fn(key: string, value: T): bool };
 
 fn use_store<T>(s: Store<T>, key: string, val: T) {
     s.set(key, val);
@@ -422,7 +422,7 @@ type ApiResponse<T> = {
     error: ApiError?,
     request_id: string = "unknown",
 }
-fn fetch_user(id: string) -> ApiResponse<User> {
+fn fetch_user(id: string): ApiResponse<User> {
     if (id == "") {
         return { ok: false, error: { code: 400, message: "bad id" } };
     }
@@ -436,7 +436,7 @@ if (res.ok && res.data != null) { print(res.data.name); }
 
 ```adesh
 type Event<T> = { kind: string, payload: T, timestamp: u64 = 0 }
-type EventHandler<T> = fn(event: Event<T>) -> bool;
+type EventHandler<T> = fn(event: Event<T>): bool;
 
 let string_handler: EventHandler<string> = (e) => {
     print(f"[{e.kind}] {e.payload}");
@@ -456,7 +456,7 @@ type DbConfig = {
     password: string?,
     pool_size: u64 = 10,
 }
-fn connect(cfg: DbConfig) -> bool {
+fn connect(cfg: DbConfig): bool {
     let host = cfg.host; // defaults already injected if omitted
     print(f"connecting to {host}:{cfg.port}");
     return true;

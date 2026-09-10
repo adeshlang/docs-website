@@ -167,19 +167,19 @@ Scalars are any numeric `Value` (`Number`, `F64`, `F32`, `I64`, `I32`, `U64`, `U
 
 | Method | Signature | Description |
 |---|---|---|
-| `Simd.sum(arr)` | `fn sum(Array<number>) -> number` | Sum all elements (SIMD-width chunked accumulation). |
-| `Simd.mean(arr)` | `fn mean(Array<number>) -> number` | Arithmetic mean; `NaN` if empty. |
-| `Simd.min(arr)` | `fn min(Array<number>) -> number` | Minimum; error if empty. |
-| `Simd.max(arr)` | `fn max(Array<number>) -> number` | Maximum; error if empty. |
-| `Simd.dot(a, b)` | `fn dot(Array<number>, Array<number>) -> number` | Dot product `Σ a[i]*b[i]`; SIMD chunked. |
+| `Simd.sum(arr)` | `fn sum(Array<number>): number` | Sum all elements (SIMD-width chunked accumulation). |
+| `Simd.mean(arr)` | `fn mean(Array<number>): number` | Arithmetic mean; `NaN` if empty. |
+| `Simd.min(arr)` | `fn min(Array<number>): number` | Minimum; error if empty. |
+| `Simd.max(arr)` | `fn max(Array<number>): number` | Maximum; error if empty. |
+| `Simd.dot(a, b)` | `fn dot(Array<number>, Array<number>): number` | Dot product `Σ a[i]*b[i]`; SIMD chunked. |
 
 ### Element-wise Transforms
 
 | Method | Signature | Description |
 |---|---|---|
-| `Simd.abs(arr)` | `fn abs(Array<number>) -> Array<number>` | Per-element absolute value. |
-| `Simd.sqrt(arr)` | `fn sqrt(Array<number>) -> Array<number>` | Per-element square root (`NaN` for negative). |
-| `Simd.add(a, b)` | `fn add(Array\|scalar, Array\|scalar) -> Array<number>` | Element-wise add with broadcast. |
+| `Simd.abs(arr)` | `fn abs(Array<number>): Array<number>` | Per-element absolute value. |
+| `Simd.sqrt(arr)` | `fn sqrt(Array<number>): Array<number>` | Per-element square root (`NaN` for negative). |
+| `Simd.add(a, b)` | `fn add(Array\|scalar, Array\|scalar): Array<number>` | Element-wise add with broadcast. |
 | `Simd.sub(a, b)` | same | Element-wise subtract. |
 | `Simd.mul(a, b)` | same | Element-wise multiply (SIMD `f64` fast path). |
 | `Simd.div(a, b)` | same | Element-wise divide; `NaN` where divisor is `0`. |
@@ -188,8 +188,8 @@ Scalars are any numeric `Value` (`Number`, `F64`, `F32`, `I64`, `I32`, `U64`, `U
 
 | Method | Signature | Description |
 |---|---|---|
-| `Simd.fusedMulAdd(a, b, c)` | `fn fusedMulAdd(Array, Array, Array) -> Array` | `a[i]*b[i] + c[i]` fused (single rounding). |
-| `Simd.fusedSqrtMulAdd(a, b, c)` | `fn fusedSqrtMulAdd(Array, Array, Array) -> Array` | `sqrt(a[i]*b[i] + c[i])` fused. |
+| `Simd.fusedMulAdd(a, b, c)` | `fn fusedMulAdd(Array, Array, Array): Array` | `a[i]*b[i] + c[i]` fused (single rounding). |
+| `Simd.fusedSqrtMulAdd(a, b, c)` | `fn fusedSqrtMulAdd(Array, Array, Array): Array` | `sqrt(a[i]*b[i] + c[i])` fused. |
 
 Fused ops go through `src/runtime/simd/fusion.rs` and avoid intermediate `f64` rounding and extra passes.
 
@@ -197,9 +197,9 @@ Fused ops go through `src/runtime/simd/fusion.rs` and avoid intermediate `f64` r
 
 | Method | Signature | Description |
 |---|---|---|
-| `Simd.concat(a, b)` | `fn concat(Array, Array) -> Array` | Concatenate two arrays (not element-wise). |
-| `Simd.vector(arr)` | `fn vector(Array<number>) -> VectorHandle` | Create vector handle with instance methods (see below). |
-| `Simd.workers()` | `fn workers() -> number` | Number of scheduler workers (for sizing parallel SIMD work). |
+| `Simd.concat(a, b)` | `fn concat(Array, Array): Array` | Concatenate two arrays (not element-wise). |
+| `Simd.vector(arr)` | `fn vector(Array<number>): VectorHandle` | Create vector handle with instance methods (see below). |
+| `Simd.workers()` | `fn workers(): number` | Number of scheduler workers (for sizing parallel SIMD work). |
 
 ---
 
@@ -237,10 +237,10 @@ print(v.toArray());             // [1.0, 2.0, 3.0, 4.0] — copy out
 | `v.abs()` | `-> Array<number>` | Element-wise abs. |
 | `v.sqrt()` | `-> Array<number>` | Element-wise sqrt. |
 | `v.len()` | `-> number` | Length of captured array. |
-| `v.dot(other)` | `fn dot(Array) -> number` | Dot with `other`. |
-| `v.add(other)` | `fn add(Array) -> Array` | Element-wise add with `other`. |
-| `v.mul(other)` | `fn mul(Array) -> Array` | Element-wise multiply. |
-| `v.scale(scalar)` | `fn scale(number) -> Array` | Multiply all lanes by scalar. |
+| `v.dot(other)` | `fn dot(Array): number` | Dot with `other`. |
+| `v.add(other)` | `fn add(Array): Array` | Element-wise add with `other`. |
+| `v.mul(other)` | `fn mul(Array): Array` | Element-wise multiply. |
+| `v.scale(scalar)` | `fn scale(number): Array` | Multiply all lanes by scalar. |
 | `v.toArray()` | `-> Array<number>` | Copy of underlying array. |
 
 The handle is backed by `Arc<Mutex<Vec<Value>>>` so clones share state safely across threads.
@@ -346,7 +346,7 @@ print(Simd.fusedSqrtMulAdd(a, b, c)); // [sqrt(12), sqrt(14), ...]
 ```adesh
 import Simd;
 
-fn cosineSimilarity(a: Array<number>, b: Array<number>) -> number {
+fn cosineSimilarity(a: Array<number>, b: Array<number>): number {
     let dot = Simd.dot(a, b);
     let normA = Math.sqrt(Simd.dot(a, a));
     let normB = Math.sqrt(Simd.dot(b, b));

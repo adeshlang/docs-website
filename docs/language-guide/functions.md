@@ -16,7 +16,7 @@ This document specifies function parameter mechanics, System V AMD64 / Windows x
 Functions are declared using the `fn` keyword. Type annotations on parameters and return values define contract boundaries checked during compilation:
 
 ```adesh
-fn calculate_thrust(mass: f64, acceleration: f64) -> f64 {
+fn calculate_thrust(mass: f64, acceleration: f64): f64 {
     return mass * acceleration;
 }
 ```
@@ -113,7 +113,7 @@ Functions accept specialized optimization annotations to direct compiler lowerin
 ```adesh
 @inline
 @noalloc
-fn vector_dot(a: [f32; 4], b: [f32; 4]) -> f32 {
+fn vector_dot(a: [f32; 4], b: [f32; 4]): f32 {
     return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] + a[3]*b[3];
 }
 ```

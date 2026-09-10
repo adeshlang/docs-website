@@ -143,7 +143,7 @@ let e: Elem = 99;
 print(e); // 99
 
 // Generic helper that derives return type from argument
-fn echo(v) -> typeof v {
+fn echo(v): typeof v {
     type V = typeof v;
     let w: V = v;
     return w;
@@ -214,7 +214,7 @@ print(b); // 42
 
 // Factory + typeof alias — keep API type in sync with impl
 struct Config { host: string, port: i32 }
-fn default_config() -> Config { return Config { host: "localhost", port: 8080 }; }
+fn default_config(): Config { return Config { host: "localhost", port: 8080 }; }
 type C = typeof default_config(); // C = Config
 let cfg: C = default_config();
 print(cfg.host, cfg.port); // "localhost" 8080

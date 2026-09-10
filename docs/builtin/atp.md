@@ -398,23 +398,23 @@ All frames are varint-length-prefixed and can be coalesced inside one packet (`F
 
 | Method | Signature | Returns | Notes |
 |---|---|---|---|
-| `server.accept()` | `fn accept() -> AtpConnection \| null` | non-blocking poll; `null` if no pending handshake |
-| `server.close()` | `fn close() -> bool` | stops engine |
-| `server.metrics()` | `fn metrics() -> EngineMetrics` | `{ connections, established, streams, memoryUsed, bytesSent, bytesReceived }` |
+| `server.accept()` | `fn accept(): AtpConnection \| null` | non-blocking poll; `null` if no pending handshake |
+| `server.close()` | `fn close(): bool` | stops engine |
+| `server.metrics()` | `fn metrics(): EngineMetrics` | `{ connections, established, streams, memoryUsed, bytesSent, bytesReceived }` |
 
 ### Connection Object (`build_connection_object`)
 
 | Method | Signature | Description |
 |---|---|---|
-| `conn.send(data, reliable?, ordered?, streamId?)` | `fn send(data: string\|u8[], reliable?: bool, ordered?: bool, streamId?: u64) -> bool` | Enqueue message; `reliable` default `true`, `ordered` default `true`, `streamId` default `1` (client) / `2` (server). |
-| `conn.receive()` | `fn receive() -> Delivery \| null` | Non-blocking poll for next delivery. |
-| `conn.openStream(priority?)` | `fn openStream(priority?: "low"\|"medium"\|"high"\|"critical") -> AtpStream` | Open stream handle. |
-| `conn.datagram(data)` | `fn datagram(data: string\|u8[]) -> bool` | Unreliable datagram (no ordering, no retransmit). |
-| `conn.ping()` | `fn ping() -> bool` | Send Ping frame. |
-| `conn.close()` | `fn close() -> bool` | Graceful connection close. |
-| `conn.cancel(streamId, messageId)` | `fn cancel(streamId: u64, messageId: u64) -> bool` | Cancel message. |
-| `conn.metrics()` | `fn metrics() -> ConnMetrics` | `{ bytesSent, bytesReceived, packetsSent, packetsReceived, messagesSent, messagesReceived }` |
-| `conn.migrate(host, port)` | `fn migrate(host: string, port: u16) -> bool` | Path migration (`PathChallenge`/`PathResponse`). |
+| `conn.send(data, reliable?, ordered?, streamId?)` | `fn send(data: string\|u8[], reliable?: bool, ordered?: bool, streamId?: u64): bool` | Enqueue message; `reliable` default `true`, `ordered` default `true`, `streamId` default `1` (client) / `2` (server). |
+| `conn.receive()` | `fn receive(): Delivery \| null` | Non-blocking poll for next delivery. |
+| `conn.openStream(priority?)` | `fn openStream(priority?: "low"\|"medium"\|"high"\|"critical"): AtpStream` | Open stream handle. |
+| `conn.datagram(data)` | `fn datagram(data: string\|u8[]): bool` | Unreliable datagram (no ordering, no retransmit). |
+| `conn.ping()` | `fn ping(): bool` | Send Ping frame. |
+| `conn.close()` | `fn close(): bool` | Graceful connection close. |
+| `conn.cancel(streamId, messageId)` | `fn cancel(streamId: u64, messageId: u64): bool` | Cancel message. |
+| `conn.metrics()` | `fn metrics(): ConnMetrics` | `{ bytesSent, bytesReceived, packetsSent, packetsReceived, messagesSent, messagesReceived }` |
+| `conn.migrate(host, port)` | `fn migrate(host: string, port: u16): bool` | Path migration (`PathChallenge`/`PathResponse`). |
 
 Connection fields: `conn.id`, `conn.connectionId` (both `ConnectionId.0`), `conn.type === "AtpConnection"`.
 

@@ -33,7 +33,7 @@ Declare asynchronous functions with the `async fn` prefix. Inside an `async fn`,
 import { http } from "builtin";
 import { json } from "builtin";
 
-async fn fetch_user_data(user_id: string) -> Result<User, Error> {
+async fn fetch_user_data(user_id: string): Result<User, Error> {
     let url = f"https://api.example.com/users/{user_id}";
     
     // Non-blocking network request
@@ -52,7 +52,7 @@ async fn fetch_user_data(user_id: string) -> Result<User, Error> {
 AdeshLang supports `async fn main()` directly as the application entry point:
 
 ```adesh
-async fn main() -> Result<(), Error> {
+async fn main(): Result<(), Error> {
     print("Fetching user profile...");
     let user = await fetch_user_data("usr_1048")?;
     print(f"Loaded user: {user.name} ({user.email})");
@@ -73,7 +73,7 @@ async fn handle_client(connection: TcpStream) {
     // Process client connection...
 }
 
-async fn run_server() -> Result<(), Error> {
+async fn run_server(): Result<(), Error> {
     let listener = TcpListener::bind("127.0.0.1:8080").await?;
     print("Server listening on 127.0.0.1:8080...");
 
@@ -98,7 +98,7 @@ Execute a collection of futures in parallel and wait for all of them to resolve:
 ```adesh
 import { async } from "builtin";
 
-async fn fetch_all_metrics() -> [Metric] {
+async fn fetch_all_metrics(): [Metric] {
     let f1 = fetch_cpu_usage();
     let f2 = fetch_memory_usage();
     let f3 = fetch_disk_usage();
@@ -116,7 +116,7 @@ Wait for the first future to complete:
 import { async } from "builtin";
 import { time } from "builtin";
 
-async fn fetch_with_timeout(url: string, timeout_ms: u64) -> Result<string, Error> {
+async fn fetch_with_timeout(url: string, timeout_ms: u64): Result<string, Error> {
     let request_future = http::get(url);
     let timeout_future = time::sleep(timeout_ms);
 
@@ -140,7 +140,7 @@ Iterate asynchronously over incoming event streams, file chunks, or WebSocket me
 ```adesh
 import { websocket } from "builtin";
 
-async fn listen_to_feed() -> Result<(), Error> {
+async fn listen_to_feed(): Result<(), Error> {
     let ws = await websocket::connect("wss://feed.example.com/prices")?;
     
     // Asynchronously consume messages as they arrive

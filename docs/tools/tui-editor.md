@@ -19,7 +19,7 @@ AdeshLang includes a lightning-fast, full-featured **Terminal User Interface (TU
  │ ▾ src/         │ 1 │ import { println } from "std:io";                           │
  │   ▸ net/       │ 2 │ import { JITCompiler } from "std:jit";                      │
  │   • app.adesh  │ 3 │                                                             │
- │   • main.adesh │ 4 │ fn main() -> int {                                          │
+ │   • main.adesh │ 4 │ fn main(): int {                                          │
  │ ▾ tests/       │ 5 │     let numbers = [10, 20, 30, 40];                         │
  │   • jit_test   │ 6 │     let total = numbers.reduce(0, fn(a, b) => a + b);       │
  │                │ 7 │     println("Total: {total}");                              │

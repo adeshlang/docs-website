@@ -92,7 +92,7 @@ alloc<T>(n)  -->  Owned  --free-->  Freed  --any use-->  UseAfterFree (E0507)
 
 ```adesh
 // Pairing alloc/free via defer ensures cleanup on early return or throw.
-fn with_temp_buffer(len: usize) -> bool {
+fn with_temp_buffer(len: usize): bool {
     unsafe {
         let buf: *mut u8 = alloc<u8>(len);
         defer free(buf);           // LIFO at scope exit, even on `return`/`throw`
@@ -196,4 +196,3 @@ unsafe {
 - [strong](./strong) / [weak](./weak) / [share](./share) — ARC ownership (separate from manual free)
 - [Memory & Safety](../../advanced/memory-safety) — compile-time memory guarantees
 - `src/parsing/borrow_check.rs:546` `validate_free`, `src/parsing/cfg_borrow/mir.rs:231`, `src/parsing/compile_time_memory_safety/error.rs`
-

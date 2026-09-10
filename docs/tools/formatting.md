@@ -59,7 +59,7 @@ adesh fmt src/main.adesh --diff
 
 #### Before:
 ```adesh
-fn  calculate_total(items:[Item],discount:f64)->f64{
+fn  calculate_total(items:[Item],discount:f64): f64{
 let total:f64=0.0;
 for item in items{total+=item.price*(1.0-discount);}
 return total;}
@@ -67,7 +67,7 @@ return total;}
 
 #### After `adesh fmt`:
 ```adesh
-fn calculate_total(items: [Item], discount: f64) -> f64 {
+fn calculate_total(items: [Item], discount: f64): f64 {
     let total: f64 = 0.0;
     for item in items {
         total += item.price * (1.0 - discount);

@@ -86,12 +86,12 @@ Create `convert.adesh`:
 
 ```adesh
 // Convert Fahrenheit to Celsius
-fn fahrenheit_to_celsius(deg_f: f64) -> f64 {
+fn fahrenheit_to_celsius(deg_f: f64): f64 {
     return (deg_f - 32.0) * (5.0 / 9.0);
 }
 
 // Convert Celsius to Fahrenheit
-fn celsius_to_fahrenheit(deg_c: f64) -> f64 {
+fn celsius_to_fahrenheit(deg_c: f64): f64 {
     return (deg_c * 9.0 / 5.0) + 32.0;
 }
 

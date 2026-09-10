@@ -27,7 +27,7 @@ let message = match status_code {
 Match exact scalar constants or multiple alternative patterns separated by `|`:
 
 ```adesh
-fn categorize_char(c: char) -> string {
+fn categorize_char(c: char): string {
     return match c {
         'a' | 'e' | 'i' | 'o' | 'u' => "vowel",
         '0'..='9' => "digit",
@@ -42,7 +42,7 @@ fn categorize_char(c: char) -> string {
 Match integer or character ranges using `start..=end`:
 
 ```adesh
-fn evaluate_grade(score: i64) -> string {
+fn evaluate_grade(score: i64): string {
     return match score {
         90..=100 => "A",
         80..=89 => "B",
@@ -62,7 +62,7 @@ fn evaluate_grade(score: i64) -> string {
 Extract values from tuples and arrays directly in patterns:
 
 ```adesh
-fn describe_point(point: (f64, f64, f64)) -> string {
+fn describe_point(point: (f64, f64, f64)): string {
     return match point {
         (0.0, 0.0, 0.0) => "Origin",
         (x, 0.0, 0.0) => f"On X-axis at {x}",
@@ -84,7 +84,7 @@ struct User {
     active: bool,
 }
 
-fn check_access(user: &User) -> string {
+fn check_access(user: &User): string {
     return match user {
         User { role: "admin", active: true, .. } => "Full Admin Access",
         User { role: "editor", active: true, name, .. } => f"Editor access granted to {name}",
@@ -133,7 +133,7 @@ fn handle_event(event: NetworkEvent) {
 Add custom boolean conditions to patterns with the `if` guard syntax:
 
 ```adesh
-fn process_transaction(amount: f64, is_vip: bool) -> string {
+fn process_transaction(amount: f64, is_vip: bool): string {
     return match amount {
         a if a <= 0.0 => "Invalid transaction amount",
         a if a > 10000.0 && !is_vip => "Transaction requires manager approval",
@@ -150,7 +150,7 @@ fn process_transaction(amount: f64, is_vip: bool) -> string {
 Bind a matched value to a variable while simultaneously checking sub-patterns:
 
 ```adesh
-fn process_message(code: i64) -> string {
+fn process_message(code: i64): string {
     return match code {
         val @ 100..=199 => f"Informational status: {val}",
         val @ 200..=299 => f"Success status: {val}",

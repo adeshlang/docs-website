@@ -130,7 +130,7 @@ print(a2 * b2); // [3.0, 6.0, 9.0, 12.0]
 // Dot product — 8x speedup over scalar loop (from simd/overview.md:93)
 @pure
 @noalloc
-fn simd_dot_f32(a: vec8<f32>[], b: vec8<f32>[]) -> f32 {
+fn simd_dot_f32(a: vec8<f32>[], b: vec8<f32>[]): f32 {
     let len = a.len(); // contiguous DynArray slices
     let acc = f32x8::splat(0.0);
     let i = 0;
@@ -154,7 +154,7 @@ print(saxpy);
 
 // RGBA image blending — 32-byte vectorized alpha compositing (see simd/overview.md:124)
 @noalloc
-fn blend_rgba(foreground: raw u8[32], background: raw u8[32], alpha: u8) -> raw u8[32] {
+fn blend_rgba(foreground: raw u8[32], background: raw u8[32], alpha: u8): raw u8[32] {
     let fg = u8x32::load_aligned(foreground);
     let bg = u8x32::load_aligned(background);
     let av = u8x32::splat(alpha);
@@ -227,4 +227,3 @@ region batch {
 - [Lexer & Parser](/docs/compiler/lexer-parser) — `TokenKind::VecType` vs `Raw` vs `Region` reservation
 - `src/parsing/ast.rs:102-152` `ArrayElementType`, `src/memory/dynamic_allocator.rs` — element size for lane vectors
 - `examples/numerics/matrix_operations.adesh` — worked array `alpha * x + y`, `Simd.dot`, `Simd.vector`
-

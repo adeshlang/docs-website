@@ -21,7 +21,7 @@ struct Counter {
         this.count += 1;
     }
 
-    pub fn double() -> i64 {
+    pub fn double(): i64 {
         return this.count * 2;
     }
 }

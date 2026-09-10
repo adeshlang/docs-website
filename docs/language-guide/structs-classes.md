@@ -123,14 +123,14 @@ AdeshLang allows developers to extend existing built-in or user-defined types wi
 ```adesh
 // Add custom method to built-in string type
 extend on string {
-    public fn is_empty_or_whitespace(self) -> bool {
+    public fn is_empty_or_whitespace(self): bool {
         return self.trim().len() == 0;
     }
 }
 
 // Add methods to custom Person class
 extend on Person {
-    public fn generate_badge(self) -> string {
+    public fn generate_badge(self): string {
         return f"Badge: {self.name}";
     }
 }
@@ -172,7 +172,7 @@ When a class implements an interface, the compiler builds an **Interface Table (
 
 ```adesh
 abstract class Shape {
-    public abstract fn calculate_area(self) -> f64;
+    public abstract fn calculate_area(self): f64;
 }
 ```
 

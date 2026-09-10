@@ -21,7 +21,7 @@ struct Counter {
         self.count += 1;
     }
 
-    pub fn value() -> i64 {
+    pub fn value(): i64 {
         return self.count;
     }
 }

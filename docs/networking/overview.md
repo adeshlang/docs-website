@@ -48,7 +48,7 @@ async fn handle_connection(stream: net::TcpStream) {
     }
 }
 
-async fn main() -> Result<(), Error> {
+async fn main(): Result<(), Error> {
     let listener = await net::TcpListener::bind("0.0.0.0:8080")?;
     print("TCP Server listening on port 8080...");
 
@@ -67,7 +67,7 @@ async fn main() -> Result<(), Error> {
 ```adesh
 import { net } from "builtin";
 
-fn main() -> Result<(), Error> {
+fn main(): Result<(), Error> {
     let stream = net::TcpStream::connect("127.0.0.1:8080", timeout_ms = 3000)?;
     defer stream.close();
 
@@ -88,7 +88,7 @@ For low-latency, connectionless communication (games, telemetry, voice):
 ```adesh
 import { net } from "builtin";
 
-fn run_udp_server() -> Result<(), Error> {
+fn run_udp_server(): Result<(), Error> {
     let socket = net::UdpSocket::bind("0.0.0.0:9000")?;
     let buffer = [0u8; 512];
 
@@ -114,7 +114,7 @@ Wrap raw TCP sockets in hardware-accelerated TLS 1.3 encryption:
 import { tls } from "builtin";
 import { net } from "builtin";
 
-fn main() -> Result<(), Error> {
+fn main(): Result<(), Error> {
     let tcp_stream = net::TcpStream::connect("api.github.com:443")?;
     
     // Perform TLS 1.3 handshake with ALPN negotiation
@@ -139,7 +139,7 @@ fn main() -> Result<(), Error> {
 import { http } from "builtin";
 import { json } from "builtin";
 
-async fn fetch_weather(city: string) -> Result<f64, Error> {
+async fn fetch_weather(city: string): Result<f64, Error> {
     let url = f"https://api.weather.com/v1/current?city={city}";
     
     let response = await http::get(url);
@@ -160,7 +160,7 @@ async fn fetch_weather(city: string) -> Result<f64, Error> {
 ```adesh
 import { websocket } from "builtin";
 
-async fn connect_realtime_feed() -> Result<(), Error> {
+async fn connect_realtime_feed(): Result<(), Error> {
     let ws = await websocket::connect("wss://stream.binance.com/ws/btcusdt@trade")?;
     defer ws.close();
 

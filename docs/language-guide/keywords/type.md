@@ -23,7 +23,7 @@ type Cache<K, V> = HashMap<K, (V, u64)>;
 type Port = u16;
 type Milliseconds = u64;
 
-fn connect(host: string, port: Port, timeout: Milliseconds) -> bool {
+fn connect(host: string, port: Port, timeout: Milliseconds): bool {
     return true;
 }
 ```

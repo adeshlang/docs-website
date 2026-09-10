@@ -101,7 +101,7 @@ Membership is **non-mutating** and does not advance any iterator. For maps, pref
 ### Example 1 — `for ... in ...` over arrays, ranges, and destructuring
 
 ```adesh
-fn sum(xs: [i32]) -> i32 {
+fn sum(xs: [i32]): i32 {
     let total = 0;
     for v in xs { total += v; }
     return total;
@@ -160,7 +160,7 @@ fn membership_demo() {
 ### Example 3 — `in` with control flow, async, and regions
 
 ```adesh
-fn filter_with_continue(xs: [i32]) -> [i32] {
+fn filter_with_continue(xs: [i32]): [i32] {
     let out: [i32] = [];
     for v in xs {
         if v < 0 { continue; }
@@ -171,7 +171,7 @@ fn filter_with_continue(xs: [i32]) -> [i32] {
 }
 print(filter_with_continue([5, -1, 50, 200, 3])); // [5, 50]
 
-async fn fetch_all(urls: [string]) -> [string] {
+async fn fetch_all(urls: [string]): [string] {
     let bodies: [string] = [];
     for url in urls {
         // Sequential awaits inside for — each iteration suspends
@@ -181,7 +181,7 @@ async fn fetch_all(urls: [string]) -> [string] {
     return bodies;
 }
 
-async fn fetch_all_concurrent(urls: [string]) -> [string] {
+async fn fetch_all_concurrent(urls: [string]): [string] {
     let handles = [];
     for url in urls { handles.push(spawn fetch(url)); } // spawn inside for
     let bodies: [string] = [];

@@ -15,7 +15,7 @@ The `Int` keyword (with an uppercase `I`) is a case-sensitive reserved word. Bot
 
 ```adesh
 let total: Int = -5;
-fn offset(x: Int) -> Int {
+fn offset(x: Int): Int {
     return x + 1;
 }
 ```

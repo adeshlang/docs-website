@@ -240,6 +240,37 @@ yes
 2 4
 ```
 
+## Type-level operators `|` and `?` (DSA new syntax)
+
+Not runtime ops but **type operators** — documented here because they appear beside `??`/`?.`:
+
+```adesh
+fn findIndex(nums: [int], target: int): int | null { ... }   // union
+fn getTopWord(freq: dict): string | null { ... }
+fn describeValue(v: int | string | bool): string { ... }     // multi-union
+let x: int? = null;             // T? == T | null (postfix)
+type Node = { data: int, next: Node? };
+type User = { name: String, age?: u8 = 20 }; // optional field with default
+type Box<T> = { value: T, tag?: String = "generic-box" };
+print(typeof(x)); // "int?" — nullable type tag
+```
+
+* `A | B` — union type; `[]`/`{}` are valid members (`[int] | []`)
+* `T?` — postfix optional; `field?: T` — optional field; with `= default` for injection
+* Always written with **colon** `:` return (`fn f(): T | null`), never `->` (only `extern "C"` uses `->`)
+
+## Container + set operators
+
+```adesh
+let s: set; s.insert(1); s.insert(2);           // default decl
+let sA = Set([1, 2, 3]); let sB = Set([3, 4]);
+print(sA.union(sB));        // {1,2,3,4}
+print(sA.intersection(sB)); // {3}
+print(sA.contains(2));      // true
+print(2 in [1, 2, 3]);      // true  (membership)
+print("llo" in "hello");    // true
+```
+
 ## Practice
 
 Write `operators_work.adesh` and predict each line before you run it:

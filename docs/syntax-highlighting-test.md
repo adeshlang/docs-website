@@ -114,7 +114,7 @@ fn add(a: i32, b: i32): i32 {
 // Function call
 let result = add(5, 3)
 fn process(data: [i32])
-fn map<T, U>(items: [T], callback: fn(T) -> U): [U]
+fn map<T, U>(items: [T], callback: fn(T): U): [U]
 ```
 
 ## Modules and Imports
@@ -259,7 +259,7 @@ let spread = ...array
 let optional = obj?.prop
 let fallback = value ?? default
 let arrow = (x) => x * 2
-let ret = fn(x: i32) -> i32
+let ret = fn(x: i32): i32
 ```
 
 ## Memory Management

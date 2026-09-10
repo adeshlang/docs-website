@@ -195,7 +195,7 @@ Inference produces a `TypeVar` that is later unified. Widening rules (e.g., `i32
 | Arrays | `Array<T>` / `[T]` | growable |
 | Tuples | `[T, U]` | fixed arity |
 | Objects | `{ key: Type }` | structural |
-| Functions | `fn(T) -> U` | first-class |
+| Functions | `fn(T): U` | first-class |
 | Generics | `Vec<T>`, `HashMap<K,V>` | with bounds |
 | Type alias | `type Pair<A,B> = [A, B]` | alias + generics |
 | Union/Option | `T \| null` | nullable |
@@ -263,7 +263,7 @@ The rules checked here are documented in [Semantics Rules](/docs/language-guide/
 Source:
 
 ```adesh
-fn sum(arr: Array<i32>) -> i32 {
+fn sum(arr: Array<i32>): i32 {
     let total = 0;
     for x in arr { total += x; }
     return total;

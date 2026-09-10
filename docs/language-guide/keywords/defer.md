@@ -26,7 +26,7 @@ expr_stmt  ::= expr ";"        // e.g., file.close(); free(ptr);
 ### Canonical forms
 
 ```adesh
-fn readData(path: string) -> string {
+fn readData(path: string): string {
     let file = FS.open(path, "r");
     defer file.close();              // single expression
     let contents = file.readAll();
@@ -127,7 +127,7 @@ unsafe {
 ### Example 1 — File and lock cleanup with LIFO guarantees
 
 ```adesh
-fn copyFile(src: string, dst: string) -> bool {
+fn copyFile(src: string, dst: string): bool {
     let s = FS.open(src, "r");
     defer s.close();                 // runs last (registered first)
 
@@ -141,7 +141,7 @@ fn copyFile(src: string, dst: string) -> bool {
     return true; // both closes run
 } // s.close, d.close in LIFO order
 
-fn withMutex(m: Mutex, op: fn() -> void) {
+fn withMutex(m: Mutex, op: fn(): void) {
     m.lock();
     defer m.unlock(); // paired even if op throws
     op();
@@ -152,7 +152,7 @@ fn withMutex(m: Mutex, op: fn() -> void) {
 
 ```adesh
 // Pairing alloc/free across multiple exit paths
-unsafe fn process(n: usize) -> i32 {
+unsafe fn process(n: usize): i32 {
     let buf: *mut u8 = alloc<u8>(n);
     defer free(buf);           // LIFO at function scope exit
 

@@ -81,10 +81,10 @@ fn main() {
 
 | Function | Signature | Description |
 |---|---|---|
-| `spawn(closure)` | `fn spawn<F, T>(f: F) -> JoinHandle<T>` | Spawns a new native OS thread. Closure may capture via `move`. |
+| `spawn(closure)` | `fn spawn<F, T>(f: F): JoinHandle<T>` | Spawns a new native OS thread. Closure may capture via `move`. |
 | `sleep_ms(ms)` | `fn sleep_ms(ms: u64)` | Parks current thread for `ms` milliseconds. |
 | `yield_now()` | `fn yield_now()` | Yields execution to the scheduler. |
-| `current_thread_id()` | `fn current_thread_id() -> u64` | Returns OS thread identifier. |
+| `current_thread_id()` | `fn current_thread_id(): u64` | Returns OS thread identifier. |
 
 ### `JoinHandle`
 
@@ -162,13 +162,13 @@ for _ in 0..5 {
 
 | Function / Method | Signature | Description |
 |---|---|---|
-| `channel<T>()` | `fn channel<T>() -> (Sender<T>, Receiver<T>)` | Unbounded FIFO channel; sender never blocks. |
-| `sync_channel<T>(n)` | `fn sync_channel<T>(bound: usize) -> (SyncSender<T>, Receiver<T>)` | Bounded channel with capacity `n`; `send` blocks when full. |
-| `Sender.send(val)` | `fn send(val: T) -> Result<(), SendError>` | Enqueue value; fails if receiver dropped. |
-| `Sender.clone()` | `fn clone() -> Sender<T>` | Clone sender for multi-producer. |
-| `Receiver.recv()` | `fn recv() -> Result<T, RecvError>` | Blocking receive; `Err` when all senders dropped and queue empty. |
-| `Receiver.tryRecv()` | `fn try_recv() -> Result<T, TryRecvError>` | Non-blocking poll: `Ok(val)`, `Err(Empty)`, or `Err(Disconnected)`. |
-| `Receiver.recvTimeout(ms)` | `fn recv_timeout(ms: u64) -> Result<T, RecvError>` | Blocking receive with timeout. |
+| `channel<T>()` | `fn channel<T>(): (Sender<T>, Receiver<T>)` | Unbounded FIFO channel; sender never blocks. |
+| `sync_channel<T>(n)` | `fn sync_channel<T>(bound: usize): (SyncSender<T>, Receiver<T>)` | Bounded channel with capacity `n`; `send` blocks when full. |
+| `Sender.send(val)` | `fn send(val: T): Result<(), SendError>` | Enqueue value; fails if receiver dropped. |
+| `Sender.clone()` | `fn clone(): Sender<T>` | Clone sender for multi-producer. |
+| `Receiver.recv()` | `fn recv(): Result<T, RecvError>` | Blocking receive; `Err` when all senders dropped and queue empty. |
+| `Receiver.tryRecv()` | `fn try_recv(): Result<T, TryRecvError>` | Non-blocking poll: `Ok(val)`, `Err(Empty)`, or `Err(Disconnected)`. |
+| `Receiver.recvTimeout(ms)` | `fn recv_timeout(ms: u64): Result<T, RecvError>` | Blocking receive with timeout. |
 | `drop(sender)` / `drop(receiver)` | — | Closing a sender/receiver signals disconnect. |
 
 ### Channel Semantics
@@ -220,18 +220,18 @@ let config = Arc::new(RwLock::new("read-only-config"));
 
 | Method | Signature | Description |
 |---|---|---|
-| `Mutex::new(val)` | `fn new(val: T) -> Mutex<T>` | Create a mutex wrapping `val`. |
-| `mutex.lock()` | `fn lock() -> Result<MutexGuard<T>, PoisonError>` | Acquire exclusive lock; blocks. Returns guard deref to `T`. |
-| `mutex.tryLock()` | `fn try_lock() -> Result<MutexGuard<T>, TryLockError>` | Non-blocking attempt; `Err(WouldBlock)` if busy. |
+| `Mutex: new(val)` | `fn new(val: T): Mutex<T>` | Create a mutex wrapping `val`. |
+| `mutex.lock()` | `fn lock(): Result<MutexGuard<T>, PoisonError>` | Acquire exclusive lock; blocks. Returns guard deref to `T`. |
+| `mutex.tryLock()` | `fn try_lock(): Result<MutexGuard<T>, TryLockError>` | Non-blocking attempt; `Err(WouldBlock)` if busy. |
 | `guard` deref | `*guard`, `*guard = val` | Read/write the guarded value through the guard. |
 
 ### RwLock API
 
 | Method | Signature | Description |
 |---|---|---|
-| `RwLock::new(val)` | `fn new(val: T) -> RwLock<T>` | Create a reader-writer lock. |
-| `rwlock.read()` | `fn read() -> Result<RwLockReadGuard<T>, PoisonError>` | Shared read lock; many readers can hold it concurrently. |
-| `rwlock.write()` | `fn write() -> Result<RwLockWriteGuard<T>, PoisonError>` | Exclusive write lock; blocks until all readers/writers released. |
+| `RwLock: new(val)` | `fn new(val: T): RwLock<T>` | Create a reader-writer lock. |
+| `rwlock.read()` | `fn read(): Result<RwLockReadGuard<T>, PoisonError>` | Shared read lock; many readers can hold it concurrently. |
+| `rwlock.write()` | `fn write(): Result<RwLockWriteGuard<T>, PoisonError>` | Exclusive write lock; blocks until all readers/writers released. |
 | `rwlock.tryRead()` / `tryWrite()` | — | Non-blocking variants. |
 
 ### Poisoning
@@ -393,19 +393,19 @@ print(f"Counter: {*counter.lock().unwrap()}");
 
 | Function / Struct | Signature | Description |
 |---|---|---|
-| `spawn(closure)` | `fn spawn<F, T>(f: F) -> JoinHandle<T>` | Spawns a new native OS thread. |
+| `spawn(closure)` | `fn spawn<F, T>(f: F): JoinHandle<T>` | Spawns a new native OS thread. |
 | `sleep_ms(ms)` | `fn sleep_ms(ms: u64)` | Parks current thread for `ms` ms. |
 | `yield_now()` | `fn yield_now()` | Yields to scheduler. |
-| `channel<T>()` | `fn channel<T>() -> (Sender<T>, Receiver<T>)` | Unbounded MPSC channel. |
-| `sync_channel<T>(n)` | `fn sync_channel<T>(bound: usize) -> (SyncSender<T>, Receiver<T>)` | Bounded channel with backpressure. |
-| `Mutex::new(val)` | `fn new(val: T) -> Mutex<T>` | Mutual exclusion lock wrapping `val`. |
-| `RwLock::new(val)` | `fn new(val: T) -> RwLock<T>` | Reader-writer lock wrapping `val`. |
-| `Barrier::new(n)` | `fn new(n: usize) -> Barrier` | Rendezvous barrier for `n` threads. |
-| `Condvar::new()` | `fn new() -> Condvar` | Condition variable (pairs with `Mutex`). |
-| `AtomicBool::new(v)` | `fn new(v: bool) -> AtomicBool` | Lock-free boolean. |
-| `AtomicI64::new(v)` | `fn new(v: i64) -> AtomicI64` | Lock-free 64-bit integer. |
-| `Arc::new(val)` | `fn new(val: T) -> Arc<T>` | Atomic ref-counted shared ownership. |
-| `workers()` | `fn workers() -> usize` | Worker pool size. |
+| `channel<T>()` | `fn channel<T>(): (Sender<T>, Receiver<T>)` | Unbounded MPSC channel. |
+| `sync_channel<T>(n)` | `fn sync_channel<T>(bound: usize): (SyncSender<T>, Receiver<T>)` | Bounded channel with backpressure. |
+| `Mutex: new(val)` | `fn new(val: T): Mutex<T>` | Mutual exclusion lock wrapping `val`. |
+| `RwLock: new(val)` | `fn new(val: T): RwLock<T>` | Reader-writer lock wrapping `val`. |
+| `Barrier: new(n)` | `fn new(n: usize): Barrier` | Rendezvous barrier for `n` threads. |
+| `Condvar: new()` | `fn new(): Condvar` | Condition variable (pairs with `Mutex`). |
+| `AtomicBool: new(v)` | `fn new(v: bool): AtomicBool` | Lock-free boolean. |
+| `AtomicI64: new(v)` | `fn new(v: i64): AtomicI64` | Lock-free 64-bit integer. |
+| `Arc: new(val)` | `fn new(val: T): Arc<T>` | Atomic ref-counted shared ownership. |
+| `workers()` | `fn workers(): usize` | Worker pool size. |
 
 ---
 

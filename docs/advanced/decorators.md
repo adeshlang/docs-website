@@ -42,7 +42,7 @@ AdeshLang provides several high-performance built-in decorators optimized direct
 // Enforce compile-time purity and automatic memoization
 @pure
 @memoize
-fn fibonacci(n: i64) -> i64 {
+fn fibonacci(n: i64): i64 {
     if n <= 1 {
         return n;
     }
@@ -52,7 +52,7 @@ fn fibonacci(n: i64) -> i64 {
 // Guarantee zero heap allocations for real-time safety
 @noalloc
 @inline
-fn compute_vector_dot(a: [f32; 4], b: [f32; 4]) -> f32 {
+fn compute_vector_dot(a: [f32; 4], b: [f32; 4]): f32 {
     let sum: f32 = 0.0;
     for i in 0..4 {
         sum += a[i] * b[i];
@@ -63,7 +63,7 @@ fn compute_vector_dot(a: [f32; 4], b: [f32; 4]) -> f32 {
 // Log execution metrics in development builds
 @log
 @measure_time
-fn process_batch_records(records: [Record]) -> Result<i64, Error> {
+fn process_batch_records(records: [Record]): Result<i64, Error> {
     let count = records.len();
     // Process items...
     return Ok(count);
@@ -104,7 +104,7 @@ decorator audit_trail(level: string) {
 
 ```adesh
 @audit_trail("CRITICAL")
-fn transfer_funds(from_account: string, to_account: string, amount: f64) -> bool {
+fn transfer_funds(from_account: string, to_account: string, amount: f64): bool {
     print(f"Transferring ${amount} from {from_account} to {to_account}");
     return true;
 }
@@ -129,7 +129,7 @@ decorator log_calls(target, meta) {
 }
 
 @log_calls
-fn calculate_hash(data: string) -> string {
+fn calculate_hash(data: string): string {
     return crypto::sha256(data);
 }
 ```
@@ -145,7 +145,7 @@ When multiple decorators are applied to a single function or class, AdeshLang bu
 @rate_limit(100)
 @cache(ttl = 60)
 @measure_time
-fn get_user_profile(user_id: string) -> UserProfile {
+fn get_user_profile(user_id: string): UserProfile {
     // Fetch profile...
 }
 ```

@@ -15,11 +15,11 @@ The `abstract` keyword marks a type or member as abstract: it declares a shape w
 
 ```adesh
 abstract interface Shape {
-    fn area() -> f64;
+    fn area(): f64;
 }
 
 struct Circle(radius: f64): Shape {
-    pub fn area() -> f64 {
+    pub fn area(): f64 {
         return 3.14159 * self.radius * self.radius;
     }
 }

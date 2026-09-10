@@ -40,7 +40,7 @@ decorator logged(target) {
 }
 
 @logged
-fn add(a: i32, b: i32) -> i32 { return a + b; }
+fn add(a: i32, b: i32): i32 { return a + b; }
 ```
 
 ### Standalone marker (rare)
@@ -92,7 +92,7 @@ Source ──► Lex(Runtime) ──► Parse(DecoratorPhase::Runtime) ──►
 |---|---|---|
 | `target` | `Function`/`ClassDecl` reference | The decorated declaration (name, params, decorators) |
 | `call` | call-site object | `call.args: [Value]`, `call.proceed(*modified_args)` |
-| `call.proceed` | `fn(*args) -> Return` | Delegates to next pipeline stage or original (`TokenKind::Proceed`) |
+| `call.proceed` | `fn(*args): Return` | Delegates to next pipeline stage or original (`TokenKind: Proceed`) |
 
 `call.proceed()` may be invoked **0 or 1 times** per `runtime` invocation. Calling it 0 times suppresses the original; calling it >1 times is a runtime `LangError`.
 
@@ -131,7 +131,7 @@ decorator logged(target) {
 }
 
 @logged
-fn multiply(a: i32, b: i32) -> i32 { return a * b; }
+fn multiply(a: i32, b: i32): i32 { return a * b; }
 
 print(multiply(6, 7)); // enter multiply args=[6,7] → exit multiply -> 42 in 0ms → 42
 ```
@@ -171,7 +171,7 @@ decorator retry(attempts: i32) {
 
 @memoize
 @retry(3)
-fn fetch(url: string) -> string {
+fn fetch(url: string): string {
     // runtime wrappers nest: memoize(runtime(retry(runtime(fetch))))
     return http_get(url);
 }
@@ -200,7 +200,7 @@ runtime {
 }
 
 // Contrast:
-fn dynamic(add: i32) -> i32 {
+fn dynamic(add: i32): i32 {
     runtime { return LOOKUP[0] as i32 + add; } // forced runtime
     // vs. compile { LOOKUP[0] } would have constant-folded before lowering
 }

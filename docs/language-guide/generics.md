@@ -27,11 +27,11 @@ fn swap<T>(a: &mut T, b: &mut T) {
 }
 
 trait Printable {
-    fn format(&self) -> string;
+    fn format(&self): string;
 }
 class Box<T> implements Printable {
     value: T,
-    fn format(&self) -> string { return f"{self.value}"; }
+    fn format(&self): string { return f"{self.value}"; }
 }
 ```
 
@@ -42,7 +42,7 @@ TypeParams    ::= "<" TypeParam { "," TypeParam } ">"
 TypeParam     ::= IDENT [ ":" TraitBound { "+" TraitBound } ]
 TraitBound    ::= IDENT [ "<" Type { "," Type } ">" ]
 GenericArgs   ::= "<" Type { "," Type } ">"
-Type          ::= IDENT [ GenericArgs ] | "[" Type "]" | "(" TypeList ")" | "fn" "(" Params ")" "->" Type
+Type          ::= IDENT [ GenericArgs ] | "[" Type "]" | "(" TypeList ")" | "fn" "(" Params ")" ":" Type   // `:` is canonical; `->` still parsed (compat) but only `extern "C"` uses `->`
 ```
 
 All generic declarations are lowered in `src/parsing/ast.rs` via `Function.type_params`, `ClassDecl.type_params`, `StructDecl.type_params`, `TypeAliasDecl.type_params`, and `InterfaceDecl.type_params`.
@@ -87,13 +87,13 @@ Mangling is deterministic and collision-resistant: type hashes include module-qu
 
 ```adesh
 // Source
-fn identity<T>(x: T) -> T { return x; }
+fn identity<T>(x: T): T { return x; }
 let a = identity<i64>(42);
 let b = identity<string>("hello");
 
 // Lowered symbols (conceptual)
-// _Adesh_M_main_identity_i64  -> fn(i64) -> i64
-// _Adesh_M_main_identity_string -> fn(string) -> string
+// _Adesh_M_main_identity_i64  -> fn(i64): i64
+// _Adesh_M_main_identity_string -> fn(string): string
 ```
 
 ---
@@ -129,7 +129,7 @@ Discriminant optimization (1/2/4 bytes) is applied per instantiation (see `enums
 ```adesh
 class Container<T> {
     value: T,
-    fn get(&self) -> &T { return &self.value; }
+    fn get(&self): &T { return &self.value; }
     fn set(&mut self, v: T) { self.value = v; }
 }
 let c = new Container<i64>();
@@ -146,10 +146,10 @@ Generic parameters can enforce interface contracts via trait bounds (`: Trait`):
 
 ```adesh
 trait Printable {
-    fn format(&self) -> string;
+    fn format(&self): string;
 }
 trait Comparable<T> {
-    fn compare(&self, other: &T) -> i32;
+    fn compare(&self, other: &T): i32;
 }
 // Enforce T implements both Printable and Comparable
 fn process_item<T: Printable + Comparable<T>>(item: &T) {
@@ -165,8 +165,8 @@ Trait bounds are verified during semantic analysis in `src/semantics/engine.rs`.
 ```adesh
 class User implements Printable, Comparable<User> {
     name: string,
-    fn format(&self) -> string { return self.name; }
-    fn compare(&self, other: &User) -> i32 { return 0; }
+    fn format(&self): string { return self.name; }
+    fn compare(&self, other: &User): i32 { return 0; }
 }
 process_item<User>(new User()); // OK
 // process_item<i64>(42); // E0401: i64 does not implement Printable
@@ -193,12 +193,12 @@ struct Vec<T> { data: [T], len: u64, }
 
 // Extend with generic methods
 extend on Vec<T> {
-    fn map<U>(self: &Vec<T>, f: fn(&T) -> U) -> Vec<U> {
+    fn map<U>(self: &Vec<T>, f: fn(&T): U): Vec<U> {
         let out: Vec<U> = Vec { data: [], len: 0 };
         for item in self.data { out.data.push(f(&item)); }
         return out;
     }
-    fn find<P: fn(&T) -> bool>(self: &Vec<T>, pred: P) -> Option<&T> {
+    fn find<P: fn(&T): bool>(self: &Vec<T>, pred: P): Option<&T> {
         for item in self.data {
             if (pred(&item)) { return Option::Some(&item); }
         }
@@ -252,8 +252,8 @@ VTable Layout (per concrete Trait impl):
 |  size: usize (8B)                  |
 |  align: usize (8B)                 |
 |  drop: fn(*mut void) (8B)          |
-|  method[0]: fn(*mut void) -> ...   |
-|  method[1]: fn(*mut void) -> ...   |
+|  method[0]: fn(*mut void): ...   |
+|  method[1]: fn(*mut void): ...   |
 +------------------------------------+
 ```
 
@@ -296,7 +296,7 @@ Variance controls how generic type constructors relate under subtyping, implemen
 |---|---|---|
 | `&T`, `&mut T` (mutable) | Invariant over `T` | Mutation would break soundness |
 | `*T`, `Share<T>` | Covariant over `T` | Read-only or owned |
-| `fn(T) -> U` | Contravariant in `T`, Covariant in `U` | Function parameter vs return |
+| `fn(T): U` | Contravariant in `T`, Covariant in `U` | Function parameter vs return |
 | `Vec<T>`, `Stack<T>` | Invariant | Interior mutability |
 | `Option<T>`, `Result<T,E>` | Covariant | Immutable payload |
 
@@ -389,7 +389,7 @@ struct HirType::Generic { base: String, args: Vec<HirType> }
 
 ```adesh
 trait Ordered {
-    fn less_than(&self, other: &Self) -> bool;
+    fn less_than(&self, other: &Self): bool;
 }
 fn bubble_sort<T: Ordered>(arr: &mut [T]) {
     let n = arr.len();
@@ -403,7 +403,7 @@ fn bubble_sort<T: Ordered>(arr: &mut [T]) {
 }
 class Score implements Ordered {
     value: i64,
-    fn less_than(&self, other: &Self) -> bool { return self.value < other.value; }
+    fn less_than(&self, other: &Self): bool { return self.value < other.value; }
 }
 let scores: [Score] = [Score { value: 3 }, Score { value: 1 }];
 bubble_sort<Score>(&mut scores);
@@ -415,11 +415,11 @@ let s: Scores = scores; // alias interplay (§ alias docs)
 ### 11.2 Heterogeneous Registry with `dyn Trait`
 
 ```adesh
-trait Plugin { fn run(&self) -> string; }
-class Logger implements Plugin { fn run(&self) -> string { return "log"; } }
-class Metrics implements Plugin { fn run(&self) -> string { return "metrics"; } }
+trait Plugin { fn run(&self): string; }
+class Logger implements Plugin { fn run(&self): string { return "log"; } }
+class Metrics implements Plugin { fn run(&self): string { return "metrics"; } }
 
-fn run_all(plugins: [&dyn Plugin]) -> [string] {
+fn run_all(plugins: [&dyn Plugin]): [string] {
     let out: [string] = [];
     for p in plugins { out.push(p.run()); }
     return out;
@@ -432,13 +432,13 @@ print(run_all(plugins));
 
 ```adesh
 extend on Result<T, E> {
-    fn map<U>(self: Result<T,E>, f: fn(T) -> U) -> Result<U,E> {
+    fn map<U>(self: Result<T,E>, f: fn(T): U): Result<U,E> {
         match self {
             Result::Ok(v) => Result::Ok(f(v)),
             Result::Err(e) => Result::Err(e),
         }
     }
-    fn flat_map<U>(self: Result<T,E>, f: fn(T) -> Result<U,E>) -> Result<U,E> {
+    fn flat_map<U>(self: Result<T,E>, f: fn(T): Result<U,E>): Result<U,E> {
         match self { Result::Ok(v) => f(v), Result::Err(e) => Result::Err(e), }
     }
 }

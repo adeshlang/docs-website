@@ -90,7 +90,7 @@ adesh disasm program.adesh
 
 ### Sample Disassembly Output:
 ```text
-=== Bytecode Disassembly: fn calculate(a: i64, b: i64) -> i64 ===
+=== Bytecode Disassembly: fn calculate(a: i64, b: i64): i64 ===
 Constants: [ 10 ]
 Locals: [ a, b, temp ]
 

@@ -275,7 +275,7 @@ while (true) {
 ### 4.1 `Option<T>` for Nullable Values
 
 ```adesh
-fn find_user(id: string) -> Option<User> {
+fn find_user(id: string): Option<User> {
     for u in users { if (u.id == id) { return Option::Some(u); } }
     return Option::None;
 }
@@ -294,7 +294,7 @@ let email = find_user("42").and_then((u) => u.email); // Option<string>
 ### 4.2 `Result<T, E>` for Fallible Operations
 
 ```adesh
-fn parse_int(s: string) -> Result<i64, string> {
+fn parse_int(s: string): Result<i64, string> {
     // ...
     if (valid) { return Result::Ok(n); } else { return Result::Err("invalid"); }
 }
@@ -321,13 +321,13 @@ enum Shape {
 }
 
 extend on Shape {
-    fn area(&self) -> f64 {
+    fn area(&self): f64 {
         match self {
             Shape::Circle { radius } => 3.1415926535 * radius * radius,
             Shape::Rect { width, height } => width * height,
         }
     }
-    fn is_circle(&self) -> bool {
+    fn is_circle(&self): bool {
         match self {
             Shape::Circle { .. } => true,
             _ => false,
@@ -345,7 +345,7 @@ print(c.is_circle());
 enum Wrapper<T> { Value(T), Empty, }
 
 extend on Wrapper<T> {
-    fn map<U>(self: Wrapper<T>, f: fn(T) -> U) -> Wrapper<U> {
+    fn map<U>(self: Wrapper<T>, f: fn(T): U): Wrapper<U> {
         match self {
             Wrapper::Value(v) => Wrapper::Value(f(v)),
             Wrapper::Empty => Wrapper::Empty,
@@ -378,7 +378,7 @@ Lowered as `Pattern::Or(Box<Pattern>, Box<Pattern>)` — multiple discriminant c
 ```adesh
 enum Tree<T> { Leaf(T), Node { left: Tree<T>, right: Tree<T> }, }
 
-fn sum(tree: Tree<i64>) -> i64 {
+fn sum(tree: Tree<i64>): i64 {
     match tree {
         Tree::Leaf(n) => n,
         Tree::Node { left, right } => sum(left) + sum(right),
@@ -457,7 +457,7 @@ Interpreter --> Value::Enum / EnumCtor (src/parsing/ast.rs:1003-1005)
 ```adesh
 enum State { Idle, Running { progress: f64 }, Done { result: string }, Failed { error: string }, }
 
-fn poll_state(s: State) -> string {
+fn poll_state(s: State): string {
     match s {
         State::Idle => "idle",
         State::Running { progress } => f"running {progress}%",
@@ -475,13 +475,13 @@ for st in states { print(poll_state(st)); }
 enum List<T> { Nil, Cons { head: T, tail: List<T> }, }
 
 extend on List<T> {
-    fn len(&self) -> u64 {
+    fn len(&self): u64 {
         match self {
             List::Nil => 0,
             List::Cons { head, tail } => 1 + tail.len(),
         }
     }
-    fn map<U>(self: List<T>, f: fn(T) -> U) -> List<U> {
+    fn map<U>(self: List<T>, f: fn(T): U): List<U> {
         match self {
             List::Nil => List::Nil,
             List::Cons { head, tail } => List::Cons { head: f(head), tail: tail.map(f) },
@@ -495,11 +495,11 @@ print(lst.len()); // 2
 ### 9.3 `Option`/`Result` Composition with Match
 
 ```adesh
-fn get_user_email(id: string) -> Option<string> {
+fn get_user_email(id: string): Option<string> {
     let user = find_user(id)?; // Option early return (desugars to match None => return None)
     return user.email;          // Option<string>
 }
-fn parse_user_id(s: string) -> Result<string, string> {
+fn parse_user_id(s: string): Result<string, string> {
     let n = parse_int(s).map_err((e) => f"bad id: {e}")?;
     if (n < 0) { return Result::Err("negative id"); }
     return Result::Ok(f"{n}");
@@ -513,7 +513,7 @@ match parse_user_id("42") {
 ### 9.4 Or Pattern with Guards
 
 ```adesh
-fn classify(msg: Message) -> string {
+fn classify(msg: Message): string {
     match msg {
         Message::Quit | Message::Write("") => "empty/quit",
         Message::Move { x, y } if x == 0 && y == 0 => "origin",
@@ -528,13 +528,13 @@ fn classify(msg: Message) -> string {
 
 ```adesh
 extend on Result<T, E> {
-    fn is_ok(&self) -> bool {
+    fn is_ok(&self): bool {
         match self {
             Result::Ok(_) => true,
             Result::Err(_) => false,
         }
     }
-    fn unwrap_or(self: Result<T, E>, default: T) -> T {
+    fn unwrap_or(self: Result<T, E>, default: T): T {
         match self {
             Result::Ok(v) => v,
             Result::Err(_) => default,

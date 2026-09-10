@@ -38,7 +38,7 @@ Source → Lexer → Parser → AST → HIR → MIR/Borrow → VIR ──► Cod
                                       (reference)  (native)        (portable)
 ```
 
-VIR is the **single handoff point**. Every backend implements the same `Backend` trait: `fn emit(vir: &VirModule) -> Result<Artifact>`.
+VIR is the **single handoff point**. Every backend implements the same `Backend` trait: `fn emit(vir: &VirModule): Result<Artifact>`.
 
 ---
 
@@ -329,7 +329,7 @@ Benchmarks from [Backend Benchmarks](/docs/backends/overview#performance-benchma
 Source:
 
 ```adesh
-fn square(x: i32) -> i32 { return x * x; }
+fn square(x: i32): i32 { return x * x; }
 let y = square(7);
 ```
 

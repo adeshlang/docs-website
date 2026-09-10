@@ -16,7 +16,7 @@ description: The `async` keyword marks a function or block as asynchronous, lowe
 ## Syntax
 
 ```text
-async_fn     ::= "async" "fn" ident "(" params? ")" ( "->" type )? block
+async_fn     ::= "async" "fn" ident "(" params? ")" ( ":" type )? block   // `:` canonical; `->` also accepted for compat, but prefer `:` (only `extern "C"` uses `->`)
 async_block  ::= "async" block
 async_move   ::= "async" "move" block       // capture-by-move form (when available)
 params       ::= param ("," param)*
@@ -30,12 +30,12 @@ type         ::= ident ("<" type ("," type)* ">")? ("?")?
 ### Canonical forms
 
 ```adesh
-async fn fetch(url: string) -> string {
+async fn fetch(url: string): string {
     let data = await http_get(url);
     return data;
 }
 
-async fn compute(n: i32) -> i32 {
+async fn compute(n: i32): i32 {
     await sleep(10);
     return n * 2;
 }
@@ -99,7 +99,7 @@ The executor repeatedly `poll`s the future's state machine. On `Pending`, the th
 
 ### Return type
 
-`async fn f() -> T` logically returns `Promise<T>` (or `Task<T>` in spawned contexts). Callers must `await` it or `spawn` it to drive it. Forgetting to `await` leaves the future inert (lint: `unused async result`).
+`async fn f(): T` logically returns `Promise<T>` (or `Task<T>` in spawned contexts). Callers must `await` it or `spawn` it to drive it. Forgetting to `await` leaves the future inert (lint: `unused async result`).
 
 ### Capture and ownership
 
@@ -122,7 +122,7 @@ Values used inside `async` blocks that come from the enclosing scope are capture
 ### Example 1 — Basic async fetch chain and error propagation
 
 ```adesh
-async fn fetch(url: string) -> string {
+async fn fetch(url: string): string {
     // Each await is a suspension point — thread is released while I/O is pending
     let conn = await connect(url);
     let resp = await conn.get("/");
@@ -130,7 +130,7 @@ async fn fetch(url: string) -> string {
     return resp.body;
 }
 
-async fn fetch_all(urls: [string]) -> [string] {
+async fn fetch_all(urls: [string]): [string] {
     let results: [string] = [];
     // Sequential version: each fetch waits before starting next
     for url in urls {
@@ -153,7 +153,7 @@ async fn main() {
 ### Example 2 — Concurrency via `spawn` inside `async` context
 
 ```adesh
-async fn fetch_concurrent(urls: [string]) -> [string] {
+async fn fetch_concurrent(urls: [string]): [string] {
     // Spawn all fetches at once — they run concurrently on the executor
     let handles = [];
     for url in urls {
@@ -186,7 +186,7 @@ async fn demo_concurrent() {
 ### Example 3 — Async blocks, `defer`/`region`, and borrow correctness
 
 ```adesh
-async fn with_temp_file(path: string) -> string {
+async fn with_temp_file(path: string): string {
     let file = FS.open(path, "r");
     defer file.close(); // LIFO — runs on every exit path, including throw/return
 
@@ -200,7 +200,7 @@ async fn with_temp_file(path: string) -> string {
 }
 
 // Region interaction: arena allocation must not escape the async suspension
-async fn with_scratch(n: i32) -> i32 {
+async fn with_scratch(n: i32): i32 {
     region scratch {
         unsafe {
             let buf: *mut u8 = alloc<u8>(n);

@@ -164,7 +164,7 @@ extern "C" fn my_callback(code: i32) -> void {
     print("callback:", code);
 }
 
-fn use_mylib(path: string) -> i32 {
+fn use_mylib(path: string): i32 {
     unsafe {
         let handle = mylib_open(path as *const u8);
         if handle as usize == 0 { throw "open failed"; }

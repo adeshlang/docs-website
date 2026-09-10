@@ -16,13 +16,13 @@ This document specifies the compiler transformation of `async` functions into st
 Functions annotated with `async` do not execute synchronously to completion. Instead, the compiler (via `src/parsing/ast.rs:Function.is_async`, `src/parsing/hir_lower.rs`, `src/execution`) transforms an `async fn` into an anonymous **Stackless State Machine Struct** that can suspend at `await` and resume later.
 
 ```adesh
-async fn fetch_payload(url: string) -> Result<string, Error> {
+async fn fetch_payload(url: string): Result<string, Error> {
     let connection = await connect(url)?;
     let response = await connection.get()?;
     return Ok(response.body);
 }
 
-async fn compose() -> string {
+async fn compose(): string {
     let a = await fetch_payload("https://a.example");
     let b = await fetch_payload("https://b.example");
     return f"{a}+{b}";
@@ -57,7 +57,7 @@ HIR lowering (`src/parsing/hir.rs`, `src/execution`) represents this as:
 ```rust
 enum AsyncState { Start, WaitingConnection, WaitingResponse, Done }
 struct FetchPayloadStateMachine { state: AsyncState, url: String, conn_future: Option<Future>, ... }
-fn poll(&mut self, cx: &mut Context) -> Poll<Result<String, Error>>
+fn poll(&mut self, cx: &mut Context): Poll<Result<String, Error>>
 ```
 
 ### 1.2 State Transitions
@@ -86,7 +86,7 @@ State 2 (WaitingResponse):
 ### 1.3 EBNF
 
 ```ebnf
-AsyncFn     ::= "async" "fn" IDENT "(" Params ")" [ "->" Type ] Block
+AsyncFn     ::= "async" "fn" IDENT "(" Params ")" [ ":" Type ] Block   // `:` canonical; `->` also parsed (only `extern "C"` uses `->`)
 AwaitExpr   ::= "await" Expr
 SpawnExpr   ::= "spawn" Expr               (* spawn(async { ... }) *)
 AsyncBlock  ::= "async" ( "move" )? Block  (* async move { ... } captures by move *)
@@ -218,8 +218,8 @@ Global Shared Task Queue (injection queue)
 Spawn signature:
 
 ```adesh
-fn spawn<T>(future: async fn() -> T) -> JoinHandle<T>;
-struct JoinHandle<T> { fn await(self) -> T; fn cancel(); }
+fn spawn<T>(future: async fn(): T): JoinHandle<T>;
+struct JoinHandle<T> { fn await(self): T; fn cancel(); }
 ```
 
 Example:
@@ -341,7 +341,7 @@ let msg = await ch.recv();
 Defers in `async fn` are preserved across suspensions in the state machine. They run when the async fn's future becomes `Ready` (success, error, or cancellation), not when individual `await` points are reached:
 
 ```adesh
-async fn guarded_fetch(url: string) -> string {
+async fn guarded_fetch(url: string): string {
     let lock = global_mutex.lock();
     defer lock.unlock(); // held across await points until async fn completes
     let data = await fetch(url);
@@ -371,7 +371,7 @@ If an async fn is cancelled (JoinHandle dropped), defers still run before the fu
 ### 8.1 Concurrent Fetch with Join
 
 ```adesh
-async fn fetch_many(urls: [string]) -> [string] {
+async fn fetch_many(urls: [string]): [string] {
     let handles: [JoinHandle<string>] = [];
     for url in urls {
         let u = url; // move capture per iteration
@@ -417,7 +417,7 @@ print(result);
 ### 8.3 Timeout via `select`-like Pattern
 
 ```adesh
-async fn with_timeout<T>(future: Promise<T>, ms: u64) -> Result<T, string> {
+async fn with_timeout<T>(future: Promise<T>, ms: u64): Result<T, string> {
     let timeout = spawn(async move { await sleep(ms); return "timeout"; });
     // Conceptual select: whichever future completes first wins
     // (actual select combinator depends on stdlib)
@@ -490,4 +490,3 @@ Interpreter microtasks: `NativeEffect::EnqueueMicrotask(Box<dyn FnOnce(&mut dyn 
 4. Prefer `join` over sequential `await` in loops when tasks are independent — enables true concurrency.
 5. Use `defer` inside `async fn` for guard cleanup; defers survive suspensions.
 6. Monitor executor metrics: poll counts, steal rates, and Pending/Ready ratios via `adesh --trace-async`.
-

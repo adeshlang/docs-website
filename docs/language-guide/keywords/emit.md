@@ -121,7 +121,7 @@ Source ──► Lex(Emit) ──► Parse ──┐
 compile {
     const FIELDS = ["x", "y", "z"];
     for field in FIELDS {
-        emit(`fn get_${field}(p: Point) -> f64 { return p.${field}; }`);
+        emit(`fn get_${field}(p: Point): f64 { return p.${field}; }`);
         emit(`fn set_${field}(p: mut Point, v: f64) { p.${field} = v; }`);
     }
     // Also emit a constant that runtime code can reference:
@@ -201,7 +201,7 @@ decorator inline(target) {
 }
 
 @inline
-fn hot(x: i32) -> i32 { return x * x + 1; }
+fn hot(x: i32): i32 { return x * x + 1; }
 
 print(hot(10)); // 101 — with inline hint applied at LIR level
 // Contrast with compile's string emit:

@@ -49,7 +49,7 @@ Most decorators use one or two phases; four-phase decorators are compiler-plugin
 ```adesh
 @logged
 @retry(3, 100)
-fn fetch(url: string) -> string { return http_get(url); }
+fn fetch(url: string): string { return http_get(url); }
 
 // Decorator with args is a Call-like syntax after @ — args captured as DecoratorPipelineStage.args
 // Zero-arg form @logged and parameterized @retry(3) are both valid.
@@ -153,10 +153,10 @@ decorator logged(target) {
 }
 
 @logged
-fn add(a: i32, b: i32) -> i32 { return a + b; }
+fn add(a: i32, b: i32): i32 { return a + b; }
 
 @logged
-fn greet(name: string) -> string { return "hi " + name; }
+fn greet(name: string): string { return "hi " + name; }
 
 print(add(2, 3));    // → add(2, 3) ← add = 5 (…ms) → 5
 print(greet("Adesh")); // → greet(Adesh) … → greet = hi Adesh → hi Adesh
@@ -213,7 +213,7 @@ decorator retry(n: i32) {
 // Stacking: memoize outermost, retry inner — retries only happen on cache miss
 @memoize
 @retry(3)
-fn expensive(n: i32) -> i32 {
+fn expensive(n: i32): i32 {
     if (rand() < 0.4) { throw "transient failure"; }
     return n * n;
 }

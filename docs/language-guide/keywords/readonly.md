@@ -170,7 +170,7 @@ struct Config {
     retries: u8, // mutable — operational tuning may change at runtime
 }
 
-fn load_config() -> Config {
+fn load_config(): Config {
     let host = env("HOST") ?? "0.0.0.0";
     let port_str = env("PORT") ?? "8080";
     let port = port_str as u16;
@@ -247,7 +247,7 @@ e.tags.push("archived"); // ok (!) — readonly protects the field, not the arra
 print(e.tags); // [inbox,archived] — shallow
 
 // Deep-freeze pattern — wrap in a helper that produces a frozen snapshot:
-fn freeze_envelope(src: Envelope) -> Envelope {
+fn freeze_envelope(src: Envelope): Envelope {
     // Defensive copy: callers mutate the copy, not the original's arrays
     return Envelope { tags: src.tags.clone(), meta: src.meta.clone() };
 }

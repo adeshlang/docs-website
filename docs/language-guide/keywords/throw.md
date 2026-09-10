@@ -14,7 +14,7 @@ The `throw` keyword raises an error, transferring control to the nearest enclosi
 ## Syntax & Example
 
 ```adesh
-fn lookup(key: string) -> i64 {
+fn lookup(key: string): i64 {
     if key == "" {
         throw Error("empty key");
     }

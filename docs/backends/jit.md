@@ -50,7 +50,7 @@ The AdeshLang JIT uses a **two-tier adaptive compilation strategy**:
 Long-running loops inside cold functions are upgraded mid-execution without waiting for the enclosing function to return:
 
 ```adesh
-fn process_large_dataset(data: [f64]) -> f64 {
+fn process_large_dataset(data: [f64]): f64 {
     let sum: f64 = 0.0;
     
     // Loop begins in Tier-1. After 1,000 iterations, OSR seamlessly

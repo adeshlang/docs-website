@@ -70,9 +70,9 @@ Source class layout (heap)                 After `extend on`
 | Target | Example | Notes |
 |--------|---------|-------|
 | `class` | `extend on Counter { fn inc() { this.value += 1; } }` | Primary use. `this` parameter binds to the instance. |
-| `struct` | `extend on Vec2 { fn len() -> f64 { return Math.sqrt(this.x*this.x+this.y*this.y); } }` | Value semantics — `this` is a copy unless borrowed. |
+| `struct` | `extend on Vec2 { fn len(): f64 { return Math.sqrt(this.x*this.x+this.y*this.y); } }` | Value semantics — `this` is a copy unless borrowed. |
 | `enum` | `extend on Direction { fn opposite() { return match this { North => Direction.South(), … } } }` | `this` exposes `.tag`, `.value`, `.__enum`; full `match` support. See `examples/extend/05_enum_extend.adesh`. |
-| builtin | `extend on string { fn isBlank() -> bool { return this.trim().len()==0; } }` | Retroactive builtin augmentation; same monomorphic lowering. |
+| builtin | `extend on string { fn isBlank(): bool { return this.trim().len()==0; } }` | Retroactive builtin augmentation; same monomorphic lowering. |
 | generic instantiation | `extend on Container<T>` not at block level — **method-level** generics only | Put `<T>` on each `fn`, not on the `extend on` header. |
 
 ### Method Modifiers Inside `extend on`
@@ -81,22 +81,22 @@ Each method may independently be:
 
 * `async fn` / `async unsafe fn` — `method_is_async` flag in `type_decls.rs:46-51`.
 * `unsafe fn` — before or after `fn`, or trailing (`fn foo() unsafe { … }`). Collapsed to `is_unsafe`.
-* Generic: `fn wrap<T>(value: T) -> T` — `method_type_params` (`type_decls.rs:58-69`).
-* Typed params & return: `fn scale(factor: f64) -> f64` — accepts `:`, `->`, or `=>` (`type_decls.rs:92-97`).
+* Generic: `fn wrap<T>(value: T): T` — `method_type_params` (`type_decls.rs:58-69`).
+* Typed params & return: `fn scale(factor: f64): f64` — accepts `:`, `->`, or `=>` (`type_decls.rs:92-97`).
 
 ```adesh
 extend AdvancedOps on Container {
     // async + generic + typed return: all legal inside extend
-    async fn fetchAsync<T>(key: string) -> Option<T> {
+    async fn fetchAsync<T>(key: string): Option<T> {
         let v = await store.get(key);
         return v;
     }
 
-    unsafe fn rawBits(self) -> u64 {
+    unsafe fn rawBits(self): u64 {
         return unsafe { reinterpret(self.value); };
     }
 
-    fn map<U>(transform: fn(T) -> U) -> Container<U> {
+    fn map<U>(transform: fn(T): U): Container<U> {
         return new Container(transform(this.value));
     }
 }
@@ -116,7 +116,7 @@ class Person {
 
 // anonymous — common for one-off augmentations
 extend on Person {
-    fn isAdult() -> bool { return this.age >= 18; }
+    fn isAdult(): bool { return this.age >= 18; }
 }
 
 // named — groups related methods for readability
@@ -144,10 +144,10 @@ Named blocks are idiomatic for *concern separation* (`extend PersonValidation on
 struct Point { x: f64, y: f64 }
 
 extend on Point {
-    fn magnitude() -> f64 {
+    fn magnitude(): f64 {
         return Math.sqrt(this.x*this.x + this.y*this.y);
     }
-    fn add(other: Point) -> Point {
+    fn add(other: Point): Point {
         return Point { x: this.x + other.x, y: this.y + other.y };
     }
 }
@@ -163,7 +163,7 @@ extend DirectionHelpers on Direction {
             West  => Direction.East()
         };
     }
-    fn isCardinal() -> bool { return true; }
+    fn isCardinal(): bool { return true; }
 }
 
 let p = Point { x: 3.0, y: 4.0 };
@@ -180,11 +180,11 @@ class Box<T> {
 
 extend on Box {
     // method-level generic (block-level generics not yet supported)
-    fn map<U>(f: fn(T) -> U) -> Box<U> {
+    fn map<U>(f: fn(T): U): Box<U> {
         return new Box(f(this.value));
     }
 
-    async fn mapAsync<U>(f: async fn(T) -> U) -> Box<U> {
+    async fn mapAsync<U>(f: async fn(T): U): Box<U> {
         let v = await f(this.value);
         return new Box(v);
     }
@@ -201,19 +201,19 @@ class Rectangle {
     Rectangle(w, h) { this.width=w; this.height=h; }
 }
 extend on Rectangle {
-    fn area()      -> f64 { return this.width * this.height; }
-    fn perimeter() -> f64 { return 2.0*(this.width+this.height); }
-    fn isSquare()  -> bool { return this.width == this.height; }
+    fn area(): f64 { return this.width * this.height; }
+    fn perimeter(): f64 { return 2.0*(this.width+this.height); }
+    fn isSquare(): bool { return this.width == this.height; }
 }
 
 class Order {
     Order(id, item, price, qty) {
         this.id=id; this.item=item; this.price=price; this.qty=qty;
     }
-    fn total() -> f64 { return this.price * this.qty; }
+    fn total(): f64 { return this.price * this.qty; }
 }
 extend OrderSerialization on Order {
-    fn summary() -> string {
+    fn summary(): string {
         return "Order #" + this.id + ": " + this.qty + "x " + this.item
              + " = $" + this.total();
     }

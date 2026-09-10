@@ -54,12 +54,12 @@ Export AdeshLang functions to JavaScript using the `#[export_name]` attribute:
 ### AdeshLang Code (`src/crypto_module.adesh`):
 ```adesh
 #[export_name("adesh_sha256")]
-pub fn adesh_sha256(input: string) -> string {
+pub fn adesh_sha256(input: string): string {
     return crypto::sha256(input);
 }
 
 #[export_name("add_numbers")]
-pub fn add_numbers(a: i32, b: i32) -> i32 {
+pub fn add_numbers(a: i32, b: i32): i32 {
     return a + b;
 }
 ```

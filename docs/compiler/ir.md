@@ -89,7 +89,7 @@ HIR is the *desugared, resolved* form of the AST (covered in [Semantic Analysis 
 Source:
 
 ```adesh
-fn max(a: i32, b: i32) -> i32 {
+fn max(a: i32, b: i32): i32 {
     return if a > b { a } else { b };
 }
 ```
@@ -218,7 +218,7 @@ VIR is the unified low-level IR that all backends consume. It is in **SSA form**
 Source:
 
 ```adesh
-fn add(a: i32, b: i32) -> i32 { return a + b; }
+fn add(a: i32, b: i32): i32 { return a + b; }
 let x = add(2, 3);
 ```
 

@@ -32,7 +32,7 @@ enum MathError {
     NegativeSquareRoot,
 }
 
-fn safe_divide(numerator: f64, denominator: f64) -> Result<f64, MathError> {
+fn safe_divide(numerator: f64, denominator: f64): Result<f64, MathError> {
     if denominator == 0.0 {
         return Err(MathError::DivisionByZero);
     }
@@ -64,7 +64,7 @@ struct Config {
     database_url: string,
 }
 
-fn load_app_config(path: string) -> Result<Config, Error> {
+fn load_app_config(path: string): Result<Config, Error> {
     // 1. Read file. If Err, returns immediately from load_app_config with Err
     let contents = fs::read_to_string(path)?;
     
@@ -88,7 +88,7 @@ fn load_app_config(path: string) -> Result<Config, Error> {
 Use `Option<T>` when a value may or may not be present:
 
 ```adesh
-fn find_user_by_id(users: [User], id: i64) -> Option<User> {
+fn find_user_by_id(users: [User], id: i64): Option<User> {
     for user in users {
         if user.id == id {
             return Some(user);
@@ -126,7 +126,7 @@ The `defer` statement schedules a statement or block to execute automatically wh
 ```adesh
 import { fs } from "builtin";
 
-fn process_log_file(file_path: string) -> Result<(), Error> {
+fn process_log_file(file_path: string): Result<(), Error> {
     let file = fs::open(file_path, "r")?;
     
     // Guaranteed to close file upon function exit!
@@ -152,7 +152,7 @@ fn process_log_file(file_path: string) -> Result<(), Error> {
 
 ```adesh
 // Panics should be reserved for catastrophic programmer bugs:
-fn get_element_unchecked<T>(list: &[T], index: usize) -> &T {
+fn get_element_unchecked<T>(list: &[T], index: usize): &T {
     if index >= list.len() {
         panic(f"Fatal index out of bounds: index {index} >= length {list.len()}");
     }

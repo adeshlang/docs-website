@@ -105,7 +105,7 @@ compile {
 // Precompute a table and assert structural invariant at compile time
 compile {
     const SIZES = [1, 2, 4, 8];
-    fn validate_sizes() -> bool {
+    fn validate_sizes(): bool {
         for s in SIZES { require s > 0 && (s & (s - 1)) == 0, "sizes must be powers of two"; }
         return true;
     }
@@ -155,7 +155,7 @@ decorator numeric_retry(attempts: i32) {
 }
 
 @numeric_retry(3)
-fn fetch_count(n: i32) -> i32 {
+fn fetch_count(n: i32): i32 {
     if (n < 0) { throw "negative"; }
     return n + 1;
 }
@@ -163,7 +163,7 @@ fn fetch_count(n: i32) -> i32 {
 print(fetch_count(5));  // 6 — succeeds first try
 // print(fetch_count("hi")); // runtime require fails: runtime arg must be numeric
 // @numeric_retry(20)
-// fn bad(a: i32, b: i32) -> i32 { return a+b; } // compile require fails: attempts must be 1..10 / single-param
+// fn bad(a: i32, b: i32): i32 { return a+b; } // compile require fails: attempts must be 1..10 / single-param
 ```
 
 This shows the idiomatic split: `compile` checks AST shape, `typecheck` checks types, `emit` checks IR directives, `runtime` checks live values.
@@ -176,7 +176,7 @@ type Port = u16;
 fn serve(port: Port) { print("serving on " + port); }
 
 // Compile-time type precondition — fails build if port type drifts
-typecheck serve is fn(Port) -> void;
+typecheck serve is fn(Port): void;
 
 // Runtime value precondition — fails call, but builds fine
 decorator valid_port(target) {

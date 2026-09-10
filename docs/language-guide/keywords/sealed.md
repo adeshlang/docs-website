@@ -15,7 +15,7 @@ The `sealed` keyword marks a type as closed to extension: only a known set of su
 
 ```adesh
 sealed interface Shape {
-    fn area() -> f64;
+    fn area(): f64;
 }
 
 struct Circle(radius: f64): Shape { /* ... */ }

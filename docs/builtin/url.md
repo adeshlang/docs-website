@@ -270,7 +270,7 @@ print(u.search); // "?q=hello+%26+world"  (encoded)
 ```adesh
 import URL;
 
-fn buildSearchUrl(base: string, query: string, page: i32) -> string {
+fn buildSearchUrl(base: string, query: string, page: i32): string {
     let u = URL.parse(base);
     u.pathname = "/api/search";
     u.searchParams.set("q", query);

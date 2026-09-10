@@ -134,7 +134,7 @@ fn map_values_fallback() {
 ### Example 2 — Filtering, early exit, and `defer` inside `of` loops
 
 ```adesh
-fn sum_values(map) -> i32 {
+fn sum_values(map): i32 {
     let total = 0;
     for v of map {
         if v < 0 { continue; }   // skip negative values
@@ -165,7 +165,7 @@ fn enumerate_values(xs: [i32]) {
 ### Example 3 — Async, concurrent `spawn`, and `region` with value iteration
 
 ```adesh
-async fn process_values(urls: [string]) -> [string] {
+async fn process_values(urls: [string]): [string] {
     let results: [string] = [];
     // `for ... of ...` with async suspension — sequential
     for url of urls {
@@ -175,7 +175,7 @@ async fn process_values(urls: [string]) -> [string] {
     return results;
 }
 
-async fn process_values_concurrent(urls: [string]) -> [string] {
+async fn process_values_concurrent(urls: [string]): [string] {
     let handles = [];
     for url of urls { handles.push(spawn fetch(url)); } // spawn inside of-loop
     let out: [string] = [];

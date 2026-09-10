@@ -136,17 +136,17 @@ if (WebSocket.isError(client)) {
 
 | Method / Function | Signature | Description |
 |---|---|---|
-| `WebSocket.connect(url, config?)` | `fn connect(url: string, config?: ClientConfig) -> Client \| Error` | Connect to `ws://` or `wss://` URL; performs TCP connect + handshake. |
-| `WebSocket.isError(val)` | `fn isError(val: any) -> bool` | Check if connect returned an error. |
-| `client.getState()` | `fn getState() -> State` | `Connecting`, `Open`, `Closing`, `Closed`. |
-| `client.sendText(text)` | `fn sendText(text: string) -> Result<void, WSError>` | Send UTF-8 text frame (FIN=1). |
-| `client.sendBinary(bytes)` | `fn sendBinary(bytes: u8[]) -> Result<void, WSError>` | Send binary frame. |
-| `client.sendPing(data?)` | `fn sendPing(data?: u8[]) -> Result<void, WSError>` | Send ping control frame (keepalive). |
-| `client.sendPong(data)` | `fn sendPong(data: u8[]) -> Result<void, WSError>` | Respond to ping. |
-| `client.receive()` | `fn receive() -> Message` | Block until next message frame arrives. |
-| `client.receiveTimeout(ms)` | `fn receiveTimeout(ms: u64) -> Message \| null` | Receive with timeout; `null` on timeout. |
+| `WebSocket.connect(url, config?)` | `fn connect(url: string, config?: ClientConfig): Client \| Error` | Connect to `ws://` or `wss://` URL; performs TCP connect + handshake. |
+| `WebSocket.isError(val)` | `fn isError(val: any): bool` | Check if connect returned an error. |
+| `client.getState()` | `fn getState(): State` | `Connecting`, `Open`, `Closing`, `Closed`. |
+| `client.sendText(text)` | `fn sendText(text: string): Result<void, WSError>` | Send UTF-8 text frame (FIN=1). |
+| `client.sendBinary(bytes)` | `fn sendBinary(bytes: u8[]): Result<void, WSError>` | Send binary frame. |
+| `client.sendPing(data?)` | `fn sendPing(data?: u8[]): Result<void, WSError>` | Send ping control frame (keepalive). |
+| `client.sendPong(data)` | `fn sendPong(data: u8[]): Result<void, WSError>` | Respond to ping. |
+| `client.receive()` | `fn receive(): Message` | Block until next message frame arrives. |
+| `client.receiveTimeout(ms)` | `fn receiveTimeout(ms: u64): Message \| null` | Receive with timeout; `null` on timeout. |
 | `client.close(code?, reason?)` | `fn close(code?: u16, reason?: string)` | Send close frame and await peer close. |
-| `client.isConnected()` | `fn isConnected() -> bool` | `true` if state is `Open`. |
+| `client.isConnected()` | `fn isConnected(): bool` | `true` if state is `Open`. |
 
 ### ClientConfig
 
@@ -230,12 +230,12 @@ server.listen();
 
 | Method | Signature | Description |
 |---|---|---|
-| `WebSocket.server(opts)` | `fn server(opts: ServerOpts) -> Server` | Create server (does not bind until `listen`/`startEcho`). |
+| `WebSocket.server(opts)` | `fn server(opts: ServerOpts): Server` | Create server (does not bind until `listen`/`startEcho`). |
 | `server.startEcho()` | `fn startEcho()` | Start server that echoes every frame back to sender. |
 | `server.onConnection(handler)` | `fn onConnection(fn(conn: ServerConn))` | Register per-connection handler. |
 | `server.listen()` | `fn listen()` | Bind and run accept loop (blocks). |
 | `server.broadcast(room, msg)` | `fn broadcast(room: string, msg: string)` | Send `msg` to all conns in `room`. |
-| `server.connections()` | `fn connections() -> ServerConn[]` | Snapshot of active connections. |
+| `server.connections()` | `fn connections(): ServerConn[]` | Snapshot of active connections. |
 | `server.close()` | `fn close()` | Stop accepting; close all connections. |
 | `conn.sendText(text)` | — | Send text frame to this client. |
 | `conn.sendBinary(bytes)` | — | Send binary frame. |

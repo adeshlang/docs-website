@@ -14,11 +14,11 @@ The `return` keyword exits the current function and yields a value to the caller
 ## Syntax & Example
 
 ```adesh
-fn square(x: i32) -> i32 {
+fn square(x: i32): i32 {
     return x * x;
 }
 
-fn earlyExit(items: [i32]) -> i32 {
+fn earlyExit(items: [i32]): i32 {
     for it in items {
         if it < 0 { return it; }
     }

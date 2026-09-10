@@ -95,7 +95,7 @@ extern "C" {
     fn gettimeofday(tv: *mut TimeVal, tz: *mut TimeZone) -> i32;
 }
 
-fn get_current_epoch() -> i64 {
+fn get_current_epoch(): i64 {
     let tv = TimeVal { tv_sec: 0, tv_usec: 0 };
     let null_tz: *mut TimeZone = null;
     

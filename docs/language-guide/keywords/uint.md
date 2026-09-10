@@ -15,7 +15,7 @@ The `uint` keyword is a primitive unsigned integer type keyword. It denotes an u
 
 ```adesh
 let count: uint = 100;
-fn hash_code() -> uint {
+fn hash_code(): uint {
     return 0;
 }
 ```

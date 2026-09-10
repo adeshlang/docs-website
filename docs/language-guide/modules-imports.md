@@ -51,12 +51,12 @@ Symbols declared within a module are **private** to that module's compilation un
 // File: math_utils.adesh
 export const PI: f64 = 3.1415926535;
 
-export fn calculate_area(radius: f64) -> f64 {
+export fn calculate_area(radius: f64): f64 {
     return PI * radius * radius;
 }
 
 export type Vec2 = { x: f64, y: f64 };
-export class Circle { radius: f64, fn area(&self) -> f64 { return 3.14 * self.radius * self.radius; } }
+export class Circle { radius: f64, fn area(&self): f64 { return 3.14 * self.radius * self.radius; } }
 
 fn internal_helper() { } // Private: Not exported
 ```
@@ -195,7 +195,7 @@ Module "math_utils.adesh" Symbol Table (src/semantics/engine.rs)
 |  Name            | Exported | Kind           |
 |------------------|----------|----------------|
 |  PI              |  true    | const f64      |
-|  calculate_area  |  true    | fn(f64)->f64  |
+|  calculate_area  |  true    | fn(f64): f64  |
 |  internal_helper |  false   | fn()           |
 +---------------------------------------------+
 
@@ -414,11 +414,11 @@ Source .adesh --> Lexer (src/parsing/lexer.rs: import/export keywords)
 
 ```adesh
 // utils/math.adesh
-export fn add(a: i64, b: i64) -> i64 { return a + b; }
-export fn mul(a: i64, b: i64) -> i64 { return a * b; }
+export fn add(a: i64, b: i64): i64 { return a + b; }
+export fn mul(a: i64, b: i64): i64 { return a * b; }
 
 // utils/strings.adesh
-export fn capitalize(s: string) -> string { return s.toUpperCase(); }
+export fn capitalize(s: string): string { return s.toUpperCase(); }
 
 // utils/index.adesh
 export * from "./math";

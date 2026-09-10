@@ -15,7 +15,7 @@ The `static` keyword marks a member as belonging to the type itself rather than 
 
 ```adesh
 struct Math {
-    pub static fn square(x: i64) -> i64 {
+    pub static fn square(x: i64): i64 {
         return x * x;
     }
 }

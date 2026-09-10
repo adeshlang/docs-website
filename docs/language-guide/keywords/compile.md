@@ -113,7 +113,7 @@ If the block uses `emit`, its value is `null` — emission is a side-effect on t
 ```adesh
 // Build a 256-entry CRC table once at build time — zero runtime cost.
 compile {
-    fn build_crc32_table() -> [u32; 256] {
+    fn build_crc32_table(): [u32; 256] {
         let tbl: [u32; 256] = [0u32; 256];
         for i in 0..256 {
             let crc = i as u32;
@@ -129,7 +129,7 @@ compile {
 }
 
 // At runtime CRC_TABLE is a frozen constant — no initialization loop.
-fn crc32(data: [u8]) -> u32 {
+fn crc32(data: [u8]): u32 {
     let crc: u32 = 0xFFFFFFFF;
     for b in data { crc = CRC_TABLE[(crc ^ (b as u32)) & 0xFF] ^ (crc >> 8); }
     return ~crc;
@@ -158,7 +158,7 @@ decorator arity_tag(target) {
 }
 
 @arity_tag
-fn add(a: i32, b: i32) -> i32 { return a + b; }
+fn add(a: i32, b: i32): i32 { return a + b; }
 
 print(add(2, 3)); // calling add with arity 2 → 5
 // The compile block injected target.__arity = 2 before typecheck saw the call site.
@@ -183,10 +183,10 @@ decorator must_be_numeric(target) {
 }
 
 @must_be_numeric
-fn square(x: i32) -> i32 { return x * x; }  // ok
+fn square(x: i32): i32 { return x * x; }  // ok
 
 // @must_be_numeric
-// fn bad(s: string) -> string { return s; } // typecheck phase error
+// fn bad(s: string): string { return s; } // typecheck phase error
 
 // Standalone compile-time guard:
 compile {

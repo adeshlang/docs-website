@@ -97,8 +97,8 @@ Errors are values — any type `E` can be the error payload:
 ```adesh
 type IoError = { kind: string, path: string };
 type ParseError = { line: u64, col: u64, message: string };
-fn read_config(path: string) -> Result<Config, IoError> { ... }
-fn parse_int(s: string) -> Result<i64, ParseError> { ... }
+fn read_config(path: string): Result<Config, IoError> { ... }
+fn parse_int(s: string): Result<i64, ParseError> { ... }
 ```
 
 Callers match exhaustively:
@@ -115,15 +115,15 @@ Higher-order combinators:
 
 ```adesh
 extend on Result<T, E> {
-    fn map<U>(self: Result<T,E>, f: fn(T) -> U) -> Result<U,E> { ... }
-    fn map_err<F>(self: Result<T,E>, f: fn(E) -> F) -> Result<T,F> { ... }
-    fn and_then<U>(self: Result<T,E>, f: fn(T) -> Result<U,E>) -> Result<U,E> { ... }
-    fn unwrap_or(self: Result<T,E>, default: T) -> T { ... }
+    fn map<U>(self: Result<T,E>, f: fn(T): U): Result<U,E> { ... }
+    fn map_err<F>(self: Result<T,E>, f: fn(E): F): Result<T,F> { ... }
+    fn and_then<U>(self: Result<T,E>, f: fn(T): Result<U,E>): Result<U,E> { ... }
+    fn unwrap_or(self: Result<T,E>, default: T): T { ... }
 }
 extend on Option<T> {
-    fn map<U>(self: Option<T>, f: fn(T) -> U) -> Option<U> { ... }
-    fn unwrap_or(self: Option<T>, default: T) -> T { ... }
-    fn ok_or<E>(self: Option<T>, err: E) -> Result<T,E> { ... }
+    fn map<U>(self: Option<T>, f: fn(T): U): Option<U> { ... }
+    fn unwrap_or(self: Option<T>, default: T): T { ... }
+    fn ok_or<E>(self: Option<T>, err: E): Result<T,E> { ... }
 }
 ```
 
@@ -134,13 +134,13 @@ extend on Option<T> {
 The `?` operator is syntactic sugar for unwrapping `Ok`/`Some` or early-returning `Err`/`None` from the enclosing function:
 
 ```adesh
-fn read_and_parse(filename: string) -> Result<i64, Error> {
+fn read_and_parse(filename: string): Result<i64, Error> {
     let text = read_file(filename)?; // Early returns Err if read_file fails
     let num = parse_int(text)?;     // Early returns Err if parse_int fails
     return Ok(num);
 }
 
-fn get_first<T>(arr: [T]) -> Option<T> {
+fn get_first<T>(arr: [T]): Option<T> {
     let first = arr.get(0)?; // returns None if out of bounds (if get returns Option)
     return Some(first);
 }
@@ -173,7 +173,7 @@ Inside `try`/`catch`, `?` on `Result::Err` may lower to `throw err` if the funct
 `?` is an early-return terminator — it triggers the same scope-exit injection as `return`/`throw` (§ `defer-statement.md`):
 
 ```adesh
-fn with_cleanup(path: string) -> Result<string, Error> {
+fn with_cleanup(path: string): Result<string, Error> {
     let file = open_file(path)?; // if Err, no file to clean — no defer yet
     defer file.close();          // only deferred if open succeeded
     let text = file.read_all()?; // if Err, file.close() runs before return
@@ -281,7 +281,7 @@ Throwing is a terminator — code after `throw` in the same block is unreachable
 
 ```adesh
 // Monadic: error is part of return type, caller must handle
-fn parse(s: string) -> Result<i64, ParseError> { ... }
+fn parse(s: string): Result<i64, ParseError> { ... }
 let r = parse("hi");
 match r { Result::Ok(n) => print(n), Result::Err(e) => print(e.message) }
 
@@ -300,7 +300,7 @@ Use `Result` for expected, recoverable errors that are part of the function's co
 Defer runs on **all** scope exits, regardless of error model:
 
 ```adesh
-fn example(path: string) -> Result<string, Error> {
+fn example(path: string): Result<string, Error> {
     let file = open_file(path)?; // Result early return => defer still runs for outer scope
     defer file.close();
 
@@ -343,7 +343,7 @@ This unification is implemented via shared cleanup edges in the CFG (`src/parsin
 Futures propagate errors via `Result`-typed `Poll::Ready`:
 
 ```adesh
-async fn fetch(url: string) -> Result<string, Error> {
+async fn fetch(url: string): Result<string, Error> {
     let conn = await connect(url)?; // ? on Result inside async fn => early returns Err
     let resp = await conn.get()?;   // ? triggers async early return (future Ready(Err))
     return Ok(resp.body);
@@ -361,7 +361,7 @@ async fn caller() {
 Throwing inside `async fn` rejects the future with the thrown value (analogous to `Promise.reject` / `BuiltinEnv::schedule_reject`). Awaiting a rejected promise surfaces as `Err` or throw depending on `await` context and `try`/`catch`:
 
 ```adesh
-async fn failing() -> string {
+async fn failing(): string {
     throw Error { message: "async failure" };
 }
 try {
@@ -412,7 +412,7 @@ Codegen (src/backends/*)
 ### 8.1 Result Chain with `?` and `map`
 
 ```adesh
-fn load_user(id: string) -> Result<User, Error> {
+fn load_user(id: string): Result<User, Error> {
     let raw = read_file(f"users/{id}.json")?;
     let json = parse_json(raw)?;
     let user = User::from_json(json)?; // each ? short-circuits
@@ -424,7 +424,7 @@ let user = load_user("42").map((u) => f"{u.name}").unwrap_or(User { name: "guest
 ### 8.2 Option Safety
 
 ```adesh
-fn find_user(id: string) -> Option<User> {
+fn find_user(id: string): Option<User> {
     let users: [User] = load_all();
     for u in users { if (u.id == id) { return Some(u); } }
     return None;
@@ -436,7 +436,7 @@ print(name);
 ### 8.3 Mixing `try`/`catch` with `Result` Boundaries
 
 ```adesh
-fn risky() -> Result<i64, Error> {
+fn risky(): Result<i64, Error> {
     try {
         let n = parse_int("not a number")?; // inner ? returns Err, but throw would also work
         if (n < 0) { throw Error { message: "negative" }; }
@@ -451,7 +451,7 @@ fn risky() -> Result<i64, Error> {
 ### 8.4 `defer` + `Result` for Resource Safety
 
 ```adesh
-fn with_file<T>(path: string, body: fn(&File) -> Result<T, Error>) -> Result<T, Error> {
+fn with_file<T>(path: string, body: fn(&File): Result<T, Error>): Result<T, Error> {
     let file = open_file(path)?;
     defer file.close();
     return body(&file)?; // if body returns Err, close still runs
@@ -481,7 +481,7 @@ let content = with_file("data.txt", (f) => Ok(f.read_all()));
 
 ```adesh
 type FileError = { path: string, kind: string };
-fn safe_read(path: string) -> Result<string, FileError> {
+fn safe_read(path: string): Result<string, FileError> {
     try {
         let file = open_file(path)?; // ? on I/O Result
         defer file.close();
@@ -502,7 +502,7 @@ match res {
 ### 10.2 Async Error Aggregation
 
 ```adesh
-async fn fetch_all(urls: [string]) -> [Result<string, Error>] {
+async fn fetch_all(urls: [string]): [Result<string, Error>] {
     let handles: [JoinHandle<Result<string, Error>>] = [];
     for url in urls {
         handles.push(spawn(async move {
@@ -532,7 +532,7 @@ print(email.unwrap_or("no email"));
 ### 10.4 Transaction with `defer` + `throw`
 
 ```adesh
-fn transfer(from: &mut Account, to: &mut Account, amount: i64) -> Result<(), Error> {
+fn transfer(from: &mut Account, to: &mut Account, amount: i64): Result<(), Error> {
     from.lock();
     defer from.unlock();
     to.lock();
@@ -563,4 +563,3 @@ fn transfer(from: &mut Account, to: &mut Account, amount: i64) -> Result<(), Err
 5. Keep `try` blocks narrow: wrap only the fallible operation so `catch` does not accidentally swallow unrelated throws.
 6. For `async fn` returning `Result`, use `?` freely — the state machine propagates `Ready(Err(...))` without unwinding.
 7. Document the error type `E` in `Result<T,E>` function signatures; use type aliases (`type ApiResult<T> = Result<T, ApiError>`) for consistency.
-

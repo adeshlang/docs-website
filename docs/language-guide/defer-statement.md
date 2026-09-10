@@ -16,7 +16,7 @@ This document specifies the execution order, compiler AST lowering, LIFO unwindi
 The `defer` statement postpones execution of an expression or block until the enclosing lexical scope terminates. It is the primary RAII mechanism for deterministic resource cleanup:
 
 ```adesh
-fn process_file(path: string) -> Result<(), Error> {
+fn process_file(path: string): Result<(), Error> {
     let file = open_file(path)?;
     defer file.close(); // Execution deferred until process_file exits
 
@@ -294,7 +294,7 @@ try {
 In `async fn`, defers are tied to the async state machine, not the underlying thread. Each suspension point preserves the defer stack in the state machine struct (`src/execution` async lowering):
 
 ```adesh
-async fn fetch(url: string) -> string {
+async fn fetch(url: string): string {
     let conn = await connect(url)?;
     defer conn.close(); // deferred until async fn completes (Ready or Err), even across awaits
     let data = await conn.get()?;
@@ -332,7 +332,7 @@ If a defer body itself throws/panics, the runtime runs remaining defers for that
 ### 9.1 File Processing with Guaranteed Close
 
 ```adesh
-fn copy_file(src: string, dst: string) -> Result<(), Error> {
+fn copy_file(src: string, dst: string): Result<(), Error> {
     let src_file = open_file(src)?;
     defer src_file.close();
     let dst_file = create_file(dst)?;
@@ -358,7 +358,7 @@ fn critical(mutex: &Mutex<Data>) {
 ### 9.3 Temporary File Cleanup
 
 ```adesh
-fn with_temp_file(body: fn(string) -> bool) -> bool {
+fn with_temp_file(body: fn(string): bool): bool {
     let tmp = create_temp_file();
     defer { if (file_exists(tmp.path)) { remove_file(tmp.path); } }
     let ok = body(tmp.path);
@@ -383,7 +383,7 @@ fn multi_resource() {
 ### 9.5 Defer with `region` and Early Return
 
 ```adesh
-fn process_batch(items: [string]) -> Result<(), Error> {
+fn process_batch(items: [string]): Result<(), Error> {
     region Scratch {
         let buf = alloc_in_region(4096);
         defer flush(buf);
@@ -453,4 +453,3 @@ The defer stack is `Vec<Stmt>` per scope; `defer` AST nodes are removed after be
 4. Prefer `defer` over manual `try`/`finally` for resource cleanup — it is zero-cost on the happy path (cleanup is injected, not branched).
 5. In `async fn`, remember defers live for the entire async operation, not per-await — avoid holding locks across `await` points via long-lived defers.
 6. Combine `defer` with `region` for batch arena allocations that need per-allocation finalization.
-

@@ -47,7 +47,7 @@ Unreachable branches, unused local variables, and unreferenced functions are com
 Small, frequently called functions (leaf functions, arithmetic helpers, getter/setters) are expanded directly into their call sites, eliminating function call prologue/epilogue overhead and opening opportunities for vectorization:
 ```adesh
 @inline
-fn square(x: f64) -> f64 {
+fn square(x: f64): f64 {
     return x * x;
 }
 ```
@@ -97,12 +97,12 @@ struct NetworkHeader {
 ### Prefer Slices and Stack Allocation Over Heap Copies
 ```adesh
 // SUB-OPTIMAL (creates a new heap string copy):
-fn process_prefix(text: string) -> string {
+fn process_prefix(text: string): string {
     return text.substring(0, 5);
 }
 
 // OPTIMAL (zero allocation, returns zero-copy string slice &str):
-fn process_prefix(text: &string) -> &str {
+fn process_prefix(text: &string): &str {
     return &text[0..5];
 }
 ```
@@ -112,7 +112,7 @@ Annotating real-time audio filters, cryptographic cores, or game physics routine
 
 ```adesh
 @noalloc
-fn calculate_quaternion_rotation(q: [f32; 4], v: [f32; 3]) -> [f32; 3] {
+fn calculate_quaternion_rotation(q: [f32; 4], v: [f32; 3]): [f32; 3] {
     // Guaranteed 100% stack allocation
     // ...
 }

@@ -87,7 +87,7 @@ While `Pending`, the executor's worker thread polls other ready tasks. The `Wake
 If the awaited future `throw`s / rejects, `await` propagates the exception as if `throw` had executed at the `await` site:
 
 ```adesh
-async fn mayFail() -> i32 { throw "oops"; }
+async fn mayFail(): i32 { throw "oops"; }
 async fn caller() {
     try { let v = await mayFail(); } catch (e) { print(e); } // "oops"
 }
@@ -117,12 +117,12 @@ This works uniformly for `await fetch(...)`, `await h` where `h` is a `spawn` ha
 ### Example 1 — Sequential awaits, conditional await, and loop awaits
 
 ```adesh
-async fn fetch(url: string) -> string {
+async fn fetch(url: string): string {
     let resp = await http_get(url);
     return resp.body;
 }
 
-async fn fetchAll(urls: [string]) -> [string] {
+async fn fetchAll(urls: [string]): [string] {
     let results: [string] = [];
     // Sequential: each iteration suspends until that fetch completes
     for url in urls {
@@ -132,13 +132,13 @@ async fn fetchAll(urls: [string]) -> [string] {
     return results;
 }
 
-async fn fetchConditionally(url: string, useCache: bool) -> string {
+async fn fetchConditionally(url: string, useCache: bool): string {
     // Await inside conditional expression — only one branch suspends
     let body = await (useCache ? fetchCached(url) : fetch(url));
     return body;
 }
 
-async fn retry(url: string, attempts: i32) -> string {
+async fn retry(url: string, attempts: i32): string {
     let lastErr: string = "";
     for i in 0..attempts {
         try {
@@ -155,7 +155,7 @@ async fn retry(url: string, attempts: i32) -> string {
 ### Example 2 — Concurrent awaits with `spawn`, join patterns, and cancellation
 
 ```adesh
-async fn concurrentFetch() -> [string] {
+async fn concurrentFetch(): [string] {
     // Concurrent — all three start before any await
     let ha = spawn fetch("https://a.example");
     let hb = spawn fetch("https://b.example");
@@ -168,7 +168,7 @@ async fn concurrentFetch() -> [string] {
     return [a, b, c];
 }
 
-async fn firstReady(urls: [string]) -> string {
+async fn firstReady(urls: [string]): string {
     // Race — return first completed (poll order is executor-dependent)
     let handles = [];
     for url in urls { handles.push(spawn fetch(url)); }
@@ -180,7 +180,7 @@ async fn firstReady(urls: [string]) -> string {
     throw "all failed";
 }
 
-async fn withTimeout() -> string {
+async fn withTimeout(): string {
     // Timeout pattern — spawn timeout alongside fetch
     let dataTask = spawn fetch("https://slow.example");
     let timeoutTask = spawn async { await sleep(2000); throw "timeout"; };
@@ -198,7 +198,7 @@ async fn withTimeout() -> string {
 ### Example 3 — `await` with `defer`, `region`, and borrow safety
 
 ```adesh
-async fn readWithCleanup(path: string) -> string {
+async fn readWithCleanup(path: string): string {
     let file = FS.open(path, "r");
     defer file.close(); // guaranteed on return/throw — NOT on suspension
 
@@ -220,7 +220,7 @@ async fn badRegionCapture() {
     // // await would resume with dangling pointer — rejected
 }
 
-async fn goodScratch() -> i32 {
+async fn goodScratch(): i32 {
     // ✅ Copy data out of region before awaiting
     let first: u8;
     region scratch {

@@ -59,7 +59,7 @@ extend CounterOps on Counter {
 
 // struct target
 extend on Point {
-    fn distance(other: Point) -> f64 {
+    fn distance(other: Point): f64 {
         let dx = this.x - other.x;
         return Math.sqrt(dx*dx + other.y*other.y);
     }
@@ -79,12 +79,12 @@ extend on Direction {
 
 // builtin target (hypothetical extension)
 extend on string {
-    fn isBlank() -> bool { return this.trim().len() == 0; }
+    fn isBlank(): bool { return this.trim().len() == 0; }
 }
 
 // multiple blocks accumulate on same target
-extend on User { fn isValid() -> bool { return len(this.email) > 0; } }
-extend UserDisplay on User { fn displayName() -> string { return this.username; } }
+extend on User { fn isValid(): bool { return len(this.email) > 0; } }
+extend UserDisplay on User { fn displayName(): string { return this.username; } }
 ```
 
 ### Errors

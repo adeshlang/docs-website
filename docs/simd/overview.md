@@ -92,7 +92,7 @@ let fma_res = a.fma(b, scalar_factor);
 ```adesh
 @pure
 @noalloc
-fn simd_dot_product_f32(a: &[f32], b: &[f32]) -> f32 {
+fn simd_dot_product_f32(a: &[f32], b: &[f32]): f32 {
     let len = a.len();
     let vec_acc = f32x8::splat(0.0);
     let i = 0;
@@ -121,7 +121,7 @@ fn simd_dot_product_f32(a: &[f32], b: &[f32]) -> f32 {
 ### Fast RGBA Image Blending (Alpha Compositing)
 ```adesh
 @noalloc
-fn blend_rgba_chunk(foreground: &[u8; 32], background: &[u8; 32], alpha: u8) -> [u8; 32] {
+fn blend_rgba_chunk(foreground: &[u8; 32], background: &[u8; 32], alpha: u8): [u8; 32] {
     let fg = u8x32::load_aligned(foreground);
     let bg = u8x32::load_aligned(background);
     let a_vec = u8x32::splat(alpha);

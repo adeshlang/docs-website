@@ -120,7 +120,7 @@ unsafe {
 @cImport("string.h")
 extern "C" fn strlen(s: *const u8) -> usize;
 
-fn c_strlen_safe(s: string) -> usize {
+fn c_strlen_safe(s: string): usize {
     // Convert AdeshLang string to NUL-terminated buffer, then call C.
     unsafe {
         let n = s.len() + 1;
@@ -192,4 +192,3 @@ Best practice for diagnostics: match on `LangError.code` (`E0507`, `E0508`) in t
 - [Memory & Safety](../../advanced/memory-safety) — ownership/borrow overview
 - [Lexer & Parser](/docs/compiler/lexer-parser) — `TokenKind::Unsafe` and AST `UnsafeBlock`
 - `src/parsing/ast.rs:683` `UnsafeBlock`, `src/parsing/hir.rs:358`, `src/parsing/borrow_check.rs:365`
-

@@ -39,10 +39,10 @@ class Canvas extends Widget implements Resizable {
 
 // abstract / sealed parents
 abstract class Shape {
-    abstract fn area() -> f64;
+    abstract fn area(): f64;
 }
 class Circle extends Shape {
-    fn area() -> f64 { return 3.14159 * self.radius * self.radius; }
+    fn area(): f64 { return 3.14159 * self.radius * self.radius; }
 }
 ```
 
@@ -65,7 +65,7 @@ class ElectricCar extends Vehicle {
         self.battery_kwh = battery_kwh;
     }
 
-    fn range() -> f64 { return self.battery_kwh * 5.0; }
+    fn range(): f64 { return self.battery_kwh * 5.0; }
 }
 ```
 
@@ -138,7 +138,7 @@ class Engine {
     protected fn check() { return self.power_kw > 0.0; }
 }
 class TurboEngine extends Engine {
-    fn canStart() -> bool {
+    fn canStart(): bool {
         return self.check();       // OK: protected via inheritance
         // return self.power_kw;  // ERROR E0042: private not visible in subclass
     }

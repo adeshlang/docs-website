@@ -120,7 +120,7 @@ enum Shape {
     Rect(f64, f64),
 }
 
-fn area(s: Shape) -> f64 {
+fn area(s: Shape): f64 {
     return match s {
         Shape::Circle(r)      => 3.14159 * r * r,
         Shape::Square(side)   => side * side,
@@ -131,7 +131,7 @@ print(area(Shape::Circle(2.0))); // ~12.56
 print(area(Shape::Rect(3.0, 4.0))); // 12
 
 // Or-patterns and wildcards over scalars
-fn classify(n: i32) -> string {
+fn classify(n: i32): string {
     return match n {
         0          => "zero",
         1 | 2      => "one or two",
@@ -150,7 +150,7 @@ print(classify(-3)); // "negative"
 ```adesh
 struct Point { x: f64, y: f64 }
 
-fn quadrant(p: Point) -> string {
+fn quadrant(p: Point): string {
     return match p {
         Point { x, y } if x >= 0 && y >= 0 => "Q1",
         Point { x, y } if x < 0 && y >= 0  => "Q2",
@@ -204,7 +204,7 @@ fn drain(stack: [i32]) {
 ```adesh
 enum Result<T, E> { Ok(T), Err(E) }
 
-fn describe(r: Result<i32, string>) -> string {
+fn describe(r: Result<i32, string>): string {
     // match is an expression — its value can be assigned or returned
     let msg: string = match r {
         Result::Ok(v)  => f"ok: {v}",
@@ -217,7 +217,7 @@ print(describe(Result::Err("bad")))); // "err: bad"
 
 // Nested destructuring
 enum Wrapper { Pair((i32, i32)), Empty }
-fn nested(w: Wrapper) -> i32 {
+fn nested(w: Wrapper): i32 {
     return match w {
         Wrapper::Pair((a, b)) => a + b,
         Wrapper::Empty        => 0,
@@ -234,7 +234,7 @@ fn nested(w: Wrapper) -> i32 {
 // match color { Color::Red => 0, _ => 1 }
 
 // Range + guard combo for grading
-fn grade(score: i32) -> string {
+fn grade(score: i32): string {
     return match score {
         90..=100            => "A",
         80..89              => "B",

@@ -14,7 +14,7 @@ The `fn` keyword declares a function: a named, reusable block of code with param
 ## Syntax & Example
 
 ```adesh
-fn add(a: i32, b: i32) -> i32 {
+fn add(a: i32, b: i32): i32 {
     return a + b;
 }
 

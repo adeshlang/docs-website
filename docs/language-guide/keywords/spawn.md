@@ -40,7 +40,7 @@ let result: string = await t;
 ### Relation to `async`/`await`
 
 ```
-async fn f() -> T   — declares suspension points; returns Promise<T>/Task<T>
+async fn f(): T   — declares suspension points; returns Promise<T>/Task<T>
 await expr          — suspends current task until expr resolves
 spawn expr          — creates a sibling task; does NOT suspend caller
 spawn + await       — concurrent fork then join
@@ -79,7 +79,7 @@ The runtime (`src/runtime_core/`) uses a **work-stealing deque** per worker thre
 If the spawned task `throw`s, the exception is captured in the handle. `await` on that handle re-throws:
 
 ```adesh
-async fn failing() -> i32 { throw "boom"; }
+async fn failing(): i32 { throw "boom"; }
 let h = spawn failing();
 try {
     let v = await h;
@@ -101,7 +101,7 @@ try {
 ### Example 1 — Concurrent fetch with join
 
 ```adesh
-async fn fetch(url: string) -> string {
+async fn fetch(url: string): string {
     // ... asynchronous work (runtime_core I/O) ...
     return "body:" + url;
 }
@@ -130,13 +130,13 @@ async fn main() {
 ### Example 2 — Parallel pipelines, error handling, and background work
 
 ```adesh
-async fn process_item(id: i32) -> i32 {
+async fn process_item(id: i32): i32 {
     if id < 0 { throw "negative id"; }
     let v = await compute(id); // suspension point
     return v * 2;
 }
 
-async fn parallel_pipeline(ids: [i32]) -> [i32] {
+async fn parallel_pipeline(ids: [i32]): [i32] {
     // Spawn a task per item — throughput scales with worker threads
     let handles = [];
     for id in ids {
@@ -176,7 +176,7 @@ async fn demo() {
 ### Example 3 — `spawn` with regions, `defer`, and structured cleanup
 
 ```adesh
-async fn with_scratch(id: i32) -> i32 {
+async fn with_scratch(id: i32): i32 {
     region scratch {
         unsafe {
             let buf: *mut u8 = alloc<u8>(256);
@@ -189,7 +189,7 @@ async fn with_scratch(id: i32) -> i32 {
     }
 }
 
-async fn fan_out(n: i32) -> i32 {
+async fn fan_out(n: i32): i32 {
     let handles = [];
     for i in 0..n { handles.push(spawn with_scratch(i)); }
     let sum = 0;

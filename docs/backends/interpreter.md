@@ -43,7 +43,7 @@ Type :help for special commands, or press Ctrl+D / exit to quit.
 
 adesh> let x = 42;
 42
-adesh> let double = fn(n: i64) -> i64 { return n * 2; };
+adesh> let double = fn(n: i64): i64 { return n * 2; };
 <function: double>
 adesh> double(x);
 84

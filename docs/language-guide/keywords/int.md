@@ -15,7 +15,7 @@ The `int` keyword is a primitive signed integer type keyword. It denotes a signe
 
 ```adesh
 let total: int = -5;
-fn offset(x: int) -> int {
+fn offset(x: int): int {
     return x + 1;
 }
 ```

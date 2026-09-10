@@ -88,8 +88,8 @@ Heap types (`string`, `[T]`, `Class`, `Struct` with heap fields, `Share<T>`) are
 ### 2.3 Ownership Across Calls & Returns
 
 ```adesh
-fn make() -> Container { return Container { id: 1 }; }
-fn take(c: Container) -> i64 { return c.id; } // takes ownership
+fn make(): Container { return Container { id: 1 }; }
+fn take(c: Container): i64 { return c.id; } // takes ownership
 let c = make();         // c owns the returned allocation
 let id = take(c);       // c moved into take; c invalid after
 // c.id; // E0030
@@ -127,7 +127,7 @@ update(&mut data); // exclusive: requires no active shared borrows
 ### 3.2 Borrow Kinds & Syntax
 
 ```adesh
-fn read(data: &Data) -> i64 { return data.len(); }
+fn read(data: &Data): i64 { return data.len(); }
 fn write(data: &mut Data) { data.push(42); }
 let x = &data;       // shared borrow
 let y = &mut data;   // exclusive borrow
@@ -208,7 +208,7 @@ For branches, `L(r)` unions across successor blocks until the last use on each p
 References in function signatures have lifetimes tracked by the borrow checker. While AdeshLang's syntax largely elides explicit lifetime parameters, the compiler internally assigns lifetime variables and solves constraints; escaping a local reference is caught:
 
 ```adesh
-fn bad() -> &i64 {
+fn bad(): &i64 {
     let x: i64 = 42;
     return &x; // E0031: cannot return reference to local variable
 }
@@ -234,7 +234,7 @@ let owned = data; // E0503: cannot move out of borrowed value (r active)
 Mutable references can be reborrowed as shared or exclusive without moving:
 
 ```adesh
-fn peek(x: &mut Vec<i64>) -> &i64 { return &x[0]; } // reborrow &mut Vec as &i64
+fn peek(x: &mut Vec<i64>): &i64 { return &x[0]; } // reborrow &mut Vec as &i64
 fn extend(v: &mut Vec<i64>) { peek(v); v.push(1); }  // peek's borrow ends before push
 ```
 
@@ -289,7 +289,7 @@ let leaked: &i64;
 | Code | Cause | Example |
 |---|---|---|
 | `E0030` | Use of moved value | `let b = a; print(a)` |
-| `E0031` | Return ref to local | `fn f() -> &i64 { let x=1; &x }` |
+| `E0031` | Return ref to local | `fn f(): &i64 { let x=1; &x }` |
 | `E0500` | Shared + exclusive alias | `let r=&x; let m=&mut x;` |
 | `E0501` | Exclusive + shared alias | `let m=&mut x; let r=&x;` |
 | `E0502` | Assignment while borrowed | `let r=&x; x=1;` |
