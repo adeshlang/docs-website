@@ -231,7 +231,7 @@ region huge_batch {
 - [free](./free) — why `free` is usually omitted inside regions
 - [unsafe](./unsafe) — audit fence for deriving raw pointers from region arenas
 - [raw](./raw) — `raw T[N]` storage vs `DynArray` — both benefit from region scoping
-- [defer](../defer) — LIFO cleanup that runs before `RegionExit`
+- [defer](./defer) — LIFO cleanup that runs before `RegionExit`
 - [Memory & Safety](../../advanced/memory-safety#region-based-allocation) — arena concepts
 - `src/parsing/ast.rs:677-683` `Region`/`UnsafeBlock`, `src/parsing/cfg_borrow/mir.rs:149`, `src/memory/dynamic_allocator.rs`, `memory/memory_management_research.md:96`
 

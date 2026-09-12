@@ -236,5 +236,6 @@ if "a" in map { print(map["a"]); }
 - [while](./while) / [do](./do) — condition-based loops
 - [break](./break) / [continue](./continue) — loop control (`JUMP_OUT`/`JUMP_LOOP_HEAD`)
 - [Control Flow](../control-flow) — iterator protocol and loop lowering
-- [Arrays & Collections](../collections) — value iterators and `values()` fallback
+- [Arrays & Tuples](../../arrays/overview) — arrays and iteration
+- [Collections](../../builtin/collections) — built-in collection data structures
 - `src/parsing/lexer.rs:943`, `als/src/hover.rs:349`

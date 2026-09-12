@@ -224,8 +224,9 @@ Reserve `jump` for **generated code and `unsafe` trampolines**; application logi
 
 ## See Also
 
-- [break & continue (control flow)](../control-flow/break-continue) — `TokenKind::Break`/`Continue` structured loop exits
-- [return](../control-flow/return) — `TokenKind::Return` function exit
+- [break](./break) / [continue](./continue) — `TokenKind::Break`/`Continue` structured loop exits
+- [return](./return) — `TokenKind::Return` function exit
+- [Control Flow](../control-flow) — structured control flow overview
 - [unsafe](./unsafe) — `TokenKind::Unsafe` required for dangerous `jump` targets
 - [region](./region) / [defer](./defer) — `TokenKind::Region`/`Defer` cleanups that `jump` may bypass
 - [decorator](./decorator) — `TokenKind::Decorator` (unrelated to control flow)

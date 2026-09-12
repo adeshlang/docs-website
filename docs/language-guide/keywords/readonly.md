@@ -296,9 +296,10 @@ Prefer `readonly` on **value fields** (`string`, `u16`, `f64`, other structs) fo
 
 ## See Also
 
-- [const](../variables/const) — `TokenKind::Const` compile-time constants vs. `readonly` runtime-fixed
-- [let](../variables/let) — `StmtKind::Let(..., readonly)` binding declaration
-- [struct](../types/struct) / [class](../types/class) — `readonly` field declarations inside aggregates
+- [const](./const) — `TokenKind::Const` compile-time constants vs. `readonly` runtime-fixed
+- [let](./let) — variable binding declaration
+- [struct](./struct) / [class](./class) — `readonly` field declarations inside aggregates
+- [Variables](../variables) — variable declaration semantics
 - [decorator](./decorator) — `compile { emit }` can inject `readonly` fields
 - [require](./require) — `TokenKind::Require` field invariants complement `readonly` slot protection
 - [Memory & Safety](../../advanced/memory-safety) — shallow vs. deep immutability and SSAO

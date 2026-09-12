@@ -259,5 +259,5 @@ struct S { a: i32, b: f64 } // may mismatch without repr guarantee
 - [region](./region) — arena bulk-free for scratch FFI buffers (`AllocKind::Region`)
 - [raw](./raw) — `raw T[N]` contiguous storage for C interop
 - [FFI Guide](../../tools/ffi) — full FFI tutorial, `$cImport`, linking, and build config
-- [Compiler Directives](../directives) — `$cImport` and other `$`-prefixed directives
+- [Modules & Imports](../modules-imports) — module system and imports
 - `src/parsing/lexer.rs:1017`, `als/src/hover.rs:396`, `tools/ffi.md`

@@ -188,7 +188,7 @@ Best practice for diagnostics: match on `LangError.code` (`E0507`, `E0508`) in t
 - [free](./free) — deterministic deallocation and its pairing rules
 - [region](./region) — arena allocation and bulk-free scopes (`StmtKind::Region`)
 - [raw](./raw) — `raw T[N]` arrays without metadata (`Value::RawArray`)
-- [extern](../extern) / `@cImport` — FFI declarations (must be called in `unsafe`)
+- [extern](./extern) / `$cImport` — FFI declarations (must be called in `unsafe`)
 - [Memory & Safety](../../advanced/memory-safety) — ownership/borrow overview
 - [Lexer & Parser](/docs/compiler/lexer-parser) — `TokenKind::Unsafe` and AST `UnsafeBlock`
 - `src/parsing/ast.rs:683` `UnsafeBlock`, `src/parsing/hir.rs:358`, `src/parsing/borrow_check.rs:365`
