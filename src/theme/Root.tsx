@@ -27,9 +27,18 @@ export default function Root({ children }: { children: React.ReactNode }) {
     <>
       <Head>
         {/* Site-wide structured data */}
-        <script type="application/ld+json">{JSON.stringify(org)}</script>
-        <script type="application/ld+json">{JSON.stringify(website)}</script>
-        <script type="application/ld+json">{JSON.stringify(app)}</script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(app) }}
+        />
       </Head>
       {children}
     </>

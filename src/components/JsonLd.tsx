@@ -16,7 +16,10 @@ export default function JsonLd({ data, id }: JsonLdProps) {
     <>
       {payload.map((datum, idx) => (
         <Head key={id ? `${id}-${idx}` : `jsonld-${idx}`}>
-          <script type="application/ld+json">{JSON.stringify(datum)}</script>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(datum) }}
+          />
         </Head>
       ))}
     </>

@@ -36,8 +36,8 @@ User-agent: Applebot-Extended
 Allow: /
 
 # Sitemaps
-Sitemap: https://adeshlang.github.io/sitemap.xml
+Sitemap: https://www.adeshlang.org/sitemap.xml
 
 # GEO discovery
 # llms.txt is the standard for LLM-friendly site map (https://llmstxt.org)
-# Hosted at https://adeshlang.github.io/llms.txt
+# Hosted at https://www.adeshlang.org/llms.txt

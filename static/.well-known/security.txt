@@ -2,4 +2,4 @@ Contact: https://github.com/adeshlang/adeshlang/security/policy
 Contact: mailto:ajaytainwala@outlook.com
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://adeshlang.github.io/.well-known/security.txt
+Canonical: https://www.adeshlang.org/.well-known/security.txt

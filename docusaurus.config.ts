@@ -1,4 +1,5 @@
 // @ts-check
+import 'dotenv/config';
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
@@ -16,7 +17,7 @@ function pluginAdeshPrism() {
 // ---------------------------------------------------------------------------
 // SEO & GEO — Central site metadata
 // ---------------------------------------------------------------------------
-const SITE_URL = 'https://adeshlang.github.io';
+const SITE_URL = 'https://www.adeshlang.org';
 const SITE_TITLE = 'AdeshLang';
 const SITE_TAGLINE =
   'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language';
@@ -298,30 +299,70 @@ const config: Config = {
         },
         sitemap: {
           changefreq: 'weekly' as const,
-          priority: 0.5,
-          ignorePatterns: ['/tags/**'],
+          priority: 0.7,
+          ignorePatterns: [
+            '/tags/**',
+            '/search',
+            '/intro',
+            '/stdlib/**',
+            '/getting-started/**',
+            '/learn/learn-programming',
+            '/learn/learn-by-examples',
+            '/examples',
+            '/arrays/**',
+            '/backends/**',
+            '/builtin/**',
+            '/compiler/**',
+            '/contributing',
+            '/faq',
+            '/language-guide/**',
+            '/networking/**',
+            '/performance/**',
+            '/simd/**',
+            '/syntax-highlighting-test',
+            '/tools/**',
+          ],
           filename: 'sitemap.xml',
           createSitemapItems: async (params: any) => {
             const { defaultCreateSitemapItems, ...rest } = params;
             let items = await defaultCreateSitemapItems(rest);
+            const now = new Date().toISOString();
             items = items.map((item: any) => {
-              if (item.url === SITE_URL + '/' || item.url === SITE_URL + '/docs') {
-                return { ...item, changefreq: 'daily', priority: 1.0 };
+              const url = item.url;
+              let priority = 0.7;
+              let changefreq = 'weekly';
+
+              if (url === SITE_URL || url === `${SITE_URL}/` || url === `${SITE_URL}/docs`) {
+                priority = 1.0;
+                changefreq = 'daily';
+              } else if (
+                url.includes('/learn') ||
+                url.includes('/learn-by-examples') ||
+                url.includes('/docs/language-guide')
+              ) {
+                priority = 0.8;
+                changefreq = 'weekly';
+              } else if (url.includes('/blog')) {
+                priority = 0.7;
+                changefreq = 'weekly';
+              } else if (url.includes('/about')) {
+                priority = 0.6;
+                changefreq = 'monthly';
               }
-              if (item.url.includes('/learn/') || item.url.includes('/docs/language-guide/') || item.url === SITE_URL + '/learn' || item.url === SITE_URL + '/learn-by-examples') {
-                return { ...item, changefreq: 'weekly', priority: 0.8 };
-              }
-              if (item.url.includes('/blog')) {
-                return { ...item, changefreq: 'weekly', priority: 0.6 };
-              }
-              return item;
+
+              return {
+                ...item,
+                changefreq,
+                priority,
+                lastmod: item.lastmod || now,
+              };
             });
             return items;
           },
         },
-        gtag: process.env.GTAG_ID
+        gtag: (process.env.GOOGLE_ANALYTICS_ID || process.env.GTAG_ID)
           ? {
-              trackingID: process.env.GTAG_ID,
+              trackingID: process.env.GOOGLE_ANALYTICS_ID || process.env.GTAG_ID || '',
               anonymizeIP: true,
             }
           : undefined,

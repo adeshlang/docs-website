@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 // Site constants — keep in sync with docusaurus.config.ts
 // ---------------------------------------------------------------------------
-export const SITE_URL = 'https://adeshlang.github.io';
+export const SITE_URL = 'https://www.adeshlang.org';
 export const SITE_NAME = 'AdeshLang';
 export const SITE_TITLE = 'AdeshLang — High-Performance Memory-Safe Language';
 export const SITE_TAGLINE =

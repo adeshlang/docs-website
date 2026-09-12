@@ -283,7 +283,7 @@ export default function Home(): JSX.Element {
     {
       question: 'Where can I learn AdeshLang?',
       answer:
-        'Start at https://adeshlang.github.io/learn/getting-started/quick-start for a 5-minute guide, then follow the Learn roadmap, Language Guide, and examples catalog.',
+        'Start at https://www.adeshlang.org/learn/getting-started/quick-start for a 5-minute guide, then follow the Learn roadmap, Language Guide, and examples catalog.',
     },
   ]);
 
