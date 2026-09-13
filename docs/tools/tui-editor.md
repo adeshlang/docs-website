@@ -13,6 +13,10 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 AdeshLang includes a lightning-fast, full-featured **Terminal User Interface (TUI) Code Editor** built directly into the toolchain. It provides a complete IDE experience directly inside your terminal with sub-5ms cold startup, zero graphical dependencies, and a memory footprint under 15 MB.
 
+:::tip Looking for the Browser Version?
+If you want an in-browser code editor without running a local terminal, check out the **[Online Web IDE (editor.adeshlang.org)](https://editor.adeshlang.org)** which executes 100% in WebAssembly with Monaco editor and live diagnostics.
+:::
+
 ```text
  ┌─ [File] [Edit] [View] [Run] [Info] ───────────────────────────────────────────────┐
  │ 📁 EXPLORER    │ main.adesh* ✕ │ math.adesh ✕                                    │

@@ -376,7 +376,15 @@ export default function Home(): JSX.Element {
             </div>
 
             <div className="hero-ctas">
-              <Link className="btn-filled" to="/learn/getting-started/quick-start">
+              <a
+                className="btn-filled btn-editor"
+                href="https://editor.adeshlang.org"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ✨ Try Web Editor ↗
+              </a>
+              <Link className="btn-outlined" to="/learn/getting-started/quick-start">
                 Get Started →
               </Link>
               <Link className="btn-outlined" to="/learn">
@@ -484,6 +492,17 @@ export default function Home(): JSX.Element {
                   </code>
                 </pre>
               </div>
+            </div>
+            <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'flex-end' }}>
+              <a
+                className="btn-outlined"
+                href="https://editor.adeshlang.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '0.875rem', padding: '0.45rem 1rem' }}
+              >
+                ⚡ Open Interactive Web Editor (editor.adeshlang.org) ↗
+              </a>
             </div>
           </div>
 
@@ -625,11 +644,19 @@ export default function Home(): JSX.Element {
             Follow our 5-minute Quick Start guide or explore the progressive learning path.
           </p>
           <div className="cta-buttons">
-            <Link className="btn-filled" to="/learn/getting-started/quick-start">
-              Start Learning Now →
+            <a
+              className="btn-filled"
+              href="https://editor.adeshlang.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Web Editor ↗
+            </a>
+            <Link className="btn-outlined" to="/learn/getting-started/quick-start">
+              Quick Start Guide →
             </Link>
             <Link className="btn-outlined" to="/docs">
-              Read the Reference Docs
+              Read Reference Docs
             </Link>
           </div>
         </section>

@@ -13,6 +13,10 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 This guide gets you up and running with AdeshLang in under 5 minutes. You will install the toolchain, verify your environment, create a project, write your first script, and run tests.
 
+:::tip Try Online Without Installing
+Want to explore AdeshLang immediately without installing anything locally? Open our **[Online Web Editor (editor.adeshlang.org)](https://editor.adeshlang.org)** to write, edit, and execute AdeshLang code directly in your web browser with 100% client-side WebAssembly!
+:::
+
 ---
 
 ## 1. Verify Your Installation & Toolchain Health

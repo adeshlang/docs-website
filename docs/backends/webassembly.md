@@ -9,6 +9,10 @@ description: Compiling AdeshLang to WebAssembly for high-performance browser exe
 
 AdeshLang can be compiled directly to compact, sandboxed **WebAssembly (WASM)** binaries. Because AdeshLang operates with **zero garbage collection** and uses compile-time memory safety with 2ns ARC, WASM binaries require **no runtime GC engine**—resulting in tiny binary sizes (as small as 15KB) and deterministic performance.
 
+:::info Interactive Web Playground
+You can test the WebAssembly engine live right now in your browser without installing anything at **[editor.adeshlang.org](https://editor.adeshlang.org)**.
+:::
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │                   AdeshLang WASM Target                  │

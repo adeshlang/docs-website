@@ -16,6 +16,7 @@ export const SITE_DESCRIPTION =
 export const SITE_AUTHOR = 'Ajay Tainwala';
 export const SITE_AUTHOR_URL = 'https://ajaytainwala.vercel.app';
 export const GITHUB_URL = 'https://github.com/adeshlang/adeshlang';
+export const EDITOR_URL = 'https://editor.adeshlang.org';
 export const SOCIAL_IMAGE = `${SITE_URL}/img/social-card.jpg`;
 export const LOGO_URL = `${SITE_URL}/img/logo.svg`;
 export const FAVICON_URL = `${SITE_URL}/img/favicon.ico`;

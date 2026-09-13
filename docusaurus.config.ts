@@ -420,6 +420,13 @@ const config: Config = {
         { to: '/about', label: 'About', position: 'left' },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
+          href: 'https://editor.adeshlang.org',
+          label: 'Web Editor',
+          position: 'right',
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
+        {
           href: 'https://github.com/adeshlang/adeshlang',
           label: 'GitHub',
           position: 'right',
@@ -443,6 +450,12 @@ const config: Config = {
             {
               label: 'Learn by Examples',
               to: '/learn-by-examples',
+            },
+            {
+              label: 'Web Editor (Playground)',
+              href: 'https://editor.adeshlang.org',
+              target: '_blank',
+              rel: 'noopener noreferrer',
             },
           ],
         },
@@ -469,6 +482,12 @@ const config: Config = {
             {
               label: 'Language Guide',
               to: '/docs/language-guide/basics',
+            },
+            {
+              label: 'Online Web Editor',
+              href: 'https://editor.adeshlang.org',
+              target: '_blank',
+              rel: 'noopener noreferrer',
             },
             {
               label: 'About Project',
