@@ -417,6 +417,11 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
+        {
+          to: '/docs/install',
+          label: 'Install',
+          position: 'left',
+        },
         { to: '/about', label: 'About', position: 'left' },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
