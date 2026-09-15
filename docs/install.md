@@ -19,14 +19,14 @@ website does not host installers or application packages.
       </div>
       <div className="card__body">
         <p><strong>Available now</strong> for Windows x86_64.</p>
-        <p>Open the latest GitHub release and download the Windows installer or portable ZIP.</p>
+        <p>Download the standalone Windows setup installer executable.</p>
         <a
           className="button button--primary button--block"
-          href="https://github.com/adeshlang/adeshlang/releases/latest"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Download Windows build
+          Download Windows Setup (.exe)
         </a>
       </div>
     </div>
@@ -37,16 +37,16 @@ website does not host installers or application packages.
         <h2>Android</h2>
       </div>
       <div className="card__body">
-        <p>Download the Android APK from the GitHub release assets.</p>
+        <p><strong>Available now</strong> for Android devices.</p>
+        <p>Download the official AdeshLang Android Editor App APK.</p>
         <a
           className="button button--secondary button--block"
-          href="https://github.com/adeshlang/adeshlang/releases/latest"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0-android/android-editor.apk"
           target="_blank"
           rel="noopener noreferrer"
         >
           Download Android APK
         </a>
-        <small>If the latest release has no APK asset yet, Android publishing is still pending.</small>
       </div>
     </div>
   </div>
@@ -56,10 +56,10 @@ website does not host installers or application packages.
 
 | Platform | Status | Download |
 | --- | --- | --- |
-| Windows x86_64 | **Available now** | [GitHub Releases](https://github.com/adeshlang/adeshlang/releases/latest) |
-| Linux | Coming soon | Not available yet |
-| macOS | Coming soon | Not available yet |
-| Android | APK via GitHub Releases | [GitHub Releases](https://github.com/adeshlang/adeshlang/releases/latest) |
+| Windows x86_64 | **Available now** | [Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe) / [All Releases](https://github.com/adeshlang/adeshlang/releases) |
+| Android | **Available now** | [Android Editor APK](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0-android/android-editor.apk) |
+| Linux | Coming soon | Build from source |
+| macOS | Coming soon | Build from source |
 
 ## Windows installation
 

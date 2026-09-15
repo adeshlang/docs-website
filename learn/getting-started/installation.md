@@ -322,8 +322,13 @@ After successful installation:
 Happy coding! 🚀
 ## Recommended installation
 
-Download the installer or portable archive for your operating system and
-architecture, install it, and verify the distribution:
+Download the installer or package for your operating system:
+
+- **Windows x86_64**: [Download Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)
+- **Android**: [Download Android Editor APK](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0-android/android-editor.apk)
+- **All Releases**: [GitHub Releases](https://github.com/adeshlang/adeshlang/releases)
+
+After installation, verify the distribution:
 
 ```bash
 adesh doctor
