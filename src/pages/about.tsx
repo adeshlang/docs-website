@@ -14,7 +14,7 @@ export default function About(): JSX.Element {
   return (
     <Layout
       title="About AdeshLang & Creator Ajay Tainwala"
-      description="Learn about AdeshLang programming language design and its creator, Ajay Tainwala — Full Stack Developer & Software Engineer based in Bengaluru, India."
+      description="Meet Ajay Tainwala, creator of AdeshLang — a high-performance, memory-safe programming language built with Rust, Cranelift JIT, and zero-cost safety."
     >
       <Head>
         <link rel="canonical" href={`${SITE_URL}/about`} />

@@ -19,7 +19,7 @@ export default function DocItemWrapper(props: Props): JSX.Element {
   const description =
     (frontMatter.description as string) ??
     (metadata.description as string) ??
-    'AdeshLang programming language documentation — Rust-inspired, high-performance, memory-safe.';
+    'AdeshLang documentation — a Rust-inspired, high-performance language with Cranelift native JIT, zero-cost memory safety, SIMD, and built-in networking.';
   const permalink: string = metadata.permalink ?? '/';
   const url = permalink.startsWith('http') ? permalink : `${SITE_URL}${permalink}`;
   const image = (frontMatter.image as string) ?? 'img/social-card.jpg';

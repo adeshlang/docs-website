@@ -322,7 +322,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title="AdeshLang — High-Performance Memory-Safe Language"
-      description="आदेश (Adesh) — Command. Code. Create. A Rust-inspired, high-performance programming language with Cranelift native JIT, zero-cost memory safety, and multi-backend support."
+      description="AdeshLang (आदेश) is a Rust-inspired, high-performance language with Cranelift native JIT (10–230× speedup), zero-cost memory safety, and SIMD acceleration."
     >
       <Head>
         <link rel="canonical" href={`${SITE_URL}/`} />

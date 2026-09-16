@@ -12,7 +12,7 @@ export const SITE_TITLE = 'AdeshLang — High-Performance Memory-Safe Language';
 export const SITE_TAGLINE =
   'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language';
 export const SITE_DESCRIPTION =
-  'AdeshLang (आदेश) — a modern, Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedups), zero-cost compile-time memory safety, hardware SIMD, and batteries-included networking. Experimental, open-source, built with Rust.';
+  'AdeshLang (आदेश) — a Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedup), memory safety, SIMD, and networking.';
 export const SITE_AUTHOR = 'Ajay Tainwala';
 export const SITE_AUTHOR_URL = 'https://ajaytainwala.vercel.app';
 export const GITHUB_URL = 'https://github.com/adeshlang/adeshlang';
