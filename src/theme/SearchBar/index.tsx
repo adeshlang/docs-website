@@ -42,9 +42,16 @@ const POPULAR_QUICK_LINKS = [
   {
     title: 'Quick Start',
     path: '/learn/getting-started/quick-start',
-    description: 'Get started with AdeshLang CLI, compiler, and tools',
+    description: 'Get started with AdeshLang CLI, compiler, and tools in 5 minutes',
     category: 'Learn',
     icon: '⚡',
+  },
+  {
+    title: 'Installation Guide',
+    path: '/docs/install',
+    description: 'Install prebuilt binaries or compile from source on Windows, macOS, and Linux',
+    category: 'Install',
+    icon: '📦',
   },
   {
     title: 'Language Basics',
@@ -64,8 +71,15 @@ const POPULAR_QUICK_LINKS = [
     title: 'Cranelift Native JIT',
     path: '/docs/backends/native-jit',
     description: 'High-performance native JIT backend with 10–230× speedups',
-    category: 'Docs',
+    category: 'Backends',
     icon: '⚙️',
+  },
+  {
+    title: 'Hardware SIMD',
+    path: '/docs/simd/simd-overview',
+    description: 'Parallel vector arithmetic with AVX2 and ARM Neon acceleration',
+    category: 'Docs',
+    icon: '🏎️',
   },
   {
     title: 'Memory Safety Model',
@@ -75,17 +89,31 @@ const POPULAR_QUICK_LINKS = [
     icon: '🛡️',
   },
   {
+    title: 'WebAssembly (WASM)',
+    path: '/docs/backends/webassembly',
+    description: 'Compile and run AdeshLang directly in web browsers and WASI runtimes',
+    category: 'Backends',
+    icon: '🌐',
+  },
+  {
     title: 'Bytecode VM & Opcodes',
     path: '/docs/backends/bytecode-vm',
     description: 'Stack-based virtual machine execution engine architecture',
-    category: 'Docs',
+    category: 'Backends',
     icon: '💻',
   },
   {
-    title: 'Standard Library',
+    title: 'Networking & HTTP',
+    path: '/docs/builtin/http',
+    description: 'Builtin TCP, UDP, async HTTP client, and WebSocket libraries',
+    category: 'Stdlib',
+    icon: '🔌',
+  },
+  {
+    title: 'Standard Library Overview',
     path: '/docs/builtin/overview',
     description: 'Builtin libraries: math, JSON, FS, HTTP, crypto, regex, and more',
-    category: 'Docs',
+    category: 'Stdlib',
     icon: '📚',
   },
   {
@@ -98,7 +126,7 @@ const POPULAR_QUICK_LINKS = [
   {
     title: 'About AdeshLang',
     path: '/about',
-    description: 'Project mission, architectural pillars, and roadmap',
+    description: 'Project mission, architectural pillars, creator story, and roadmap',
     category: 'Overview',
     icon: 'ℹ️',
   },

@@ -24,22 +24,40 @@ export const FAVICON_URL = `${SITE_URL}/img/favicon.ico`;
 export const SITE_KEYWORDS = [
   'AdeshLang',
   'Adesh programming language',
+  'Adesh Lang',
+  'आदेश',
   'Rust-inspired language',
   'Cranelift JIT',
+  'Cranelift Native JIT',
   'memory-safe language',
   'systems programming',
   'zero-cost abstractions',
   'SIMD',
+  'AVX2',
+  'ARM Neon',
   'AOT compilation',
   'Bytecode VM',
+  'Tree-Walk Interpreter',
   'WebAssembly',
-  'compiler',
+  'WASM compiler',
+  'compiler design',
   'programming language',
   'high-performance language',
+  'type inference',
+  'pattern matching',
+  'algebraic data types',
+  'borrow checker',
+  'ownership model',
+  'HTTP client',
+  'WebSocket stdlib',
+  'ALS LSP',
+  'Adesh Language Server',
+  'ADL package manager',
+  'TUI Code Editor',
   'India programming language',
   'Bharat',
-  'LSP',
-  'package manager ADL',
+  'Bengaluru software',
+  'Ajay Tainwala',
 ];
 
 // ---------------------------------------------------------------------------
@@ -88,7 +106,102 @@ export function organizationSchema() {
   };
 }
 
-/** WebSite — enables Sitelinks SearchBox for SEO */
+/** SiteNavigationElement ItemList — triggers prominent Google Sitelinks for website sub-links */
+export function siteNavigationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'AdeshLang Navigation & Core Sections',
+    itemListElement: [
+      {
+        '@type': 'SiteNavigationElement',
+        position: 1,
+        name: 'Learn AdeshLang',
+        description: 'Guided progressive roadmap for learning AdeshLang programming from basics to advanced systems.',
+        url: `${SITE_URL}/learn`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 2,
+        name: 'Quick Start Guide',
+        description: 'Install AdeshLang and run your first program in under 5 minutes.',
+        url: `${SITE_URL}/learn/getting-started/quick-start`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 3,
+        name: 'Installation Guide',
+        description: 'Detailed install commands for Windows, macOS, and Linux.',
+        url: `${SITE_URL}/docs/install`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 4,
+        name: 'Learn by Examples',
+        description: 'Complete runnable programs with terminal output for every language feature.',
+        url: `${SITE_URL}/learn-by-examples`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 5,
+        name: 'Documentation Reference',
+        description: 'Comprehensive language reference, compiler backends, and standard library documentation.',
+        url: `${SITE_URL}/docs`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 6,
+        name: 'Language Guide',
+        description: 'Variables, types, control flow, functions, structs, enums, and pattern matching.',
+        url: `${SITE_URL}/docs/language-guide/basics`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 7,
+        name: 'Cranelift Native JIT',
+        description: 'High-performance native JIT execution backend with 10–230× speedups.',
+        url: `${SITE_URL}/docs/backends/native-jit`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 8,
+        name: 'Memory Safety Model',
+        description: 'Compile-time single-ownership and borrow checking with zero-cost abstractions.',
+        url: `${SITE_URL}/docs/advanced/memory-safety`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 9,
+        name: 'Standard Library',
+        description: 'Built-in modules for networking, HTTP, WebSockets, JSON, FS, and cryptography.',
+        url: `${SITE_URL}/docs/builtin/overview`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 10,
+        name: 'Online Web Editor',
+        description: 'Interactive online playground to write and run AdeshLang code in the browser.',
+        url: EDITOR_URL,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 11,
+        name: 'About Creator & Project',
+        description: 'Meet creator Ajay Tainwala and learn about the design philosophy of AdeshLang.',
+        url: `${SITE_URL}/about`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 12,
+        name: 'Engineering Blog',
+        description: 'Compiler deep-dives, release notes, and systems programming articles.',
+        url: `${SITE_URL}/blog`,
+      },
+    ],
+  };
+}
+
+/** WebSite — enables Sitelinks SearchBox & sub-pages mapping for SEO */
 export function websiteSchema() {
   return {
     '@context': 'https://schema.org',
@@ -106,6 +219,64 @@ export function websiteSchema() {
       },
       'query-input': 'required name=search_term_string',
     },
+    hasPart: [
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/learn`,
+        name: 'Learn AdeshLang',
+        description: 'Guided progressive roadmap for learning AdeshLang programming.',
+        url: `${SITE_URL}/learn`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/learn/getting-started/quick-start`,
+        name: 'Quick Start',
+        description: '5-minute quick start tutorial for AdeshLang.',
+        url: `${SITE_URL}/learn/getting-started/quick-start`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/docs/install`,
+        name: 'Install AdeshLang',
+        description: 'Installation instructions for all supported operating systems.',
+        url: `${SITE_URL}/docs/install`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/learn-by-examples`,
+        name: 'Learn by Examples',
+        description: 'Example catalog with runnable code and terminal evaluation outputs.',
+        url: `${SITE_URL}/learn-by-examples`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/docs`,
+        name: 'Documentation Reference',
+        description: 'Reference docs for the language, compiler, runtime, and standard library.',
+        url: `${SITE_URL}/docs`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/docs/language-guide/basics`,
+        name: 'Language Guide Basics',
+        description: 'Comprehensive syntax and language guide.',
+        url: `${SITE_URL}/docs/language-guide/basics`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/about`,
+        name: 'About AdeshLang',
+        description: 'About the AdeshLang project mission and creator Ajay Tainwala.',
+        url: `${SITE_URL}/about`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/blog`,
+        name: 'AdeshLang Blog',
+        description: 'Engineering deep-dives and compiler updates.',
+        url: `${SITE_URL}/blog`,
+      },
+    ],
   };
 }
 
@@ -253,3 +424,47 @@ export function personSchema() {
     knowsAbout: ['Programming Languages', 'Compilers', 'Rust', 'Systems Programming', 'JIT Compilation'],
   };
 }
+
+/** SoftwareSourceCode — for example & runnable code pages */
+export function softwareSourceCodeSchema(opts: {
+  name: string;
+  description: string;
+  codeSample: string;
+  url: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: opts.name,
+    description: opts.description,
+    programmingLanguage: 'AdeshLang',
+    runtimePlatform: 'Adesh Runtime (x86_64, AArch64, WASM)',
+    codeRepository: GITHUB_URL,
+    url: absoluteUrl(opts.url),
+    text: opts.codeSample,
+    author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_AUTHOR_URL },
+  };
+}
+
+/** Course — for guided tutorial paths in /learn */
+export function courseSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: opts.name,
+    description: opts.description,
+    provider: {
+      '@type': 'Organization',
+      name: 'AdeshLang Project',
+      sameAs: SITE_URL,
+    },
+    url: absoluteUrl(opts.url),
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+  };
+}
+

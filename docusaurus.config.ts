@@ -26,20 +26,40 @@ const SITE_DESCRIPTION =
 const SITE_KEYWORDS = [
   'AdeshLang',
   'Adesh programming language',
+  'Adesh Lang',
+  'आदेश',
   'Rust-inspired language',
   'Cranelift JIT',
+  'Cranelift Native JIT',
   'memory-safe language',
   'systems programming',
   'zero-cost abstractions',
   'SIMD',
+  'AVX2',
+  'ARM Neon',
   'AOT compilation',
   'Bytecode VM',
+  'Tree-Walk Interpreter',
   'WebAssembly',
-  'compiler',
+  'WASM compiler',
+  'compiler design',
   'programming language',
   'high-performance language',
+  'type inference',
+  'pattern matching',
+  'algebraic data types',
+  'borrow checker',
+  'ownership model',
+  'HTTP client',
+  'WebSocket stdlib',
+  'ALS LSP',
+  'Adesh Language Server',
+  'ADL package manager',
+  'TUI Code Editor',
   'India programming language',
   'Bharat',
+  'Bengaluru software',
+  'Ajay Tainwala',
 ].join(', ');
 const SITE_AUTHOR = 'Ajay Tainwala';
 const SOCIAL_IMAGE = 'img/social-card.jpg';
@@ -61,7 +81,7 @@ const config: Config = {
   onBrokenAnchors: 'warn',
   onDuplicateRoutes: 'warn',
 
-  // SEO: ideal head hygiene — canonical, hreflang handled by Docusaurus core
+  // SEO & GEO: Ideal head hygiene — canonical, hreflang handled by Docusaurus core
   headTags: [
     // Primary SEO
     {
@@ -88,7 +108,53 @@ const config: Config = {
       tagName: 'meta',
       attributes: { name: 'googlebot', content: 'index, follow' },
     },
-    // GEO: explicit permissions for AI crawlers / LLM training discoverability
+    // GEO: Geographic Coordinates & Location Targeting (Bengaluru, Karnataka, India)
+    {
+      tagName: 'meta',
+      attributes: { name: 'geo.region', content: 'IN-KA' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'geo.placename', content: 'Bengaluru' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'geo.position', content: '12.9716;77.5946' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'ICBM', content: '12.9716, 77.5946' },
+    },
+    // Dublin Core Metadata
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.title', content: SITE_TAGLINE },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.creator', content: SITE_AUTHOR },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.subject', content: 'Programming Languages, Systems Programming, Cranelift JIT, Rust, Compilers' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.description', content: SITE_DESCRIPTION },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.publisher', content: 'AdeshLang Project' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.language', content: 'en' },
+    },
+    {
+      tagName: 'meta',
+      attributes: { name: 'DC.coverage', content: 'Worldwide' },
+    },
+    // GEO: Explicit permissions for AI crawlers / LLM training discoverability
     {
       tagName: 'meta',
       attributes: { name: 'ai-content-declaration', content: 'ai-crawl-allowed' },
@@ -124,7 +190,15 @@ const config: Config = {
       tagName: 'meta',
       attributes: { name: 'twitter:site', content: '@adeshlang' },
     },
-    // Performance: preconnect for Google Fonts
+    // Performance: DNS Prefetch & Preconnect for Google Fonts
+    {
+      tagName: 'link',
+      attributes: { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
+    },
+    {
+      tagName: 'link',
+      attributes: { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
+    },
     {
       tagName: 'link',
       attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -132,6 +206,24 @@ const config: Config = {
     {
       tagName: 'link',
       attributes: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+    },
+    // Performance: Non-blocking asynchronous Google Fonts stylesheet
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preload',
+        as: 'style',
+        href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap',
+        media: 'print',
+        onload: "this.media='all'",
+      },
     },
     // Icons / Manifest
     {
@@ -142,10 +234,14 @@ const config: Config = {
       tagName: 'link',
       attributes: { rel: 'manifest', href: '/manifest.json' },
     },
-    // GEO: discoverability for LLMs — llms.txt
+    // GEO: Discoverability for LLMs — llms.txt & ai.txt
     {
       tagName: 'link',
       attributes: { rel: 'alternate', type: 'text/plain', title: 'LLMs.txt — AdeshLang for AI', href: '/llms.txt' },
+    },
+    {
+      tagName: 'link',
+      attributes: { rel: 'alternate', type: 'text/plain', title: 'AI.txt — AdeshLang Agentic Web', href: '/ai.txt' },
     },
     // Verification placeholders — set via env or replace with real tokens
     ...(process.env.GOOGLE_SITE_VERIFICATION
@@ -395,6 +491,8 @@ const config: Config = {
       logo: {
         alt: 'AdeshLang Logo',
         src: 'img/logo.svg',
+        width: 32,
+        height: 32,
       },
       items: [
         {

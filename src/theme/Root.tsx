@@ -4,6 +4,7 @@ import {
   organizationSchema,
   websiteSchema,
   softwareApplicationSchema,
+  siteNavigationSchema,
 } from '../utils/seo';
 
 /**
@@ -12,7 +13,8 @@ import {
  *
  * Schemas injected:
  *  - Organization (with founder Ajay Tainwala, logo, location)
- *  - WebSite (with SearchAction → sitelinks searchbox)
+ *  - WebSite (with SearchAction → sitelinks searchbox + hasPart sub-pages)
+ *  - SiteNavigationElement ItemList (enables Google Sitelinks & sub-links visibility)
  *  - SoftwareApplication (AdeshLang as a programming language / developer tool)
  *
  * Page-specific schemas (TechArticle, Breadcrumb, FAQ, HowTo, Person) are
@@ -21,6 +23,7 @@ import {
 export default function Root({ children }: { children: React.ReactNode }) {
   const org = organizationSchema();
   const website = websiteSchema();
+  const nav = siteNavigationSchema();
   const app = softwareApplicationSchema();
 
   return (
@@ -34,6 +37,10 @@ export default function Root({ children }: { children: React.ReactNode }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(nav) }}
         />
         <script
           type="application/ld+json"

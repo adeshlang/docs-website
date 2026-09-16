@@ -8,6 +8,10 @@ import {
   faqSchema,
   howToSchema,
   breadcrumbSchema,
+  websiteSchema,
+  siteNavigationSchema,
+  organizationSchema,
+  softwareApplicationSchema,
 } from '../utils/seo';
 
 /* ──────────────────────────────────────────────
@@ -304,6 +308,11 @@ export default function Home(): JSX.Element {
     { name: 'Documentation', url: '/intro' },
   ]);
 
+  const websiteJsonLd = websiteSchema();
+  const navJsonLd = siteNavigationSchema();
+  const orgJsonLd = organizationSchema();
+  const appJsonLd = softwareApplicationSchema();
+
   const handleCopyCmd = () => {
     navigator.clipboard.writeText('curl -fsSL https://adeshlang.org/install.sh | sh');
     setCopied(true);
@@ -318,11 +327,15 @@ export default function Home(): JSX.Element {
       <Head>
         <link rel="canonical" href={`${SITE_URL}/`} />
         <meta name="keywords" content="AdeshLang, programming language, Rust-inspired, Cranelift JIT, memory-safe, SIMD, compiler, AOT, WASM, systems programming" />
+        <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(navJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(orgJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(appJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       </Head>
-      <div className="landing-page">
+      <main className="landing-page" id="main-content">
         {/* ═══════════════ HERO ═══════════════ */}
         <header className="hero">
           {/* Gradient mesh blobs */}
@@ -352,6 +365,10 @@ export default function Home(): JSX.Element {
               src="/img/logo.svg"
               alt="AdeshLang Logo"
               className="hero-logo"
+              width={180}
+              height={180}
+              loading="eager"
+              decoding="async"
             />
 
             <h1 className="hero-brand-title">AdeshLang</h1>
@@ -660,7 +677,7 @@ export default function Home(): JSX.Element {
             </Link>
           </div>
         </section>
-      </div>
+      </main>
     </Layout>
   );
 }

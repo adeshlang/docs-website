@@ -21,8 +21,6 @@
  *  13. Custom footer
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap');
-
 @font-face {
   font-family: 'Samarkan';
   src: url('/SAMAN___.TTF') format('truetype');
@@ -208,11 +206,9 @@
 
 .gradient-text {
   background: linear-gradient(135deg, var(--md-primary) 0%, #0284c7 50%, #8b5cf6 100%);
-  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 6s ease-in-out infinite;
 }
 
 .section-eyebrow {
@@ -430,15 +426,22 @@
   margin-bottom: 2rem;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  animation: fadeUp 0.6s var(--ease-standard) both;
 }
 
 .hero-badge .pulse-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--md-primary);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--md-primary) 60%, transparent);
-  animation: pulseRing 2s infinite;
+  position: relative;
+}
+
+.hero-badge .pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1.5px solid var(--md-primary);
+  animation: pulseScale 2s cubic-bezier(0.2, 0, 0, 1) infinite;
 }
 
 .hero-logo {
@@ -447,7 +450,8 @@
   margin: 0 auto 0.75rem;
   display: block;
   filter: drop-shadow(0 0 40px color-mix(in srgb, var(--md-primary) 45%, transparent));
-  animation: fadeUp 0.6s var(--ease-standard) 0.1s both, floatLogo 6s ease-in-out infinite 0.7s;
+  animation: floatLogo 6s ease-in-out infinite;
+  contain: layout paint;
 }
 
 .hero-brand-title {
@@ -457,7 +461,6 @@
   line-height: 1;
   color: #ffffff;
   margin: 0 0 2rem;
-  animation: fadeUp 0.6s var(--ease-standard) 0.15s both;
 }
 
 .hero-title {
@@ -468,7 +471,6 @@
   letter-spacing: -0.03em;
   color: var(--hero-text);
   margin: 0 0 1.25rem;
-  animation: fadeUp 0.6s var(--ease-standard) 0.15s both;
 }
 
 .hero-subtitle {
@@ -477,7 +479,6 @@
   max-width: 680px;
   margin: 0 auto 1.5rem;
   color: var(--hero-subtitle);
-  animation: fadeUp 0.6s var(--ease-standard) 0.2s both;
 }
 
 /* Experimental notice card */
@@ -489,7 +490,6 @@
   background: var(--notice-bg);
   border: 1px solid var(--notice-border);
   text-align: left;
-  animation: fadeUp 0.6s var(--ease-standard) 0.25s both;
 }
 .hero-notice-title {
   display: flex;
@@ -525,7 +525,6 @@
   gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 2.5rem;
-  animation: fadeUp 0.6s var(--ease-standard) 0.3s both;
 }
 
 .btn-filled {
@@ -765,11 +764,9 @@
   top: 0; left: 0; right: 0;
   height: 3px;
   background: linear-gradient(90deg, var(--md-primary), #0284c7, #8b5cf6);
-  background-size: 200% 100%;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-slow) var(--ease-emphasized);
-  animation: gradientShift 4s linear infinite;
 }
 .feature-card:hover::after { transform: scaleX(1); }
 
@@ -1116,16 +1113,20 @@
 }
 .backend-status-dot.full {
   background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-  animation: dotPulse 2.5s ease-in-out infinite;
+}
+.backend-status-dot.full::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1.5px solid #10b981;
+  animation: pulseScale 2.5s cubic-bezier(0.2, 0, 0, 1) infinite;
 }
 .backend-status-dot.partial {
   background: #f59e0b;
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
 }
 .backend-status-dot.no {
   background: #64748b;
-  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.15);
 }
 
 .backend-name {
@@ -1406,35 +1407,9 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulseRing {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--md-primary) 60%, transparent); }
-  70% { box-shadow: 0 0 0 8px transparent; }
-  100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes geoSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes geoFloatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes geoPulse {
-  0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.6; }
-  50% { transform: rotate(45deg) scale(1.15); opacity: 0.35; }
-}
-
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
-  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.1); }
+@keyframes pulseScale {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
 }
 
 @keyframes shimmer {
@@ -1581,8 +1556,6 @@
 .footer-accent-line {
   height: 3px;
   background: linear-gradient(90deg, #10b981, #0284c7, #8b5cf6, #10b981);
-  background-size: 200% 100%;
-  animation: gradientShift 8s linear infinite;
 }
 
 /* Dot pattern overlay */

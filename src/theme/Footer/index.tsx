@@ -52,7 +52,15 @@ export default function Footer(): JSX.Element | null {
         {/* Brand column */}
         <div className="footer-brand">
           <div className="footer-logo-row">
-            <img src="/img/logo.svg" alt="AdeshLang" className="footer-logo" />
+            <img
+              src="/img/logo.svg"
+              alt="AdeshLang"
+              className="footer-logo"
+              width={44}
+              height={44}
+              loading="lazy"
+              decoding="async"
+            />
             <span className="footer-brand-name">{siteConfig.title}</span>
           </div>
           <p className="footer-tagline">
@@ -65,7 +73,9 @@ export default function Footer(): JSX.Element | null {
         {/* Link columns */}
         {footerLinks.map((col) => (
           <div className="footer-col" key={col.title}>
-            <h4 className="footer-col-title">{col.title}</h4>
+            <p className="footer-col-title" role="heading" aria-level={3}>
+              {col.title}
+            </p>
             <ul className="footer-col-list">
               {col.items.map((item) => (
                 <li key={item.label}>
