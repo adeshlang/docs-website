@@ -268,78 +268,138 @@ All official packages and binaries are cryptographically signed and checksummed 
 
 ---
 
-## Adesh CLI Commands & Toolchain / AI Setup Guide
+---
 
-AdeshLang comes with a unified toolchain CLI (`adesh`) for running, compiling, diagnosing, and managing dependencies including AI acceleration libraries and native toolchains.
+## Installation & Toolchain Setup Flow
 
-:::tip Adesh Toolchain CLI Overview
-Once installed, the `adesh` CLI manages your compiler backends, LSP server (`als`), package manager (`adl`), and AI/GPU acceleration setup.
+Follow this 4-step flow to set up AdeshLang on your system, verify diagnostics, configure optional toolchains, and begin coding.
+
+```mermaid
+flowchart LR
+    A["Step 1: Install Core<br/>(Win/Mac/Linux/Android)"] --> B["Step 2: Verify Diagnostics<br/><code>adesh doctor</code>"]
+    B --> C{"Need AOT / GPU?"}
+    C -- "No (REPL/JIT/Scripts)" --> D["Ready to Code!<br/><code>adesh repl</code> / <code>adesh run</code>"]
+    C -- "Yes (adesh build/MLIR)" --> E["Step 3: Toolchain Setup<br/><code>adesh toolchain install</code>"]
+    E --> D
+    D --> F["Step 4: Editor & Extensions<br/>VS Code / ALS / TUI Editor"]
+```
+
+---
+
+### Step 1: Install AdeshLang Core Package
+
+Download and install the official package for your platform using the [Direct Downloads](#direct-downloads-v030) or [Platform-Specific Instructions](#installation-instructions) below:
+
+* **🪟 Windows**: Run `AdeshLang-0.3.0-x86_64-windows-setup.exe` (or extract portable ZIP).
+* **🍏 macOS**: Run `AdeshLang-0.3.0-*.pkg` or open `.dmg`.
+* **🐧 Linux**: Install `adeshlang_0.3.0_amd64.deb` (`sudo dpkg -i ...`) or `adeshlang-0.3.0-1.x86_64.rpm`.
+* **📱 Android**: Sideload `AdeshLang-mobile-0.3.0-arm64-v8a.apk`.
+
+:::tip Out-of-the-Box Execution (Zero External Dependencies)
+AdeshLang's core features run immediately after Step 1 with **zero external dependencies**:
+* **`adesh repl`** — Interactive REPL shell.
+* **`adesh run <file.adesh>`** — Tree-walk bytecode interpreter.
+* **`adesh run --njit <file.adesh>`** — Ultra-fast Cranelift Native JIT engine (10× to 230× speedup).
+* **`adesh check` & `adesh fmt`** — Static analysis, borrow-checker, and formatting.
+* **`als` / `adesh lsp`** — Language server for real-time IDE diagnostics.
 :::
 
-<div className="row margin-bottom--lg">
-  <div className="col col--6 margin-bottom--md">
-    <div className="card shadow--md" style={{height: '100%', padding: '1.25rem'}}>
-      <h3>🩺 <code>adesh doctor</code></h3>
-      <p><strong>Environment & Diagnostic Verification</strong></p>
-      <p>Scans system environment, PATH variables, compiler tools (C/C++, LLVM, Cranelift JIT), Rust runtime, and GPU/AI acceleration backends (CUDA, ROCm, Vulkan, Metal, ONNX Runtime).</p>
-      <pre><code>adesh doctor</code></pre>
-    </div>
-  </div>
+---
 
-  <div className="col col--6 margin-bottom--md">
-    <div className="card shadow--md" style={{height: '100%', padding: '1.25rem'}}>
-      <h3>🛠️ <code>adesh setup toolchain</code></h3>
-      <p><strong>Automated Native & AI Setup Tool</strong></p>
-      <p>Downloads and registers missing compilation backends, LLVM infrastructure, Cranelift JIT codegen runtime, SIMD targets, and native AI/ML libraries.</p>
-      <pre><code>adesh setup toolchain</code></pre>
-    </div>
-  </div>
-</div>
+### Step 2: Verify Environment & Diagnostics
+
+After installing, verify the binaries and run the automated health check:
+
+```bash
+# Verify CLI is on PATH
+adesh --version
+
+# Run full system diagnostics (compilers, JIT runtime, GPU drivers, AI acceleration)
+adesh doctor
+
+# Inspect environment variables and resolved paths
+adesh env
+adesh env --json
+```
+
+---
+
+### Step 3: Toolchain Setup (`adesh toolchain install`) *(Optional)*
+
+The optional LLVM/MLIR toolchain is only required if you plan to use **AOT static compilation** (`adesh build <file.adesh>`) or **GPU MLIR kernels**. 
+
+```bash
+# Recommended on Linux (Ubuntu/Debian/Fedora/Arch) & macOS (Homebrew):
+# Installs and registers native toolchain via your system package manager (apt/dnf/pacman/brew)
+adesh toolchain install --use-system-packages
+
+# Automated download & installation of pinned upstream toolchain:
+adesh toolchain install
+
+# For pre-release builds or custom environments:
+adesh toolchain install --allow-unverified
+
+# Install system-wide (requires admin / sudo):
+sudo adesh toolchain install --system
+```
+
+#### Toolchain Diagnostics & Management Commands
+
+| Command | Purpose |
+|---|---|
+| `adesh toolchain current` | Display the active toolchain path, Clang, and LLD linker locations. |
+| `adesh toolchain list` | List bundled and system-detected LLVM/MLIR toolchains. |
+| `adesh toolchain check` | Verify whether the active toolchain can compile native targets. |
+| `adesh toolchain path` | Print the path to the bundled toolchain root directory. |
+| `adesh toolchain expose --system` | Expose bundled LLVM/Clang tools system-wide for third-party programs. |
+
+---
+
+### Step 4: Editor & Developer Workflow Setup
+
+#### 💻 VS Code / Cursor / Windsurf
+Install the official extension for syntax highlighting, autocomplete, code actions, and real-time ALS diagnostics:
+```bash
+# Download and install VSIX
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix
+code --install-extension adesh-vscode-0.3.0.vsix
+```
+
+#### 🖥️ Built-in Terminal UI (TUI) Editor
+AdeshLang includes a complete terminal-based code editor built-in. Launch it anytime without needing an external IDE:
+```bash
+adesh editor           # Launch TUI editor
+adesh-editor main.adesh # Edit specific file in TUI editor
+```
+
+#### 🐳 Docker Container Quickstart
+If you prefer running AdeshLang in a fully isolated container with LLVM/MLIR and native toolchains pre-configured:
+```bash
+# Pull and start interactive REPL
+docker run -it --rm adeshlang/adeshlang:latest adesh repl
+
+# Execute local scripts inside container
+docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/main.adesh
+```
+
+---
 
 ### Essential Adesh Command Reference
 
 | Command | Category | Description & Usage |
 |---|---|---|
 | `adesh doctor` | **Diagnostics** | Run complete health check on compiler, backends, environment, and AI hardware acceleration drivers. |
-| `adesh setup toolchain` | **Setup / AI** | Automatically download, configure, and bind native toolchain binaries, Cranelift JIT, and AI/GPU acceleration libraries. |
-| `adesh run <file.adesh>` | **Execution** | Run AdeshLang program using the primary Tree-Walk Interpreter backend. |
-| `adesh run --jit-native <file>` | **Execution** | Execute using **Cranelift Native JIT** backend (10× to 230× speedups). |
-| `adesh build <file.adesh>` | **Compilation** | AOT compile source into native executable machine binary. |
-| `adesh pkg install <pkg>` | **Package Mgr** | Install dependencies, standard packages, or AI/ML model binding libraries. |
+| `adesh toolchain install` | **Toolchain** | Provision, download, or bind LLVM, Clang, LLD, and MLIR native compilation backends. |
+| `adesh toolchain current` | **Toolchain** | Inspect the active compiler backend, sysroot, and tool locations. |
+| `adesh repl` | **Execution** | Launch the interactive AdeshLang REPL shell with multiline support. |
+| `adesh run <file.adesh>` | **Execution** | Execute AdeshLang source with the standard tree-walk interpreter. |
+| `adesh run --njit <file>` | **Execution** | Execute using **Cranelift Native JIT** backend (10× to 230× speedups). |
+| `adesh build <file.adesh>` | **Compilation** | AOT compile source into standalone native machine binary. |
+| `adesh editor` | **IDE Tool** | Launch the built-in cross-platform Terminal UI (TUI) Code Editor. |
 | `adesh check <file.adesh>` | **Linter** | Run static analysis, type checking, and borrow checker without codegen. |
 | `adesh fmt <file.adesh>` | **Formatter** | Auto-format source files according to standard AdeshLang style guidelines. |
-| `adesh lsp` | **IDE Tool** | Launch the Adesh Language Server for VS Code, Cursor, and Windsurf integration. |
-
----
-
-### AI & Machine Learning Toolchain Setup
-
-AdeshLang includes built-in bindings for SIMD hardware acceleration, tensor operations, and GPU MLIR backends. Follow these steps to configure your machine for AI/ML development:
-
-#### Step 1: Run System Diagnostic
-Check for existing C compilers, LLVM, GPU drivers (CUDA/Metal/Vulkan), and SIMD support:
-```bash
-adesh doctor
-```
-
-#### Step 2: Provision Native AI Toolchain
-Automatically fetch and install required Cranelift JIT backends, C/C++ toolchains, and AI runtime support libraries:
-```bash
-adesh setup toolchain --enable-ai
-```
-
-#### Step 3: Install AI Standard Packages
-Install the official Adesh tensor, SIMD, and matrix math libraries using the package manager:
-```bash
-adesh pkg install adesh-tensor
-adesh pkg install adesh-simd
-```
-
-#### Step 4: Verify JIT Acceleration
-Run an AI or SIMD workload with native Cranelift JIT compilation enabled:
-```bash
-adesh run --jit-native my_neural_net.adesh
-```
+| `adesh lsp` / `als` | **Language Server** | Launch the Adesh Language Server for VS Code, Cursor, and Windsurf integration. |
+| `adl install <pkg>` | **Package Mgr** | Install dependencies, libraries, or AI/ML model binding packages. |
 
 ---
 

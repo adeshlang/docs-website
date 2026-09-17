@@ -6,7 +6,51 @@ sidebar_label: Installation
 
 # Installation Guide
 
-Detailed installation instructions for all platforms.
+Comprehensive setup guide for AdeshLang across all supported platforms.
+
+## 🚀 Quick Setup & Installation Flow
+
+Get started in 3 simple steps:
+
+1. **Download & Install Core Package**: Choose your platform below or see the complete [Installation Downloads & Checksums](/docs/install).
+2. **Verify Environment**: Run `adesh doctor` to inspect compiler backends, PATH, and JIT runtime.
+3. **Setup Optional LLVM Toolchain**: Run `adesh toolchain install --use-system-packages` if you require AOT binary compilation (`adesh build`).
+
+:::tip Instant Out-of-the-Box Execution
+You can run programs (`adesh run file.adesh`), enter the REPL (`adesh repl`), and use the lightning-fast Cranelift JIT (`adesh run --njit file.adesh`) immediately after installing the core package without needing external LLVM toolchains!
+:::
+
+### Pre-built Packages (v0.3.0)
+
+- **🪟 Windows**: [Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe) | [Portable ZIP](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)
+- **🍏 macOS**: [Apple Silicon PKG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg) | [Intel PKG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg)
+- **🐧 Linux**: [Debian/Ubuntu DEB](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb) | [Fedora RPM](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm) | [Tarball (.tar.xz)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz)
+- **📱 Android**: [Android APK (ARM64)](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk)
+- **💻 VS Code**: [Extension (.vsix)](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)
+
+---
+
+## Toolchain Management (`adesh toolchain`)
+
+For AOT compilation and advanced MLIR/GPU workflows:
+
+```bash
+# Recommended on Linux / macOS (uses system package manager)
+adesh toolchain install --use-system-packages
+
+# Download pinned LLVM/MLIR toolchain directly
+adesh toolchain install
+
+# Inspect active compiler and linker paths
+adesh toolchain current
+
+# List available toolchains
+adesh toolchain list
+```
+
+---
+
+## Building from Source (Advanced / Contributors)
 
 ## System Requirements
 
