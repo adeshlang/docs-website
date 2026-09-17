@@ -331,6 +331,7 @@ Download the installer or package for your operating system from the [AdeshLang 
 - **🐧 Linux (Fedora/RHEL)**: [Download RPM (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm) | [Download RPM (aarch64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.aarch64.rpm)
 - **🐧 Linux (Universal Tarball)**: [Download .tar.xz (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz) | [Download .tar.xz (arm64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-linux-gnu.tar.xz)
 - **📱 Android**: [View Android Releases](https://github.com/adeshlang/adeshlang/releases)
+- **💻 VS Code Extension**: [Download VS Code Extension (.vsix)](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)
 - **📦 All Downloads & Checksums**: [Full Installation Guide & SHA-256 Table](/docs/install) | [GitHub Releases](https://github.com/adeshlang/adeshlang/releases)
 
 After installation, verify the distribution:

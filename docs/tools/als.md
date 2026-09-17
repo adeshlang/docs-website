@@ -54,8 +54,23 @@ adesh lsp --log-file=als.log --log-level=trace
 
 ## 3. Editor Configurations
 
-### Visual Studio Code
-Install the official extension from the marketplace or configure via `.vscode/settings.json`:
+### Visual Studio Code / Cursor / Windsurf
+
+The official **AdeshLang Extension** provides rich language support, syntax highlighting, code snippets, and automatic Language Server (ALS) lifecycle management.
+
+#### 1. Download & Install the Extension (.vsix)
+Download the official release: **[adesh-vscode-0.3.0.vsix](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)** (11.11 MB).
+
+- **Install via CLI**:
+  ```bash
+  code --install-extension adesh-vscode-0.3.0.vsix
+  ```
+- **Install via GUI**:
+  1. Open the Extensions sidebar (`Ctrl+Shift+X` / `Cmd+Shift+X`).
+  2. Click the `...` menu (Views and More Actions) in the top-right.
+  3. Choose **Install from VSIX...** and select the downloaded file.
+
+#### 2. Settings (`.vscode/settings.json`)
 ```json
 {
   "adesh.lsp.path": "adesh",

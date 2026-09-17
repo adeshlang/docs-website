@@ -186,16 +186,42 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
       </div>
     </div>
   </div>
+
+  <div className="col col--12 margin-bottom--md">
+    <div className="card shadow--md" style={{height: '100%'}}>
+      <div className="card__header">
+        <h3>💻 Visual Studio Code Extension</h3>
+      </div>
+      <div className="card__body">
+        <p>Official AdeshLang Language Support &amp; ALS Language Server integration for VS Code and VS Code-based editors (Cursor, Windsurf, VSCodium).</p>
+        <ul>
+          <li>Full ALS Language Server protocol integration with live diagnostic checks.</li>
+          <li>Semantic syntax highlighting, auto-completion, hover docs, and formatting.</li>
+        </ul>
+      </div>
+      <div className="card__footer">
+        <a
+          className="button button--primary button--block margin-bottom--sm"
+          href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download VS Code Extension (.vsix) — 11.11 MB
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 ---
 
 ## All Release Assets & SHA-256 Checksums
 
-All official packages and binaries are cryptographically signed and checksummed in the [AdeshLang v0.3.0 GitHub Release](https://github.com/adeshlang/adeshlang/releases/tag/v0.3.0).
+All official packages and binaries are cryptographically signed and checksummed in the [AdeshLang Releases](https://github.com/adeshlang/adeshlang/releases).
 
 | File Name | Platform / Target | Size | SHA-256 Checksum |
 |---|---|---|---|
+| **[adesh-vscode-0.3.0.vsix](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)** | VS Code Extension (VSIX Package) | 11.11 MB | `8394d41f2772a782f25405408916e56b64d871ab087e8d7bfeb6187363257d59` |
 | **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)** | Windows x86_64 (Setup GUI) | 14.4 MB | `38fa3fe98b2e6551c22458f67e187ab93207193d65e194fce28fbef3ee301c1c` |
 | **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)** | Windows x86_64 (Portable ZIP) | 34.3 MB | `0c40afe6f43ea7dc23821bd17827c6ac5426dde1274b93f1b0ebbfd870cae79d` |
 | **[AdeshLang-0.3.0-aarch64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-windows-portable.zip)** | Windows ARM64 (Portable ZIP) | 31.1 MB | `c99e7b689e843a72581922ee90fd388fbc2e50544a55feb01dc745a874a96dff` |
@@ -294,6 +320,28 @@ tar -xf AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
 # Move to local bin or export PATH
 sudo cp -r AdeshLang-0.3.0-x86_64-linux-gnu/* /usr/local/
 ```
+
+---
+
+### 💻 Visual Studio Code Extension (.vsix)
+
+The official **AdeshLang VS Code Extension** integrates syntax highlighting, autocomplete, code actions, and real-time ALS language server diagnostics for VS Code, Cursor, Windsurf, and VSCodium.
+
+#### Option 1: Install via VS Code Command Line (CLI)
+```bash
+# Download the VSIX package
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix
+
+# Install into VS Code
+code --install-extension adesh-vscode-0.3.0.vsix
+```
+
+#### Option 2: Install via VS Code Graphical Interface
+1. Download **[adesh-vscode-0.3.0.vsix](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)**.
+2. In VS Code, open the Extensions view (`Ctrl+Shift+X` on Windows/Linux or `Cmd+Shift+X` on macOS).
+3. Click the `...` menu (Views and More Actions) at the top-right of the Extensions pane.
+4. Select **Install from VSIX...**
+5. Select the downloaded `adesh-vscode-0.3.0.vsix` file to install.
 
 ---
 
