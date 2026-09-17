@@ -193,11 +193,19 @@
    2. BASE & TYPOGRAPHY
    ────────────────────────────────────────────── */
 
+.landing-page,
+.landing-page *,
+.landing-page *::before,
+.landing-page *::after {
+  box-sizing: border-box;
+}
+
 .landing-page {
   font-family: var(--ifm-font-family-base);
   color: var(--md-on-surface);
   background: var(--md-surface);
   overflow-x: hidden;
+  width: 100%;
 }
 
 .landing-page section {
@@ -530,12 +538,13 @@
 .btn-filled {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--md-primary);
   color: var(--md-on-primary) !important;
   font-weight: 700;
   font-size: 0.98rem;
-  padding: 13px 28px;
+  padding: 13px 24px;
   border-radius: var(--shape-full);
   text-decoration: none !important;
   box-shadow: 0 4px 20px color-mix(in srgb, var(--md-primary) 35%, transparent);
@@ -543,6 +552,9 @@
               box-shadow var(--dur-medium) var(--ease-standard);
   position: relative;
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 /* Shimmer sweep on hover */
 .btn-filled::after {
@@ -563,13 +575,14 @@
 .btn-outlined {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: color-mix(in srgb, var(--md-on-surface) 4%, transparent);
   border: 1px solid var(--md-outline-variant);
   color: var(--md-on-surface) !important;
   font-weight: 600;
   font-size: 0.98rem;
-  padding: 13px 28px;
+  padding: 13px 24px;
   border-radius: var(--shape-full);
   text-decoration: none !important;
   backdrop-filter: blur(10px);
@@ -577,6 +590,9 @@
   transition: transform var(--dur-medium) var(--ease-standard),
               border-color var(--dur-medium) var(--ease-standard),
               box-shadow var(--dur-medium) var(--ease-standard);
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 .btn-outlined:hover {
   transform: translateY(-2px);
@@ -632,10 +648,11 @@
 .install-bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   background: var(--md-surface-container);
   border: 1px solid var(--md-outline-variant);
-  padding: 8px 10px 8px 18px;
+  padding: 8px 10px 8px 16px;
   border-radius: var(--shape-full);
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -645,16 +662,26 @@
               box-shadow var(--dur-medium) var(--ease-standard);
   width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
 }
 .install-bar:hover {
   border-color: color-mix(in srgb, var(--md-primary) 45%, var(--md-outline-variant));
   box-shadow: 0 4px 20px color-mix(in srgb, var(--md-primary) 15%, transparent);
+}
+.install-cmd-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+  text-align: left;
 }
 .install-prompt {
   color: var(--md-primary);
   font-weight: 700;
   user-select: none;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .install-code {
   font-family: var(--font-mono);
@@ -673,7 +700,7 @@
 .install-actions {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-shrink: 0;
 }
 .copy-btn {
@@ -1561,15 +1588,84 @@
   .hero-geo .geo-ring {
     display: none;
   }
-  .install-bar {
-    flex-wrap: wrap;
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  .hero-ctas .btn-filled,
+  .hero-ctas .btn-outlined {
+    width: 100%;
     justify-content: center;
+    box-sizing: border-box;
+    font-size: 0.92rem;
+    padding: 12px 16px;
+    white-space: normal;
+    text-align: center;
+  }
+  .install-widget {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  .install-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    box-sizing: border-box;
     border-radius: var(--shape-md);
-    padding: 12px 14px;
+    padding: 6px;
+  }
+  .install-tab {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    box-sizing: border-box;
+  }
+  .install-bar {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: var(--shape-lg);
+    padding: 12px;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .install-cmd-box {
+    width: 100%;
+    max-width: 100%;
+    background: color-mix(in srgb, var(--md-surface-container-high) 60%, transparent);
+    padding: 10px 12px;
+    border-radius: var(--shape-sm);
+    border: 1px solid var(--md-outline-variant);
+    overflow-x: auto;
+    box-sizing: border-box;
   }
   .install-code {
+    white-space: pre;
+    overflow-x: auto;
+    text-overflow: clip;
+  }
+  .install-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .copy-btn, .install-download-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 14px;
+    box-sizing: border-box;
     white-space: normal;
-    word-break: break-all;
+    word-break: break-word;
   }
   .feature-grid {
     grid-template-columns: 1fr;
@@ -1590,32 +1686,49 @@
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  .hero-ctas {
-    flex-direction: column;
-    width: 100%;
+  .hero {
+    padding: 3rem 0.75rem 2rem;
   }
-  .hero-ctas .btn-filled,
-  .hero-ctas .btn-outlined {
+  .hero-inner {
     width: 100%;
-    justify-content: center;
+    max-width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .hero-brand-title {
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    word-break: break-word;
+  }
+  .hero-title {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    word-break: break-word;
+  }
+  .hero-notice {
+    padding: 0.85rem 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
   .section-heading {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
   .stat-value {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
   .terminal-pane {
-    padding: 1rem;
-    font-size: 0.78rem;
+    padding: 0.85rem;
+    font-size: 0.76rem;
   }
   .cta-buttons {
     flex-direction: column;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
   .cta-buttons .btn-filled,
   .cta-buttons .btn-outlined {
     width: 100%;
     justify-content: center;
+    box-sizing: border-box;
   }
   .bench-info {
     flex-direction: column;
@@ -1792,6 +1905,85 @@ body:has([class*='docPage']) .landing-footer,
 body[class*='docs-doc'] .landing-footer,
 [class*='docMainContainer'] ~ .landing-footer {
   display: none !important;
+}
+
+/* ──────────────────────────────────────────────
+   14. DOCS / INSTALL PAGE RESPONSIVE ENHANCEMENTS
+   ────────────────────────────────────────────── */
+
+/* Table responsive wrapper */
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive cards & download buttons in docs */
+.card {
+  border-radius: var(--shape-md);
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface-container-low);
+  transition: transform var(--dur-medium) var(--ease-standard), box-shadow var(--dur-medium) var(--ease-standard), border-color var(--dur-medium) var(--ease-standard);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--md-primary) 35%, var(--md-outline-variant));
+  box-shadow: var(--elev-2);
+}
+
+.card__header h3 {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card__footer {
+  margin-top: auto;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.button-group .button {
+  flex: 1 1 auto;
+  white-space: normal;
+  text-align: center;
+  word-break: break-word;
+}
+
+.button {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+  padding: 0.6rem 1rem;
+  border-radius: var(--shape-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--dur-fast) var(--ease-standard);
+}
+
+@media (max-width: 640px) {
+  .button-group--block {
+    flex-direction: column;
+    width: 100%;
+  }
+  .button-group--block .button {
+    width: 100%;
+  }
+  .button {
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 0.65rem 0.85rem;
+  }
 }
 
 /* ──────────────────────────────────────────────
