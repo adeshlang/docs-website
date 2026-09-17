@@ -322,11 +322,16 @@ After successful installation:
 Happy coding! 🚀
 ## Recommended installation
 
-Download the installer or package for your operating system:
+Download the installer or package for your operating system from the [AdeshLang v0.3.0 Release](https://github.com/adeshlang/adeshlang/releases/tag/v0.3.0) or check the detailed [Installation Page](/docs/install):
 
-- **Windows x86_64**: [Download Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)
-- **Android**: [Download Android Editor APK](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0-android/android-editor.apk)
-- **All Releases**: [GitHub Releases](https://github.com/adeshlang/adeshlang/releases)
+- **🪟 Windows (x86_64)**: [Download Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe) | [Portable ZIP](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)
+- **🍏 macOS (Apple Silicon)**: [Download macOS PKG Installer](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg) | [DMG Image](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg)
+- **🍏 macOS (Intel x86_64)**: [Download macOS PKG Installer](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg) | [DMG Image](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg)
+- **🐧 Linux (Debian/Ubuntu)**: [Download DEB (amd64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb) | [Download DEB (arm64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_arm64.deb)
+- **🐧 Linux (Fedora/RHEL)**: [Download RPM (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm) | [Download RPM (aarch64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.aarch64.rpm)
+- **🐧 Linux (Universal Tarball)**: [Download .tar.xz (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz) | [Download .tar.xz (arm64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-linux-gnu.tar.xz)
+- **📱 Android**: [View Android Releases](https://github.com/adeshlang/adeshlang/releases)
+- **📦 All Downloads & Checksums**: [Full Installation Guide & SHA-256 Table](/docs/install) | [GitHub Releases](https://github.com/adeshlang/adeshlang/releases)
 
 After installation, verify the distribution:
 

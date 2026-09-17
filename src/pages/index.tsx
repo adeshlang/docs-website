@@ -244,17 +244,81 @@ function FeatureCard({ icon, title, body }: { icon: string; title: string; body:
   );
 }
 
+type OSKey = 'windows' | 'macos' | 'linux' | 'android';
+
+interface OSInstallOption {
+  label: string;
+  icon: string;
+  command: string;
+  downloadUrl: string;
+  downloadLabel: string;
+  prompt: string;
+}
+
+const installOptions: Record<OSKey, OSInstallOption> = {
+  windows: {
+    label: 'Windows',
+    icon: '🪟',
+    command: 'irm https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe -OutFile adesh-setup.exe; .\\adesh-setup.exe',
+    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe',
+    downloadLabel: 'Setup .exe (14.4 MB)',
+    prompt: 'PS >',
+  },
+  macos: {
+    label: 'macOS',
+    icon: '🍏',
+    command: 'curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg && sudo installer -pkg AdeshLang-0.3.0-aarch64-macos.pkg -target /',
+    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg',
+    downloadLabel: 'PKG (Apple Silicon)',
+    prompt: '$',
+  },
+  linux: {
+    label: 'Linux',
+    icon: '🐧',
+    command: 'curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb && sudo dpkg -i adeshlang_0.3.0_amd64.deb',
+    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb',
+    downloadLabel: 'DEB (amd64)',
+    prompt: '$',
+  },
+  android: {
+    label: 'Android',
+    icon: '📱',
+    command: 'https://github.com/adeshlang/adeshlang/releases',
+    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases',
+    downloadLabel: 'View APK Releases',
+    prompt: 'APK',
+  },
+};
+
 /* ──────────────────────────────────────────────
    Page
    ────────────────────────────────────────────── */
 
 export default function Home(): JSX.Element {
   const [activeTab, setActiveTab] = useState(snippets[0]!);
+  const [selectedOS, setSelectedOS] = useState<OSKey>('windows');
   const [copied, setCopied] = useState(false);
   const featuresRef = useReveal<HTMLDivElement>();
   const sandboxRef = useReveal<HTMLDivElement>();
   const backendRef = useReveal<HTMLDivElement>();
   const rustRef = useReveal<HTMLDivElement>();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+      const ua = (navigator.userAgent || navigator.platform || '').toLowerCase();
+      if (ua.includes('win')) {
+        setSelectedOS('windows');
+      } else if (ua.includes('mac')) {
+        setSelectedOS('macos');
+      } else if (ua.includes('android')) {
+        setSelectedOS('android');
+      } else if (ua.includes('linux')) {
+        setSelectedOS('linux');
+      }
+    }
+  }, []);
+
+  const currentInstall = installOptions[selectedOS] || installOptions.windows;
 
   // SEO & GEO — Structured data for homepage: FAQ + HowTo + Breadcrumb
   // GEO: FAQPage is heavily used by generative engines for grounded answers
@@ -277,7 +341,7 @@ export default function Home(): JSX.Element {
     {
       question: 'How do I install AdeshLang?',
       answer:
-        'Run curl -fsSL https://adeshlang.org/install.sh | sh, or download from GitHub releases. Then use adesh run main.adesh, adesh run --jit-native main.adesh for native JIT, or adesh build for AOT.',
+        'Download the official installer or package for Windows (.exe), macOS (.pkg/.dmg), Linux (.deb/.rpm/.tar.xz), or Android (.apk) from GitHub Releases v0.3.0 or use the automated commands on the homepage. Then use adesh run main.adesh, adesh run --jit-native main.adesh for native JIT, or adesh build for AOT.',
     },
     {
       question: 'Is AdeshLang memory-safe without garbage collection?',
@@ -296,7 +360,7 @@ export default function Home(): JSX.Element {
     description: 'Install AdeshLang and run your first program using the interpreter.',
     url: `${SITE_URL}/learn/getting-started/quick-start`,
     steps: [
-      { name: 'Install AdeshLang', text: 'Run curl -fsSL https://adeshlang.org/install.sh | sh in your terminal.' },
+      { name: 'Install AdeshLang', text: 'Download and run the installer for your OS from the official v0.3.0 release or run the quick setup command.' },
       { name: 'Create main.adesh', text: 'Create a file with fn main() { print("Hello, AdeshLang!"); }' },
       { name: 'Run with interpreter', text: 'Execute adesh run main.adesh to see output.' },
       { name: 'Try native JIT', text: 'Execute adesh run --jit-native main.adesh for Cranelift native speedup.' },
@@ -314,7 +378,7 @@ export default function Home(): JSX.Element {
   const appJsonLd = softwareApplicationSchema();
 
   const handleCopyCmd = () => {
-    navigator.clipboard.writeText('curl -fsSL https://adeshlang.org/install.sh | sh');
+    navigator.clipboard.writeText(currentInstall.command);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -420,16 +484,51 @@ export default function Home(): JSX.Element {
               </a>
             </div>
 
-            <div className="install-bar">
-              <span className="install-prompt">$</span>
-              <code className="install-code">curl -fsSL https://adeshlang.org/install.sh | sh</code>
-              <button
-                onClick={handleCopyCmd}
-                className={`copy-btn ${copied ? 'copied' : ''}`}
-                title="Copy install command"
-              >
-                {copied ? '✓ Copied' : 'Copy'}
-              </button>
+            <div className="install-widget">
+              <div className="install-tabs">
+                {(Object.keys(installOptions) as OSKey[]).map((osKey) => {
+                  const opt = installOptions[osKey];
+                  return (
+                    <button
+                      key={osKey}
+                      className={`install-tab ${selectedOS === osKey ? 'active' : ''}`}
+                      onClick={() => setSelectedOS(osKey)}
+                    >
+                      <span>{opt.icon}</span>
+                      <span>{opt.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="install-bar">
+                <span className="install-prompt">{currentInstall.prompt}</span>
+                <code className="install-code" title={currentInstall.command}>
+                  {currentInstall.command}
+                </code>
+                <div className="install-actions">
+                  <button
+                    onClick={handleCopyCmd}
+                    className={`copy-btn ${copied ? 'copied' : ''}`}
+                    title="Copy command"
+                  >
+                    {copied ? '✓ Copied' : 'Copy'}
+                  </button>
+                  <a
+                    className="install-download-btn"
+                    href={currentInstall.downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`Direct Download for ${currentInstall.label}`}
+                  >
+                    ⬇ {currentInstall.downloadLabel}
+                  </a>
+                </div>
+              </div>
+
+              <Link className="install-footer-link" to="/docs/install">
+                ⚡ View all 23 platform binaries, installers &amp; SHA-256 checksums →
+              </Link>
             </div>
           </div>
         </header>

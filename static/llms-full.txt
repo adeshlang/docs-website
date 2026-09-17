@@ -77,9 +77,9 @@ print("Status:", res.status);
 ```
 
 ## Installation
-```
-curl -fsSL https://adeshlang.org/install.sh | sh
-# or via cargo / github releases
+```bash
+# Download official packages from https://github.com/adeshlang/adeshlang/releases
+# Windows (.exe), macOS (.pkg/.dmg), Linux (.deb/.rpm/.tar.xz), Android (.apk)
 adesh run main.adesh
 adesh run --jit-native main.adesh   # Cranelift
 adesh build main.adesh               # AOT

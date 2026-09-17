@@ -131,7 +131,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install AdeshLang
-        run: curl -fsSL https://adeshlang.org/install.sh | sh
+        run: |
+          curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb
+          sudo dpkg -i adeshlang_0.3.0_amd64.deb
       - name: Check Code Formatting
         run: adesh fmt . --check
 ```
