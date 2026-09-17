@@ -168,21 +168,39 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <h3>📱 Android</h3>
       </div>
       <div className="card__body">
-        <p>AdeshLang Mobile IDE and execution environment for Android devices.</p>
+        <p>AdeshLang Mobile IDE and native execution environment for Android devices.</p>
         <ul>
-          <li>Includes the native Adesh runtime engine.</li>
-          <li>Built-in code editor, syntax highlighting, and diagnostics.</li>
+          <li><strong>ARM64-v8a APK</strong>: Recommended for physical devices.</li>
+          <li><strong>Universal APK</strong>: Compatible with all 64-bit architectures.</li>
         </ul>
       </div>
       <div className="card__footer">
         <a
           className="button button--primary button--block margin-bottom--sm"
-          href="https://github.com/adeshlang/adeshlang/releases"
+          href="https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk"
           target="_blank"
           rel="noopener noreferrer"
         >
-          View Android Release Packages (.apk)
+          Download Android APK (ARM64) — 62.2 MB
         </a>
+        <div className="button-group button-group--block">
+          <a
+            className="button button--secondary button--sm"
+            href="https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Universal APK (134 MB)
+          </a>
+          <a
+            className="button button--secondary button--sm"
+            href="https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-x86_64.apk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            x86_64 Emulator (73.5 MB)
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -221,6 +239,10 @@ All official packages and binaries are cryptographically signed and checksummed 
 
 | File Name | Platform / Target | Size | SHA-256 Checksum |
 |---|---|---|---|
+| **[AdeshLang-mobile-0.3.0-arm64-v8a.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk)** | Android ARM64-v8a (Recommended APK) | 62.2 MB | `94b07518478018aaff020389d1b9027ec94f4f836c3849e4f1fa2b546800a071` |
+| **[AdeshLang-mobile-0.3.0-universal.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk)** | Android Universal (All-in-One APK) | 134 MB | `1ac32660e0ca611049a7b961c11ed1b315ae31be6173027c77ed8ba0f49b9bf1` |
+| **[AdeshLang-mobile-0.3.0-x86_64.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-x86_64.apk)** | Android x86_64 (Emulators / ChromeOS) | 73.5 MB | `6392a8432b6ee2b5d21cd9ac85c7896ebd1140449ff53b302d1f428193096bc3` |
+| **[AdeshLang-mobile-0.3.0.aab](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0.aab)** | Android App Bundle (AAB Package) | 107 MB | `b6453465967f1b69c53b8e1079d2c14f06d2afeb1bdc2e096c64163cccd61b10` |
 | **[adesh-vscode-0.3.0.vsix](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)** | VS Code Extension (VSIX Package) | 11.11 MB | `8394d41f2772a782f25405408916e56b64d871ab087e8d7bfeb6187363257d59` |
 | **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)** | Windows x86_64 (Setup GUI) | 14.4 MB | `38fa3fe98b2e6551c22458f67e187ab93207193d65e194fce28fbef3ee301c1c` |
 | **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)** | Windows x86_64 (Portable ZIP) | 34.3 MB | `0c40afe6f43ea7dc23821bd17827c6ac5426dde1274b93f1b0ebbfd870cae79d` |
@@ -342,6 +364,27 @@ code --install-extension adesh-vscode-0.3.0.vsix
 3. Click the `...` menu (Views and More Actions) at the top-right of the Extensions pane.
 4. Select **Install from VSIX...**
 5. Select the downloaded `adesh-vscode-0.3.0.vsix` file to install.
+
+---
+
+### 📱 Android Installation
+
+The **AdeshLang Mobile App** is a standalone code editor and native Adesh runtime environment for Android smartphones, tablets, and emulators.
+
+#### Option 1: Direct Download & Sideload (Phone / Tablet)
+1. Download the **[ARM64-v8a APK](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk)** on your Android device (or use the **[Universal APK](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk)**).
+2. Open the downloaded `.apk` file.
+3. If prompted, enable **"Install unknown apps"** in your Android Settings for your browser or file manager.
+4. Tap **Install** and launch AdeshLang Mobile.
+
+#### Option 2: Install via Android Debug Bridge (ADB)
+```bash
+# Download the ARM64 APK
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk
+
+# Install to connected device via ADB
+adb install AdeshLang-mobile-0.3.0-arm64-v8a.apk
+```
 
 ---
 

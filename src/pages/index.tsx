@@ -283,10 +283,10 @@ const installOptions: Record<OSKey, OSInstallOption> = {
   android: {
     label: 'Android',
     icon: '📱',
-    command: 'https://github.com/adeshlang/adeshlang/releases',
-    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases',
-    downloadLabel: 'View APK Releases',
-    prompt: 'APK',
+    command: 'curl -LO https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk && adb install AdeshLang-mobile-0.3.0-arm64-v8a.apk',
+    downloadUrl: 'https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk',
+    downloadLabel: 'ARM64 APK (62.2 MB)',
+    prompt: '$',
   },
 };
 

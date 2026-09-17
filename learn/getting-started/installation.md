@@ -330,7 +330,7 @@ Download the installer or package for your operating system from the [AdeshLang 
 - **🐧 Linux (Debian/Ubuntu)**: [Download DEB (amd64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb) | [Download DEB (arm64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_arm64.deb)
 - **🐧 Linux (Fedora/RHEL)**: [Download RPM (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm) | [Download RPM (aarch64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.aarch64.rpm)
 - **🐧 Linux (Universal Tarball)**: [Download .tar.xz (x86_64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz) | [Download .tar.xz (arm64)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-linux-gnu.tar.xz)
-- **📱 Android**: [View Android Releases](https://github.com/adeshlang/adeshlang/releases)
+- **📱 Android**: [Download Android APK (ARM64)](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk) | [Universal APK](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk)
 - **💻 VS Code Extension**: [Download VS Code Extension (.vsix)](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)
 - **📦 All Downloads & Checksums**: [Full Installation Guide & SHA-256 Table](/docs/install) | [GitHub Releases](https://github.com/adeshlang/adeshlang/releases)
 
