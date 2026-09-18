@@ -268,6 +268,81 @@ All official packages and binaries are cryptographically signed and checksummed 
 
 ---
 
+## Adesh CLI Commands & Toolchain / AI Setup Guide
+
+AdeshLang comes with a unified toolchain CLI (`adesh`) for running, compiling, diagnosing, and managing dependencies including AI acceleration libraries and native toolchains.
+
+:::tip Adesh Toolchain CLI Overview
+Once installed, the `adesh` CLI manages your compiler backends, LSP server (`als`), package manager (`adl`), and AI/GPU acceleration setup.
+:::
+
+<div className="row margin-bottom--lg">
+  <div className="col col--6 margin-bottom--md">
+    <div className="card shadow--md" style={{height: '100%', padding: '1.25rem'}}>
+      <h3>🩺 <code>adesh doctor</code></h3>
+      <p><strong>Environment & Diagnostic Verification</strong></p>
+      <p>Scans system environment, PATH variables, compiler tools (C/C++, LLVM, Cranelift JIT), Rust runtime, and GPU/AI acceleration backends (CUDA, ROCm, Vulkan, Metal, ONNX Runtime).</p>
+      <pre><code>adesh doctor</code></pre>
+    </div>
+  </div>
+
+  <div className="col col--6 margin-bottom--md">
+    <div className="card shadow--md" style={{height: '100%', padding: '1.25rem'}}>
+      <h3>🛠️ <code>adesh setup toolchain</code></h3>
+      <p><strong>Automated Native & AI Setup Tool</strong></p>
+      <p>Downloads and registers missing compilation backends, LLVM infrastructure, Cranelift JIT codegen runtime, SIMD targets, and native AI/ML libraries.</p>
+      <pre><code>adesh setup toolchain</code></pre>
+    </div>
+  </div>
+</div>
+
+### Essential Adesh Command Reference
+
+| Command | Category | Description & Usage |
+|---|---|---|
+| `adesh doctor` | **Diagnostics** | Run complete health check on compiler, backends, environment, and AI hardware acceleration drivers. |
+| `adesh setup toolchain` | **Setup / AI** | Automatically download, configure, and bind native toolchain binaries, Cranelift JIT, and AI/GPU acceleration libraries. |
+| `adesh run <file.adesh>` | **Execution** | Run AdeshLang program using the primary Tree-Walk Interpreter backend. |
+| `adesh run --jit-native <file>` | **Execution** | Execute using **Cranelift Native JIT** backend (10× to 230× speedups). |
+| `adesh build <file.adesh>` | **Compilation** | AOT compile source into native executable machine binary. |
+| `adesh pkg install <pkg>` | **Package Mgr** | Install dependencies, standard packages, or AI/ML model binding libraries. |
+| `adesh check <file.adesh>` | **Linter** | Run static analysis, type checking, and borrow checker without codegen. |
+| `adesh fmt <file.adesh>` | **Formatter** | Auto-format source files according to standard AdeshLang style guidelines. |
+| `adesh lsp` | **IDE Tool** | Launch the Adesh Language Server for VS Code, Cursor, and Windsurf integration. |
+
+---
+
+### AI & Machine Learning Toolchain Setup
+
+AdeshLang includes built-in bindings for SIMD hardware acceleration, tensor operations, and GPU MLIR backends. Follow these steps to configure your machine for AI/ML development:
+
+#### Step 1: Run System Diagnostic
+Check for existing C compilers, LLVM, GPU drivers (CUDA/Metal/Vulkan), and SIMD support:
+```bash
+adesh doctor
+```
+
+#### Step 2: Provision Native AI Toolchain
+Automatically fetch and install required Cranelift JIT backends, C/C++ toolchains, and AI runtime support libraries:
+```bash
+adesh setup toolchain --enable-ai
+```
+
+#### Step 3: Install AI Standard Packages
+Install the official Adesh tensor, SIMD, and matrix math libraries using the package manager:
+```bash
+adesh pkg install adesh-tensor
+adesh pkg install adesh-simd
+```
+
+#### Step 4: Verify JIT Acceleration
+Run an AI or SIMD workload with native Cranelift JIT compilation enabled:
+```bash
+adesh run --jit-native my_neural_net.adesh
+```
+
+---
+
 ## Installation Instructions
 
 ### 🪟 Windows Installation

@@ -502,17 +502,19 @@ export default function Home(): JSX.Element {
               </div>
 
               <div className="install-bar">
-                <span className="install-prompt">{currentInstall.prompt}</span>
-                <code className="install-code" title={currentInstall.command}>
-                  {currentInstall.command}
-                </code>
+                <div className="install-cmd-box">
+                  <span className="install-prompt">{currentInstall.prompt}</span>
+                  <code className="install-code" title={currentInstall.command}>
+                    {currentInstall.command}
+                  </code>
+                </div>
                 <div className="install-actions">
                   <button
                     onClick={handleCopyCmd}
                     className={`copy-btn ${copied ? 'copied' : ''}`}
                     title="Copy command"
                   >
-                    {copied ? '✓ Copied' : 'Copy'}
+                    {copied ? '✓ Copied' : '📋 Copy'}
                   </button>
                   <a
                     className="install-download-btn"
