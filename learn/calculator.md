@@ -30,8 +30,6 @@ fn main() {
     
     // TODO: Menu loop
 }
-
-main();
 ```
 
 ## Step 2: Operation Functions
@@ -194,8 +192,6 @@ fn main() {
         print("");  // Empty line for readability
     }
 }
-
-main();
 ```
 
 ## Complete Working Version

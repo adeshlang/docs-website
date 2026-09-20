@@ -346,31 +346,31 @@ AdeshLang provides powerful functional methods:
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 // map - transform each element
-let doubled = map(numbers, fn(x) { x * 2; });
+let doubled = numbers.map(fn(x) { return x * 2; });
 print(doubled);    // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 
 // filter - keep only matching
-let evens = filter(numbers, fn(x) { x % 2 == 0; });
+let evens = numbers.filter(fn(x) { return x % 2 == 0; });
 print(evens);      // [2, 4, 6, 8, 10]
 
 // reduce - combine to single value
-let sum = reduce(numbers, 0, fn(acc, x) { acc + x; });
+let sum = numbers.reduce(fn(acc, x) { return acc + x; }, 0);
 print(sum);        // 55
 
 // find - first matching element
-let found = find(numbers, fn(x) { x > 5; });
+let found = numbers.find(fn(x) { return x > 5; });
 print(found);      // 6
 
 // findIndex - index of first match
-let idx = findIndex(numbers, fn(x) { x > 5; });
+let idx = numbers.findIndex(fn(x) { return x > 5; });
 print(idx);        // 5
 
 // some - any match?
-let hasBig = some(numbers, fn(x) { x > 100; });
+let hasBig = numbers.some(fn(x) { return x > 100; });
 print(hasBig);     // false
 
 // every - all match?
-let allPositive = every(numbers, fn(x) { x > 0; });
+let allPositive = numbers.every(fn(x) { return x > 0; });
 print(allPositive); // true
 ```
 

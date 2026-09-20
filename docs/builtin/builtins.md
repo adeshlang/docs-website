@@ -80,24 +80,26 @@ print(alloc([1,2,3]));      // "heap"
 
 ### Array/Collection Operations
 
-| Function | Description | Parameters | Returns |
-|----------|-------------|------------|---------|
-| `map(array, fn)` | Transform each element | `array: array`, `fn: function` | `array` |
-| `filter(array, fn)` | Keep elements matching predicate | `array: array`, `fn: function` | `array` |
-| `reduce(array, fn, initial?)` | Reduce to single value | `array: array`, `fn: function`, `initial?: any` | `any` |
+| Method / Function | Description | Parameters | Returns |
+|-------------------|-------------|------------|---------|
+| `array.map(fn)` | Transform each element | `fn: function(x)` | `array` |
+| `array.filter(fn)` | Keep elements matching predicate | `fn: function(x): bool` | `array` |
+| `array.reduce(fn, initial?)` | Reduce to single value | `fn: function(acc, x)`, `initial?: any` | `any` |
 
 ```adesh
 let xs = [1, 2, 3, 4];
-let evens = filter(xs, fn(x) { return x % 2 == 0; });  // [2, 4]
-let doubled = map(evens, fn(x) { return x * 2; });     // [4, 8]
-let sum = reduce(doubled, fn(a, b) { return a + b; }, 0); // 12
+let evens = xs.filter(fn(x) { return x % 2 == 0; });  // [2, 4]
+let doubled = evens.map(fn(x) { return x * 2; });     // [4, 8]
+let sum = doubled.reduce(fn(a, b) { return a + b; }, 0); // 12
 ```
 
-**Method syntax also works (VM mode):**
+**Method Chaining:**
 ```adesh
-let filtered = numbers.filter(fn(x) { return x > 5; });
-let mapped = numbers.map(fn(x) { return x * x; });
-let reduced = numbers.reduce(fn(a, x) { return a + x; }, 0);
+let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let result = numbers
+    .filter(fn(x) { return x > 5; })
+    .map(fn(x) { return x * x; })
+    .reduce(fn(acc, x) { return acc + x; }, 0);
 ```
 
 ### Array Methods (Available on Array Values)

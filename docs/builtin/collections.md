@@ -13,9 +13,9 @@ The **Collections** builtin library provides 15 high-performance, memory-safe da
 | Name | What it provides |
 | :--- | :--- |
 | `Collections` | The namespace: 15 constructor functions (`Vec`, `Slice`, `HashMap`, `HashSet`, `VecDeque`, `BTreeMap`, `BTreeSet`, `BinaryHeap`, `PriorityQueue`, `BitSet`, `RingBuffer`, `Queue`, `Stack`, `OrderedMap`, `OrderedSet`) |
-| `map(array, fn)` | Global function — transform each element |
-| `filter(array, fn)` | Global function — keep matching elements |
-| `reduce(array, fn, initial?)` | Global function — fold to a single value |
+| `array.map(fn)` | Method / Function — transform each element |
+| `array.filter(fn)` | Method / Function — keep matching elements |
+| `array.reduce(fn, initial?)` | Method / Function — fold to a single value |
 
 ## Importing the library
 
@@ -389,26 +389,26 @@ print(ring.pop());                    // event_2
 
 ---
 
-## Array functions: `map`, `filter`, `reduce`
+## Array methods: `.map()`, `.filter()`, `.reduce()`
 
-These are **global** builtins (also available as array methods). They accept a native function, user function, bound method, or closure.
+AdeshLang arrays provide higher-order transformation methods. They accept a native function, user function, bound method, or closure.
 
 ```adesh
 let xs = [1, 2, 3, 4, 5];
 
-let doubled = map(xs, fn(x) { return x * 2; });       // [2, 4, 6, 8, 10]
-let evens = filter(xs, fn(x) { return x % 2 == 0; }); // [2, 4]
-let sum = reduce(xs, fn(a, b) { return a + b; }, 0);  // 15
+let doubled = xs.map(fn(x) { return x * 2; });       // [2, 4, 6, 8, 10]
+let evens = xs.filter(fn(x) { return x % 2 == 0; }); // [2, 4]
+let sum = xs.reduce(fn(a, b) { return a + b; }, 0);  // 15
 
-// Method form on plain arrays:
+// Squares:
 let squares = xs.map(fn(x) { return x * x; });
 ```
 
-| Function | Signature | Description |
+| Method | Signature | Description |
 | :--- | :--- | :--- |
-| `map` | `map(array, fn)` | Return a new array with `fn` applied to each element |
-| `filter` | `filter(array, fn)` | Return a new array of elements for which `fn` is truthy |
-| `reduce` | `reduce(array, fn, initial?)` | Fold left; without `initial` the first element is the seed and the fold starts at index 1 |
+| `map` | `array.map(fn)` | Return a new array with `fn` applied to each element |
+| `filter` | `array.filter(fn)` | Return a new array of elements for which `fn` is truthy |
+| `reduce` | `array.reduce(fn, initial?)` | Fold left; without `initial` the first element is the seed and the fold starts at index 1 |
 
 :::note
 `reduce` over an **empty** array without an `initial` value is an error. Values can be compared for the sort/heap operations by numeric value first, then by string.

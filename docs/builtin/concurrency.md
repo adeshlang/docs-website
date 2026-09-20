@@ -326,29 +326,61 @@ if (guard.isErr()) {
 
 ---
 
-## 6. Worker Pool & Parallel Helpers (Scheduler)
+## 6. High-Speed Work-Stealing Parallel Engine (`import Parallel;`)
 
-For CPU-bound fan-out without manual thread management, the scheduler exposes a worker pool:
+For CPU-bound operations across multiple cores, AdeshLang provides the `Parallel` module backed by a Rayon work-stealing thread pool and SIMD vectorization:
 
 ```adesh
-import { workers, parallel_map } from "stdlib/concurrency";
+import Parallel;
 
 // Number of scheduler workers (typically num_cpus)
-print(workers()); // e.g., 8
+print(Parallel.workers()); // e.g., 8
 
 let xs = [1, 2, 3, 4, 5, 6, 7, 8];
-let doubled = parallel_map(xs, fn(x) { return x * 2; });
+
+// 1. Parallel Map (preserves order)
+let doubled = Parallel.map(xs, fn(x) { return x * 2; });
 print(doubled); // [2, 4, 6, 8, 10, 12, 14, 16]
+
+// 2. Parallel Filter
+let evens = Parallel.filter(xs, fn(x) { return x % 2 == 0; });
+print(evens); // [2, 4, 6, 8]
+
+// 3. Parallel Tree Reduction
+let total = Parallel.reduce(xs, 0, fn(acc, x) { return acc + x; });
+print(total); // 36
+
+// 4. Multi-Core SIMD Reductions
+print("SIMD Sum:", Parallel.sum(xs)); // 36
+print("SIMD Dot:", Parallel.dot(xs, xs)); // 204
+
+// 5. Parallel For Range & ForEach
+Parallel.forEach(0, 4, fn(i) {
+    print("Parallel worker active:", i);
+});
 ```
 
-| Function | Description |
+| Method | Description |
 |---|---|
-| `workers()` | Number of threads in the global worker pool. |
-| `parallel_map(arr, fn)` | Apply `fn` to each element in parallel, collecting results. |
-| `parallel_filter(arr, fn)` | Filter in parallel. |
-| `parallel_reduce(arr, fn, init)` | Parallel fold (associative `fn` only). |
+| `Parallel.map(arr, fn)` | Concurrent mapping across CPU cores with order preservation. |
+| `Parallel.flatMap(arr, fn)` | Parallel map followed by array flattening. |
+| `Parallel.filter(arr, fn)` | Concurrent predicate evaluation with preserved element ordering. |
+| `Parallel.reduce(arr, init, fn)` | Parallel chunked tree reduction. |
+| `Parallel.forEach(start, end, fn)` | Multithreaded range iteration. |
+| `Parallel.forEach(arr, fn)` | Multithreaded array iteration. |
+| `Parallel.for(start, end, [step,] fn)` | Range-based parallel loop with custom step. |
+| `Parallel.find(arr, fn)` | Short-circuiting parallel element search. |
+| `Parallel.findIndex(arr, fn)` | Short-circuiting parallel index search. |
+| `Parallel.any(arr, fn)` / `Parallel.all(arr, fn)` | Short-circuiting boolean predicates. |
+| `Parallel.sort(arr)` / `Parallel.sortBy(arr, keyFn)` | Multi-core parallel sorting. |
+| `Parallel.sum(arr)` / `Parallel.product(arr)` | Multi-core SIMD-accelerated sum and product. |
+| `Parallel.min(arr)` / `Parallel.max(arr)` / `Parallel.mean(arr)` | Multi-core min, max, and mean reductions. |
+| `Parallel.dot(arrA, arrB)` | Multi-core SIMD vector dot product. |
+| `Parallel.join(fn1, fn2, ...)` | Fork-join concurrent execution of multiple tasks. |
+| `Parallel.scope(fn(scope))` | Scoped task spawning with automatic completion barrier. |
+| `Parallel.workers()` / `Parallel.setWorkers(n)` | Query or configure active worker threads. |
 
-The scheduler uses work-stealing — idle workers steal tasks from busy workers' queues, minimizing tail latency.
+The scheduler uses Rayon work-stealing — idle workers steal tasks dynamically from busy workers' queues, eliminating tail latency and scaling linearly with CPU core count.
 
 ---
 

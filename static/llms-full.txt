@@ -57,7 +57,7 @@ fn main() {
 ### Higher-Order Functions & Arrays
 ```adesh
 let numbers = [10, 20, 30, 40];
-let doubled = map(numbers, fn(x) { return x * 2; });
+let doubled = numbers.map(fn(x) { return x * 2; });
 print("Doubled:", doubled);
 ```
 

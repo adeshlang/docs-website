@@ -93,7 +93,7 @@ print("Counter value:", counter.value()); // Output: Counter value: 11
 
 // 4. Higher-Order Array Operations
 let numbers = [1, 2, 3, 4];
-let doubled = map(numbers, fn(x) { return x * 2; });
+let doubled = numbers.map(fn(x) { return x * 2; });
 print("Doubled numbers:", doubled);      // Output: Doubled numbers: [2, 4, 6, 8]
 
 // 5. Error Handling

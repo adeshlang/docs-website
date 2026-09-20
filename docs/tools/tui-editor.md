@@ -25,7 +25,7 @@ If you want an in-browser code editor without running a local terminal, check ou
  │   • app.adesh  │ 3 │                                                             │
  │   • main.adesh │ 4 │ fn main(): int {                                          │
  │ ▾ tests/       │ 5 │     let numbers = [10, 20, 30, 40];                         │
- │   • jit_test   │ 6 │     let total = numbers.reduce(0, fn(a, b) => a + b);       │
+ │   • jit_test   │ 6 │     let total = numbers.reduce(fn(a, b) => a + b, 0);       │
  │                │ 7 │     println("Total: {total}");                              │
  │                │ 8 │     return 0;                                               │
  │                │ 9 │ }                                                           │

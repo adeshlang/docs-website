@@ -29,7 +29,7 @@ Explore complete code snippets, runtime outputs, and syntax breakdowns grouped b
 | **Enums** | [**Enums & Pattern Matching**](/learn-by-examples/enums) | Algebraic enums with payload variants, structural `match` patterns |
 | **Error Handling** | [**Error Handling & Guarding**](/learn-by-examples/error-handling) | Exception guarding with `throw`, `try`, and `catch` blocks |
 | **Memory & Teardown** | [**Defer & Memory Management**](/learn-by-examples/defer-and-memory) | LIFO scope cleanup via `defer`, borrowing references (`&`), ownership |
-| **Concurrency** | [**Async & Concurrency**](/learn-by-examples/concurrency) | `async fn`, `await`, multithreaded `Parallel.map` and `Parallel.forEach` |
+| **Concurrency** | [**Async & Parallel Concurrency**](/learn-by-examples/concurrency) | `async fn`, `await`, multi-core work-stealing `Parallel.map`, `Parallel.reduce`, `Parallel.sum`, `Parallel.sort` |
 | **Standard Library** | [**Standard Library Ecosystem**](/learn-by-examples/standard-library) | Native modules: `Math`, `Crypto` (SHA-256), `JSON` serialization, `FS` |
 | **Algorithms** | [**Data Structures & Algorithms**](/learn-by-examples/dsa) | Two Sum ($O(N)$ hash lookup), LRU Cache, Graph traversal |
 

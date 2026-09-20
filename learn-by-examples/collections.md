@@ -8,15 +8,15 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 # Arrays, Tuples & Collections
 
-<FeatureStatus status="STABLE" details="Array literals, map/filter/reduce functional transforms, and stdlib Collections (HashMap, HashSet, VecDeque)" />
+<FeatureStatus status="STABLE" details="Array literals, global and method-style map/filter/reduce functional transforms, and stdlib Collections (HashMap, HashSet, VecDeque)" />
 
-AdeshLang includes built-in dynamic arrays, functional iteration operations (`map`, `filter`, `reduce`), and high-performance collection primitives via `import Collections;`.
+AdeshLang includes built-in dynamic arrays, functional transformation operations (`map`, `filter`, `reduce`), and high-performance collection primitives via `import Collections;`.
 
 ---
 
-## 1. Array Operations & Functional Transformations (`map`, `filter`, `reduce`)
+## 1. Functional Transformations (`map`, `filter`, `reduce`)
 
-Arrays are dynamic, indexable sequences of values. Higher-order functions process arrays functionally without mutating original buffers.
+Arrays in AdeshLang support functional transformations via both built-in functions (`map(arr, fn)`, `filter(arr, fn)`, `reduce(arr, fn, init)`) and fluent array methods (`arr.map(fn)`, `arr.filter(fn)`, `arr.reduce(fn, init)`). These higher-order functions process collections immutably without mutating the source buffers.
 
 ### Code Example
 
@@ -24,19 +24,27 @@ Arrays are dynamic, indexable sequences of values. Higher-order functions proces
 let numbers = [10, 15, 20, 25, 30];
 print("Initial array:", numbers);
 print("First element [0]:", numbers[0]);
-print("Array length:", numbers.len());
+print("Array length:", len(numbers));
 
-// 1. map: transform each element
-let doubled = map(numbers, fn(n) { return n * 2; });
-print("Mapped (x2):", doubled);
-
-// 2. filter: retain elements matching predicate
+// 1. Built-in global functions
 let evens = filter(numbers, fn(n) { return n % 2 == 0; });
-print("Filtered (evens):", evens);
+print("Filtered evens (global filter):", evens);
 
-// 3. reduce: accumulate into scalar result
-let sum = reduce(numbers, fn(acc, val) { return acc + val; }, 0);
-print("Reduced (sum):", sum);
+let doubled = map(evens, fn(n) { return n * 2; });
+print("Doubled evens (global map):", doubled);
+
+let sumTotal = reduce(doubled, fn(acc, val) { return acc + val; }, 0);
+print("Reduced sum (global reduce):", sumTotal);
+
+// 2. Method-style transformations
+let tripled = numbers.map(fn(n) { return n * 3; });
+print("Tripled (method map):", tripled);
+
+let greaterThanFifty = tripled.filter(fn(n) { return n > 50; });
+print("Filtered > 50 (method filter):", greaterThanFifty);
+
+let total = numbers.reduce(fn(acc, val) { return acc + val; }, 0);
+print("Sum total (method reduce):", total);
 ```
 
 ### Terminal Output
@@ -45,16 +53,19 @@ print("Reduced (sum):", sum);
 Initial array: [10, 15, 20, 25, 30]
 First element [0]: 10
 Array length: 5
-Mapped (x2): [20, 30, 40, 50, 60]
-Filtered (evens): [10, 20, 30]
-Reduced (sum): 100
+Filtered evens (global filter): [10, 20, 30]
+Doubled evens (global map): [20, 40, 60]
+Reduced sum (global reduce): 120
+Tripled (method map): [30, 45, 60, 75, 90]
+Filtered > 50 (method filter): [60, 75, 90]
+Sum total (method reduce): 100
 ```
 
 ### Breakdown
 
-* **`map(arr, fn)`**: Applies callback function `fn` to each item, producing a new transformed array.
-* **`filter(arr, fn)`**: Evaluates boolean predicate `fn`, retaining items where `fn` returns `true`.
-* **`reduce(arr, fn, init)`**: Combines array elements into a single accumulated result starting from `init`.
+* **`map(arr, fn)` / `arr.map(fn)`**: Applies callback function `fn` to each item, producing a new transformed array with preserved element order.
+* **`filter(arr, fn)` / `arr.filter(fn)`**: Evaluates boolean predicate `fn`, retaining items where `fn` returns `true`.
+* **`reduce(arr, fn, init)` / `arr.reduce(fn, init)`**: Combines array elements into a single accumulated result starting from `init`.
 
 ---
 

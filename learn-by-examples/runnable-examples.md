@@ -54,6 +54,7 @@ adesh run --test examples/01_Basics/test.adesh
 | **Collections** | `adesh run examples/Libraries/collections/hashmap_examples.adesh` | `HashMap`, `HashSet`, `BTreeMap`, `VecDeque`, `PriorityQueue` |
 | **Compression** | `adesh run examples/Libraries/compression/gzip.adesh` | Gzip compression and decompression buffers |
 | **Concurrency** | `adesh run examples/Libraries/concurrency/threads.adesh` | Thread spawning, mutexes, channels, message passing |
+| **Parallel** | `adesh run examples/Libraries/concurrency/parallel_ops.adesh` | Work-stealing `Parallel.map`, `Parallel.reduce`, `Parallel.sum`, `Parallel.sort` |
 | **Crypto** | `adesh run examples/Libraries/crypto/sha256.adesh` | SHA-256, AES-256-GCM, HMAC, RSA key pairs |
 | **DNS** | `adesh run examples/Libraries/dns/resolve.adesh` | Async domain name resolution (`A`, `AAAA`, `MX`) |
 | **Encoding** | `adesh run examples/Libraries/encoding/base64.adesh` | Base64 and Hex encoding/decoding |

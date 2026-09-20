@@ -27,7 +27,7 @@ const snippets = [
 let numbers = [10, 20, 30, 40];
 
 // 2. Higher-order map operation
-let doubled = map(numbers, fn(x) {
+let doubled = numbers.map(fn(x) {
     return x * 2;
 });
 

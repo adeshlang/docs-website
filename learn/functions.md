@@ -442,15 +442,15 @@ Hello, World!
 let numbers = [1, 2, 3, 4, 5];
 
 // map - transform each element
-let doubled = map(numbers, fn(x) { x * 2; });
+let doubled = numbers.map(fn(x) { return x * 2; });
 print(doubled);    // [2, 4, 6, 8, 10]
 
 // filter - keep matching elements
-let evens = filter(numbers, fn(x) { x % 2 == 0; });
+let evens = numbers.filter(fn(x) { return x % 2 == 0; });
 print(evens);      // [2, 4]
 
 // reduce - combine to single value
-let sum = reduce(numbers, 0, fn(acc, x) { acc + x; });
+let sum = numbers.reduce(fn(acc, x) { return acc + x; }, 0);
 print(sum);        // 15
 ```
 

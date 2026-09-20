@@ -116,7 +116,9 @@ print("Length: ", buffer.length); // 0
 
 ## 2. Functional & Transformation Builtins
 
-### `.map(fn)`
+AdeshLang supports functional transformations via both method calls (`nums.map(fn)`) and built-in global functions (`map(nums, fn)`, `filter(nums, fn)`, `reduce(nums, fn, init)`).
+
+### `.map(fn)` / `map(arr, fn)`
 
 Applies a mapping function `fn(x)` to each element, returning a new transformed array:
 
@@ -124,10 +126,13 @@ Applies a mapping function `fn(x)` to each element, returning a new transformed 
 let nums = [1, 2, 3, 4, 5];
 
 let squared = nums.map(fn(x) { return x * x; });
-print("Squared: ", squared); // [1, 4, 9, 16, 25]
+print("Squared (method): ", squared); // [1, 4, 9, 16, 25]
+
+let doubled = map(nums, fn(x) { return x * 2; });
+print("Doubled (global): ", doubled); // [2, 4, 6, 8, 10]
 ```
 
-### `.filter(fn)`
+### `.filter(fn)` / `filter(arr, fn)`
 
 Evaluates predicate function `fn(x)` for each element, returning a filtered array of matching items:
 
@@ -135,10 +140,13 @@ Evaluates predicate function `fn(x)` for each element, returning a filtered arra
 let values = [10, 15, 20, 25, 30];
 
 let evens = values.filter(fn(x) { return x % 2 == 0; });
-print("Evens: ", evens); // [10, 20, 30]
+print("Evens (method): ", evens); // [10, 20, 30]
+
+let odds = filter(values, fn(x) { return x % 2 != 0; });
+print("Odds (global):  ", odds);  // [15, 25]
 ```
 
-### `.reduce(fn, init)`
+### `.reduce(fn, init)` / `reduce(arr, fn, init)`
 
 Accumulates array elements into a single value starting from seed accumulator `init`:
 
@@ -146,8 +154,14 @@ Accumulates array elements into a single value starting from seed accumulator `i
 let numbers = [1, 2, 3, 4, 5];
 
 let sum = numbers.reduce(fn(acc, val) { return acc + val; }, 0);
-print("Sum total: ", sum); // 15
+print("Sum total (method): ", sum); // 15
+
+let product = reduce(numbers, fn(acc, val) { return acc * val; }, 1);
+print("Product (global):   ", product); // 120
 ```
+
+> ⚡ **Multi-Core Work-Stealing Parallelism**: For CPU-intensive data transformations across multiple CPU cores, use `import Parallel;` (`Parallel.map`, `Parallel.filter`, `Parallel.reduce`, `Parallel.sort`, `Parallel.sum`). See [Async & Concurrency](/docs/builtin/concurrency#6-high-speed-work-stealing-parallel-engine-import-parallel).
+
 
 ### `.slice(start, end)`
 

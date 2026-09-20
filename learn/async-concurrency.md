@@ -151,24 +151,30 @@ pool.shutdown();
 99
 ```
 
-And for data-parallel work, AdeshLang's iterator is parallel:
+And for data-parallel work, AdeshLang includes the high-performance work-stealing `Parallel` module:
 
 ```adesh
-let out = thread.parallel_map([1, 2, 3, 4], fn(x) { return x * 2; });
+import Parallel;
+
+let out = Parallel.map([1, 2, 3, 4], fn(x) { return x * 2; });
 print(out);                   // [2, 4, 6, 8]
+
+let sum = Parallel.sum([10, 20, 30, 40]);
+print(sum);                   // 100
 ```
 
 **Output:**
 ```
 [2, 4, 6, 8]
+100
 ```
 
-From `examples/Libraries/concurrency/14_thread_pool.adesh` and `18_parallel_map.adesh`.
+From `examples/Libraries/concurrency/parallel_ops.adesh`.
 
 ## Async/await: non-blocking single-threaded work
 
 `async fn` starts a task and returns a **Promise** immediately; `await` waits
-for it without blocking the whole thread:
+for it without blocking the whole thread (and `main` is auto-invoked):
 
 ```adesh
 async fn fetchUser(id) {
@@ -179,8 +185,6 @@ async fn main() {
     let result = await fetchUser(123);
     print(result);              // data_123
 }
-
-await main();
 ```
 
 **Output:**

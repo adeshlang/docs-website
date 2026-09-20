@@ -98,8 +98,6 @@ fn main() {
     handleAdd(manager, ["Buy milk", "", "low"]);
     handleList(manager, []);
 }
-
-main();
 ```
 
 **Output:**
