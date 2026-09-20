@@ -6,16 +6,16 @@ sidebar_label: Collections
 
 # Collections Library
 
-The **Collections** builtin library provides 15 high-performance, memory-safe data structures built around AdeshLang's ownership/RAII model — no garbage collector required. It ships as the `Collections` namespace with one constructor per type, plus the global functional helpers `map`, `filter`, and `reduce`. All types are available identically across every backend (Interpreter, Bytecode VM, JIT, Native JIT, AOT, WASM).
+The **Collections** builtin library provides 15 high-performance, memory-safe data structures built around AdeshLang's ownership/RAII model — no garbage collector required. It ships as the `Collections` namespace with one constructor per type, plus fluent array methods `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, initial)`. All types are available identically across every backend (Interpreter, Bytecode VM, JIT, Native JIT, AOT, WASM).
 
 ## Namespace
 
 | Name | What it provides |
 | :--- | :--- |
 | `Collections` | The namespace: 15 constructor functions (`Vec`, `Slice`, `HashMap`, `HashSet`, `VecDeque`, `BTreeMap`, `BTreeSet`, `BinaryHeap`, `PriorityQueue`, `BitSet`, `RingBuffer`, `Queue`, `Stack`, `OrderedMap`, `OrderedSet`) |
-| `array.map(fn)` | Method / Function — transform each element |
-| `array.filter(fn)` | Method / Function — keep matching elements |
-| `array.reduce(fn, initial?)` | Method / Function — fold to a single value |
+| `array.map(fn)` | Method — transform each element |
+| `array.filter(fn)` | Method — keep matching elements |
+| `array.reduce(fn, initial?)` | Method — fold elements to a single value |
 
 ## Importing the library
 

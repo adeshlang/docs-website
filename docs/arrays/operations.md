@@ -114,39 +114,39 @@ print("Length: ", buffer.length); // 0
 
 ---
 
-## 2. Functional & Transformation Builtins
+## 2. Functional & Transformation Methods
 
-AdeshLang supports functional transformations via both method calls (`nums.map(fn)`) and built-in global functions (`map(nums, fn)`, `filter(nums, fn)`, `reduce(nums, fn, init)`).
+AdeshLang provides high-performance, fluent array methods for functional transformations: `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, init)`. These methods operate immutably, producing new arrays or values without modifying the original collection.
 
-### `.map(fn)` / `map(arr, fn)`
+### `.map(fn)`
 
-Applies a mapping function `fn(x)` to each element, returning a new transformed array:
+Applies a mapping callback function `fn(x)` to each element, returning a new transformed array:
 
 ```adesh
 let nums = [1, 2, 3, 4, 5];
 
 let squared = nums.map(fn(x) { return x * x; });
-print("Squared (method): ", squared); // [1, 4, 9, 16, 25]
+print("Squared: ", squared); // [1, 4, 9, 16, 25]
 
-let doubled = map(nums, fn(x) { return x * 2; });
-print("Doubled (global): ", doubled); // [2, 4, 6, 8, 10]
+let doubled = nums.map(fn(x) { return x * 2; });
+print("Doubled: ", doubled); // [2, 4, 6, 8, 10]
 ```
 
-### `.filter(fn)` / `filter(arr, fn)`
+### `.filter(fn)`
 
-Evaluates predicate function `fn(x)` for each element, returning a filtered array of matching items:
+Evaluates predicate function `fn(x)` for each element, returning a filtered array containing only elements where `fn` evaluates to `true`:
 
 ```adesh
 let values = [10, 15, 20, 25, 30];
 
 let evens = values.filter(fn(x) { return x % 2 == 0; });
-print("Evens (method): ", evens); // [10, 20, 30]
+print("Evens: ", evens); // [10, 20, 30]
 
-let odds = filter(values, fn(x) { return x % 2 != 0; });
-print("Odds (global):  ", odds);  // [15, 25]
+let greaterThanTwenty = values.filter(fn(x) { return x > 20; });
+print("Greater than 20: ", greaterThanTwenty); // [25, 30]
 ```
 
-### `.reduce(fn, init)` / `reduce(arr, fn, init)`
+### `.reduce(fn, init)`
 
 Accumulates array elements into a single value starting from seed accumulator `init`:
 
@@ -154,10 +154,10 @@ Accumulates array elements into a single value starting from seed accumulator `i
 let numbers = [1, 2, 3, 4, 5];
 
 let sum = numbers.reduce(fn(acc, val) { return acc + val; }, 0);
-print("Sum total (method): ", sum); // 15
+print("Sum total: ", sum); // 15
 
-let product = reduce(numbers, fn(acc, val) { return acc * val; }, 1);
-print("Product (global):   ", product); // 120
+let product = numbers.reduce(fn(acc, val) { return acc * val; }, 1);
+print("Product:   ", product); // 120
 ```
 
 > ⚡ **Multi-Core Work-Stealing Parallelism**: For CPU-intensive data transformations across multiple CPU cores, use `import Parallel;` (`Parallel.map`, `Parallel.filter`, `Parallel.reduce`, `Parallel.sort`, `Parallel.sum`). See [Async & Concurrency](/docs/builtin/concurrency#6-high-speed-work-stealing-parallel-engine-import-parallel).

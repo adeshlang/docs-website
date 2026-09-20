@@ -190,22 +190,32 @@ print(execute_if(false, get_value));   // 0
 
 ## Array transformations (the real-world win)
 
-The built-in `map` is itself a higher-order function — pass it a
-transformer:
+AdeshLang array methods like `.map()`, `.filter()`, and `.reduce()` are higher-order methods — pass them callback functions to transform collections:
 
 ```adesh
-let arr = [1, 2, 3, 4];
+let arr = [1, 2, 3, 4, 5, 6];
+
+// 1. Transform elements with .map()
 let doubled = arr.map(fn(x) { return x * 2; });
-print(doubled);   // [2, 4, 6, 8]
+print("Doubled:", doubled);   // [2, 4, 6, 8, 10, 12]
+
+// 2. Filter elements with .filter()
+let evens = arr.filter(fn(x) { return x % 2 == 0; });
+print("Evens:", evens);       // [2, 4, 6]
+
+// 3. Accumulate elements with .reduce()
+let sum = arr.reduce(fn(acc, x) { return acc + x; }, 0);
+print("Sum:", sum);           // 21
 ```
 
 **Output:**
 ```
-[2, 4, 6, 8]
+Doubled: [2, 4, 6, 8, 10, 12]
+Evens: [2, 4, 6]
+Sum: 21
 ```
 
-The same pattern powers `filter`, `reduce`, and even
-[`thread.parallel_map`](/learn/async-concurrency) for CPU-bound work.
+The same pattern powers [`Parallel.map`](/docs/builtin/concurrency) for multi-core CPU work.
 
 ## Practice
 
