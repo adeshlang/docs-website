@@ -29,28 +29,28 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
       <div className="card__footer">
         <a
           className="button button--primary button--block margin-bottom--sm"
-          href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Download Windows Setup (.exe) — 14.4 MB
+          Download Windows Setup (.exe) — 70.4 MB
         </a>
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Portable x86_64 (.zip) — 34.3 MB
+            Portable x86_64 (.zip) — 120.3 MB
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-aarch64-windows-portable.zip"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-windows-portable.zip"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Portable ARM64 (.zip) — 31.1 MB
+            Portable ARM64 (.zip) — 113.1 MB
           </a>
         </div>
       </div>
@@ -72,36 +72,36 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
       <div className="card__footer">
         <a
           className="button button--primary button--block margin-bottom--sm"
-          href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Apple Silicon Installer (.pkg) — 20.7 MB
+          Apple Silicon Installer (.pkg) — 21.2 MB
         </a>
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Apple Silicon (.dmg) — 23 MB
+            Apple Silicon (.dmg) — 23.6 MB
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Intel (.pkg) — 23.7 MB
+            Intel (.pkg) — 24.3 MB
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Intel (.dmg) — 27 MB
+            Intel (.dmg) — 27.6 MB
           </a>
         </div>
       </div>
@@ -125,37 +125,37 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <div className="button-group button-group--block margin-bottom--sm">
           <a
             className="button button--primary"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adeshlang_0.3.0_amd64.deb"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Debian/Ubuntu x86_64 (.deb) — 89.7 MB
+            Debian/Ubuntu x86_64 (.deb) — 90.7 MB
           </a>
           <a
             className="button button--primary"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adeshlang_0.3.0_arm64.deb"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_arm64.deb"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Debian/Ubuntu ARM64 (.deb) — 85 MB
+            Debian/Ubuntu ARM64 (.deb) — 86.0 MB
           </a>
         </div>
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adeshlang-0.3.0-1.x86_64.rpm"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Fedora/RPM x86_64 — 116 MB
+            Fedora/RPM x86_64 — 117.5 MB
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Universal Tarball (.tar.xz) — 82.6 MB
+            Universal Tarball (.tar.xz) — 83.5 MB
           </a>
         </div>
       </div>
@@ -409,7 +409,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 ### 🪟 Windows Installation
 
 #### Graphical Setup (Recommended)
-1. Download **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)**.
+1. Download **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)**.
 2. Run the installer and follow the on-screen prompts.
 3. Open PowerShell or Command Prompt and verify:
    ```powershell
@@ -418,7 +418,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
    ```
 
 #### Portable ZIP Archive
-1. Download **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)**.
+1. Download **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)**.
 2. Extract the archive to your preferred directory (e.g. `C:\AdeshLang`).
 3. Add the `bin` directory to your user `PATH`.
 
@@ -428,8 +428,8 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 
 #### PKG Installer (Recommended)
 1. Download the PKG installer for your architecture:
-   - **Apple Silicon (M1/M2/M3/M4)**: [AdeshLang-0.3.0-aarch64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg)
-   - **Intel**: [AdeshLang-0.3.0-x86_64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg)
+   - **Apple Silicon (M1/M2/M3/M4)**: [AdeshLang-0.3.0-aarch64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg)
+   - **Intel**: [AdeshLang-0.3.0-x86_64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg)
 2. Double-click the `.pkg` file and follow the standard macOS installation wizard.
 3. Open Terminal and run:
    ```bash
@@ -438,7 +438,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
    ```
 
 #### DMG Drag-and-Drop
-1. Download the `.dmg` image ([Apple Silicon DMG](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg) / [Intel DMG](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg)).
+1. Download the `.dmg` image ([Apple Silicon DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg) / [Intel DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg)).
 2. Open the image and double-click `Install-AdeshLang.command` or copy to `/Library/Application Support/AdeshLang`.
 
 ---
@@ -448,7 +448,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 #### Debian / Ubuntu / Mint / Pop!_OS (.deb)
 ```bash
 # Download DEB package
-curl -LO https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adeshlang_0.3.0_amd64.deb
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb
 
 # Install via dpkg / apt
 sudo dpkg -i adeshlang_0.3.0_amd64.deb
@@ -462,17 +462,17 @@ adesh doctor
 #### Fedora / RHEL / Rocky / CentOS (.rpm)
 ```bash
 # Download and install RPM
-sudo rpm -Uvh https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adeshlang-0.3.0-1.x86_64.rpm
+sudo rpm -Uvh https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm
 
 # Verify
 adesh --version
 adesh doctor
 ```
 
-#### Universal Tarball (.tar.xz)
+#### Universal Tarball (.tar.xz) — 83.5 MB
 ```bash
 # Download and extract tarball
-curl -LO https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
 tar -xf AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
 
 # Move to local bin or export PATH
@@ -530,7 +530,7 @@ You can verify the integrity of any downloaded package using the official `SHA25
 
 ```bash
 # Linux / macOS
-curl -sL https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/SHA256SUMS | grep "<filename>" | sha256sum -c
+curl -sL https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/SHA256SUMS | grep "<filename>" | sha256sum -c
 
 # Windows PowerShell
 Get-FileHash -Algorithm SHA256 .\AdeshLang-0.3.0-x86_64-windows-setup.exe

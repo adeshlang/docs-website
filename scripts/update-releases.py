@@ -5,7 +5,7 @@ AdeshLang Docs Website Release Updater
 Fetches the latest GitHub releases for `adeshlang/adeshlang` (including core,
 mobile, and vscode releases), computes/validates SHA-256 checksums and file sizes,
 and automatically updates documentation download links, installation commands,
-and release tables across the documentation website.
+release tables, and installer manifests across the repository.
 
 Usage:
   python update-releases.py [--repo owner/name] [--tag v0.3.0] [--dry-run]
@@ -123,6 +123,31 @@ def get_platform_desc(filename: str) -> str:
     return "Release Artifact"
 
 
+def get_target_tag_for_filename(filename: str, core_tag: str, mobile_tag: str, vscode_tag: str) -> str:
+    """Routes an asset filename to its proper release tag."""
+    if filename.startswith("adesh-vscode-") or filename.endswith(".vsix"):
+        return vscode_tag
+    if filename.startswith("AdeshLang-mobile-") or "SHA256SUMS-mobile" in filename:
+        return mobile_tag
+    return core_tag
+
+
+def fix_all_download_urls(content: str, repo: str, core_tag: str, mobile_tag: str, vscode_tag: str) -> str:
+    """
+    Scans content for any GitHub release download URL and rewrites it with
+    the proper tag based on the asset filename.
+    """
+    def _repl(match):
+        filename = match.group(1)
+        tag = get_target_tag_for_filename(filename, core_tag, mobile_tag, vscode_tag)
+        return f"https://github.com/{repo}/releases/download/{tag}/{filename}"
+
+    pattern = re.compile(
+        r"https://github\.com/[^/]+/[^/]+/releases/download/[^/]+/([a-zA-Z0-9_\.\-]+)"
+    )
+    return pattern.sub(_repl, content)
+
+
 def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
     print(f"Fetching release information for {repo}...")
     api_url = f"https://api.github.com/repos/{repo}/releases"
@@ -136,27 +161,50 @@ def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
         print("No releases found.")
         return False
 
-    # Find core release, mobile release, and vscode release
-    core_release = None
-    mobile_release = None
-    vscode_release = None
+    # Separate releases by type
+    core_candidates = []
+    mobile_candidates = []
+    vscode_candidates = []
 
     for rel in releases:
         tag = rel.get("tag_name", "")
         if tag.startswith("mobile-"):
-            if not mobile_release:
-                mobile_release = rel
+            mobile_candidates.append(rel)
         elif tag.startswith("vscode-"):
-            if not vscode_release:
-                vscode_release = rel
+            vscode_candidates.append(rel)
         else:
-            if target_tag:
-                if tag == target_tag and not core_release:
-                    core_release = rel
-            elif not core_release:
-                core_release = rel
+            core_candidates.append(rel)
+
+    core_release = None
+    mobile_release = None
+    vscode_release = None
+
+    if target_tag:
+        if target_tag.startswith("vscode-"):
+            for r in vscode_candidates:
+                if r.get("tag_name") == target_tag:
+                    vscode_release = r
+                    break
+        elif target_tag.startswith("mobile-"):
+            for r in mobile_candidates:
+                if r.get("tag_name") == target_tag:
+                    mobile_release = r
+                    break
+        else:
+            for r in core_candidates:
+                if r.get("tag_name") == target_tag:
+                    core_release = r
+                    break
+
+    if not core_release and core_candidates:
+        core_release = core_candidates[0]
+    if not mobile_release and mobile_candidates:
+        mobile_release = mobile_candidates[0]
+    if not vscode_release and vscode_candidates:
+        vscode_release = vscode_candidates[0]
 
     if not core_release:
+        # Fallback if no release without prefix was found
         core_release = releases[0]
 
     core_tag = core_release.get("tag_name", "v0.3.0")
@@ -169,14 +217,14 @@ def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
     print(f"  • Mobile : {mobile_tag}")
     print(f"  • VSCode : {vscode_tag}")
 
-    # Gather all assets
+    # Gather all assets with their appropriate release tag
     assets = []
     for rel, rtag in [(core_release, core_tag), (mobile_release, mobile_tag), (vscode_release, vscode_tag)]:
         if not rel:
             continue
         for a in rel.get("assets", []):
             name = a.get("name", "")
-            download_url = a.get("browser_download_url", "")
+            download_url = f"https://github.com/{repo}/releases/download/{rtag}/{name}"
             size = a.get("size", 0)
             assets.append({
                 "name": name,
@@ -185,45 +233,55 @@ def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
                 "tag": rtag,
             })
 
-    # Download SHA256SUMS if present
+    # Download SHA256SUMS from core and mobile releases if present
     sha256_map = {}
     for a in assets:
-        if a["name"] in ("SHA256SUMS", "SHA256SUMS.txt"):
+        if a["name"] in ("SHA256SUMS", "SHA256SUMS.txt", "SHA256SUMS-mobile.txt"):
             try:
                 req = Request(a["url"], headers=get_headers())
                 with urlopen(req, timeout=30) as resp:
                     lines = resp.read().decode("utf-8").splitlines()
                     for line in lines:
-                        parts = line.strip().split()
+                        line = line.strip()
+                        if not line or line.startswith("#"):
+                            continue
+                        parts = line.split()
                         if len(parts) >= 2:
                             sha = parts[0]
                             fname = parts[1].lstrip("*").lstrip("./")
                             sha256_map[fname] = sha
-                print(f"Loaded {len(sha256_map)} checksums from {a['name']}")
+                print(f"Loaded checksums from {a['name']}")
             except Exception as e:
                 print(f"Warning: Could not fetch {a['name']}: {e}")
 
-    # Process all assets for checksums
+    # Process all assets for checksums and formatted sizes
     asset_rows = []
+    asset_size_dict = {}
+    asset_sha_dict = {}
     for a in assets:
         name = a["name"]
         url = a["url"]
-        size_str = format_size(a["size"])
+        size_bytes = a["size"]
+        size_str = format_size(size_bytes)
         sha = sha256_map.get(name)
         if not sha:
             print(f"Fetching sha256 for {name}...")
             try:
                 sha, real_size = compute_sha256_and_size(url)
-                if not a["size"]:
+                if not size_bytes:
+                    size_bytes = real_size
                     size_str = format_size(real_size)
             except Exception as e:
                 print(f"  Warning: could not compute sha256 for {name}: {e}")
                 sha = "pending"
         desc = get_platform_desc(name)
+        asset_size_dict[name] = size_str
+        asset_sha_dict[name] = sha
         asset_rows.append({
             "name": name,
             "desc": desc,
             "size": size_str,
+            "size_bytes": size_bytes,
             "sha256": sha,
             "url": url,
         })
@@ -233,12 +291,37 @@ def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
     docs_root = script_dir.parent
     repo_root = docs_root.parent
 
-    # 1. Update docs-website/docs/install.md table
+    # 1. Update docs-website/docs/install.md
     install_md = docs_root / "docs" / "install.md"
     if install_md.is_file():
         content = install_md.read_text(encoding="utf-8")
-        
-        # Build new markdown table
+
+        # Fix all release download URLs across the entire file
+        content = fix_all_download_urls(content, repo, core_tag, mobile_tag, vscode_tag)
+
+        # Update core version mentions (e.g. AdeshLang v0.3.0)
+        content = re.sub(
+            r"AdeshLang v\d+\.\d+\.\d+",
+            f"AdeshLang {core_tag}",
+            content
+        )
+        content = re.sub(
+            r"Direct Downloads \(v\d+\.\d+\.\d+\)",
+            f"Direct Downloads ({core_tag})",
+            content
+        )
+
+        # Update button size labels if present
+        def _btn_sub(match):
+            prefix = match.group(1)
+            fname = match.group(2)
+            suffix = match.group(3)
+            size = asset_size_dict.get(fname, "")
+            if size:
+                return f"{prefix}{fname}{suffix} — {size}"
+            return match.group(0)
+
+        # Build new markdown table for assets
         table_lines = [
             "| File Name | Platform / Target | Size | SHA-256 Checksum |",
             "|---|---|---|---|",
@@ -259,68 +342,182 @@ def update_docs(repo: str, target_tag: str = None, dry_run: bool = False):
         else:
             print(f"! Warning: Could not locate asset table in {install_md}")
 
-        # Update URLs and version strings
-        content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{core_tag}/",
-            content
-        )
-        content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/mobile-v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{mobile_tag}/",
-            content
-        )
-        content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/vscode-v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{vscode_tag}/",
-            content
-        )
+        # Fix specific button size annotations in install.md
+        setup_exe = f"AdeshLang-{core_version}-x86_64-windows-setup.exe"
+        if setup_exe in asset_size_dict:
+            content = re.sub(
+                r"Download Windows Setup \(\.exe\)(?: — [^\n<]+)?",
+                f"Download Windows Setup (.exe) — {asset_size_dict[setup_exe]}",
+                content
+            )
+        win_zip_x86 = f"AdeshLang-{core_version}-x86_64-windows-portable.zip"
+        if win_zip_x86 in asset_size_dict:
+            content = re.sub(
+                r"Portable x86_64 \(\.zip\)(?: — [^\n<]+)?",
+                f"Portable x86_64 (.zip) — {asset_size_dict[win_zip_x86]}",
+                content
+            )
+        win_zip_arm = f"AdeshLang-{core_version}-aarch64-windows-portable.zip"
+        if win_zip_arm in asset_size_dict:
+            content = re.sub(
+                r"Portable ARM64 \(\.zip\)(?: — [^\n<]+)?",
+                f"Portable ARM64 (.zip) — {asset_size_dict[win_zip_arm]}",
+                content
+            )
+        mac_pkg_arm = f"AdeshLang-{core_version}-aarch64-macos.pkg"
+        if mac_pkg_arm in asset_size_dict:
+            content = re.sub(
+                r"Apple Silicon Installer \(\.pkg\)(?: — [^\n<]+)?",
+                f"Apple Silicon Installer (.pkg) — {asset_size_dict[mac_pkg_arm]}",
+                content
+            )
+        mac_dmg_arm = f"AdeshLang-{core_version}-aarch64-macos.dmg"
+        if mac_dmg_arm in asset_size_dict:
+            content = re.sub(
+                r"Apple Silicon \(\.dmg\)(?: — [^\n<]+)?",
+                f"Apple Silicon (.dmg) — {asset_size_dict[mac_dmg_arm]}",
+                content
+            )
+        mac_pkg_x86 = f"AdeshLang-{core_version}-x86_64-macos.pkg"
+        if mac_pkg_x86 in asset_size_dict:
+            content = re.sub(
+                r"Intel \(\.pkg\)(?: — [^\n<]+)?",
+                f"Intel (.pkg) — {asset_size_dict[mac_pkg_x86]}",
+                content
+            )
+        mac_dmg_x86 = f"AdeshLang-{core_version}-x86_64-macos.dmg"
+        if mac_dmg_x86 in asset_size_dict:
+            content = re.sub(
+                r"Intel \(\.dmg\)(?: — [^\n<]+)?",
+                f"Intel (.dmg) — {asset_size_dict[mac_dmg_x86]}",
+                content
+            )
+        deb_x86 = f"adeshlang_{core_version}_amd64.deb"
+        if deb_x86 in asset_size_dict:
+            content = re.sub(
+                r"Debian/Ubuntu x86_64 \(\.deb\)(?: — [^\n<]+)?",
+                f"Debian/Ubuntu x86_64 (.deb) — {asset_size_dict[deb_x86]}",
+                content
+            )
+        deb_arm = f"adeshlang_{core_version}_arm64.deb"
+        if deb_arm in asset_size_dict:
+            content = re.sub(
+                r"Debian/Ubuntu ARM64 \(\.deb\)(?: — [^\n<]+)?",
+                f"Debian/Ubuntu ARM64 (.deb) — {asset_size_dict[deb_arm]}",
+                content
+            )
+        rpm_x86 = f"adeshlang-{core_version}-1.x86_64.rpm"
+        if rpm_x86 in asset_size_dict:
+            content = re.sub(
+                r"Fedora/RPM x86_64(?: — [^\n<]+)?",
+                f"Fedora/RPM x86_64 — {asset_size_dict[rpm_x86]}",
+                content
+            )
+        tar_x86 = f"AdeshLang-{core_version}-x86_64-linux-gnu.tar.xz"
+        if tar_x86 in asset_size_dict:
+            content = re.sub(
+                r"Universal Tarball \(\.tar\.xz\)(?: — [^\n<]+)?",
+                f"Universal Tarball (.tar.xz) — {asset_size_dict[tar_x86]}",
+                content
+            )
 
         if not dry_run:
             install_md.write_text(content, encoding="utf-8")
+            print(f"✓ Updated {install_md}")
 
     # 2. Update docs-website/learn/getting-started/installation.md
     learn_install_md = docs_root / "learn" / "getting-started" / "installation.md"
     if learn_install_md.is_file():
         content = learn_install_md.read_text(encoding="utf-8")
+        content = fix_all_download_urls(content, repo, core_tag, mobile_tag, vscode_tag)
         content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{core_tag}/",
+            r"https://github\.com/[^/]+/[^/]+/releases/tag/(?:vscode-|mobile-)?v\d+\.\d+\.\d+",
+            f"https://github.com/{repo}/releases/tag/{core_tag}",
             content
         )
         content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/mobile-v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{mobile_tag}/",
+            r"AdeshLang v\d+\.\d+\.\d+ Release",
+            f"AdeshLang {core_tag} Release",
             content
         )
         content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/vscode-v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{vscode_tag}/",
+            r"Pre-built Packages \(v\d+\.\d+\.\d+\)",
+            f"Pre-built Packages ({core_tag})",
             content
         )
         if not dry_run:
             learn_install_md.write_text(content, encoding="utf-8")
-            print(f"✓ Updated release URLs in {learn_install_md}")
+            print(f"✓ Updated {learn_install_md}")
 
     # 3. Update docs-website/src/pages/index.tsx
     index_tsx = docs_root / "src" / "pages" / "index.tsx"
     if index_tsx.is_file():
         content = index_tsx.read_text(encoding="utf-8")
-        content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{core_tag}/",
-            content
-        )
-        content = re.sub(
-            r"https://github\.com/[^/]+/[^/]+/releases/download/mobile-v\d+\.\d+\.\d+/",
-            f"https://github.com/{repo}/releases/download/{mobile_tag}/",
-            content
-        )
+        content = fix_all_download_urls(content, repo, core_tag, mobile_tag, vscode_tag)
+
+        # Update button labels with exact sizes in index.tsx
+        setup_exe = f"AdeshLang-{core_version}-x86_64-windows-setup.exe"
+        if setup_exe in asset_size_dict:
+            content = re.sub(
+                r"downloadLabel:\s*'Setup \.exe \([^\)]+\)'",
+                f"downloadLabel: 'Setup .exe ({asset_size_dict[setup_exe]})'",
+                content
+            )
+        mobile_apk = f"AdeshLang-mobile-{core_version}-arm64-v8a.apk"
+        if mobile_apk in asset_size_dict:
+            content = re.sub(
+                r"downloadLabel:\s*'ARM64 APK \([^\)]+\)'",
+                f"downloadLabel: 'ARM64 APK ({asset_size_dict[mobile_apk]})'",
+                content
+            )
+
         if not dry_run:
             index_tsx.write_text(content, encoding="utf-8")
-            print(f"✓ Updated homepage download commands in {index_tsx}")
+            print(f"✓ Updated {index_tsx}")
 
-    print("All documentation files updated successfully!")
+    # 4. Update docs-website/docs/tools/als.md
+    als_md = docs_root / "docs" / "tools" / "als.md"
+    if als_md.is_file():
+        content = als_md.read_text(encoding="utf-8")
+        content = fix_all_download_urls(content, repo, core_tag, mobile_tag, vscode_tag)
+        vsix_file = f"adesh-vscode-{core_version}.vsix"
+        if vsix_file in asset_size_dict:
+            content = re.sub(
+                r"\*\*\[adesh-vscode-[^\]]+\]\([^\)]+\)\*\*\s*\([^\)]+\)",
+                f"**[{vsix_file}](https://github.com/{repo}/releases/download/{vscode_tag}/{vsix_file})** ({asset_size_dict[vsix_file]})",
+                content
+            )
+        if not dry_run:
+            als_md.write_text(content, encoding="utf-8")
+            print(f"✓ Updated {als_md}")
+
+    # 5. Update installer/manifests/release-stable.json
+    manifest_file = repo_root / "installer" / "manifests" / "release-stable.json"
+    if manifest_file.is_file():
+        try:
+            m_data = json.loads(manifest_file.read_text(encoding="utf-8"))
+            m_data["version"] = core_version
+            for comp_name, comp_info in m_data.get("components", {}).items():
+                url = comp_info.get("url", "")
+                if url:
+                    fname = url.split("/")[-1]
+                    tag = get_target_tag_for_filename(fname, core_tag, mobile_tag, vscode_tag)
+                    comp_info["url"] = f"https://github.com/{repo}/releases/download/{tag}/{fname}"
+                    comp_info["version"] = core_version
+                    if fname in asset_sha_dict and asset_sha_dict[fname] != "pending":
+                        comp_info["sha256"] = asset_sha_dict[fname]
+                    # Update size in bytes if available from rows
+                    for r in asset_rows:
+                        if r["name"] == fname and r.get("size_bytes"):
+                            comp_info["size"] = r["size_bytes"]
+                            break
+            if not dry_run:
+                manifest_file.write_text(json.dumps(m_data, indent=2) + "\n", encoding="utf-8")
+                print(f"✓ Updated {manifest_file}")
+        except Exception as e:
+            print(f"! Warning: could not update {manifest_file}: {e}")
+
+    print("All documentation files and manifests updated successfully!")
     return True
 
 
