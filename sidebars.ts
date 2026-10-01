@@ -228,6 +228,7 @@ const sidebars: SidebarsConfig = {
         'compiler/codegen',
         'compiler/adob',
         'compiler/linker',
+        'compiler/runtime-abi',
         'compiler/runtime',
         'compiler/memory-management',
       ],
