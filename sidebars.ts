@@ -226,6 +226,8 @@ const sidebars: SidebarsConfig = {
         'compiler/borrow-checker',
         'compiler/ir',
         'compiler/codegen',
+        'compiler/adob',
+        'compiler/linker',
         'compiler/runtime',
         'compiler/memory-management',
       ],
@@ -235,6 +237,7 @@ const sidebars: SidebarsConfig = {
       label: 'Tools & Ecosystem',
       items: [
         'tools/cli',
+        'tools/adob-cli',
         'tools/tui-editor',
         'tools/als',
         'tools/formatting',

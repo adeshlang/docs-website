@@ -41,10 +41,64 @@ adesh run --bytecode app.adesh
 ---
 
 ### `adesh build <file>`
-Compiles an AdeshLang program ahead-of-time (AOT) into a standalone native binary executable.
+Compiles an AdeshLang program ahead-of-time (AOT) into a standalone native binary executable, ADOB object, static archive, or shared library.
 
 ```bash
+# Build native executable directly with native Adesh Linker
 adesh build main.adesh -o bin/app.exe
+
+# Emit native ADOB (Adesh Native Object Binary) object file
+adesh build main.adesh --emit-adob -o target/main.adob
+
+# Build static library (.lib / .a)
+adesh build math.adesh --lib -o libmath.lib
+
+# Build shared library (.dll / .so)
+adesh build api.adesh --shared -o api.dll
+
+# Fast iterative development build (skip optimizations)
+adesh build main.adesh --fast
+
+# Deterministic reproducible release build with stripped symbols
+adesh build main.adesh --release --deterministic --strip -o app.exe
+```
+
+---
+
+### `adesh adob <subcommand>`
+Inspects, validates, and manages ADOB (`.adob`) object binaries.
+
+```bash
+# Inspect object headers, target architecture, and exports
+adesh adob inspect target/main.adob
+
+# Validate file integrity, alignment, and bounds
+adesh adob validate target/main.adob
+
+# Dump symbol table
+adesh adob dump-symbols target/main.adob
+
+# Dump section table
+adesh adob dump-sections target/main.adob
+
+# Dump relocation table
+adesh adob dump-relocations target/main.adob
+```
+
+---
+
+### `adesh toolchain <subcommand>`
+Manages installed toolchain profiles, cross-compilation targets, and external toolchains.
+
+```bash
+# List available and active toolchains
+adesh toolchain list
+
+# Discover and register host system compilers and linkers into Adesh
+adesh toolchain --external install
+
+# Install a specific cross-compilation toolchain
+adesh toolchain install aarch64-unknown-linux-gnu
 ```
 
 ---
