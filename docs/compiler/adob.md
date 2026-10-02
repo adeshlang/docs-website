@@ -4,86 +4,71 @@ title: ADOB Universal Object Format
 sidebar_label: ADOB Object Format
 ---
 
+import FeatureStatus from '@site/src/components/FeatureStatus';
+
 # ADOB — Adesh Native Object Binary
 
-**ADOB** (*Adesh Native Object Binary*) is the first-class, target-neutral relocatable object format designed specifically for the Adesh ecosystem. It completely decouples the Adesh compiler from platform-specific binary object formats like ELF, PE/COFF, and Mach-O.
+<FeatureStatus status="PARTIAL" details="Version 1.0 format and validation are implemented; target codegen and linker support vary" />
+
+**ADOB** (*Adesh Native Object Binary*) is Adesh's relocatable object format.
+It stores a target descriptor, sections, symbols, imports and exports,
+relocations, and metadata in a common container. An ADOB object still describes
+a particular target; using the format does not imply that code generation or
+linking is implemented for every architecture or device.
+
+> **Planned for v0.4.0:** The native compiler and linker improvements using
+> ADOB are planned for AdeshLang v0.4.0. ADOB v1.0 and its tools exist in the
+> current codebase, but the full native toolchain is not yet a generally
+> supported release feature.
 
 ```text
-Adesh Source → AST → HIR → LIR → Machine IR → ADOB Object → adeshlink → Native Executable (.exe / ELF / Mach-O)
+Adesh source → partial native lowering → Machine IR → ADOB object → adeshlink → target output
 ```
 
 ---
 
-## Why ADOB?
+## What the format contains
 
-Traditional compilers emit platform-specific object files directly (e.g. `.o` / `.obj`), tightly coupling code generation with specific operating systems and toolchain linkers. 
+ADOB objects use format version **1.0.0**. The serialized data includes:
 
-ADOB provides:
-1. **Target Neutrality:** Represents code and data sections for CPUs (x86_64, AArch64, RISC-V), GPUs (CUDA, Vulkan, Metal), NPUs, and MCUs in a single unified format.
-2. **First-Class Safety Metadata:** Embeds memory safety levels, stack canary markers, Control Flow Integrity (CFI/CET/BTI) status, and W^X enforcement flags.
-3. **Deterministic & Hardened:** Guarantees bit-for-bit reproducible binary outputs across different host build systems.
-4. **Multi-Architecture Fat Bundles:** Package code for heterogeneous compute platforms (CPU + GPU kernels) into a single `.adob` bundle.
+| Part | Contents |
+|---|---|
+| Header | Magic `ADOB`, format version, flags, and entry counts |
+| Target descriptor | Device, architecture, operating system, environment, ABI, pointer width, endianness, and target features |
+| Sections | Section names, kinds, permissions/flags, alignment, payload bytes, and relocations |
+| Symbols | Defined and undefined symbols with binding, visibility, kind, and section information |
+| Imports and exports | External dependency names and exported symbol names |
+| Metadata | Optional safety, security, threading, optimization, debug, unwind, accelerator, memory-region, extension, and build metadata |
 
----
-
-## File Format Specification
-
-Every ADOB object begins with a fixed header and descriptor table:
-
-| Field | Size | Description |
-|---|---|---|
-| `ADOB_MAGIC` | 4 bytes | Fixed magic identifier: `"ADOB"` (`0x41 0x44 0x4F 0x42`) |
-| `ADOB_VERSION` | 3 bytes | Major, minor, and patch version (`1.0.0`) |
-| `FLAGS` | 4 bytes | Bitflags: Relocatable, Executable, Shared, Hardened, Deterministic |
-| `TARGET_DESCRIPTOR` | Variable | Compute device, architecture, OS, ABI, pointer width, endianness |
-| `SAFETY_METADATA` | Variable | Memory safety level, stack canary guard, CFI, W^X page flags |
-| `THREAD_SAFETY` | Variable | Memory ordering model (`Relaxed`..`SeqCst`), TLS model |
-| `SECTIONS_TABLE` | Variable | Section headers, alignments, flags, and byte offsets |
-| `SYMBOLS_TABLE` | Variable | Defined & undefined symbols, bindings (Global/Local/Weak), sizes |
-| `RELOCATIONS_TABLE` | Variable | Target relocations (Absolute, Relative, GOT, PLT, TLS) |
-| `PAYLOAD_BYTES` | Variable | Raw binary machine code and constant data bytes |
+The library also has an `AdobBundle` container for grouping objects. Bundling
+objects does not provide missing device code generation or runtime support.
+Relocation kinds are described in the format, but whether a relocation can be
+produced and applied depends on the code generator and linker for the selected
+target.
 
 ---
 
-## Multi-Architecture Fat Bundles (`AdobBundle`)
+## Emit, inspect, and validate
 
-ADOB allows combining multiple target objects into a universal heterogeneous bundle:
-
-```rust
-use adesh_object::bundle::AdobBundle;
-
-let mut bundle = AdobBundle::new();
-bundle.add_member(x86_64_object);
-bundle.add_member(aarch64_object);
-bundle.add_member(gpu_cuda_object);
-
-let fat_bytes = bundle.to_bytes()?;
-```
-
----
-
-## Working with ADOB in the CLI
-
-### Emitting ADOB
 ```bash
-# Compile Adesh source code to an ADOB object
+# Emit an object using the native compiler path.
 adesh build src/main.adesh --emit-adob -o target/main.adob
-```
 
-### Inspecting and Validating ADOB Objects
-```bash
-# View target architecture, ABI, and section summaries
-adesh adob inspect target/main.adob
-
-# Run strict structural and memory boundary validation
+# Validate the object and inspect its contents.
 adesh adob validate target/main.adob
-
-# Dump symbol table
+adesh adob inspect target/main.adob
 adesh adob dump-symbols target/main.adob
-
-# Dump section table
 adesh adob dump-sections target/main.adob
-
-# Dump relocation records
 adesh adob dump-relocations target/main.adob
 ```
+
+`AdobWriter::write` validates an object before serializing it. Validation
+checks structural properties such as header/version, section names and
+alignment, symbol bounds and section indices, relocation bounds and references,
+and import/export names. This is format-integrity validation; it does not
+verify that the machine code is correct, that the target is supported, or that
+the resulting program is safe to execute.
+
+See [ADOB CLI tools](/docs/tools/adob-cli) for the inspection commands and
+[Native Compiler Toolchain](/docs/compiler/native-toolchain) for current target
+support.

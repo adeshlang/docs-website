@@ -1,18 +1,18 @@
 ---
 id: codegen
-title: Code Generation & Backends - From VIR to Native Code
+title: Code Generation and Backends
 sidebar_label: Codegen & Backends
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# Code Generation & Backends — From VIR to Native Code
+# Code Generation and Backends
 
-<FeatureStatus status="PARTIAL" details="Interpreter full; Cranelift JIT/AOT, Bytecode VM, WASM, GPU/MLIR under active development" />
+<FeatureStatus status="PARTIAL" details="Backend feature coverage varies; the ADOB native path is partial and planned for v0.4.0" />
 
-The final compiler stage consumes the unified
-[**VIR**](/docs/compiler/ir) and produces something executable. AdeshLang has
-several backends, each a different "final consumer":
+Most existing backends consume [**VIR**](/docs/compiler/ir). The newer ADOB
+native toolchain is a separate path from HIR through Machine IR, ADOB, and
+`adeshlink`; it does not consume VIR.
 
 ```
                   ┌──► Interpreter (tree-walk; full)
@@ -25,12 +25,31 @@ several backends, each a different "final consumer":
                   └──► GPU / MLIR (--gpu; planned)
 ```
 
+The native toolchain follows a separate path:
+
+```text
+HIR ──► partial native lowering ──► Machine IR ──► x86-64 codegen
+                                                    │
+                                                    ▼
+                                              ADOB object
+                                                    │
+                                                    ▼
+                                                adeshlink
+                                                    │
+                                                    ▼
+                                           native executable
+```
+
+The native compiler and linker improvements are **planned for v0.4.0**. The
+current stable release remains v0.3.0. See the [native toolchain guide](/docs/compiler/native-toolchain)
+for target status and limitations.
+
 ---
 
 ## Pipeline Position
 
 ```
-Source → Lexer → Parser → AST → HIR → MIR/Borrow → VIR ──► CodeGen ──► Executable
+Source → Lexer → Parser → AST → HIR → MIR/Borrow → VIR ──► VIR CodeGen ──► Executable
                                                       │
                                           ┌───────────┼───────────────┐
                                           ▼           ▼               ▼
@@ -38,7 +57,8 @@ Source → Lexer → Parser → AST → HIR → MIR/Borrow → VIR ──► Cod
                                       (reference)  (native)        (portable)
 ```
 
-VIR is the **single handoff point**. Every backend implements the same `Backend` trait: `fn emit(vir: &VirModule): Result<Artifact>`.
+The ADOB native path is separate: HIR → Machine IR → ADOB → `adeshlink`.
+Backend interfaces and supported language features vary.
 
 ---
 
@@ -50,11 +70,13 @@ VIR is the **single handoff point**. Every backend implements the same `Backend`
 | **Bytecode VM** | 🟡 Partial | `--bytecode` / `--vm` | `src/backends/` bytecode modules, `src/execution/bytecode/` | scripting, portability |
 | **JIT (baseline/adaptive)** | 🟡 Partial | `--jit` | `src/backends/jit/` — `adaptive/`, `tiered/`, `optimizations/` | long-running compute |
 | **Native Cranelift JIT** | 🟡 Partial | `--jit-native` / `--native-jit` / `--njit` | `src/backends/jit/cranelift/`, `src/backends/jit/native/` | compute-intensive |
-| **AOT Native** | 🟡 Partial | `--aot` / `adesh build` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | final binaries |
+| **AOT Native (Cranelift)** | 🟡 Partial | `--aot` / `adesh build` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | final binaries |
+| **ADOB native toolchain** | 🟠 Partial; planned for v0.4.0 | `adesh build --emit-adob`, then `adeshlink` | `src/backends/native/`, `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | native codegen and linking experiments |
 | **WebAssembly** | 🟡 Partial | `--wasm` | `src/backends/wasm_backend/`, `src/backends/wasm/` | browser, edge |
 | **GPU / MLIR** | 🔵 Planned | `--gpu` | `src/backends/mlir/` | CUDA/Vulkan kernels |
 
-All flags are defined in [`src/cli/args.rs`](file:///d:/Projects/AdeshLang/src/cli/args.rs).
+`adesh build` without `--emit-adob` still uses the Cranelift AOT path. The
+ADOB/Machine-IR path is explicit and has narrower language and target support.
 
 ---
 
@@ -204,7 +226,7 @@ adesh run --native-jit file.adesh   # alias
 
 ---
 
-## AOT — Ahead-of-Time Native Binaries
+## Cranelift AOT — Ahead-of-Time Native Binaries
 
 **Sources:** `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `runtime_bridge.rs`, `static_linker.rs`, `symbols.rs`, `cranelift/`, `cranelift_impl/`, `linker/`, `memory/`, `mod.rs`
 
@@ -234,7 +256,7 @@ VIR ──► Cranelift CLIF ──► object file (.o) ──► linker ──�
 | `cranelift/` / `cranelift_impl/` | Cranelift backend specialization for AOT (vs JIT) |
 
 ```bash
-adesh build file.adesh -o app       # AOT compile
+adesh build file.adesh -o app       # Cranelift AOT compile
 ./app                               # run native binary (no runtime install needed)
 adesh build --release file.adesh    # optimized AOT (more opts, no debug info)
 ```
@@ -303,6 +325,10 @@ This is the most experimental path; the docs describe the pipeline, not stabilit
 | `--backend=interpreter` | Interpreter | explicit selection |
 
 All flags are parsed in `src/cli/args.rs`.
+
+The separate `--emit-adob` option selects the partial Machine-IR native object
+path. It emits an ADOB object; use `adeshlink` to link it. See
+[Native Compiler Toolchain](/docs/compiler/native-toolchain).
 
 ---
 

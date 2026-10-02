@@ -8,6 +8,12 @@ sidebar_label: ADOB CLI Tools
 
 The `adesh adob` command family provides inspection, validation, and diagnostic tools for working with Adesh Native Object Binary (`.adob`) files.
 
+ADOB uses format version 1.0.0. The writer validates structural consistency
+before serialization. These checks do not establish that the target backend,
+relocations, or generated machine code are fully supported. The native
+toolchain improvements are planned for AdeshLang v0.4.0; see the
+[native toolchain status](/docs/compiler/native-toolchain).
+
 ---
 
 ## Commands
@@ -19,43 +25,25 @@ Displays high-level object headers, target descriptors, compute device type, ABI
 adesh adob inspect target/main.adob
 ```
 
-**Example Output:**
-```text
-=== ADOB Object Inspection: target/main.adob ===
-Magic:             "ADOB"
-Version:           1.0.0
-Target Triple:     x86_64-windows-msvc
-Compute Device:    Cpu
-Architecture:      X86_64
-Operating System:  Windows
-ABI:               WindowsX64
-Pointer Width:     8 bytes
-Endianness:        Little
-Sections Count:    1
-Symbols Count:     1
-Exports Count:     1
-
-Exports:
-  - main
-```
+The displayed fields depend on the object being inspected.
 
 ---
 
 ### `adesh adob validate`
 Performs comprehensive integrity validation on an ADOB binary:
 - Verifies magic signature and version compatibility.
-- Ensures all section byte ranges reside within file bounds.
-- Checks that no section memory regions overlap.
-- Confirms proper byte alignment for all code and data sections.
+- Checks section names and alignment.
+- Checks defined-symbol section indices and bounds.
+- Checks relocation offsets and symbol references.
+- Checks import and export names.
 
 ```bash
 adesh adob validate target/main.adob
 ```
 
-**Example Output:**
-```text
-✓ ADOB object `target/main.adob` passed all validation checks.
-```
+Validation is structural. It does not verify instruction semantics, target
+support, ABI correctness, or executable safety. `AdobWriter::write` invokes
+this validation before encoding as well.
 
 ---
 

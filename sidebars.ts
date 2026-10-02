@@ -226,6 +226,7 @@ const sidebars: SidebarsConfig = {
         'compiler/borrow-checker',
         'compiler/ir',
         'compiler/codegen',
+        'compiler/native-toolchain',
         'compiler/adob',
         'compiler/linker',
         'compiler/runtime-abi',

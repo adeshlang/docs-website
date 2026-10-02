@@ -8,9 +8,13 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 # AdeshLang Compiler Architecture
 
-<FeatureStatus status="STABLE" details="Modular AST -> HIR -> MIR -> VIR -> CodeGen pipeline with multi-backend emission" />
+<FeatureStatus status="PARTIAL" details="Compiler stages and backend feature coverage vary; the native ADOB toolchain is partial" />
 
-The AdeshLang compiler is structured as a multi-stage compilation pipeline designed for high diagnostic clarity, memory safety verification, and execution backend flexibility. Every source file passes through the same front-end regardless of whether it will be interpreted, JIT-compiled, or AOT-linked — ensuring identical semantics across all targets.
+The AdeshLang compiler has a shared front end and multiple backend paths. The
+interpreter, bytecode, and existing JIT/AOT paths consume VIR. The newer native
+ADOB path is separate: it lowers a supported subset of HIR into Machine IR,
+emits ADOB, and links with `adeshlink`. These paths do not yet provide identical
+language-feature coverage.
 
 ---
 
@@ -59,26 +63,28 @@ The AdeshLang compiler is structured as a multi-stage compilation pipeline desig
          │            src/ir/simd/* (analysis, vectorize, cost_model, lowering)
          │            src/ir/parallel/* (analysis, transform, cost_model)
          │
-    ┌────┼──────────────────────────────┬─────────────────────┐
-    ▼    ▼                              ▼                     ▼
-┌────────┐ ┌──────────┐  ┌──────────────────┐  ┌──────────┐ ┌──────────┐
-│Interpr.│ │ Bytecode │  │  Cranelift JIT   │  │   AOT    │ │WASM/GPU  │
-│ Tree-  │ │   VM     │  │ Baseline/Adaptive│  │ Native   │ │ MLIR     │
-│ walk   │ │  --vm    │  │ --jit / --njit  │  │ --aot    │ │ --wasm   │
-└───┬────┘ └────┬─────┘  └────────┬─────────┘  └────┬─────┘ └────┬─────┘
-    │           │                 │                 │            │
-    └───────────┴─────────────────┴─────────────────┴────────────┘
-                              Runtime
-              src/execution/, src/typesystem/value_optimized.rs,
-              src/utils/interner.rs, stdlib registry
+         ▼
+VIR-based backends
+Interpreter / bytecode / JIT / AOT / WASM
+         │
+         ▼
+Runtime-dependent execution
 ```
+
+Separate native path from HIR: **HIR → partial lowering → Machine IR →
+x86-64 codegen → ADOB → `adeshlink`**.
 
 ### Data-flow summary
 
 ```
-Source ─► Lexer ─► Parser ─► AST ─► HIR ─► Semantic ─► MIR/Borrow ─► VIR ─► CodeGen ─► Runtime
-  .adesh  tokens   tree   desugar  types   ownership   SSA/opt    backends   Value(16B), Env, GC-less
+Source ─► Lexer ─► Parser ─► AST ─► HIR
+  .adesh  tokens   tree   desugar       ├──► Semantic ─► MIR/Borrow ─► VIR ─► VIR-based backends
+                                       └──► partial native lowering ─► Machine IR ─► ADOB ─► adeshlink
 ```
+
+The native toolchain work is planned for **v0.4.0**. Windows x86-64 is
+end-to-end tested; other linker and architecture targets have narrower or
+unverified support. See [Native Compiler Toolchain](/docs/compiler/native-toolchain).
 
 ---
 
@@ -93,7 +99,7 @@ Source ─► Lexer ─► Parser ─► AST ─► HIR ─► Semantic ─► M
 | 5 | **Semantic Analysis** | Type inference, trait/generic bound checking, function signature validation, field access, control-flow legality, pattern-match exhaustiveness | [`src/semantics`](file:///d:/Projects/AdeshLang/src/semantics) — `engine.rs`, `mod.rs`; [`src/types`](file:///d:/Projects/AdeshLang/src/types), [`src/typesystem`](file:///d:/Projects/AdeshLang/src/typesystem) |
 | 6 | **Borrow / Ownership (MIR)** | Ownership graph, move/borrow tracking, CFG lifetime validation, ARC insertion, drop insertion, escape analysis | [`src/parsing/cfg_borrow`](file:///d:/Projects/AdeshLang/src/parsing/cfg_borrow), [`src/ir/mir`](file:///d:/Projects/AdeshLang/src/ir/mir) — `mod.rs`, `lower.rs`, `types.rs`, `validate.rs`, `borrow_analysis.rs`, `ownership_graph.rs`, `arc_insertion.rs`, `drop_insertion.rs`, `lifetime_inference.rs`; also `src/parsing/borrow_check.rs`, `borrow_inference.rs`, `ownership.rs`, `ownership_enhanced.rs`, `lifetime_tracking.rs`, `escape_analysis.rs`, `variance.rs` |
 | 7 | **VIR & Optimizations** | SSA lowering, constant folding/propagation, CSE, DCE, inlining, SIMD vectorization pass, parallel transform, validation & pretty-printing | [`src/ir/vir`](file:///d:/Projects/AdeshLang/src/ir/vir) — `instructions.rs`, `lower.rs`, `types.rs`, `validate.rs`, `pretty_print.rs`; [`src/ir/optimizations`](file:///d:/Projects/AdeshLang/src/ir/optimizations); [`src/ir/simd`](file:///d:/Projects/AdeshLang/src/ir/simd); [`src/ir/parallel`](file:///d:/Projects/AdeshLang/src/ir/parallel) |
-| 8 | **CodeGen Backends** | Interpreter (reference), Bytecode VM, baseline/adaptive JIT, Cranelift native JIT, AOT object/linker, WASM, GPU/MLIR | [`src/backends/`](file:///d:/Projects/AdeshLang/src/backends) — `interpreter_backend/`, `jit/` (adaptive, cranelift, tiered), `aot/` (abi, cache, module_linking, object_gen, static_linker, cranelift, cranelift_impl), `wasm_backend/`, `mlir/`, `llvm/`, `common/ffi`, `lowering/` |
+| 8 | **CodeGen Backends** | VIR-based interpreter, bytecode, JIT/AOT and WASM paths; separate partial HIR-to-Machine-IR native path | [`src/backends/`](file:///d:/Projects/AdeshLang/src/backends), [`crates/adesh-codegen/`](file:///d:/Projects/AdeshLang/crates/adesh-codegen), [`crates/adesh-object/`](file:///d:/Projects/AdeshLang/crates/adesh-object), [`linker/`](file:///d:/Projects/AdeshLang/linker) |
 | 9 | **Runtime** | 16-byte `Value` enum, string interning, shared `Arc` ownership, nested environments, promise microtask queue, timers, builtin registry | [`src/execution/`](file:///d:/Projects/AdeshLang/src/execution), [`src/typesystem/value_optimized.rs`](file:///d:/Projects/AdeshLang/src/typesystem/value_optimized.rs), [`src/utils/interner.rs`](file:///d:/Projects/AdeshLang/src/utils/interner.rs) |
 
 ---
@@ -102,7 +108,7 @@ Source ─► Lexer ─► Parser ─► AST ─► HIR ─► Semantic ─► M
 
 1. **Source of Truth Integrity**: Semantic analysis runs on desugared HIR before VIR lowering. The checker never sees surface sugar.
 2. **Compile-Time Safety**: Borrow checking and move analysis reject illegal aliasing, use-after-move, and lifetime violations *before* code generation. See [Borrow Checker](/docs/compiler/borrow-checker).
-3. **Multi-Backend Portability**: VIR is the unified input for Interpreter, Bytecode VM, JIT, and AOT. One lowering, many targets — observable semantics are identical.
+3. **Backend boundaries**: VIR is shared by the interpreter, bytecode, and existing VIR-based backends. The native ADOB path is separate and has narrower feature coverage; backend equivalence is not assumed.
 4. **Diagnostics First**: Every stage preserves source positions (`line`, `col`, `line_text`) so errors render with `--> file:line:col` and source context.
 5. **GC-less Determinism**: No garbage collector. Ownership, `Arc`, and RAII drops give deterministic memory behavior (see [Memory Management](/docs/compiler/memory-management)).
 
@@ -130,13 +136,15 @@ Source ─► Lexer ─► Parser ─► AST ─► HIR ─► Semantic ─► M
                                        │
                 ┌──────────────────────▼──────────────────────┐
                 │              Backends (codegen)             │
-                │  Interpreter │ Bytecode │ JIT │ AOT │ WASM  │
-                └──────────────────────┬──────────────────────┘
+                │ VIR backends: Interpreter │ Bytecode │ JIT │ AOT │ WASM │
                                        │
                                        ▼
                                    Runtime Value
 ```
 
+
+The partial native path branches from HIR into Machine IR, then ADOB and
+`adeshlink`; it is documented separately from the VIR backend flow above.
 - **Frontend** is syntax-aware but type-blind; its job is to produce a well-formed tree.
 - **Middle-end** is where *meaning* is checked: names, types, ownership.
 - **Low-end** erases high-level constructs into flat VIR instructions and optimizes them.

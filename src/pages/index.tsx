@@ -422,7 +422,7 @@ export default function Home(): JSX.Element {
           <div className="hero-inner">
             <div className="hero-badge">
               <span className="pulse-dot" />
-              AdeshLang v0.3.0 Released
+              AdeshLang v0.3.0 Current Release
             </div>
 
             <img
@@ -455,6 +455,12 @@ export default function Home(): JSX.Element {
                 AdeshLang is an <strong>experimental programming language</strong> under active research and development. The <strong>Interpreter</strong> (<code>adesh run file.adesh</code>) is the primary face of development and source of truth for execution logic and standard features. Other backends (Baseline JIT, Adaptive JIT, Native Cranelift JIT, AOT, Bytecode VM, WASM, GPU/MLIR) are under active development and are not yet fully completed across all feature sets.
               </p>
             </div>
+
+            <p className="hero-release-note">
+              Native compiler, ADOB, and linker improvements are planned for v0.4.0.
+              The current stable release remains v0.3.0.{' '}
+              <Link to="/docs/compiler/native-toolchain">Explore the native toolchain</Link>.
+            </p>
 
             <div className="hero-ctas">
               <a

@@ -4,15 +4,25 @@ title: Standardized Runtime ABI (ADESH_RUNTIME_ABI_V1)
 sidebar_label: Runtime ABI
 ---
 
-# Adesh Runtime ABI Specification (`ADESH_RUNTIME_ABI_V1`)
+# Adesh Runtime ABI (`ADESH_RUNTIME_ABI_V1`)
 
-The **Adesh Runtime ABI** establishes the formal in-memory data representations and C-ABI calling conventions shared across all Adesh execution engines: the **Tree-Walking Interpreter**, **Bytecode VM**, **Native JIT**, and the **Ahead-of-Time Native Compiler (`adesh build`)**.
+The runtime crate defines C-compatible data structures and exported functions
+under ABI version 1. This page documents those declarations, not a universal
+calling convention shared by every Adesh backend. The native compiler's
+current subset does not support aggregate-by-value ABI classification,
+structure returns, floating-point/vector argument registers, or variadic calls.
+
+The native compiler and linker improvements are planned for AdeshLang v0.4.0.
+That release framing does not imply that every ABI declaration below is
+currently consumed or linked automatically by every build path.
 
 ---
 
 ## In-Memory Type Representations
 
-All composite data types follow strict `#[repr(C)]` layouts to enable seamless zero-copy foreign function interface (FFI) with C, C++, Rust, and OS system libraries.
+The following types in `crates/adesh-runtime/src/abi.rs` use `#[repr(C)]`.
+Documented sizes assume a 64-bit target; pointer width and ABI rules still
+depend on the target platform.
 
 ### 1. `AdeshString`
 A standard 32-byte struct on 64-bit platforms:
@@ -83,9 +93,10 @@ pub struct AdeshFatPointer {
 
 ---
 
-## C-ABI Export Symbols
+## C-ABI functions
 
-The native runtime library (`libadesh_rt` / `libadesh_std.adob`) exports standard C-ABI functions:
+The runtime crate defines C-ABI functions for strings, arrays, memory
+allocation, panic handling, and printing. For example:
 
 ```c
 // String Operations
@@ -111,6 +122,8 @@ void adesh_panic_abort(const char* msg, size_t len);
 
 ---
 
-## Precompiled Native Standard Library (`libadesh_std.adob`)
-
-Using `StdlibAdobBuilder`, Adesh precompiles standard runtime functions into multi-target fat bundles (`AdobBundle`). When `adesh build` runs, `adeshlink` links against these precompiled native archives in milliseconds, avoiding standard library source recompilation on every build.
+These declarations establish the runtime crate's API. They do not mean that a
+precompiled `libadesh_std.adob` is shipped or automatically linked by
+`adesh build`. The default executable build path still uses Cranelift AOT;
+ADOB emission is a separate, explicit native-toolchain path. See
+[Native Compiler Toolchain](/docs/compiler/native-toolchain).
