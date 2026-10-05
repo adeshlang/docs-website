@@ -80,9 +80,9 @@ The Windows x86-64 PE path is the one verified by an end-to-end execution test.
 ELF output is currently static-only and has not been run-tested; Mach-O output
 is skeletal.
 
-`adesh build` without `--emit-adob` still uses the existing Cranelift AOT path
-for executable builds. ADOB emission is an explicit native-toolchain path, not
-the default compiler backend.
+`adesh build` uses the native pipeline (native codegen → ADOB → built-in
+`adeshlink`) as the default executable path. `--emit-adob` emits an ADOB
+object only; the Cranelift backend is opt-in via `--codegen=cranelift`.
 
 ## Related documentation
 

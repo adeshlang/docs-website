@@ -124,6 +124,7 @@ void adesh_panic_abort(const char* msg, size_t len);
 
 These declarations establish the runtime crate's API. They do not mean that a
 precompiled `libadesh_std.adob` is shipped or automatically linked by
-`adesh build`. The default executable build path still uses Cranelift AOT;
-ADOB emission is a separate, explicit native-toolchain path. See
+`adesh build`. The default executable build path is the native pipeline
+(native codegen → ADOB → `adeshlink`), which auto-links the runtime static
+library; the Cranelift backend is opt-in via `--codegen=cranelift`. See
 [Native Compiler Toolchain](/docs/compiler/native-toolchain).

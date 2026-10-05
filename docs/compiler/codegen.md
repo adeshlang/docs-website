@@ -70,13 +70,16 @@ Backend interfaces and supported language features vary.
 | **Bytecode VM** | 🟡 Partial | `--bytecode` / `--vm` | `src/backends/` bytecode modules, `src/execution/bytecode/` | scripting, portability |
 | **JIT (baseline/adaptive)** | 🟡 Partial | `--jit` | `src/backends/jit/` — `adaptive/`, `tiered/`, `optimizations/` | long-running compute |
 | **Native Cranelift JIT** | 🟡 Partial | `--jit-native` / `--native-jit` / `--njit` | `src/backends/jit/cranelift/`, `src/backends/jit/native/` | compute-intensive |
-| **AOT Native (Cranelift)** | 🟡 Partial | `--aot` / `adesh build` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | final binaries |
-| **ADOB native toolchain** | 🟠 Partial; planned for v0.4.0 | `adesh build --emit-adob`, then `adeshlink` | `src/backends/native/`, `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | native codegen and linking experiments |
+| **AOT Native (Cranelift)** | 🟡 Partial | `--codegen=cranelift` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | alternative AOT path (opt-in) |
+| **ADOB native toolchain** | 🟠 Partial — **the default executable path** | `adesh build` (default) / `--emit-adob` | `src/backends/native/`, `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | native codegen and linking (execution-verified on Windows x64 only) |
 | **WebAssembly** | 🟡 Partial | `--wasm` | `src/backends/wasm_backend/`, `src/backends/wasm/` | browser, edge |
 | **GPU / MLIR** | 🔵 Planned | `--gpu` | `src/backends/mlir/` | CUDA/Vulkan kernels |
 
-`adesh build` without `--emit-adob` still uses the Cranelift AOT path. The
-ADOB/Machine-IR path is explicit and has narrower language and target support.
+`adesh build` uses the **native pipeline** (HIR → Machine IR → ADOB →
+`adeshlink`) as its default executable path; Cranelift is opt-in via
+`--codegen=cranelift`, and `--emit-adob` / `--emit-asm` emit intermediate
+artifacts only. The native path covers a substantial language subset;
+unsupported constructs are tracked in [CURRENT_STATE.md](https://github.com/adeshlang/adeshlang/blob/main/CURRENT_STATE.md).
 
 ---
 
