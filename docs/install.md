@@ -7,11 +7,11 @@ description: Official installation packages, binaries, and direct downloads for 
 
 # Install AdeshLang
 
-Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** are available for **Windows**, **macOS**, **Linux**, and **Android**.
+Official pre-built binaries, installers, and packages for **AdeshLang v0.3.1** are available for **Windows**, **macOS**, **Linux**, and **Android**.
 
 ---
 
-## Direct Downloads (v0.3.0)
+## Direct Downloads (v0.3.1)
 
 <div className="row">
   <div className="col col--6 margin-bottom--md">
@@ -29,7 +29,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
       <div className="card__footer">
         <a
           className="button button--primary button--block margin-bottom--sm"
-          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-setup.exe"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -38,7 +38,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-portable.zip"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -46,7 +46,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-windows-portable.zip"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-windows-portable.zip"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -72,7 +72,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
       <div className="card__footer">
         <a
           className="button button--primary button--block margin-bottom--sm"
-          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg"
+          href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.pkg"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -81,7 +81,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.dmg"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -89,7 +89,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-macos.pkg"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -97,7 +97,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-macos.dmg"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -125,7 +125,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <div className="button-group button-group--block margin-bottom--sm">
           <a
             className="button button--primary"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlang_0.3.0_amd64.deb"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -133,7 +133,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
           </a>
           <a
             className="button button--primary"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_arm64.deb"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlang_0.3.0_arm64.deb"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -143,7 +143,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
         <div className="button-group button-group--block">
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlang-0.3.0-1.x86_64.rpm"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -151,7 +151,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.0** a
           </a>
           <a
             className="button button--secondary button--sm"
-            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz"
+            href="https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -239,27 +239,19 @@ All official packages and binaries are cryptographically signed and checksummed 
 
 | File Name | Platform / Target | Size | SHA-256 Checksum |
 |---|---|---|---|
-| **[adesh-editor.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adesh-editor.exe)** | Windows x86_64 TUI Code Editor | 2.64 MB | `5c269098ce40650043d9c58d3a8fae9e394a4fcc5836f25eeb14306f4f974f0f` |
-| **[adesh.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adesh.exe)** | Windows x86_64 Standalone CLI | 28.0 MB | `d4764090859e2df79b17118bed5b7ddbbe4c16f92fd7d3eafef4708c280a909d` |
-| **[adeshlang-0.3.0-1.aarch64.rpm](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.aarch64.rpm)** | Fedora / RHEL ARM64 (RPM) | 111.1 MB | `01ad7a71f13de93a403875cc5d6b55589832fced8fc0de832df0ad7fdc815207` |
-| **[adeshlang-0.3.0-1.x86_64.rpm](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm)** | Fedora / RHEL x86_64 (RPM) | 117.5 MB | `39843e5e8dd6bcee099647448d427a506aa89f29b0b3fb5e3baa055a00a6430c` |
-| **[AdeshLang-0.3.0-aarch64-linux-gnu.tar.xz](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-linux-gnu.tar.xz)** | Linux ARM64 (Universal Tarball) | 77.0 MB | `7f7c4366a2bbbade34b3b9d18fc7ef5877c453fc076dfb82b6fb570151b25a46` |
-| **[AdeshLang-0.3.0-aarch64-macos.dmg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg)** | macOS Apple Silicon (Disk Image DMG) | 23.6 MB | `a04c60be0e27c2a6ea09f10d3ff1957248f799ff555212e2b9b0f28d31578e83` |
-| **[AdeshLang-0.3.0-aarch64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg)** | macOS Apple Silicon (Installer PKG) | 21.2 MB | `e380b1137ebb1d5c033f37a644fd22d4e269580b6fa87d88faf707cf7e2940ac` |
-| **[AdeshLang-0.3.0-aarch64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-windows-portable.zip)** | Windows ARM64 (Portable ZIP) | 113.1 MB | `b852c97ca87379298c24495064502992ecf2d56ca5b1b53484c332f9fecedfdc` |
-| **[AdeshLang-0.3.0-macos-aarch64.tar.xz](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-macos-aarch64.tar.xz)** | macOS Apple Silicon (Tarball) | 73.5 MB | `ecafdbc6e40f50e38a4e4e976007dee20b6ca90351489ccff8a09458bf1ae18e` |
-| **[AdeshLang-0.3.0-macos-x86_64.tar.xz](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-macos-x86_64.tar.xz)** | macOS Intel x86_64 (Tarball) | 80.5 MB | `d9ac33eedbe846138d0d48672b6842751ca7dcd4e63650629d369babdfb02f4f` |
-| **[AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz)** | Linux x86_64 (Universal Tarball) | 83.5 MB | `aaad0631598cbf9bd42a81651675a93d818a569f68de37e799bce7a37d72e73d` |
-| **[AdeshLang-0.3.0-x86_64-macos.dmg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg)** | macOS Intel x86_64 (Disk Image DMG) | 27.6 MB | `25e20534c70aff49fad43d464993db4b32acf75efc0af5e10ba206388ff20d0e` |
-| **[AdeshLang-0.3.0-x86_64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg)** | macOS Intel x86_64 (Installer PKG) | 24.3 MB | `3a99e53fc73827548a59cc9cff7f0a5cf66feb71c0565c2a6955de6a7ecb6f70` |
-| **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)** | Windows x86_64 (Portable ZIP) | 120.3 MB | `18bfd32e2f1b1156e7d0ecb308768ccd8c3bcaff1e55f119e90b78bfe18089e6` |
-| **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)** | Windows x86_64 (Setup GUI) | 70.4 MB | `3cef7c704abd37d9c97b2a7bb53478ad06ab0efa850c256ecf6c65ad55eb5bad` |
-| **[adeshlang_0.3.0_amd64.deb](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb)** | Debian / Ubuntu x86_64 (DEB) | 90.7 MB | `03133a698e6d356e03fbd102ae23564a68a6ce6e71f2d47f8aa735c8785ca527` |
-| **[adeshlang_0.3.0_arm64.deb](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_arm64.deb)** | Debian / Ubuntu ARM64 (DEB) | 86.0 MB | `7e015d0c5805d31fdacbaa49ae96e57e2a3562b67f1bc8361da31050f487e791` |
-| **[adl.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adl.exe)** | Windows x86_64 Package Manager | 3.07 MB | `fd236a9cff9f7e0e5a9620f9d92356e91da0e3ffd76b6c9c117d479e0dcd3fe4` |
-| **[als.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/als.exe)** | Windows x86_64 Language Server | 4.45 MB | `783131547d7ee3309895312fb6cc35601b44bc308d8cb8f1f53753c011b29f24` |
-| **[SHA256SUMS](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/SHA256SUMS)** | All Checksums File | 2.68 KB | `dc044c6a83dc42165abc6de82b1ca96684d18a2663f5ad73aa6def18e64904ea` |
-| **[toolchain-manifest.json](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/toolchain-manifest.json)** | LLVM Toolchain Resolver Manifest | 3.64 KB | `3b6826ad365dc426cafb06e093b702c38693d9376030ca87c570fbbbf6353b12` |
+| **[adesh-editor.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adesh-editor.exe)** | Windows x86_64 TUI Code Editor | 2.72 MB | `34245fb92b2f2270909b5be0aa8fb5266a6452d1ed61cb59b07e57013f5fb06e` |
+| **[adesh-observatory-desktop.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adesh-observatory-desktop.exe)** | Release Artifact | 12.7 MB | `5fdad45bb621b4d9441f9e34655b506b688ddc4de4413c94ff42cae7e13add48` |
+| **[adesh.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adesh.exe)** | Windows x86_64 Standalone CLI | 32.7 MB | `cdd99405f5405e8f69c6918431250e00acb08bfc00df7db502cc627f290077d1` |
+| **[AdeshLang-0.3.0-aarch64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-windows-portable.zip)** | Windows ARM64 (Portable ZIP) | 42.6 MB | `68cbfa14fcee633eda7c465db6879a1fdead34519ec24919aff38513b0ed2708` |
+| **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-portable.zip)** | Windows x86_64 (Portable ZIP) | 46.7 MB | `56ffee47115131baf1921e8c126b53b63529d71913308d5d7fb7469068f54c7c` |
+| **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-setup.exe)** | Windows x86_64 (Setup GUI) | 18.6 MB | `90f6c0f21a88abb50e563eade2831fb754d17308efc34fa5ceed8a4a5671097f` |
+| **[adeshlink.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlink.exe)** | Release Artifact | 3.67 MB | `853741ced4c41ba938c2ce6c64bb6749d1d7a92b898a59970f8a4bd40a816558` |
+| **[adl.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adl.exe)** | Windows x86_64 Package Manager | 3.32 MB | `daa6152755f206936371575e952386f5a6865e906e9fa17cb887a2516414e002` |
+| **[als.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/als.exe)** | Windows x86_64 Language Server | 4.64 MB | `e1df4b799bb4319f30cca21a83c473bf3fe48c86a270743de6d76a3c4ebb5310` |
+| **[aro.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/aro.exe)** | Release Artifact | 2.06 MB | `d3a94b3062253c845fe1f90b56c1783df64123ef376df0bfbbba54fc7432817d` |
+| **[install-windows.ps1](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/install-windows.ps1)** | Release Artifact | 3.92 KB | `5ed23b53dee02237623433c315d04b792d63d51a47d3cb52333186d234ed9f48` |
+| **[SHA256SUMS](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/SHA256SUMS)** | All Checksums File | 1.34 KB | `2385836a505c43245df1ea40b99ccc9bafa1f6ec7b10137b2809155a30132c68` |
+| **[toolchain-manifest.json](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/toolchain-manifest.json)** | LLVM Toolchain Resolver Manifest | 4.14 KB | `c90ac73985bfe49c0d89d9e6d7dc4ed5ed67d952732ff9a82f511db572678699` |
 | **[AdeshLang-mobile-0.3.0-arm64-v8a.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk)** | Android ARM64-v8a (Recommended APK) | 62.7 MB | `43ef6e42aa3235322b659e71f2a6b942b75cea004477c8177264ea1ff505f296` |
 | **[AdeshLang-mobile-0.3.0-universal.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk)** | Android Universal (All-in-One APK) | 135.4 MB | `094fd787e32a573bd0a694288d7ba24ea7ceec38485a1fe747ccf5f1c4550928` |
 | **[AdeshLang-mobile-0.3.0-x86_64.apk](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-x86_64.apk)** | Android x86_64 (Emulators / ChromeOS) | 74.1 MB | `278b048fc55e6317240f9992c2da6e39fb5970a4a2144fcfa63e694aaf2ca0f5` |
@@ -409,7 +401,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 ### 🪟 Windows Installation
 
 #### Graphical Setup (Recommended)
-1. Download **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-setup.exe)**.
+1. Download **[AdeshLang-0.3.0-x86_64-windows-setup.exe](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-setup.exe)**.
 2. Run the installer and follow the on-screen prompts.
 3. Open PowerShell or Command Prompt and verify:
    ```powershell
@@ -418,7 +410,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
    ```
 
 #### Portable ZIP Archive
-1. Download **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-windows-portable.zip)**.
+1. Download **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-portable.zip)**.
 2. Extract the archive to your preferred directory (e.g. `C:\AdeshLang`).
 3. Add the `bin` directory to your user `PATH`.
 
@@ -428,8 +420,8 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 
 #### PKG Installer (Recommended)
 1. Download the PKG installer for your architecture:
-   - **Apple Silicon (M1/M2/M3/M4)**: [AdeshLang-0.3.0-aarch64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.pkg)
-   - **Intel**: [AdeshLang-0.3.0-x86_64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.pkg)
+   - **Apple Silicon (M1/M2/M3/M4)**: [AdeshLang-0.3.0-aarch64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.pkg)
+   - **Intel**: [AdeshLang-0.3.0-x86_64-macos.pkg](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-macos.pkg)
 2. Double-click the `.pkg` file and follow the standard macOS installation wizard.
 3. Open Terminal and run:
    ```bash
@@ -438,7 +430,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
    ```
 
 #### DMG Drag-and-Drop
-1. Download the `.dmg` image ([Apple Silicon DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-aarch64-macos.dmg) / [Intel DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-macos.dmg)).
+1. Download the `.dmg` image ([Apple Silicon DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.dmg) / [Intel DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-macos.dmg)).
 2. Open the image and double-click `Install-AdeshLang.command` or copy to `/Library/Application Support/AdeshLang`.
 
 ---
@@ -448,7 +440,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 #### Debian / Ubuntu / Mint / Pop!_OS (.deb)
 ```bash
 # Download DEB package
-curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlang_0.3.0_amd64.deb
 
 # Install via dpkg / apt
 sudo dpkg -i adeshlang_0.3.0_amd64.deb
@@ -462,7 +454,7 @@ adesh doctor
 #### Fedora / RHEL / Rocky / CentOS (.rpm)
 ```bash
 # Download and install RPM
-sudo rpm -Uvh https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang-0.3.0-1.x86_64.rpm
+sudo rpm -Uvh https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/adeshlang-0.3.0-1.x86_64.rpm
 
 # Verify
 adesh --version
@@ -472,7 +464,7 @@ adesh doctor
 #### Universal Tarball (.tar.xz) — 83.5 MB
 ```bash
 # Download and extract tarball
-curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
+curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
 tar -xf AdeshLang-0.3.0-x86_64-linux-gnu.tar.xz
 
 # Move to local bin or export PATH
@@ -530,7 +522,7 @@ You can verify the integrity of any downloaded package using the official `SHA25
 
 ```bash
 # Linux / macOS
-curl -sL https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/SHA256SUMS | grep "<filename>" | sha256sum -c
+curl -sL https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/SHA256SUMS | grep "<filename>" | sha256sum -c
 
 # Windows PowerShell
 Get-FileHash -Algorithm SHA256 .\AdeshLang-0.3.0-x86_64-windows-setup.exe
