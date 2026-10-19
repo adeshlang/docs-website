@@ -232,6 +232,8 @@ const sidebars: SidebarsConfig = {
         'compiler/runtime-abi',
         'compiler/runtime',
         'compiler/memory-management',
+        'compiler/diagnostics',
+        'compiler/error-codes',
       ],
     },
     {
