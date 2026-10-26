@@ -6,7 +6,7 @@ sidebar_label: Built-in Functions
 
 # Built-in Functions
 
-AdeshLang ships with a rich standard library of built-in functions organized by namespace. This page provides a complete reference.
+Adesh ships with a rich standard library of built-in functions organized by namespace. This page provides a complete reference.
 
 ## Native datatype methods
 

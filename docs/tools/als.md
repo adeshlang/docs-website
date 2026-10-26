@@ -1,13 +1,13 @@
 ---
 id: als
-title: AdeshLang Language Server (ALS)
+title: Adesh Language Server (ALS)
 sidebar_label: ALS (Language Server)
-description: Complete guide to setup and configure the AdeshLang Language Server (ALS) across VS Code, Neovim, Helix, Emacs, and Sublime Text.
+description: Complete guide to setup and configure the Adesh Language Server (ALS) across VS Code, Neovim, Helix, Emacs, and Sublime Text.
 ---
 
-# AdeshLang Language Server (ALS)
+# Adesh Language Server (ALS)
 
-The **AdeshLang Language Server (ALS)** implements the official [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/), bringing rich IDE capabilities to any modern text editor or development environment.
+The **Adesh Language Server (ALS)** implements the official [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/), bringing rich IDE capabilities to any modern text editor or development environment.
 
 ```
 ┌───────────────────────────────────────────────────────────┐
@@ -15,7 +15,7 @@ The **AdeshLang Language Server (ALS)** implements the official [Language Server
 └─────────────────────────────▲─────────────────────────────┘
                               │ JSON-RPC over stdio
 ┌─────────────────────────────▼─────────────────────────────┐
-│             AdeshLang Language Server (ALS)               │
+│             Adesh Language Server (ALS)               │
 ├───────────────────────────────────────────────────────────┤
 │ • Incremental AST Parsing  • Type Checking & Inference    │
 │ • Symbol Indexing          • Code Action Engine           │
@@ -56,14 +56,14 @@ adesh lsp --log-file=als.log --log-level=trace
 
 ### Visual Studio Code / Cursor / Windsurf
 
-The official **AdeshLang Extension** provides rich language support, syntax highlighting, code snippets, and automatic Language Server (ALS) lifecycle management.
+The official **Adesh Extension** provides rich language support, syntax highlighting, code snippets, and automatic Language Server (ALS) lifecycle management.
 
 #### 1. Download & Install the Extension (.vsix)
-Download the official release: **[adesh-vscode-0.3.0.vsix](https://github.com/adeshlang/adeshlang/releases/download/vscode-v0.3.0/adesh-vscode-0.3.0.vsix)** (1.11 MB).
+Download the extension from the **[latest Adesh release](https://github.com/adeshlang/adeshlang/releases/latest)** (look for the `adesh-vscode-*.vsix` asset).
 
 - **Install via CLI**:
   ```bash
-  code --install-extension adesh-vscode-0.3.0.vsix
+  code --install-extension adesh-vscode-*.vsix
   ```
 - **Install via GUI**:
   1. Open the Extensions sidebar (`Ctrl+Shift+X` / `Cmd+Shift+X`).

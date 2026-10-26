@@ -6,7 +6,7 @@ sidebar_label: Math
 
 # Math Library
 
-The **Math** builtin library provides everything you need for numeric work in AdeshLang: mathematical constants, arithmetic, rounding, exponentiation and logarithms, trigonometry, hyperbolic functions, random number generation, number-theory helpers (GCD, LCM, factorials, combinations), floating-point utilities, and special functions.
+The **Math** builtin library provides everything you need for numeric work in Adesh: mathematical constants, arithmetic, rounding, exponentiation and logarithms, trigonometry, hyperbolic functions, random number generation, number-theory helpers (GCD, LCM, factorials, combinations), floating-point utilities, and special functions.
 
 It exposes **two namespaces**:
 
@@ -326,7 +326,7 @@ print(Math.ldexp(0.75, 4));      // 12
 
 ## Methods: Value Classification
 
-Predicates to safely inspect numbers before using them — the idiomatic way to guard against `NaN`/infinity in AdeshLang.
+Predicates to safely inspect numbers before using them — the idiomatic way to guard against `NaN`/infinity in Adesh.
 
 | Function | Description | Parameters | Returns |
 | :--- | :--- | :--- | :--- |

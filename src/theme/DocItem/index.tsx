@@ -15,11 +15,11 @@ export default function DocItemWrapper(props: Props): JSX.Element {
   const frontMatter: Record<string, unknown> = content.frontMatter ?? {};
   const metadata: any = content.metadata ?? {};
 
-  const title = (frontMatter.title as string) ?? metadata.title ?? 'AdeshLang Documentation';
+  const title = (frontMatter.title as string) ?? metadata.title ?? 'Adesh Documentation';
   const description =
     (frontMatter.description as string) ??
     (metadata.description as string) ??
-    'AdeshLang documentation — a Rust-inspired, high-performance language with Cranelift native JIT, zero-cost memory safety, SIMD, and built-in networking.';
+    'Adesh documentation — a Rust-inspired, high-performance language with Cranelift native JIT, zero-cost memory safety, SIMD, and built-in networking.';
   const permalink: string = metadata.permalink ?? '/';
   const url = permalink.startsWith('http') ? permalink : `${SITE_URL}${permalink}`;
   const image = (frontMatter.image as string) ?? 'img/social-card.jpg';

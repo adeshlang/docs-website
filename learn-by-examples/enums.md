@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Algebraic enum data types, payload variants, and structural pattern matching expressions" />
 
-AdeshLang enums are algebraic data types that can represent simple discrete options or carry associated payload data per variant. Pattern matching (`match`) safely destructures enum values at compile time.
+Adesh enums are algebraic data types that can represent simple discrete options or carry associated payload data per variant. Pattern matching (`match`) safely destructures enum values at compile time.
 
 ---
 

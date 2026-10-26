@@ -7,7 +7,7 @@ sidebar_label: "Functions, ABI & Call Stack"
 
 # Function Specifications, ABI & Stack Frame Layout
 
-This document specifies function parameter mechanics, System V AMD64 / Windows x64 calling conventions, stack frame layouts, closure capture structures, and compiler optimization attributes in AdeshLang.
+This document specifies function parameter mechanics, System V AMD64 / Windows x64 calling conventions, stack frame layouts, closure capture structures, and compiler optimization attributes in Adesh.
 
 ---
 
@@ -25,7 +25,7 @@ fn calculate_thrust(mass: f64, acceleration: f64): f64 {
 
 ## 2. ABI & Calling Conventions
 
-AdeshLang complies with native target ABI specifications:
+Adesh complies with native target ABI specifications:
 - **Linux / macOS**: System V AMD64 ABI
 - **Windows**: Microsoft x64 Software Convention
 

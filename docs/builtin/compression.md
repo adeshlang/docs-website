@@ -6,7 +6,7 @@ sidebar_label: Compression
 
 # Compression Library
 
-The **Compression** builtin library is AdeshLang's lossless data-compression ecosystem. It provides seven production codecs (Zstandard, GZIP, Brotli, LZ4, XZ/LZMA, DEFLATE, ZLIB), a general-purpose `compress`/`decompress` API with codec selection and level control, adaptive payload classification, stateful streaming, seekable random-access archives, ZIP/TAR archive creation and extraction with path-traversal protection, multi-threaded parallel compression, disk-to-disk file streaming, magic-header auto-detection, and fast non-cryptographic checksums. Everything is implemented natively in Rust on top of audited codec crates (`zstd`, `flate2`, `brotli`, `lz4_flex`, `lzma-rs`), and every decoder enforces decompression-bomb limits.
+The **Compression** builtin library is Adesh's lossless data-compression ecosystem. It provides seven production codecs (Zstandard, GZIP, Brotli, LZ4, XZ/LZMA, DEFLATE, ZLIB), a general-purpose `compress`/`decompress` API with codec selection and level control, adaptive payload classification, stateful streaming, seekable random-access archives, ZIP/TAR archive creation and extraction with path-traversal protection, multi-threaded parallel compression, disk-to-disk file streaming, magic-header auto-detection, and fast non-cryptographic checksums. Everything is implemented natively in Rust on top of audited codec crates (`zstd`, `flate2`, `brotli`, `lz4_flex`, `lzma-rs`), and every decoder enforces decompression-bomb limits.
 
 ## Namespace
 
@@ -68,7 +68,7 @@ import Compression;
 print(Compression.supportedCodecs());
 // ["zstd", "gzip", "brotli", "lz4", "xz", "deflate", "zlib"]
 
-let text = "Hello AdeshLang Compression Standard Library! World class performance and safety. " * 10;
+let text = "Hello Adesh Compression Standard Library! World class performance and safety. " * 10;
 let compressed = Compression.compress(text, "zstd", 5);
 print("original:", len(text), "compressed:", len(compressed));
 
@@ -147,7 +147,7 @@ The result object has `compressedData` (byte array), `originalSize`, `compressed
 ```adesh
 import Compression;
 
-let jsonPayload = "{\"id\": 101, \"title\": \"AdeshLang Adaptive Compression\", \"score\": 99.8}" * 25;
+let jsonPayload = "{\"id\": 101, \"title\": \"Adesh Adaptive Compression\", \"score\": 99.8}" * 25;
 
 let result = Compression.auto(jsonPayload);
 print("Was compressed:", result.wasCompressed);
@@ -217,8 +217,8 @@ Entries may supply **inline content** or a **disk path** to read the bytes from 
 import Compression;
 
 let files = [
-    { "name": "config.json", "content": "{\"appName\": \"AdeshLang\", \"port\": 8080}" },
-    { "name": "docs/readme.txt", "content": "Welcome to AdeshLang Compression ZIP support!" }
+    { "name": "config.json", "content": "{\"appName\": \"Adesh\", \"port\": 8080}" },
+    { "name": "docs/readme.txt", "content": "Welcome to Adesh Compression ZIP support!" }
 ];
 
 // In-memory ZIP bytes
@@ -348,7 +348,7 @@ Fast, non-cryptographic checksums for payload validation and integrity checks. (
 ```adesh
 import Compression;
 
-let data = "AdeshLang integrity check payload";
+let data = "Adesh integrity check payload";
 
 print("CRC32   :", Compression.crc32(data));
 print("CRC32C  :", Compression.crc32c(data));
@@ -400,7 +400,7 @@ print("payload round-trip:", restored == payload);   // true
 - **Strict errors.** Unknown codec names, corrupt input, truncated archives, and unsafe extraction paths throw descriptive runtime errors — always `try`/`catch` around untrusted data.
 - **Archive security.** `extractZip`/`extractZipFile`/`extractTar` reject `..`, absolute, and drive-letter paths, and enforce output limits on extraction.
 - **Streaming vs in-memory.** `compressFile`/`decompressFile`/`compressFileAtomic` stream through a 64 KB buffer (no full-file RAM cost); `compressFileAtomic` writes a `.tmp` file and atomically renames it, leaving no partial file on failure. `createZipFile`/`extractZipFile` stream straight to/from disk as well.
-- **Backend parity.** Implemented natively in Rust, so behavior is identical on Interpreter, Bytecode VM, JIT, Native JIT, LLVM AOT, and WebAssembly.
+- **Backend parity.** Implemented natively in Rust, so behavior is identical on Interpreter, Native JIT, AOT, and WebAssembly.
 - **Pair with `Encoding`.** Use `Encoding.base64Encode`/`hexEncode` to render compressed byte arrays for transport or logs, and `Encoding.hexDecode`/`base64Decode` to recover them.
 
 ## Source & examples

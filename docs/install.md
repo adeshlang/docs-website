@@ -1,13 +1,13 @@
 ---
 id: install
-title: Install AdeshLang
+title: Install Adesh
 sidebar_label: Install
 description: Official installation packages, binaries, and direct downloads for Windows, macOS, Linux, and Android.
 ---
 
-# Install AdeshLang
+# Install Adesh
 
-Official pre-built binaries, installers, and packages for **AdeshLang v0.3.1** are available for **Windows**, **macOS**, **Linux**, and **Android**.
+Official pre-built binaries, installers, and packages for **Adesh v0.3.1** are available for **Windows**, **macOS**, **Linux**, and **Android**.
 
 ---
 
@@ -168,7 +168,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.1** a
         <h3>📱 Android</h3>
       </div>
       <div className="card__body">
-        <p>AdeshLang Mobile IDE and native execution environment for Android devices.</p>
+        <p>Adesh Mobile IDE and native execution environment for Android devices.</p>
         <ul>
           <li><strong>ARM64-v8a APK</strong>: Recommended for physical devices.</li>
           <li><strong>Universal APK</strong>: Compatible with all 64-bit architectures.</li>
@@ -211,7 +211,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.1** a
         <h3>💻 Visual Studio Code Extension</h3>
       </div>
       <div className="card__body">
-        <p>Official AdeshLang Language Support &amp; ALS Language Server integration for VS Code and VS Code-based editors (Cursor, Windsurf, VSCodium).</p>
+        <p>Official Adesh Language Support &amp; ALS Language Server integration for VS Code and VS Code-based editors (Cursor, Windsurf, VSCodium).</p>
         <ul>
           <li>Full ALS Language Server protocol integration with live diagnostic checks.</li>
           <li>Semantic syntax highlighting, auto-completion, hover docs, and formatting.</li>
@@ -235,7 +235,7 @@ Official pre-built binaries, installers, and packages for **AdeshLang v0.3.1** a
 
 ## All Release Assets & SHA-256 Checksums
 
-All official packages and binaries are cryptographically signed and checksummed in the [AdeshLang Releases](https://github.com/adeshlang/adeshlang/releases).
+All official packages and binaries are cryptographically signed and checksummed in the [Adesh Releases](https://github.com/adeshlang/adeshlang/releases).
 
 | File Name | Platform / Target | Size | SHA-256 Checksum |
 |---|---|---|---|
@@ -275,7 +275,7 @@ All official packages and binaries are cryptographically signed and checksummed 
 
 ## Installation & Toolchain Setup Flow
 
-Follow this 4-step flow to set up AdeshLang on your system, verify diagnostics, configure optional toolchains, and begin coding.
+Follow this 4-step flow to set up Adesh on your system, verify diagnostics, configure optional toolchains, and begin coding.
 
 ```mermaid
 flowchart LR
@@ -289,7 +289,7 @@ flowchart LR
 
 ---
 
-### Step 1: Install AdeshLang Core Package
+### Step 1: Install Adesh Core Package
 
 Download and install the official package for your platform using the [Direct Downloads](#direct-downloads-v030) or [Platform-Specific Instructions](#installation-instructions) below:
 
@@ -299,10 +299,10 @@ Download and install the official package for your platform using the [Direct Do
 * **📱 Android**: Sideload `AdeshLang-mobile-0.3.0-arm64-v8a.apk`.
 
 :::tip Out-of-the-Box Execution (Zero External Dependencies)
-AdeshLang's core features run immediately after Step 1 with **zero external dependencies**:
+Adesh's core features run immediately after Step 1 with **zero external dependencies**:
 * **`adesh repl`** — Interactive REPL shell.
 * **`adesh run <file.adesh>`** — Tree-walk bytecode interpreter.
-* **`adesh run --njit <file.adesh>`** — Ultra-fast Cranelift Native JIT engine (10× to 230× speedup).
+* **`adesh run --njit <file.adesh>`** — Cranelift Native JIT engine.
 * **`adesh check` & `adesh fmt`** — Static analysis, borrow-checker, and formatting.
 * **`als` / `adesh lsp`** — Language server for real-time IDE diagnostics.
 :::
@@ -369,14 +369,14 @@ code --install-extension adesh-vscode-0.3.0.vsix
 ```
 
 #### 🖥️ Built-in Terminal UI (TUI) Editor
-AdeshLang includes a complete terminal-based code editor built-in. Launch it anytime without needing an external IDE:
+Adesh includes a complete terminal-based code editor built-in. Launch it anytime without needing an external IDE:
 ```bash
 adesh editor           # Launch TUI editor
 adesh-editor main.adesh # Edit specific file in TUI editor
 ```
 
 #### 🐳 Docker Container Quickstart
-If you prefer running AdeshLang in a fully isolated container with LLVM/MLIR and native toolchains pre-configured:
+If you prefer running Adesh in a fully isolated container with LLVM/MLIR and native toolchains pre-configured:
 ```bash
 # Pull and start interactive REPL
 docker run -it --rm adeshlang/adeshlang:latest adesh repl
@@ -394,13 +394,13 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 | `adesh doctor` | **Diagnostics** | Run complete health check on compiler, backends, environment, and AI hardware acceleration drivers. |
 | `adesh toolchain install` | **Toolchain** | Provision, download, or bind LLVM, Clang, LLD, and MLIR native compilation backends. |
 | `adesh toolchain current` | **Toolchain** | Inspect the active compiler backend, sysroot, and tool locations. |
-| `adesh repl` | **Execution** | Launch the interactive AdeshLang REPL shell with multiline support. |
-| `adesh run <file.adesh>` | **Execution** | Execute AdeshLang source with the standard tree-walk interpreter. |
-| `adesh run --njit <file>` | **Execution** | Execute using **Cranelift Native JIT** backend (10× to 230× speedups). |
+| `adesh repl` | **Execution** | Launch the interactive Adesh REPL shell with multiline support. |
+| `adesh run <file.adesh>` | **Execution** | Execute Adesh source with the standard tree-walk interpreter. |
+| `adesh run --njit <file>` | **Execution** | Execute using the **Cranelift Native JIT** backend. |
 | `adesh build <file.adesh>` | **Compilation** | AOT compile source into standalone native machine binary. |
 | `adesh editor` | **IDE Tool** | Launch the built-in cross-platform Terminal UI (TUI) Code Editor. |
 | `adesh check <file.adesh>` | **Linter** | Run static analysis, type checking, and borrow checker without codegen. |
-| `adesh fmt <file.adesh>` | **Formatter** | Auto-format source files according to standard AdeshLang style guidelines. |
+| `adesh fmt <file.adesh>` | **Formatter** | Auto-format source files according to standard Adesh style guidelines. |
 | `adesh lsp` / `als` | **Language Server** | Launch the Adesh Language Server for VS Code, Cursor, and Windsurf integration. |
 | `adl install <pkg>` | **Package Mgr** | Install dependencies, libraries, or AI/ML model binding packages. |
 
@@ -421,7 +421,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 
 #### Portable ZIP Archive
 1. Download **[AdeshLang-0.3.0-x86_64-windows-portable.zip](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-portable.zip)**.
-2. Extract the archive to your preferred directory (e.g. `C:\AdeshLang`).
+2. Extract the archive to your preferred directory (e.g. `C:\Adesh`).
 3. Add the `bin` directory to your user `PATH`.
 
 ---
@@ -441,7 +441,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 
 #### DMG Drag-and-Drop
 1. Download the `.dmg` image ([Apple Silicon DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.dmg) / [Intel DMG](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-macos.dmg)).
-2. Open the image and double-click `Install-AdeshLang.command` or copy to `/Library/Application Support/AdeshLang`.
+2. Open the image and double-click `Install-Adesh.command` or copy to `/Library/Application Support/AdeshLang`.
 
 ---
 
@@ -485,7 +485,7 @@ sudo cp -r AdeshLang-0.3.0-x86_64-linux-gnu/* /usr/local/
 
 ### 💻 Visual Studio Code Extension (.vsix)
 
-The official **AdeshLang VS Code Extension** integrates syntax highlighting, autocomplete, code actions, and real-time ALS language server diagnostics for VS Code, Cursor, Windsurf, and VSCodium.
+The official **Adesh VS Code Extension** integrates syntax highlighting, autocomplete, code actions, and real-time ALS language server diagnostics for VS Code, Cursor, Windsurf, and VSCodium.
 
 #### Option 1: Install via VS Code Command Line (CLI)
 ```bash
@@ -507,13 +507,13 @@ code --install-extension adesh-vscode-0.3.0.vsix
 
 ### 📱 Android Installation
 
-The **AdeshLang Mobile App** is a standalone code editor and native Adesh runtime environment for Android smartphones, tablets, and emulators.
+The **Adesh Mobile App** is a standalone code editor and native Adesh runtime environment for Android smartphones, tablets, and emulators.
 
 #### Option 1: Direct Download & Sideload (Phone / Tablet)
 1. Download the **[ARM64-v8a APK](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-arm64-v8a.apk)** on your Android device (or use the **[Universal APK](https://github.com/adeshlang/adeshlang/releases/download/mobile-v0.3.0/AdeshLang-mobile-0.3.0-universal.apk)**).
 2. Open the downloaded `.apk` file.
 3. If prompted, enable **"Install unknown apps"** in your Android Settings for your browser or file manager.
-4. Tap **Install** and launch AdeshLang Mobile.
+4. Tap **Install** and launch Adesh Mobile.
 
 #### Option 2: Install via Android Debug Bridge (ADB)
 ```bash

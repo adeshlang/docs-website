@@ -70,8 +70,8 @@ The lockfile is generated from the manifest by the resolver. It records the **ex
 lock {
   version = "1"
   generated-at = "2026-07-01T00:00:00Z"
-  compiler-version = "0.3.0"
-  adl-version = "0.3.0"
+  compiler-version = "0.4.0"
+  adl-version = "0.4.0"
   package-id = "my_app"
   dependencies = [
     {

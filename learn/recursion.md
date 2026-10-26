@@ -7,13 +7,13 @@ sidebar_label: 8. Recursion & Multiple Returns
 # Recursion & Multiple Returns
 
 Recursion is the art of a function calling **itself** to solve a smaller
-version of the same problem. Combined with AdeshLang's **multiple return
+version of the same problem. Combined with Adesh's **multiple return
 values**, it unlocks elegant solutions to classic algorithms. The real
 benchmarks live in [`examples/recursion/`](https://github.com/adeshlang/adeshlang/tree/main/examples/recursion).
 
 ## Multiple returns: functions that return several values
 
-AdeshLang functions can return a parenthesized list of values in one shot,
+Adesh functions can return a parenthesized list of values in one shot,
 and callers destructure them directly (from
 [`examples/real_world/02_test_multiple_returns.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/real_world/02_test_multiple_returns.adesh)):
 
@@ -152,10 +152,9 @@ print(fib_dp(30));
 832040
 ```
 
-Same answers, wildly different costs: naive is `O(2^n)`, DP is `O(n)`. This
-is why the docs brag about 10–230× speedups in
-[`fib_benchmark.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/fib/fib_benchmark.adesh) when you give the compiler the *better algorithm*
-first.
+Same answers, wildly different costs: naive is `O(2^n)`, DP is `O(n)`. Algorithm
+choice matters far more than the execution target — pick the better algorithm
+first, then choose how to run it.
 
 ## GCD — Euclid's algorithm
 

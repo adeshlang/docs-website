@@ -2,12 +2,12 @@
 id: async-await
 title: Asynchronous Programming (Async/Await)
 sidebar_label: Async / Await
-description: Zero-cost async/await, futures state machines, event loops, and non-blocking I/O in AdeshLang.
+description: Zero-cost async/await, futures state machines, event loops, and non-blocking I/O in Adesh.
 ---
 
 # Asynchronous Programming (Async / Await)
 
-AdeshLang provides native **`async` / `await`** syntax backed by a zero-cost, state-machine-transformed asynchronous runtime. Asynchronous functions yield control when waiting on non-blocking I/O (network, timers, disk operations) without blocking operating system threads.
+Adesh provides native **`async` / `await`** syntax backed by a zero-cost, state-machine-transformed asynchronous runtime. Asynchronous functions yield control when waiting on non-blocking I/O (network, timers, disk operations) without blocking operating system threads.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -49,7 +49,7 @@ async fn fetch_user_data(user_id: string): Result<User, Error> {
 
 ## 2. Running Async Entry Points
 
-AdeshLang supports `async fn main()` directly as the application entry point:
+Adesh supports `async fn main()` directly as the application entry point:
 
 ```adesh
 async fn main(): Result<(), Error> {
@@ -156,7 +156,7 @@ async fn listen_to_feed(): Result<(), Error> {
 
 ## 6. Zero-Cost State Machine Internals
 
-When you write an `async fn`, the AdeshLang compiler transforms the function into a compact enum-based state machine:
+When you write an `async fn`, the Adesh compiler transforms the function into a compact enum-based state machine:
 - **No heap allocations per `.await` point** (unless explicitly boxed or spawned).
 - Yielding saves only the live local variables across the suspension boundary into a struct frame.
 - Direct polling integration with native OS event multiplexers (`epoll` on Linux, `kqueue` on macOS/BSD, `IOCP` on Windows).

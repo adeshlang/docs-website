@@ -6,7 +6,7 @@ sidebar_label: 23. Standard Library Tour
 
 # The Standard Library Tour
 
-AdeshLang ships a **batteries-included standard library**: real math, real
+Adesh ships a **batteries-included standard library**: real math, real
 filesystem access, real JSON, real regex, real time, real randomness, and real
 crypto — all compiled into the runtime, no downloads. This tour walks through
 each area using the actual example files from
@@ -80,17 +80,17 @@ import JSON;
 
 let text = `
 {
-    "name": "AdeshLang",
+    "name": "Adesh",
     "version": 3,
     "stable": true
 }
 `;
 
 let lang = JSON.parse(text);
-print(lang.name);                 // AdeshLang
+print(lang.name);                 // Adesh
 print(lang.version);              // 3
 
-print(JSON.stringify(lang));      // {"name":"AdeshLang","stable":true,"version":3}
+print(JSON.stringify(lang));      // {"name":"Adesh","stable":true,"version":3}
 print(JSON.stringifyPretty(lang));// multi-line pretty output
 
 // JSON + files
@@ -101,11 +101,11 @@ print(loaded.app);                // demo
 
 **Output:**
 ```
-AdeshLang
+Adesh
 3
-{"name":"AdeshLang","stable":true,"version":3}
+{"name":"Adesh","stable":true,"version":3}
 {
-  "name": "AdeshLang",
+  "name": "Adesh",
   "stable": true,
   "version": 3
 }
@@ -121,7 +121,7 @@ From `examples/Libraries/json/basics.adesh` and `examples/Libraries/json/file_io
 ```adesh
 import "fs";
 
-fs.write("demo.txt", "Hello from AdeshLang!");
+fs.write("demo.txt", "Hello from Adesh!");
 let content = fs.read("demo.txt");
 print(content);
 
@@ -141,7 +141,7 @@ fs.move("demo_copy.txt", "demo_renamed.txt");
 
 **Output:**
 ```
-Hello from AdeshLang!
+Hello from Adesh!
 true
 true
 true
@@ -252,7 +252,7 @@ Seeds make simulations reproducible — see
 ```adesh
 import Crypto;
 
-let digest = Crypto.sha256("AdeshLang");
+let digest = Crypto.sha256("Adesh");
 print(digest);                          // 64-char hex digest
 print("Length:", len(digest));
 
@@ -290,7 +290,7 @@ let users = [
 
 let router = HTTP.Router();
 router.get("/", fn(req, res) {
-    return res.json("{\"service\":\"AdeshLang HTTP Demo\",\"status\":\"ok\"}");
+    return res.json("{\"service\":\"Adesh HTTP Demo\",\"status\":\"ok\"}");
 });
 router.get("/api/users", fn(req, res) {
     return res.json("[{\"id\":1,\"name\":\"Alice\"},{\"id\":2,\"name\":\"Bob\"}]");

@@ -271,7 +271,7 @@ Operations:
 - Drop `Arc` -> `atomic_fetch_sub(SeqCst)`; if count reaches 0, drop `T` then check weak count; free allocation when both counts are 0.
 - `Weak::upgrade` -> CAS loop on strong count; succeeds only if > 0.
 
-In AdeshLang source:
+In Adesh source:
 
 ```adesh
 share let data: Share<Vec<i64>> = share Vec { items: [1,2,3] };

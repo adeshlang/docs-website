@@ -7,7 +7,7 @@ sidebar_label: 24. Standard Library II
 # Standard Library II — Encoding, Compression, IO & Process
 
 The first [Standard Library Tour](/learn/stdlib-tour) covered Math, JSON, FS,
-Regex, Time, Random, and Crypto. AdeshLang's standard library goes further:
+Regex, Time, Random, and Crypto. Adesh's standard library goes further:
 **encoding**, **compression**, console **IO**, environment **env**, and
 **process** execution — each with dozens of real examples under
 [`examples/Libraries/`](https://github.com/adeshlang/adeshlang/tree/main/examples/Libraries).
@@ -52,7 +52,7 @@ payload:
 import Compression;
 import Encoding;
 
-let text = "Hello AdeshLang Compression! ";
+let text = "Hello Adesh Compression! ";
 let payload = text + text + text + text + text + text;
 
 let compressed = Compression.compress(payload);

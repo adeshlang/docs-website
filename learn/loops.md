@@ -6,7 +6,7 @@ sidebar_label: 5. Loops
 
 # Repeating Tasks — For and While Loops
 
-**Loops** let you run code multiple times without writing it over and over. AdeshLang has two main loop types.
+**Loops** let you run code multiple times without writing it over and over. Adesh has two main loop types.
 
 ## The `for` Loop — Count-Based
 

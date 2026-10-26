@@ -6,9 +6,9 @@ sidebar_label: IO
 
 # IO Library
 
-The **IO** builtin library is AdeshLang's streaming subsystem: console I/O, in-memory readers/writers, buffered streams, binary serialization with configurable endianness, pipes, and stream adapters (tees, limits, counters). It is **UTF-8 first**, deterministic, and behaves identically on every backend (Interpreter, Bytecode VM, JIT, Native JIT, LLVM AOT, and WebAssembly).
+The **IO** builtin library is Adesh's streaming subsystem: console I/O, in-memory readers/writers, buffered streams, binary serialization with configurable endianness, pipes, and stream adapters (tees, limits, counters). It is **UTF-8 first**, deterministic, and behaves identically on every backend (Interpreter, Native JIT, AOT, and WebAssembly).
 
-The high-level API is written in AdeshLang itself (`src/stdlib/IO.adesh`) and sits on top of native `io_*` primitives (console read/write, byte packing/unpacking, UTF-8 conversion).
+The high-level API is written in Adesh itself (`src/stdlib/IO.adesh`) and sits on top of native `io_*` primitives (console read/write, byte packing/unpacking, UTF-8 conversion).
 
 ## Classes
 
@@ -61,7 +61,7 @@ Print to stdout/stderr and read from stdin — the high-level, always-available 
 ```adesh
 import IO;
 
-IO.println("Hello, AdeshLang!");
+IO.println("Hello, Adesh!");
 IO.eprintln("[log] wrote to stderr");
 IO.print("No newline here -> ");
 
@@ -112,10 +112,10 @@ Work with bytes in memory without touching the filesystem — useful for testing
 import IO;
 
 let writer = new IO.MemoryWriter();
-writer.writeLine("AdeshLang");
+writer.writeLine("Adesh");
 writer.writeLine("IO subsystem");
 
-print(writer.toString());       // AdeshLang\nIO subsystem\n
+print(writer.toString());       // Adesh\nIO subsystem\n
 
 let reader = new IO.MemoryReader(writer.toString());
 while true {
@@ -126,7 +126,7 @@ while true {
 
 print(reader.remaining());      // 0 (fully consumed)
 reader.rewind();                // back to the start
-print(reader.readLine());       // AdeshLang
+print(reader.readLine());       // Adesh
 ```
 
 ---
@@ -356,7 +356,7 @@ print("bytes written:", len(sink.toString()));   // 14
 - **Buffers**: call `flush()` on `BufferedWriter`/`BinaryWriter` before reading the underlying sink.
 - **Binary reads return numbers**: `readU16`…`readF64` return numeric values; `readString(n)` needs the exact byte count.
 - **`ByteBuffer.readByte()`** returns `-1` when there are no more bytes; `Pipe.write()` returns `-1` after `close()`.
-- **Backend parity**: fully supported on Interpreter, Bytecode VM, JIT, Native JIT, LLVM AOT, and WebAssembly (the README matrix marks console/binary/in-memory streams YES everywhere).
+- **Backend parity**: fully supported on Interpreter, Native JIT, AOT, and WebAssembly (the README matrix marks console/binary/in-memory streams YES everywhere).
 - `Reader.readLine()` returns `null` at EOF — always check for `null` before using the line.
 
 ## Source & examples

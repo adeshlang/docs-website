@@ -15,9 +15,8 @@ ADOB objects and supported object/archive inputs, resolves symbols, lays out
 sections, applies supported relocations, and writes a target binary.
 
 > **Planned for v0.4.0:** The native-toolchain work described on this page is
-> planned for AdeshLang v0.4.0. The current stable release is v0.3.0. Target
-> support is uneven, so do not interpret a listed output format as a completed
-> or production-ready target.
+> planned for Adesh v0.4.0. Target support is uneven, so do not interpret a
+> listed output format as a completed or production-ready target.
 
 ---
 

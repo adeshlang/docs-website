@@ -19,7 +19,7 @@ interactive CLI with a demo harness.
 
 ```text
 ╔══════════════════════════════════════════╗
-║     AdeshLang Task Manager v1.0           ║
+║     Adesh Task Manager v1.0           ║
 ╚══════════════════════════════════════════╝
 
 📖 Available Commands:
@@ -304,7 +304,7 @@ Now **modify the program yourself**. Ideas, from easy to harder:
 You did it — the entire course. From `hello world` to a full, typed,
 validated CLI application with statistics and polished output. The Task
 Manager in `examples/real_world/` proves these skills are used daily by real
-AdeshLang programs.
+Adesh programs.
 
 **Where to go next:**
 
@@ -315,4 +315,4 @@ AdeshLang programs.
 - Read the [Compiler & Tooling](/docs/compiler/overview) pages to see how
   your source becomes native machine code.
 
-**👏 Great job. Now go build something real with AdeshLang.**
+**👏 Great job. Now go build something real with Adesh.**

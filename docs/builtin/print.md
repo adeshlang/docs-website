@@ -6,7 +6,7 @@ sidebar_label: Print
 
 # Print Function
 
-The `print` function is AdeshLang's primary output mechanism. It is a high-performance, feature-rich tool designed for everything from simple debugging to professional CLI output with support for colors, styles, and structured data.
+The `print` function is Adesh's primary output mechanism. It is a high-performance, feature-rich tool designed for everything from simple debugging to professional CLI output with support for colors, styles, and structured data.
 
 ## Core Functions
 
@@ -66,7 +66,7 @@ print("Another entry", { file: "app.log" });
 
 ## Text Styling (ANSI)
 
-AdeshLang supports rich text styling in terminals using ANSI escape codes. These are configured via the options object.
+Adesh supports rich text styling in terminals using ANSI escape codes. These are configured via the options object.
 
 ### Style Options
 
@@ -143,7 +143,7 @@ Set the `pretty` option to `true` (or `"full"`) to enable the default full mode,
 let data = {
     name: "Alice",
     age: 30,
-    skills: ["AdeshLang", "Rust", "LLVM"]
+    skills: ["Adesh", "Rust", "LLVM"]
 };
 
 print(data, { pretty: true });      // Full mode (default)

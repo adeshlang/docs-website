@@ -2,12 +2,12 @@
 id: testing
 title: Testing Framework (adesh test)
 sidebar_label: Testing
-description: Built-in unit testing, integration testing, assertions, and test runner in AdeshLang.
+description: Built-in unit testing, integration testing, assertions, and test runner in Adesh.
 ---
 
 # Testing Framework (`adesh test`)
 
-AdeshLang comes with a first-class, built-in testing framework and test runner. No third-party test libraries are required.
+Adesh comes with a first-class, built-in testing framework and test runner. No third-party test libraries are required.
 
 ---
 
@@ -41,7 +41,7 @@ fn test_division_by_zero_fails() {
 
 ## 2. Assertion Library
 
-AdeshLang includes built-in assertion functions in the standard prelude:
+Adesh includes built-in assertion functions in the standard prelude:
 
 | Assertion | Syntax | Description |
 |-----------|--------|-------------|

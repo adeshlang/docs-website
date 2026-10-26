@@ -7,21 +7,21 @@ slug: /getting-started/quick-start
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang Quick Start
+# Adesh Quick Start
 
 <FeatureStatus status="STABLE" details="CLI toolchain, REPL, test harness, and build pipeline" />
 
-This guide gets you up and running with AdeshLang in under 5 minutes. You will install the toolchain, verify your environment, create a project, write your first script, and run tests.
+This guide gets you up and running with Adesh in under 5 minutes. You will install the toolchain, verify your environment, create a project, write your first script, and run tests.
 
 :::tip Try Online Without Installing
-Want to explore AdeshLang immediately without installing anything locally? Open our **[Online Web Editor (editor.adeshlang.org)](https://editor.adeshlang.org)** to write, edit, and execute AdeshLang code directly in your web browser with 100% client-side WebAssembly!
+Want to explore Adesh immediately without installing anything locally? Open our **[Online Web Editor (editor.adeshlang.org)](https://editor.adeshlang.org)** to write, edit, and execute Adesh code directly in your web browser with 100% client-side WebAssembly!
 :::
 
 ---
 
 ## 1. Verify Your Installation & Toolchain Health
 
-Once AdeshLang is installed, test your environment using the built-in diagnostic utilities:
+Once Adesh is installed, test your environment using the built-in diagnostic utilities:
 
 ```bash
 # Check compiler version
@@ -44,7 +44,7 @@ adesh repair
 
 ## 2. Initialize a New Project
 
-Create a new AdeshLang project directory using `adesh init`:
+Create a new Adesh project directory using `adesh init`:
 
 ```bash
 adesh init my_first_app
@@ -116,9 +116,9 @@ Run your script instantly using the default interpreter:
 adesh run main.adesh
 ```
 
-### Try Ultra-Fast Native JIT Compilation
+### Try Native JIT Compilation
 
-To execute with native machine-code performance (10-230x faster for compute workloads), pass the `--jit-native` flag:
+To execute with native machine-code generation, pass the `--jit-native` flag:
 
 ```bash
 adesh run --jit-native main.adesh
@@ -139,7 +139,7 @@ adesh build main.adesh -o my_app.exe
 
 ## 6. Run Unit Tests
 
-AdeshLang includes a built-in test runner. To execute embedded tests:
+Adesh includes a built-in test runner. To execute embedded tests:
 
 ```bash
 adesh run --test main.adesh
@@ -163,5 +163,5 @@ adesh run --test --backend-check main.adesh
 ## What's Next?
 
 - Explore [Learn Programming](/learn) for a step-by-step introduction to programming concepts.
-- Read [Execution Backends](/docs/backends/overview) to understand the Interpreter, JIT, and AOT compilation targets.
+- Read [Execution Backends](/docs/backends/overview) to understand the Interpreter, Native JIT, and AOT native compilation targets.
 - Browse the [Standard Library Reference](/docs/builtin/overview) to see built-in networking, file system, and cryptography modules.

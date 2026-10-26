@@ -19,7 +19,7 @@ let height = 5.75;     // Put 5.75 in the box named 'height'
 let is_student = true; // Put true in the box named 'is_student'
 ```
 
-In AdeshLang, use `let` to create a variable:
+In Adesh, use `let` to create a variable:
 
 ```adesh
 let variable_name = value;
@@ -53,7 +53,7 @@ let let = 10;            // ❌ 'let' is a keyword
 
 ## Basic Types
 
-AdeshLang infers the type from the value:
+Adesh infers the type from the value:
 
 ```adesh
 let whole_number = 42;        // number (integer)
@@ -86,7 +86,7 @@ boolean
 
 ## Reassignment — Changing Values
 
-In AdeshLang, **variables are mutable by default** — just assign a new value:
+In Adesh, **variables are mutable by default** — just assign a new value:
 
 ```adesh
 let score = 0;
@@ -140,7 +140,7 @@ print(first + " " + last);    // Hello World
 print(first + ", " + last);   // Hello, World
 
 // String length
-let word = "AdeshLang";
+let word = "Adesh";
 print("Length:", len(word));  // Length: 9
 ```
 
@@ -219,7 +219,7 @@ let hobbies = ["coding", "reading", "gaming"];
 let favorites = {
     color: "blue",
     food: "pizza",
-    language: "AdeshLang"
+    language: "Adesh"
 };
 
 // 4. Print everything nicely
@@ -242,7 +242,7 @@ Height: 5.8
 Coder? true
 
 Hobbies: [coding, reading, gaming]
-Favorites: { color: "blue", food: "pizza", language: "AdeshLang" }
+Favorites: { color: "blue", food: "pizza", language: "Adesh" }
 ```
 
 Run it:

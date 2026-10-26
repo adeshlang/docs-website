@@ -6,7 +6,7 @@ sidebar_label: 19. Modules & Imports
 
 # Modules & Imports — Reusing Code
 
-No real program lives in one file. AdeshLang lets you split code into
+No real program lives in one file. Adesh lets you split code into
 **modules** and pull them back together with `import` — the exact syntax
 demoed in
 [`examples/modules/imports.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/modules/imports.adesh).

@@ -2,12 +2,12 @@
 id: keywords
 title: Keywords
 sidebar_label: Keywords
-description: Reference for the 84 documented language keywords in AdeshLang (including proceed, extend on).
+description: Reference for the 84 documented language keywords in Adesh (including proceed, extend on).
 ---
 
 # Keywords
 
-AdeshLang documents **84 language keywords** here. Every identifier that matches one of these spellings is tokenized as the corresponding keyword token rather than as an ordinary identifier, so none of them may be used as a variable, function, type, or parameter name.
+Adesh documents **84 language keywords** here. Every identifier that matches one of these spellings is tokenized as the corresponding keyword token rather than as an ordinary identifier, so none of them may be used as a variable, function, type, or parameter name.
 
 Each keyword below links to a reference with an explanation, syntax/example, and use cases.
 

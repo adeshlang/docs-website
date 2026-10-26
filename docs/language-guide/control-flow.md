@@ -1,13 +1,13 @@
 ---
 id: control-flow
 title: "Control Flow Architecture & Branching Semantics"
-description: "Formal specification of conditional branches, loop lowering, iterator trait desugaring, jump opcodes, and pattern matching decision trees in AdeshLang."
+description: "Formal specification of conditional branches, loop lowering, iterator trait desugaring, jump opcodes, and pattern matching decision trees in Adesh."
 sidebar_label: "Control Flow Architecture"
 ---
 
 # Control Flow Architecture & Branching Semantics
 
-This document details the compiler lowering, bytecode opcode generation, branch prediction annotations, and control-flow graphs for conditional logic, loops, and pattern matching in AdeshLang.
+This document details the compiler lowering, bytecode opcode generation, branch prediction annotations, and control-flow graphs for conditional logic, loops, and pattern matching in Adesh.
 
 ---
 
@@ -57,7 +57,7 @@ When `@unlikely` is attached, Cranelift/LLVM emits the failure branch out-of-lin
 
 ## 2. Loop Architecture & Lowering
 
-AdeshLang provides three fundamental loop constructs: `while`, `do...while`, and `for...in`.
+Adesh provides three fundamental loop constructs: `while`, `do...while`, and `for...in`.
 
 ### 2.1 `while` and `do...while` Loops
 - `while`: Evaluates condition at loop head before entering loop body.

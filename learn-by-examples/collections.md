@@ -10,13 +10,13 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Array literals, global and method-style map/filter/reduce functional transforms, and stdlib Collections (HashMap, HashSet, VecDeque)" />
 
-AdeshLang includes built-in dynamic arrays, functional transformation operations (`map`, `filter`, `reduce`), and high-performance collection primitives via `import Collections;`.
+Adesh includes built-in dynamic arrays, functional transformation operations (`map`, `filter`, `reduce`), and high-performance collection primitives via `import Collections;`.
 
 ---
 
 ## 1. Functional Transformations (`.map()`, `.filter()`, `.reduce()`)
 
-Arrays in AdeshLang support functional transformations via fluent array methods (`arr.map(fn)`, `arr.filter(fn)`, `arr.reduce(fn, init)`). These higher-order methods process collections immutably without mutating the source buffers and can be chained seamlessly.
+Arrays in Adesh support functional transformations via fluent array methods (`arr.map(fn)`, `arr.filter(fn)`, `arr.reduce(fn, init)`). These higher-order methods process collections immutably without mutating the source buffers and can be chained seamlessly.
 
 ### Code Example
 

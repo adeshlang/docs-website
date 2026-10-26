@@ -6,7 +6,7 @@ sidebar_label: Encoding
 
 # Encoding Library
 
-The **Encoding** builtin library is AdeshLang's complete text, binary, and wire-format encoding system. It covers Unicode text encodings (UTF-8, UTF-16, UTF-32, ASCII), byte-string encodings (Base64, Base64URL, hex), web encodings (percent, URL component, `application/x-www-form-urlencoded`), fixed-width integer/float serialization with explicit endianness, bounds-checked buffer reads, variable-length integers (VarInt, ZigZag, LEB128 — including the WASM binary format variants), and Byte Order Mark (BOM) detection/removal. Everything is implemented natively in Rust, so behavior is identical across every backend.
+The **Encoding** builtin library is Adesh's complete text, binary, and wire-format encoding system. It covers Unicode text encodings (UTF-8, UTF-16, UTF-32, ASCII), byte-string encodings (Base64, Base64URL, hex), web encodings (percent, URL component, `application/x-www-form-urlencoded`), fixed-width integer/float serialization with explicit endianness, bounds-checked buffer reads, variable-length integers (VarInt, ZigZag, LEB128 — including the WASM binary format variants), and Byte Order Mark (BOM) detection/removal. Everything is implemented natively in Rust, so behavior is identical across every backend.
 
 ## Namespace
 
@@ -34,11 +34,11 @@ Most functions that take *bytes* accept either a byte array (`[65, 66, 67]`), a 
 
 ## Text encodings (UTF-8, UTF-16, UTF-32, ASCII)
 
-Convert between AdeshLang strings and raw bytes for any Unicode encoding. All strict decoders throw a runtime error on invalid input; lossy/boolean variants let you handle malformed data gracefully.
+Convert between Adesh strings and raw bytes for any Unicode encoding. All strict decoders throw a runtime error on invalid input; lossy/boolean variants let you handle malformed data gracefully.
 
 ### UTF-8
 
-UTF-8 is the native string representation in AdeshLang, so round-tripping is exact for every Unicode code point.
+UTF-8 is the native string representation in Adesh, so round-tripping is exact for every Unicode code point.
 
 | Function | Description | Parameters | Returns |
 | :--- | :--- | :--- | :--- |
@@ -51,7 +51,7 @@ UTF-8 is the native string representation in AdeshLang, so round-tripping is exa
 ```adesh
 import Encoding;
 
-let text = "AdeshLang 🚀 नमस्ते संस्कृत 你好 こんにちは";
+let text = "Adesh 🚀 Hello World";
 let bytes = Encoding.utf8Encode(text);
 
 print(Encoding.isValidUtf8(bytes));     // true
@@ -89,7 +89,7 @@ Two-byte code units with surrogate-pair support for emoji and other non-BMP char
 ```adesh
 import Encoding;
 
-let text = "AdeshLang 🚀";
+let text = "Adesh 🚀";
 let utf16le = Encoding.utf16LEEncode(text);
 print(utf16le.length);                                 // 24 (12 code units × 2 bytes)
 print(Encoding.utf16LEDecode(utf16le) == text);        // true
@@ -115,7 +115,7 @@ Four-byte scalar values — one code point per code unit, no surrogate pairs. `u
 ```adesh
 import Encoding;
 
-let text = "AdeshLang 🚀";
+let text = "Adesh 🚀";
 let utf32le = Encoding.utf32LEEncode(text);
 print(utf32le.length);                                 // 44 (11 code points × 4 bytes)
 print(Encoding.utf32LEDecode(utf32le) == text);        // true
@@ -171,7 +171,7 @@ Turn raw bytes into printable text for storage or transport. Base64 is RFC 4648 
 ```adesh
 import Encoding;
 
-let rawBytes = [65, 100, 101, 115, 104, 76, 97, 110, 103];   // "AdeshLang"
+let rawBytes = [65, 100, 101, 115, 104, 76, 97, 110, 103];   // "Adesh"
 print(Encoding.base64Encode(rawBytes));         // "QWRlc2hMYW5n"
 print(Encoding.hexEncode(rawBytes));            // "41646573684c616e67"
 print(Encoding.hexEncodeUpper(rawBytes));       // "41646573684C616E67"
@@ -426,7 +426,7 @@ print("round-trip intact:", Encoding.hexEncode(received) == Encoding.hexEncode(p
 - **Buffer reads are bounds-checked.** `readU16LE`, `readU32LE`, `readU64LE` and their BE variants throw `Offset out of bounds` instead of reading past the buffer.
 - **VarInt/LEB128 decoders read one value.** They decode the first complete value from the front of the array; trailing bytes are ignored. Truncated sequences and u64/i64 overflow (more than 10 bytes) throw.
 - **`removeBom` returns an object** `{ bom, bytes }` — use `result.bom` and `result.bytes`; `detectBom` returns the encoding name string (or `"NONE"`).
-- **Backend parity.** Implemented natively in Rust, so behavior is identical on Interpreter, Bytecode VM, JIT, Native JIT, LLVM AOT, and WebAssembly.
+- **Backend parity.** Implemented natively in Rust, so behavior is identical on Interpreter, Native JIT, AOT, and WebAssembly.
 - **Pair with `Crypto`.** `Encoding.base64Encode`/`hexEncode` work hand-in-hand with the `Crypto` library's byte-array digests and signatures when you need to print or store them.
 
 ## Source & examples

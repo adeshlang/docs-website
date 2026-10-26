@@ -7,7 +7,7 @@ description: The `extern` keyword declares external linkage for FFI — exposing
 
 # `extern`
 
-`extern` declares that a function or static has **external linkage** — its implementation is provided by native code (C/C++/Rust) through the **FFI layer**, not by AdeshLang source. The compiler leaves the symbol unresolved for the linker and generates the appropriate calling-convention glue. AdeshLang's FFI also uses the special `$cImport` directive to bring C headers into scope.
+`extern` declares that a function or static has **external linkage** — its implementation is provided by native code (C/C++/Rust) through the **FFI layer**, not by Adesh source. The compiler leaves the symbol unresolved for the linker and generates the appropriate calling-convention glue. Adesh's FFI also uses the special `$cImport` directive to bring C headers into scope.
 
 > **Ground truth:** Lexer `TokenKind::Extern` (`src/parsing/lexer.rs:1017`, keyword `"extern"`), FFI docs `tools/ffi.md`, hover *Declares a foreign function for FFI* (`als/src/hover.rs:396`), `$cImport` header import, `unsafe` required for raw calls.
 
@@ -21,7 +21,7 @@ extern_decl   ::= "extern" abi? ("fn" fn_sig ";" | "static" ident ":" type ";")
 abi           ::= "\"C\"" | "\"C++\"" | string_literal
 fn_sig        ::= ident "(" params? ")" ("->" type)?
 
-c_import      ::= "$cImport" string_literal ";"   // AdeshLang special: imports a C header
+c_import      ::= "$cImport" string_literal ";"   // Adesh special: imports a C header
 
 params        ::= param ("," param)* ("," "...")?  // "..." for C varargs where allowed
 param         ::= ident ":" type
@@ -49,7 +49,7 @@ extern "C" {
 // With static external symbol
 extern "C" static errno: i32;
 
-// Using an extern inside AdeshLang code — calls are unsafe-adjacent
+// Using an extern inside Adesh code — calls are unsafe-adjacent
 fn main() {
     unsafe {
         printf("Hello from C\n");
@@ -73,7 +73,7 @@ fn main() {
 
 ### Linking model
 
-`extern` items have **no AdeshLang body**. The compiler emits an external symbol reference; the linker resolves it against a native library (`.a`/`.so`/`.dll`/`.lib`) supplied via build flags (`--link`, `build.adesh`, or toolchain config). If the symbol cannot be resolved, linking fails.
+`extern` items have **no Adesh body**. The compiler emits an external symbol reference; the linker resolves it against a native library (`.a`/`.so`/`.dll`/`.lib`) supplied via build flags (`--link`, `build.adesh`, or toolchain config). If the symbol cannot be resolved, linking fails.
 
 ### Calling convention and ABI
 
@@ -81,9 +81,9 @@ The `extern "C"` ABI guarantees the callee uses the C calling convention (argume
 
 ### Type mapping
 
-AdeshLang FFI maps primitive types to C types:
+Adesh FFI maps primitive types to C types:
 
-| AdeshLang | C |
+| Adesh | C |
 |---|---|
 | `i8` / `u8` | `int8_t` / `uint8_t` |
 | `i32` / `u32` | `int` / `unsigned int` |
@@ -97,7 +97,7 @@ Complex types (`struct`, `class`) require `#[repr(C)]`-like layout guarantees �
 
 ### Safety
 
-Calling an `extern` function is **unsafe** in effect, even if the call site is not syntactically `unsafe` in all builds. Raw pointers, varargs, and C UB (null deref, buffer overflow) are not checked by AdeshLang's borrow checker. Wrap calls in `unsafe { }` and validate preconditions:
+Calling an `extern` function is **unsafe** in effect, even if the call site is not syntactically `unsafe` in all builds. Raw pointers, varargs, and C UB (null deref, buffer overflow) are not checked by Adesh's borrow checker. Wrap calls in `unsafe { }` and validate preconditions:
 
 ```adesh
 unsafe {
@@ -114,7 +114,7 @@ unsafe {
 1. **Lex** `extern` → `TokenKind::Extern`, `$cImport` → special directive.
 2. **Parse** as `ExternDecl` with optional ABI and `fn`/`static`/block payload.
 3. **HIR** — `HirExtern { abi, name, params, ret, is_varargs }` with no body.
-4. **Type check** — verify AdeshLang signature matches imported header (where `$cImport` provides it).
+4. **Type check** — verify Adesh signature matches imported header (where `$cImport` provides it).
 5. **Codegen** — emit `external` symbol with `extern "C"` linkage; call via `call_indirect` with C ABI.
 6. **Link** — resolve against native library; emit error if unresolved.
 
@@ -150,16 +150,16 @@ fn main() {
 $cImport "mylib.h";
 
 extern "C" {
-    // Opaque handle — AdeshLang never inspects layout
+    // Opaque handle — Adesh never inspects layout
     fn mylib_open(path: *const u8) -> *mut void;
     fn mylib_process(handle: *mut void, data: *const u8, len: usize) -> i32;
     fn mylib_close(handle: *mut void) -> void;
 
-    // Callback type: C calls back into AdeshLang
+    // Callback type: C calls back into Adesh
     fn mylib_set_callback(handle: *mut void, cb: *mut void) -> void;
 }
 
-// AdeshLang callback that C will call — must be `extern "C"` on Adesh side too
+// Adesh callback that C will call — must be `extern "C"` on Adesh side too
 extern "C" fn my_callback(code: i32) -> void {
     print("callback:", code);
 }
@@ -235,7 +235,7 @@ fn raw_array_ffi() {
 | **Parse** | `extern 42;` | `expected 'fn' or 'static' or '{' after 'extern'` | Write `extern fn f(...);` |
 | **Parse** | `extern fn f() { }` with body | `extern function cannot have a body` | Use `;` not `{ }` |
 | **Parse** | `$cImport` without string literal | `expected string literal after '$cImport'` | Write `$cImport "header.h";` |
-| **Type** | Mismatched param/return types vs. header | `mismatched FFI signature for '<name>'` | Fix AdeshLang decl to match C header |
+| **Type** | Mismatched param/return types vs. header | `mismatched FFI signature for '<name>'` | Fix Adesh decl to match C header |
 | **Safety** | Calling `extern fn` without `unsafe` (strict builds) | `call to extern function requires unsafe` | Wrap in `unsafe { }` |
 | **Link** | Unresolved `extern` symbol at link time | `undefined reference to '<name>'` | Add native library to link args / `build.adesh` |
 | **ABI** | `extern "C++"` without C++ toolchain | `C++ ABI not supported on this target` | Use `extern "C"` or enable C++ toolchain |

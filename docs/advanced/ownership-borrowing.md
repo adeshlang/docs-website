@@ -7,11 +7,11 @@ slug: /advanced/ownership-borrowing
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# Ownership and Borrowing in AdeshLang
+# Ownership and Borrowing in Adesh
 
 <FeatureStatus status="STABLE" details="Compile-time lifetime and reference alias safety pass" />
 
-One of AdeshLang's defining characteristics is its **compile-time memory safety model**. It delivers predictable performance and zero runtime overhead without relying on a garbage collector (GC).
+One of Adesh's defining characteristics is its **compile-time memory safety model**. It delivers predictable performance and zero runtime overhead without relying on a garbage collector (GC).
 
 ---
 
@@ -27,18 +27,18 @@ In traditional programming languages, memory management generally falls into one
    - The runtime periodically pauses execution to discover unreferenced objects and reclaim memory.
    - *Failure Modes*: Unexpected pause spikes, high memory footprint, and non-deterministic resource destruction.
 
-### The AdeshLang Approach: Ownership at Compile Time
+### The Adesh Approach: Ownership at Compile Time
 
-AdeshLang uses **Ownership and Borrowing rules** enforced by the compiler's semantic analysis and MIR pass ([`src/parsing/cfg_borrow`](file:///d:/Projects/AdeshLang/src/parsing/cfg_borrow)). Memory is cleaned up deterministically the moment its single owner goes out of scope (RAII - Resource Acquisition Is Initialization).
+Adesh uses **Ownership and Borrowing rules** enforced by the compiler's semantic analysis and MIR pass ([`src/parsing/cfg_borrow`](file:///d:/Projects/AdeshLang/src/parsing/cfg_borrow)). Memory is cleaned up deterministically the moment its single owner goes out of scope (RAII - Resource Acquisition Is Initialization).
 
 ---
 
 ## 2. The Basic Concept
 
-Memory safety in AdeshLang rests on three fundamental rules:
+Memory safety in Adesh rests on three fundamental rules:
 
 > [!IMPORTANT]
-> 1. **Single Owner Rule**: Each value in AdeshLang has a single variable that is its *owner*.
+> 1. **Single Owner Rule**: Each value in Adesh has a single variable that is its *owner*.
 > 2. **Scope Drop Rule**: When the owner variable goes out of scope, the memory for that value is automatically dropped/freed.
 > 3. **Move Semantics**: Assigning a value or passing it into a function transfers (moves) ownership to the new destination.
 
@@ -50,7 +50,7 @@ Memory safety in AdeshLang rests on three fundamental rules:
 
 ```adesh
 fn main() {
-    let s1 = "Hello, AdeshLang!";
+    let s1 = "Hello, Adesh!";
     let len = s1.length;
     print(s1);
     print(len);
@@ -90,7 +90,7 @@ Error[E0382]: use of moved value: `s1`
 
 ## 4. Borrowing & References
 
-Passing ownership into every function would be tedious if you only want to read a value. AdeshLang solves this through **Borrowing**.
+Passing ownership into every function would be tedious if you only want to read a value. Adesh solves this through **Borrowing**.
 
 Instead of transferring ownership, a function can create a temporary reference (borrow) to a value:
 
@@ -100,7 +100,7 @@ fn calculate_length(text) {
 }
 
 fn main() {
-    let message = "AdeshLang Documentation";
+    let message = "Adesh Documentation";
     
     // Borrow message without moving ownership
     let len = calculate_length(message);
@@ -113,7 +113,7 @@ fn main() {
 
 ### Borrowing Rules
 
-To eliminate data races and dangling references, AdeshLang enforces:
+To eliminate data races and dangling references, Adesh enforces:
 
 - You can have **any number of immutable borrows** (`read-only` references) to a resource at the same time.
 - You can have **only ONE mutable borrow** at any given time.
@@ -123,7 +123,7 @@ To eliminate data races and dangling references, AdeshLang enforces:
 
 ## 5. Reference Counting (`Arc` & `Rc`)
 
-When multiple parts of a program need to share ownership of the same dataset (such as graph nodes or shared worker state), AdeshLang provides reference-counted wrappers:
+When multiple parts of a program need to share ownership of the same dataset (such as graph nodes or shared worker state), Adesh provides reference-counted wrappers:
 
 ```adesh
 import "std" as std;

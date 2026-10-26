@@ -6,7 +6,7 @@ sidebar_label: Random
 
 # Random Library
 
-The **Random** builtin library is a complete, production-grade randomness ecosystem for AdeshLang. It provides unbiased bounded integers (zero modulo bias via rejection sampling), full-range `u8`–`i128` generators, floats, booleans, bytes, strings/UUIDs/tokens, Fisher–Yates shuffling, sampling (with and without replacement), weighted and reservoir sampling, seeded deterministic `Rng` streams, statistical distributions, and OS-entropy-secure bytes — all backed by a high-speed **Xoshiro256++** PRNG.
+The **Random** builtin library is a complete, production-grade randomness ecosystem for Adesh. It provides unbiased bounded integers (zero modulo bias via rejection sampling), full-range `u8`–`i128` generators, floats, booleans, bytes, strings/UUIDs/tokens, Fisher–Yates shuffling, sampling (with and without replacement), weighted and reservoir sampling, seeded deterministic `Rng` streams, statistical distributions, and OS-entropy-secure bytes — all backed by a high-speed **Xoshiro256++** PRNG.
 
 ## Namespace
 

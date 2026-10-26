@@ -7,9 +7,9 @@ description: The `unsafe` keyword marks an unchecked block where raw pointers, F
 
 # `unsafe`
 
-The `unsafe` keyword marks a block or function as exempt from AdeshLang's safety guarantees. Inside an `unsafe` block the programmer — not the borrow-checker — is responsible for upholding invariants. The compiler disables or downgrades specific checks (raw-pointer dereference, unchecked `alloc`/`free`, `extern` calls, layout-dependent casts) and treats the interior as an audit boundary.
+The `unsafe` keyword marks a block or function as exempt from Adesh's safety guarantees. Inside an `unsafe` block the programmer — not the borrow-checker — is responsible for upholding invariants. The compiler disables or downgrades specific checks (raw-pointer dereference, unchecked `alloc`/`free`, `extern` calls, layout-dependent casts) and treats the interior as an audit boundary.
 
-AdeshLang's safety model is opt-in to unsafety: all safe code must remain borrow-checked, null-safe, and double-free-free. `unsafe` isolates the small fraction of code that needs to touch untyped memory or foreign ABIs so reviewers and tools can focus on it.
+Adesh's safety model is opt-in to unsafety: all safe code must remain borrow-checked, null-safe, and double-free-free. `unsafe` isolates the small fraction of code that needs to touch untyped memory or foreign ABIs so reviewers and tools can focus on it.
 
 > **Ground truth:** Lexer token `TokenKind::Unsafe` (`src/parsing/lexer.rs:1011`), parser `StmtKind::UnsafeBlock(Box<Stmt>)` (`src/parsing/ast.rs:683`), HIR `HirStmt::Unsafe { body }` with `is_unsafe` flag on `Function` (`src/parsing/hir.rs:358,379`).
 
@@ -121,7 +121,7 @@ unsafe {
 extern "C" fn strlen(s: *const u8) -> usize;
 
 fn c_strlen_safe(s: string): usize {
-    // Convert AdeshLang string to NUL-terminated buffer, then call C.
+    // Convert Adesh string to NUL-terminated buffer, then call C.
     unsafe {
         let n = s.len() + 1;
         let p: *mut u8 = alloc<u8>(n);

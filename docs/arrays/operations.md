@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" />
 
-AdeshLang includes a comprehensive standard library of built-in array methods for buffer mutation, querying, transformation, functional programming, and SIMD hardware acceleration.
+Adesh includes a comprehensive standard library of built-in array methods for buffer mutation, querying, transformation, functional programming, and SIMD hardware acceleration.
 
 ---
 
@@ -116,7 +116,7 @@ print("Length: ", buffer.length); // 0
 
 ## 2. Functional & Transformation Methods
 
-AdeshLang provides high-performance, fluent array methods for functional transformations: `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, init)`. These methods operate immutably, producing new arrays or values without modifying the original collection.
+Adesh provides high-performance, fluent array methods for functional transformations: `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, init)`. These methods operate immutably, producing new arrays or values without modifying the original collection.
 
 ### `.map(fn)`
 
@@ -228,7 +228,7 @@ print("CSV string: ", csv); // "rust, adesh, compiler"
 
 ## 4. Hardware SIMD Acceleration
 
-For numerical processing and vector math, AdeshLang provides SIMD vector
+For numerical processing and vector math, Adesh provides SIMD vector
 instructions leveraging hardware AVX2 / ARM Neon vector registers. Arrays
 support **element-wise operators**, and the `Simd` namespace provides
 reductions — all tested in the interpreter:

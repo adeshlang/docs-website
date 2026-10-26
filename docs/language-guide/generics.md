@@ -1,19 +1,19 @@
 ---
 id: generics
 title: "Generics Architecture & Monomorphization Engine"
-description: "Formal specification of AdeshLang generic instantiation, compile-time monomorphization, trait bounds, symbol mangling, and dynamic trait objects."
+description: "Formal specification of Adesh generic instantiation, compile-time monomorphization, trait bounds, symbol mangling, and dynamic trait objects."
 sidebar_label: "Generics & Monomorphization"
 ---
 
 # Generics Architecture & Monomorphization Engine
 
-This document defines the compile-time monomorphization engine, generic type resolution, trait bound validation, symbol name mangling algorithms, and dynamic trait object dispatch in AdeshLang.
+This document defines the compile-time monomorphization engine, generic type resolution, trait bound validation, symbol name mangling algorithms, and dynamic trait object dispatch in Adesh.
 
 ---
 
 ## 1. Generics Architecture Overview
 
-AdeshLang supports generic functions, structs, enums, classes, traits, and type aliases. Generics are parametric polymorphism checked at compile time and eliminated via monomorphization.
+Adesh supports generic functions, structs, enums, classes, traits, and type aliases. Generics are parametric polymorphism checked at compile time and eliminated via monomorphization.
 
 ```adesh
 struct Stack<T> {
@@ -47,7 +47,7 @@ Type          ::= IDENT [ GenericArgs ] | "[" Type "]" | "(" TypeList ")" | "fn"
 
 All generic declarations are lowered in `src/parsing/ast.rs` via `Function.type_params`, `ClassDecl.type_params`, `StructDecl.type_params`, `TypeAliasDecl.type_params`, and `InterfaceDecl.type_params`.
 
-AdeshLang implements **Compile-Time Monomorphization**. Generic code incurs zero runtime performance penalty; every concrete type instantiation generates dedicated, fully optimized native assembly.
+Adesh implements **Compile-Time Monomorphization**. Generic code incurs zero runtime performance penalty; every concrete type instantiation generates dedicated, fully optimized native assembly.
 
 ---
 
@@ -186,7 +186,7 @@ Bounds are invariant by default; see §7 for variance.
 
 ## 5. Method-Level Generics in `extend on`
 
-AdeshLang supports generic methods inside `extend on` blocks, enabling retroactive generic extensions without modifying the original type:
+Adesh supports generic methods inside `extend on` blocks, enabling retroactive generic extensions without modifying the original type:
 
 ```adesh
 struct Vec<T> { data: [T], len: u64, }
@@ -224,7 +224,7 @@ The desugaring in `src/parsing/hir_lower.rs` treats each `extend on` method as a
 
 ## 6. Dynamic Trait Objects (`dyn Trait`)
 
-When heterogeneous collections or runtime dynamic dispatch are explicitly required, AdeshLang supports dynamic trait objects (`dyn Trait`):
+When heterogeneous collections or runtime dynamic dispatch are explicitly required, Adesh supports dynamic trait objects (`dyn Trait`):
 
 ```adesh
 fn print_dynamic_items(items: [&dyn Printable]) {

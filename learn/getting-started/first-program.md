@@ -1,13 +1,13 @@
 ---
 id: first-program
-title: Your First AdeshLang Program
+title: Your First Adesh Program
 sidebar_label: First Program
-description: Step-by-step beginner guide to writing, compiling, and running your first programs in AdeshLang.
+description: Step-by-step beginner guide to writing, compiling, and running your first programs in Adesh.
 ---
 
-# Your First AdeshLang Program
+# Your First Adesh Program
 
-Welcome to AdeshLang! In this tutorial, you will write, analyze, compile, and run your first AdeshLang programs.
+Welcome to Adesh! In this tutorial, you will write, analyze, compile, and run your first Adesh programs.
 
 ---
 
@@ -17,7 +17,7 @@ Create a new file named `hello.adesh`:
 
 ```adesh
 fn main() {
-    print("Hello, World from AdeshLang!");
+    print("Hello, World from Adesh!");
 }
 ```
 
@@ -31,12 +31,12 @@ adesh run hello.adesh
 
 **Output:**
 ```text
-Hello, World from AdeshLang!
+Hello, World from Adesh!
 ```
 
 ---
 
-## 2. Anatomy of an AdeshLang Program
+## 2. Anatomy of an Adesh Program
 
 Let's break down each element:
 
@@ -67,7 +67,7 @@ fn main() {
     let name = io::read_line();
     
     // String interpolation using f"..."
-    print(f"Welcome to systems programming in AdeshLang, {name.trim()}!");
+    print(f"Welcome to systems programming in Adesh, {name.trim()}!");
 }
 ```
 

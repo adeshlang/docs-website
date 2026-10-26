@@ -7,7 +7,7 @@ description: The `extend` keyword with mandatory `on` — production reference f
 
 # `extend` … `on` — Retroactive Type Extension
 
-`extend` introduces a **retroactive extension block** that attaches new methods to an *already-declared* type without modifying its source or wrapping it. It is the AdeshLang analogue of Rust's `impl Trait for Type`, Swift/Dart extension methods, and Kotlin extension functions — but unified into a single `extend on` form that works for `class`, `struct`, `enum`, and selected builtins.
+`extend` introduces a **retroactive extension block** that attaches new methods to an *already-declared* type without modifying its source or wrapping it. It is the Adesh analogue of Rust's `impl Trait for Type`, Swift/Dart extension methods, and Kotlin extension functions — but unified into a single `extend on` form that works for `class`, `struct`, `enum`, and selected builtins.
 
 :::caution Mandatory `on`
 The parser **requires** `on`. The form `extend Point { ... }` without `on` is a compile error (`Expect 'on' after extend`). Always write `extend on Type { ... }` or the named form `extend Name on Type { ... }`.

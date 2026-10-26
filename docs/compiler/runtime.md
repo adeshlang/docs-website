@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Compact 16-byte Value enum, string interning, shared Arc ownership, scoped environments" />
 
-Every value in AdeshLang has a runtime representation. Understanding it
+Every value in Adesh has a runtime representation. Understanding it
 explains a lot about performance and behavior:
 
 - **numbers and booleans are inline** — no heap allocation

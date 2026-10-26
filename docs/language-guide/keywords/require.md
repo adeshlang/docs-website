@@ -99,7 +99,7 @@ Contracts compose: each `require` in a decorator phase contributes a conjunctive
 // File-level invariant: this module only works with 64-bit pointer width
 compile {
     require WORD_SIZE == 8, "this module requires 64-bit target";
-    require VERSION >= "2.0.0", "AdeshLang >=2.0 required";
+    require VERSION >= "2.0.0", "Adesh >=2.0 required";
 }
 
 // Precompute a table and assert structural invariant at compile time

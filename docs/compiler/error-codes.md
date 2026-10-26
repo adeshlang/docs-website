@@ -6,13 +6,13 @@ sidebar_label: Error Codes Index
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang Diagnostic Error Codes Index
+# Adesh Diagnostic Error Codes Index
 
 <FeatureStatus status="STABLE" details="Index of canonical Rust-compatible and Adesh-specific diagnostic codes" />
 
-This document provides a canonical, comprehensive index of all diagnostic codes emitted by the AdeshLang compiler, linker, and runtime.
+This document provides a canonical, comprehensive index of all diagnostic codes emitted by the Adesh compiler, linker, and runtime.
 
-AdeshLang adopts a strict, two-tier error-code design:
+Adesh adopts a strict, two-tier error-code design:
 1. **Rust-Compatible Codes (`E0001`–`E9999`)**: Used exclusively when the semantic condition and developer remediation directly correspond to an equivalent Rust compiler error code.
 2. **Adesh-Specific Codes (`AD0001`–`AD9999`)**: Dedicated to Adesh-specific language semantics, novel execution models, embedded modes, and binary packaging.
 3. **Linker Codes (`LNK001`–`LNK016`)**: Dedicated to object-file resolution, relocation, section mapping, and final executable layout.

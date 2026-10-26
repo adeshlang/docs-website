@@ -47,7 +47,7 @@ print("Body Preview:", res.text());  // JSON or HTML string
 Sends an HTTP POST request with a text or JSON string body.
 
 ```adesh
-let payload = "{\"name\":\"AdeshLang\",\"version\":\"0.3\"}";
+let payload = "{\"name\":\"Adesh\",\"version\":\"0.3\"}";
 let res = HTTP.post("https://httpbin.org/post", payload);
 print("Status:", res.status, "| Status Text:", res.statusText);
 ```

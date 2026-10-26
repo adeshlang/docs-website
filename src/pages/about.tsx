@@ -2,7 +2,56 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import Head from '@docusaurus/Head';
-import { SITE_URL, personSchema, breadcrumbSchema } from '../utils/seo';
+import { SITE_URL, GITHUB_URL, personSchema, breadcrumbSchema } from '../utils/seo';
+
+const RELEASES_URL = 'https://github.com/adeshlang/adeshlang/releases/latest';
+const PORTFOLIO_URL = 'https://www.ajaytainwala.dev';
+
+const facts = [
+  {
+    icon: 'memory',
+    title: 'Native toolchain',
+    body: 'HIR → Machine IR → ADOB v3 objects → adeshlink → PE, ELF, and Mach-O executables.',
+  },
+  {
+    icon: 'shield',
+    title: 'Zero-cost safety',
+    body: 'Compile-time reference and borrow checking without a garbage collector or pause.',
+  },
+  {
+    icon: 'bolt',
+    title: 'Cranelift JIT',
+    body: 'Runtime native code generation for compute-heavy workloads.',
+  },
+  {
+    icon: 'lan',
+    title: 'Networking built in',
+    body: 'TCP, UDP, HTTP, WebSocket, DNS, TLS, and JSON ship with the standard library.',
+  },
+];
+
+const previewFeatures = [
+  {
+    icon: 'account_tree',
+    title: 'HIR & Machine IR',
+    body: 'Platform-aware lowering from a typed high-level IR down to machine instructions.',
+  },
+  {
+    icon: 'inventory_2',
+    title: 'ADOB v3 objects',
+    body: 'A validated native object format with symbols, relocations, and section metadata.',
+  },
+  {
+    icon: 'link',
+    title: 'adeshlink',
+    body: 'A native linker with garbage collection, identical code folding, and relocation support.',
+  },
+  {
+    icon: 'deployed_code',
+    title: 'Real executables',
+    body: 'x86-64 PE output is execution-tested; AArch64, RISC-V, Mach-O, and WASM are in progress.',
+  },
+];
 
 export default function About(): JSX.Element {
   const personJsonLd = personSchema();
@@ -13,145 +62,205 @@ export default function About(): JSX.Element {
 
   return (
     <Layout
-      title="About AdeshLang & Creator Ajay Tainwala"
-      description="Meet Ajay Tainwala, creator of AdeshLang — a high-performance, memory-safe programming language built with Rust, Cranelift JIT, and zero-cost safety."
+      title="About Adesh Lang & Creator Ajay Tainwala"
+      description="Meet Ajay Tainwala, creator of Adesh — a native-speed, memory-safe programming language built with Rust, Cranelift, ADOB v3 objects, and adeshlink."
     >
       <Head>
         <link rel="canonical" href={`${SITE_URL}/about`} />
-        <meta name="keywords" content="AdeshLang, Ajay Tainwala, programming language creator, Bengaluru, Rust, compiler" />
+        <meta
+          name="keywords"
+          content="Adesh, Ajay Tainwala, native compiler, programming language creator, Bengaluru, Rust, Cranelift, adeshlink"
+        />
         <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       </Head>
-      <main style={{ padding: '4rem 1.5rem', maxWidth: '1000px', margin: '0 auto' }}>
-        {/* Header Title */}
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <div className="hero-badge" style={{ marginBottom: '1rem' }}>
-            <span>🚀 About the Project & Creator</span>
-          </div>
-          <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem' }}>
-            About <span className="gradient-text">AdeshLang</span>
+
+      <main className="about-page">
+        <header className="about-hero">
+          <span className="m3-chip">
+            <span className="material-symbols-rounded" aria-hidden="true">
+              rocket_launch
+            </span>
+            About the project &amp; creator
+          </span>
+          <h1>
+            About <span className="gradient-text">Adesh Lang</span>
           </h1>
-          <p style={{ fontSize: '1.2rem', opacity: 0.85, maxWidth: '720px', margin: '0 auto' }}>
-            Building a modern, high-performance, memory-safe programming language with Cranelift native compilation and zero-cost safety abstractions.
+          <p>
+            Building a native-speed, memory-safe programming language with a real compiler,
+            a real linker, and zero-cost safety abstractions.
           </p>
-        </div>
+        </header>
 
-        {/* Section 1: About AdeshLang */}
-        <section className="glass-card" style={{ marginBottom: '3rem', padding: '2.5rem' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#34d399', marginBottom: '1.5rem' }}>
-            What is AdeshLang?
-          </h2>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', opacity: 0.9 }}>
-            <strong>AdeshLang (आदेश)</strong> — meaning <em>"Command"</em> — is an <strong>experimental programming language</strong> built to explore language design, compiler architectures, and zero-cost safety abstractions.
+        <section className="about-section">
+          <h2>What is Adesh?</h2>
+          <p>
+            <strong>Adesh</strong> — meaning <em>&ldquo;Command&rdquo;</em> — is an
+            experimental programming language built to explore language design, compiler
+            architectures, and zero-cost safety. The <strong>tree-walk interpreter</strong>{' '}
+            remains the reference implementation and source of truth for language semantics
+            and standard-library behavior.
           </p>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', opacity: 0.9 }}>
-            The <strong>Tree-Walk Interpreter</strong> is currently the <strong>main reflection and primary source of truth</strong> for AdeshLang execution and standard library behavior. Other backends — including Cranelift Native JIT, AOT compilation, Bytecode VM, WASM, and GPU MLIR lowering — are under active experimental development.
+          <p>
+            <strong>v0.4.0 is coming soon</strong> and focuses on native execution: a complete
+            pipeline from typed HIR through Machine IR to ADOB v3 object files, linked into
+            standalone executables by <code>adeshlink</code>. The native JIT, AOT, and WASM
+            targets continue to evolve alongside it, with GPU acceleration planned for a future
+            release.
           </p>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', opacity: 0.9 }}>
-            🦀 <strong>Made with Rust</strong>: The entire AdeshLang toolchain (lexer, parser, AST, IR lowerings, CLI harness) is built in <strong>Rust</strong>. We give a massive shoutout to the <strong>Rust Core Team</strong>, the <strong>Rust Foundation</strong>, and the global <strong>Rust Community</strong> for empowering developers with the world's finest systems programming platform.
+          <p>
+            <strong>Made with Rust:</strong> the entire toolchain — lexer, parser, AST, IR
+            lowerings, linker, and CLI harness — is built in Rust. Thanks to the Rust Core
+            Team, the Rust Foundation, and the global Rust community for the platform that
+            made it possible.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginTop: '2rem' }}>
-            <div style={{ background: 'var(--btn-glass-bg)', padding: '16px', borderRadius: '12px', border: '1px solid var(--card-border)' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '4px' }}>🛡️</div>
-              <strong style={{ display: 'block', marginBottom: '4px', color: 'var(--card-heading)' }}>Zero-Cost Safety</strong>
-              <span style={{ fontSize: '0.9rem', color: 'var(--card-text)' }}>Compile-time reference & borrow checking without GC pauses.</span>
-            </div>
-
-            <div style={{ background: 'var(--btn-glass-bg)', padding: '16px', borderRadius: '12px', border: '1px solid var(--card-border)' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '4px' }}>⚡</div>
-              <strong style={{ display: 'block', marginBottom: '4px', color: 'var(--card-heading)' }}>Cranelift Native JIT</strong>
-              <span style={{ fontSize: '0.9rem', color: 'var(--card-text)' }}>Runtime native codegen via function pointers (10-230x faster).</span>
-            </div>
-
-            <div style={{ background: 'var(--btn-glass-bg)', padding: '16px', borderRadius: '12px', border: '1px solid var(--card-border)' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '4px' }}>🌐</div>
-              <strong style={{ display: 'block', marginBottom: '4px', color: 'var(--card-heading)' }}>Builtin Networking</strong>
-              <span style={{ fontSize: '0.9rem', color: 'var(--card-text)' }}>Native TCP, UDP, HTTP, WebSockets, DNS, and TLS modules.</span>
-            </div>
+          <div className="about-fact-grid">
+            {facts.map((fact) => (
+              <div className="about-fact" key={fact.title}>
+                <span className="material-symbols-rounded" aria-hidden="true">
+                  {fact.icon}
+                </span>
+                <strong>{fact.title}</strong>
+                <span>{fact.body}</span>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Section 2: Creator Ajay Tainwala */}
-        <section className="glass-card" style={{ padding: '2.5rem', border: '1px solid rgba(56, 189, 248, 0.3)' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2rem', alignItems: 'center' }}>
-            <div style={{ flex: '1 1 250px', textAlign: 'center' }}>
+        <section className="about-section">
+          <span className="m3-chip">
+            <span className="material-symbols-rounded" aria-hidden="true">
+              release_alert
+            </span>
+            v0.4.0 preview
+          </span>
+          <h2>Native features on the way</h2>
+          <p>
+            Adesh is moving from an interpreter-first runtime to a native toolchain you can
+            ship. The work is incremental and openly tracked — here is what the v0.4.0 release
+            brings.
+          </p>
+
+          <div className="about-fact-grid">
+            {previewFeatures.map((feature) => (
+              <div className="about-fact" key={feature.title}>
+                <span className="material-symbols-rounded" aria-hidden="true">
+                  {feature.icon}
+                </span>
+                <strong>{feature.title}</strong>
+                <span>{feature.body}</span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.5rem' }}>
+            <Link className="m3-btn m3-btn--filled" to="/docs/compiler/native-toolchain">
+              <span className="material-symbols-rounded" aria-hidden="true">
+                developer_board
+              </span>
+              Explore the native toolchain
+            </Link>
+            <a
+              className="m3-btn m3-btn--outlined"
+              href={RELEASES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="material-symbols-rounded" aria-hidden="true">
+                download
+              </span>
+              Latest release
+            </a>
+          </div>
+        </section>
+
+        <section className="about-section">
+          <div className="about-creator">
+            <div>
               <img
-                src="https://ajaytainwala.vercel.app/Profile/AjayTainwala.jpg"
+                className="about-creator__portrait"
+                src="/img/ajay-tainwala.jpg"
                 alt="Ajay Tainwala"
-                style={{
-                  width: '180px',
-                  height: '180px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '3px solid #38bdf8',
-                  boxShadow: '0 0 25px rgba(56, 189, 248, 0.4)',
-                }}
+                width={180}
+                height={180}
+                loading="lazy"
+                decoding="async"
                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                  // Fallback avatar if image fails to load externally
                   e.currentTarget.src = '/img/logo.svg';
                 }}
               />
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginTop: '1rem', marginBottom: '0.25rem' }}>
-                Ajay Tainwala
-              </h3>
-              <p style={{ color: '#38bdf8', fontWeight: 600, fontSize: '0.95rem' }}>
-                Creator & Lead Architect of AdeshLang
-              </p>
+              <p className="about-creator__name">Ajay Tainwala</p>
+              <p className="about-creator__role">Creator &amp; Lead Architect</p>
             </div>
 
-            <div style={{ flex: '2 1 400px' }}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '1rem' }}>
-                Meet the Creator
-              </h2>
-              <p style={{ fontSize: '1.05rem', lineHeight: '1.7', opacity: 0.9 }}>
-                <strong>Ajay Tainwala</strong> is a passionate Software Engineer, Full Stack Developer, and compiler enthusiast based in Bengaluru, India.
+            <div>
+              <h2>Meet the creator</h2>
+              <p>
+                <a href={PORTFOLIO_URL} target="_blank" rel="me noopener noreferrer">
+                  <strong>Ajay Tainwala</strong>
+                </a>{' '}
+                is a software engineer, full-stack developer, and compiler enthusiast based in
+                Bengaluru, India.
               </p>
-              <p style={{ fontSize: '1.05rem', lineHeight: '1.7', opacity: 0.9 }}>
-                Ajay's deep interest in language design, memory architecture, compiler optimizations, and web technologies led him to design and build AdeshLang from scratch — spanning parser design, AST lowering, LIR IR representation, Cranelift JIT integration, and a comprehensive standard library.
+              <p>
+                His interest in language design, memory architecture, and compiler
+                optimizations led him to build Adesh from scratch — spanning parser
+                design, AST lowering, IR representation, Cranelift integration, native code
+                generation, and a complete standard library.
               </p>
 
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '1.5rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.5rem' }}>
                 <a
-                  className="btn-primary-glow"
-                  href="https://ajaytainwala.vercel.app"
+                  className="m3-btn m3-btn--filled"
+                  href={PORTFOLIO_URL}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)', boxShadow: '0 4px 15px rgba(2, 132, 199, 0.4)' }}
+                  rel="me noopener noreferrer"
                 >
-                  🌐 Visit Portfolio (ajaytainwala.vercel.app) ↗
+                  <span className="material-symbols-rounded" aria-hidden="true">
+                    language
+                  </span>
+                  Visit ajaytainwala.dev
                 </a>
-
                 <a
-                  className="btn-secondary-glass"
+                  className="m3-btn m3-btn--outlined"
                   href="https://github.com/ajaytainwala-dev"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  GitHub @ajaytainwala-dev ↗
+                  <span className="material-symbols-rounded" aria-hidden="true">
+                    code
+                  </span>
+                  GitHub
                 </a>
-
                 <a
-                  className="btn-secondary-glass"
+                  className="m3-btn m3-btn--text"
                   href="https://in.linkedin.com/in/ajay-tainwala"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  LinkedIn ↗
+                  <span className="material-symbols-rounded" aria-hidden="true">
+                    work
+                  </span>
+                  LinkedIn
                 </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 3: Contact & Collab */}
-        <section style={{ textAlign: 'center', marginTop: '4rem' }}>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Interested in Collaborating or Contributing?</h3>
-          <p style={{ opacity: 0.8, marginBottom: '1.5rem' }}>
-            Reach out via email at <a href="mailto:ajaytainwala@outlook.com" style={{ color: '#34d399', fontWeight: 600 }}>ajaytainwala@outlook.com</a> or visit the <a href="https://github.com/adeshlang/adeshlang" style={{ color: '#38bdf8', fontWeight: 600 }}>GitHub repository</a>.
+        <section className="about-contact">
+          <h3>Interested in collaborating?</h3>
+          <p>
+            Reach out at{' '}
+            <a href="mailto:ajay@adeshlang.org">ajay@adeshlang.org</a> or open an
+            issue on <a href={GITHUB_URL}>GitHub</a>.
           </p>
-          <Link className="btn-primary-glow" to="/learn/getting-started/quick-start">
-            Explore Quick Start Guide →
+          <Link className="m3-btn m3-btn--filled" to="/learn/getting-started/quick-start">
+            <span className="material-symbols-rounded" aria-hidden="true">
+              rocket_launch
+            </span>
+            Start building
           </Link>
         </section>
       </main>

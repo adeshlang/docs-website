@@ -6,7 +6,7 @@ sidebar_label: Native JIT
 
 # Native JIT Compilation Backend
 
-The Native Just-In-Time (JIT) compilation backend executes AdeshLang programs by compiling LIR (Low-level IR) directly into native machine code at runtime.
+The Native Just-In-Time (JIT) compilation backend executes Adesh programs by compiling LIR (Low-level IR) directly into native machine code at runtime.
 
 ---
 
@@ -16,7 +16,7 @@ The Native JIT backend uses **Cranelift** (not LLVM) as its compilation engine. 
 
 ### Compilation Pipeline
 ```
-AdeshLang Source
+Adesh Source
       ↓
      LIR (Low-level IR)
       ↓
@@ -31,7 +31,7 @@ Zero-Overhead Native Call
 
 ### Performance Characteristics
 * **Compilation Speed**: Less than 10ms per function.
-* **Execution Speed**: 100-232x faster than direct interpretation.
+* **Execution Speed**: Native machine code generated at runtime; no interpreter loop dispatch.
 * **Zero Overhead**: Direct memory read/write instructions (1-2ns load/store) and native memory management (100ns malloc/free) without JVM-like garbage collection or VM loop dispatch overhead.
 
 ---
@@ -105,6 +105,6 @@ print("SUCCESS:", "Operation complete", {
 ## 4. Current Limitations & Workarounds
 
 * **Function Call Stack Limit**: Compiling complex recursive function loops with heavy printing inside nested blocks can trigger compiler stack limits.
-  * *Workaround*: Move heavy formatting logic to module-level execution, or use the standard Interpreter or Bytecode VM if deep recursion limits are hit.
+  * *Workaround*: Move heavy formatting logic to module-level execution, or use the standard Interpreter if deep recursion limits are hit.
 * **Builtin Date/Time Formatting**: Builtin Time/Date object parsing has partial Native JIT compatibility.
   * *Workaround*: Format dates as strings in user space before passing them to the Native JIT compiler.

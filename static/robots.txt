@@ -1,4 +1,4 @@
-# robots.txt for AdeshLang Documentation
+# robots.txt for Adesh Documentation
 # SEO + GEO: Allow all standard crawlers + generative AI crawlers
 
 User-agent: *

@@ -12,7 +12,7 @@ calling convention shared by every Adesh backend. The native compiler's
 current subset does not support aggregate-by-value ABI classification,
 structure returns, floating-point/vector argument registers, or variadic calls.
 
-The native compiler and linker improvements are planned for AdeshLang v0.4.0.
+The native compiler and linker improvements are planned for Adesh v0.4.0.
 That release framing does not imply that every ABI declaration below is
 currently consumed or linked automatically by every build path.
 

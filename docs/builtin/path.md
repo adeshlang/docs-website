@@ -6,7 +6,7 @@ sidebar_label: Path
 
 # Path Library
 
-The **Path** builtin library is a production-grade, cross-platform abstraction for filesystem paths in AdeshLang. A path is represented as a parsed `Path` object rather than a plain string, so the library automatically manages OS-specific separators (`\` on Windows, `/` on POSIX), UNC network paths, Windows drive letters, roots, relative/absolute normalization, and safe path traversal. It integrates natively with the `FS` library and with `Env` (whose directory methods return `Path` objects).
+The **Path** builtin library is a production-grade, cross-platform abstraction for filesystem paths in Adesh. A path is represented as a parsed `Path` object rather than a plain string, so the library automatically manages OS-specific separators (`\` on Windows, `/` on POSIX), UNC network paths, Windows drive letters, roots, relative/absolute normalization, and safe path traversal. It integrates natively with the `FS` library and with `Env` (whose directory methods return `Path` objects).
 
 ## Namespace
 
@@ -282,7 +282,7 @@ if config.isFile() {
 
 - **Separators** are chosen per-host: `\` on Windows, `/` on Unix — including in `join`, `normalize`, and `root`.
 - **Windows specifics**: drive letters (`C:`), UNC paths (`\\server\share`), and mixed slashes are handled; a root like `C:\` comes back from `root()`.
-- **Unicode**: non-ASCII paths are fully supported (e.g. `C:\Users\अजय`, `/home/日本/docs`).
+- **Unicode**: non-ASCII paths are fully supported (e.g. `C:\Users\Ajay`, `/home/user/docs`).
 - **Path traversal safety**: normalization cannot let `..` climb above the root.
 - `parent()` and `fileName()` return `null` at the root; `extension()` returns `null` when there is no dot in the file name.
 - `canonicalize()` hits the real filesystem and errors if the path does not exist; `normalize()` is purely logical.

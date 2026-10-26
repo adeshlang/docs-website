@@ -17,11 +17,9 @@ native toolchain is a separate path from HIR through Machine IR, ADOB, and
 ```
                   ┌──► Interpreter (tree-walk; full)
                   │
-        ┌───────┐ ├──► Bytecode VM (--bytecode / --vm; partial)
- VIR ──►│ codegen│ ├──► Baseline / Adaptive JIT (--jit; partial)
-        └───────┘ ├──► Native Cranelift JIT (--jit-native / --njit; partial)
-                  ├──► AOT Native (--aot; partial)
-                  ├──► WebAssembly (--wasm; partial)
+        ┌───────┐ ├──► Native Cranelift JIT (--jit-native / --njit; partial)
+ VIR ──►│ codegen│ ├──► AOT Native (--aot; partial)
+        └───────┘ ├──► WebAssembly (--wasm; partial)
                   └──► GPU / MLIR (--gpu; planned)
 ```
 
@@ -41,8 +39,9 @@ HIR ──► partial native lowering ──► Machine IR ──► x86-64 code
 ```
 
 The native compiler and linker improvements are **planned for v0.4.0**. The
-current stable release remains v0.3.0. See the [native toolchain guide](/docs/compiler/native-toolchain)
-for target status and limitations.
+latest verified behavior remains the current public release. See the
+[native toolchain guide](/docs/compiler/native-toolchain) for target status and
+limitations.
 
 ---
 
@@ -67,8 +66,6 @@ Backend interfaces and supported language features vary.
 | Backend | Status | CLI Flag | Source Path | Best For |
 |---|---|---|---|---|
 | **Interpreter** | ✅ Full | `adesh run` (default) | `src/execution/`, `src/backends/interpreter_backend/` | dev, debugging, REPL |
-| **Bytecode VM** | 🟡 Partial | `--bytecode` / `--vm` | `src/backends/` bytecode modules, `src/execution/bytecode/` | scripting, portability |
-| **JIT (baseline/adaptive)** | 🟡 Partial | `--jit` | `src/backends/jit/` — `adaptive/`, `tiered/`, `optimizations/` | long-running compute |
 | **Native Cranelift JIT** | 🟡 Partial | `--jit-native` / `--native-jit` / `--njit` | `src/backends/jit/cranelift/`, `src/backends/jit/native/` | compute-intensive |
 | **AOT Native (Cranelift)** | 🟡 Partial | `--codegen=cranelift` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | alternative AOT path (opt-in) |
 | **ADOB native toolchain** | 🟠 Partial — **the default executable path** | `adesh build` (default) / `--emit-adob` | `src/backends/native/`, `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | native codegen and linking (execution-verified on Windows x64 only) |
@@ -96,12 +93,12 @@ unsupported constructs are tracked in [CURRENT_STATE.md](https://github.com/ades
     └────┬────┘          └────┬────┘          └────┬────┘
          │                    │                    │
     ┌────▼────────┐     ┌────▼────────┐     ┌─────▼───────┐
-    │Interpreter  │     │ Cranelift   │     │  Bytecode   │
-    │ (tree-walk) │     │  IR (CLIF)  │     │  Emitter   │
+    │Interpreter  │     │ Cranelift   │     │    WASM     │
+    │ (tree-walk) │     │  IR (CLIF)  │     │   Emitter   │
     └────┬────────┘     └────┬────────┘     └─────┬───────┘
          │                   │                    │
     ┌────▼────────┐     ┌────▼────────┐     ┌─────▼───────┐
-    │  Env + Value│     │ Machine Code│     │  Bytecode   │
+    │  Env + Value│     │ Machine Code│     │    WASM     │
     │  dispatch   │     │  (x64/ARM)  │     │  (portable) │
     └────┬────────┘     └────┬────────┘     └─────┬───────┘
          │                   │                    │
@@ -150,62 +147,13 @@ VIR instruction ──► interpreter dispatch (match on opcode)
 
 ---
 
-## Bytecode VM
+## Native JIT (Cranelift)
 
-**Sources:** `src/backends/` bytecode emitter, `src/execution/bytecode/`, `src/backends/lowering/`
+**Sources:** `src/backends/jit/cranelift/`, `src/backends/jit/native/`, `src/backends/jit/array_ops/`, `src/backends/jit/optimizations/`, `src/backends/jit/mod.rs`
 
-The bytecode VM compiles VIR to a compact, portable bytecode and executes it on a register or stack VM. It sits between interpreter and JIT in speed and complexity.
+The native JIT lowers VIR to Cranelift IR at runtime and executes the result from executable memory.
 
-```
-VIR ──► bytecode emitter ──► .abc (Adesh Bytecode) ──► VM loop (dispatch table)
-         (lower VIR ops to bytecode ops)          fetch-decode-execute
-```
-
-```bash
-adesh run --bytecode myapp.adesh   # bytecode path
-adesh run --vm myapp.adesh         # alias
-```
-
-**Characteristics:**
-
-| Property | Detail |
-|---|---|
-| Portability | Single bytecode file runs anywhere without recompilation |
-| Startup | Faster than interpreter for large programs (no tree walk) |
-| Speed | 5–8× interpreter (see benchmarks below) |
-| Debugging | Source maps back to `.adesh` spans for stack traces |
-
----
-
-## JIT — Baseline, Adaptive, and Cranelift Native
-
-**Sources:** `src/backends/jit/` — `adaptive/`, `array_ops/`, `cranelift/`, `native/`, `optimizations/`, `tiered/`, `mod.rs`; `src/backends/llvm/` (alternative LLVM path)
-
-JIT lowers VIR toward native machine code at runtime.
-
-### Tiered JIT Architecture
-
-```
-VIR ──► Tier 0: Baseline JIT (fast compile, no opts)
-          │
-          │  hot threshold (loop count / call count)
-          ▼
-        Tier 1: Adaptive JIT (profile-guided, inline hot callees)
-          │
-          ▼
-        Tier 2: Cranelift JIT (full opts, SIMD, register allocation)
-          │
-          ▼
-        Native machine code (x86_64 / AArch64) in executable memory
-```
-
-- `backends/jit/tiered/` — tier management, hotness counters, deoptimization points.
-- `backends/jit/adaptive/` — recompiles hot functions with profiling feedback.
-- `backends/jit/cranelift/` — Cranelift CLIF generation, ISA selection, register allocation.
-- `backends/jit/optimizations/` — JIT-specific opts (array bounds check elimination, etc.).
-- `backends/jit/array_ops/` — specialized native emission for array-heavy code.
-
-### Cranelift Path (Native JIT)
+### Native code path
 
 ```
 VIR ──► Cranelift CLIF ──► Cranelift codegen ──► executable buffer (mmap RX)
@@ -217,7 +165,6 @@ VIR ──► Cranelift CLIF ──► Cranelift codegen ──► executable bu
 Because VIR is already SSA, mapping to Cranelift CLIF is direct — each VIR virtual register becomes a CLIF value, each `Phi` becomes a CLIF block param.
 
 ```bash
-adesh run --jit file.adesh          # baseline/adaptive JIT
 adesh run --jit-native file.adesh   # native Cranelift JIT
 adesh run --njit file.adesh         # alias for --jit-native
 adesh run --native-jit file.adesh   # alias
@@ -318,8 +265,6 @@ This is the most experimental path; the docs describe the pipeline, not stabilit
 | Flag | Backend | Meaning |
 |---|---|---|
 | (none) | Interpreter | default; `adesh run file.adesh` |
-| `--bytecode`, `--vm` | Bytecode VM | emit + run bytecode |
-| `--jit` | Baseline/Adaptive JIT | tiered JIT with profiling |
 | `--jit-native`, `--native-jit`, `--njit` | Cranelift Native JIT | full native codegen via Cranelift |
 | `--aot` | AOT | ahead-of-time native binary |
 | `--wasm` | WASM | WebAssembly emission |
@@ -337,19 +282,17 @@ path. It emits an ADOB object; use `adeshlink` to link it. See
 
 ## Performance Profile
 
-Benchmarks from [Backend Benchmarks](/docs/backends/overview#performance-benchmarks) (relative to interpreter = 1×):
+No relative-speed figures are published while the native targets are experimental. The interpreter is the correctness baseline, and each optimized target must match its observable semantics before it is considered complete. Measure on your own hardware with the exact toolchain version you plan to deploy.
 
-| Backend | Relative Speed | Startup | Best For |
-|---|---|---|---|
-| Interpreter | 1× | instant | dev, debugging, REPL, correctness |
-| Bytecode VM | 5–8× | fast | scripting, portability, embedded |
-| Baseline JIT | 10–20× | moderate | long-running compute, warm loops |
-| Native JIT (Cranelift) | 100–232× | slower (compile) | compute-intensive, SIMD, numeric |
-| AOT | 100–250× | instant (precompiled) | shipped binaries, CLIs, production |
-| WASM | 3–6× (in browser) | fast | web, edge, sandbox |
-| GPU/MLIR | 500×+ (kernel-bound) | slow (kernel compile) | vector/parallel workloads |
+| Target | Startup | Best For |
+|---|---|---|
+| Interpreter | instant | dev, debugging, REPL, correctness |
+| Native JIT (Cranelift) | compile on first run | compute-intensive, SIMD, numeric |
+| AOT (Cranelift) | instant (precompiled) | shipped binaries, CLIs, production |
+| WASM | fast | web, edge, sandbox |
+| GPU (planned) | slow (kernel compile) | vector/parallel workloads |
 
-> Numbers are workload-dependent. The interpreter is the correctness baseline — optimized backends must match its observable semantics before they are considered complete.
+> Speed is workload-dependent. Optimized targets must match the interpreter's observable semantics before they are considered complete.
 
 ---
 

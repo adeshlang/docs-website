@@ -7,7 +7,7 @@ description: The `constructor` keyword is lexed but rejected by the parser; use 
 
 # `constructor`
 
-The `constructor` keyword is reserved by the lexer and tokenized as a keyword, but the parser **explicitly rejects** it. AdeshLang does not use a `constructor` keyword to declare constructors; instead, the supported constructor form is a method named after the class itself.
+The `constructor` keyword is reserved by the lexer and tokenized as a keyword, but the parser **explicitly rejects** it. Adesh does not use a `constructor` keyword to declare constructors; instead, the supported constructor form is a method named after the class itself.
 
 ---
 

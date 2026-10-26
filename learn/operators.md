@@ -7,7 +7,7 @@ sidebar_label: 3. Operators & Expressions
 # Operators & Expressions — Working With Values
 
 Operators are the verbs of a programming language: they take values and
-produce new ones. AdeshLang has a full, expressive operator set —
+produce new ones. Adesh has a full, expressive operator set —
 arithmetic, comparison, logical, nullish, bitwise, and more — demonstrated in
 [`examples/syntax/operators.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/syntax/operators.adesh).
 

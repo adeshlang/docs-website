@@ -2,12 +2,12 @@
 id: formatting
 title: Code Formatting (adesh fmt)
 sidebar_label: Formatting
-description: Official code formatter for AdeshLang ensuring deterministic, uniform code style across projects.
+description: Official code formatter for Adesh ensuring deterministic, uniform code style across projects.
 ---
 
 # Code Formatting (`adesh fmt`)
 
-AdeshLang includes a fast, opinionated built-in code formatter: `adesh fmt`. It enforces consistent formatting conventions across codebases, eliminates bike-shedding in code reviews, and integrates seamlessly with IDEs and CI/CD pipelines.
+Adesh includes a fast, opinionated built-in code formatter: `adesh fmt`. It enforces consistent formatting conventions across codebases, eliminates bike-shedding in code reviews, and integrates seamlessly with IDEs and CI/CD pipelines.
 
 ---
 
@@ -81,11 +81,11 @@ fn calculate_total(items: [Item], discount: f64): f64 {
 ## 3. IDE Integration
 
 ### Visual Studio Code
-With the **AdeshLang** extension installed:
+With the **Adesh** extension installed:
 1. Open Settings (`Ctrl+,` or `Cmd+,`).
 2. Search for `Format On Save`.
 3. Check **Editor: Format On Save**.
-4. Ensure default formatter is set to `AdeshLang`.
+4. Ensure default formatter is set to `Adesh`.
 
 ### Neovim
 Using `conform.nvim` or `null-ls`:
@@ -130,10 +130,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install AdeshLang
+      - name: Install Adesh
         run: |
-          curl -LO https://github.com/adeshlang/adeshlang/releases/download/v0.3.0/adeshlang_0.3.0_amd64.deb
-          sudo dpkg -i adeshlang_0.3.0_amd64.deb
+          # Download the latest Debian package from
+          # https://github.com/adeshlang/adeshlang/releases
+          sudo dpkg -i adeshlang_*.deb
       - name: Check Code Formatting
         run: adesh fmt . --check
 ```

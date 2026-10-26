@@ -2,12 +2,13 @@
 id: bytecode-vm
 title: Bytecode Virtual Machine Backend
 sidebar_label: Bytecode VM
-description: Stack-based Bytecode Virtual Machine architecture, instruction set reference, and execution pipeline in AdeshLang.
+description: Stack-based Bytecode Virtual Machine architecture, instruction set reference, and execution pipeline in Adesh.
+draft: true
 ---
 
 # Bytecode Virtual Machine Backend
 
-The **AdeshLang Bytecode Virtual Machine** is a portable, compact, and high-performance stack-based virtual machine. It compiles AdeshLang source code to a platform-independent bytecode format (`.adbc`) that runs anywhere without requiring external C toolchains or LLVM installations.
+The **Adesh Bytecode Virtual Machine** is a portable, compact, and high-performance stack-based virtual machine. It compiles Adesh source code to a platform-independent bytecode format (`.adbc`) that runs anywhere without requiring external C toolchains or LLVM installations.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -37,7 +38,7 @@ The Bytecode VM operates with:
 
 ## 2. Opcode Reference Table
 
-AdeshLang Bytecode instructions use an 8-bit opcode followed by 0, 1, or 2 operands:
+Adesh Bytecode instructions use an 8-bit opcode followed by 0, 1, or 2 operands:
 
 | Opcode | Mnemonic | Operands | Description |
 |--------|----------|----------|-------------|

@@ -2,12 +2,13 @@
 id: jit
 title: JIT Compilation Backend
 sidebar_label: JIT Compiler
-description: In-depth technical architecture of the AdeshLang Just-In-Time (JIT) compiler with tiered compilation and OSR.
+description: In-depth technical architecture of the Adesh Just-In-Time (JIT) compiler with tiered compilation and OSR.
+draft: true
 ---
 
 # JIT Compilation Backend
 
-AdeshLang features an adaptive, high-throughput **Just-In-Time (JIT) Compiler** designed for server runtimes, data processing pipelines, and development workflows requiring instant startup combined with near-native execution performance.
+Adesh features an adaptive, high-throughput **Just-In-Time (JIT) Compiler** designed for server runtimes, data processing pipelines, and development workflows requiring instant startup combined with near-native execution performance.
 
 ```
 ┌───────────────────────────────────────────────────────────┐
@@ -27,7 +28,7 @@ AdeshLang features an adaptive, high-throughput **Just-In-Time (JIT) Compiler** 
 
 ## 1. Tiered JIT Architecture
 
-The AdeshLang JIT uses a **two-tier adaptive compilation strategy**:
+The Adesh JIT uses a **two-tier adaptive compilation strategy**:
 
 ### Tier-1: Baseline Fast JIT (Cranelift)
 - **Goal**: Ultra-fast compilation speed (&lt; 5ms).
@@ -66,7 +67,7 @@ fn process_large_dataset(data: [f64]): f64 {
 
 ## 3. Running with the JIT Backend
 
-To run AdeshLang programs using the JIT compiler:
+To run Adesh programs using the JIT compiler:
 
 ```bash
 # Run program using default adaptive JIT

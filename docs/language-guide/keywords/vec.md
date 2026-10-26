@@ -7,7 +7,7 @@ description: The vec keyword introduces the SIMD vector family vecN<T> — compa
 
 # `vec`
 
-`vec` is AdeshLang's **SIMD vector** type family. `vec4<f32>`, `vec8<f32>`, `vec4<f64>`, `vec16<u8>`, and their siblings are first-class numeric types lowered to hardware registers (128-bit SSE/NEON, 256-bit AVX2, 512-bit AVX-512) and to WebAssembly `v128`. Plain arrays already expose element-wise vectorized operators, but `vec` types give you explicit lane control, alignment, and access to low-level intrinsics.
+`vec` is Adesh's **SIMD vector** type family. `vec4<f32>`, `vec8<f32>`, `vec4<f64>`, `vec16<u8>`, and their siblings are first-class numeric types lowered to hardware registers (128-bit SSE/NEON, 256-bit AVX2, 512-bit AVX-512) and to WebAssembly `v128`. Plain arrays already expose element-wise vectorized operators, but `vec` types give you explicit lane control, alignment, and access to low-level intrinsics.
 
 > **Ground truth:** Lexer `TokenKind::VecType` (`src/parsing/lexer.rs:1007`, keyword `"vec"`), sibling raw token `Raw`, SIMD IR types `f32x4`/`f32x8`/`f32x16`/`f64x2`/`f64x4`/`i32x4`/`i32x8`/`u8x16`/`u8x32` (`docs-website/docs/simd/overview.md`), interpreter element-wise ops plus `Simd` namespace (`Simd.dot`, `Simd.vector`).
 
@@ -127,7 +127,7 @@ print(a2 * b2); // [3.0, 6.0, 9.0, 12.0]
 ### Example 2 — High-throughput batch — SIMD dot product, SAXPY, and RGBA blending
 
 ```adesh
-// Dot product — 8x speedup over scalar loop (from simd/overview.md:93)
+// Dot product — hardware vector operation
 @pure
 @noalloc
 fn simd_dot_f32(a: vec8<f32>[], b: vec8<f32>[]): f32 {

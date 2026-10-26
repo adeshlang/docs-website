@@ -1,5 +1,5 @@
 /**
- * Prism language definition for AdeshLang.
+ * Prism language definition for Adesh.
  *
  * To add new keywords or types, edit src/tokens/adeshTokens.js.
  * This file automatically picks up new additions from there.

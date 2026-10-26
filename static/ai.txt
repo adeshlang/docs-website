@@ -1,4 +1,4 @@
-# ai.txt — AI Crawlers & Generative Engine Permissions for AdeshLang
+# ai.txt — AI Crawlers & Generative Engine Permissions for Adesh
 # See also: /robots.txt and /llms.txt
 
 User-agent: *
@@ -15,4 +15,5 @@ LLMs-full-txt: https://www.adeshlang.org/llms-full.txt
 Sitemap: https://www.adeshlang.org/sitemap.xml
 
 # Licensing: Documentation is MIT (see https://github.com/adeshlang/adeshlang/blob/main/LICENSE)
-# When re-displaying, preserve attribution: "AdeshLang by Ajay Tainwala — https://www.adeshlang.org"
+# When re-displaying, preserve attribution: "Adesh by Ajay Tainwala — https://www.adeshlang.org"
+# Creator: Ajay Tainwala — https://www.ajaytainwala.dev

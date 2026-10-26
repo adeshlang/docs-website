@@ -7,7 +7,7 @@ sidebar_label: 11. Strings & Text
 # Strings & Text — Working with Characters
 
 Almost every real program processes text: usernames, log lines, file paths,
-JSON payloads, emails. This lesson teaches you AdeshLang's strings from the
+JSON payloads, emails. This lesson teaches you Adesh's strings from the
 ground up, using the exact patterns from the examples repository.
 
 ## What is a string?
@@ -93,7 +93,7 @@ let first = "Hello";
 let last  = "World";
 
 print(first + " " + last);     // Hello World
-print(len("AdeshLang"));       // 9
+print(len("Adesh"));       // 9
 
 // Building a sentence piece by piece
 let name = "Ajay";
@@ -113,7 +113,7 @@ Welcome to Ajay
 Strings behave like arrays of characters:
 
 ```adesh
-let text = "AdeshLang";
+let text = "Adesh";
 print(text[0]);    // A  (indexes start at 0)
 print(text[4]);    // h
 print(text[len(text) - 1]);  // g  (last character)
@@ -261,5 +261,5 @@ output change.
 
 ## Next Step
 
-Now let's see how AdeshLang thinks about **data types** — numbers, booleans,
+Now let's see how Adesh thinks about **data types** — numbers, booleans,
 and the type system. Continue to **[Types & Type System](/learn/types)** →

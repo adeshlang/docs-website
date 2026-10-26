@@ -6,11 +6,11 @@ sidebar_label: CLI Reference
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang CLI Reference
+# Adesh CLI Reference
 
-<FeatureStatus status="STABLE" details="CLI toolchain for running, compiling, testing, and formatting AdeshLang projects" />
+<FeatureStatus status="STABLE" details="CLI toolchain for running, compiling, testing, and formatting Adesh projects" />
 
-The `adesh` command-line tool manages the lifecycle of AdeshLang applications: running, type checking, native building, package management, formatting, and diagnostics.
+The `adesh` command-line tool manages the lifecycle of Adesh applications: running, type checking, native building, package management, formatting, and diagnostics.
 
 ---
 
@@ -25,23 +25,20 @@ adesh <COMMAND> [OPTIONS] <FILE> [-- <ARGS>...]
 ## Primary Commands
 
 ### `adesh run <file>`
-Executes an AdeshLang script file using the selected execution backend (default: Interpreter).
+Executes an Adesh script file using the selected execution backend (default: Interpreter).
 
 ```bash
 # Run with default interpreter
 adesh run app.adesh
 
-# Run with Native JIT compilation (10-230x speedup)
+# Run with Native JIT compilation
 adesh run --jit-native app.adesh
-
-# Run with Bytecode VM engine
-adesh run --bytecode app.adesh
 ```
 
 ---
 
 ### `adesh build <file>`
-Compiles an AdeshLang program ahead-of-time (AOT) into a standalone native binary executable, ADOB object, static archive, or shared library.
+Compiles an Adesh program ahead-of-time (AOT) into a standalone native binary executable, ADOB object, static archive, or shared library.
 
 ```bash
 # Build native executable directly with native Adesh Linker
@@ -113,7 +110,7 @@ adesh doctor
 ---
 
 ### `adesh env`
-Displays current AdeshLang environment paths, installation directories, and system configuration.
+Displays current Adesh environment paths, installation directories, and system configuration.
 
 ```bash
 adesh env
@@ -131,7 +128,7 @@ adesh repair
 ---
 
 ### `adesh pkg <subcommand>`
-Manages AdeshLang package dependencies.
+Manages Adesh package dependencies.
 
 ```bash
 adesh pkg init
@@ -151,7 +148,7 @@ adesh check src/main.adesh
 ---
 
 ### `adesh format <file>` / `adesh fmt <file>`
-Formats AdeshLang source code according to official style guidelines.
+Formats Adesh source code according to official style guidelines.
 
 ```bash
 # Preview formatting changes
@@ -189,7 +186,7 @@ For full details and keybindings, see the [TUI Code Editor Documentation](/docs/
 
 ## Testing Options (`adesh run --test`)
 
-AdeshLang includes a built-in test runner.
+Adesh includes a built-in test runner.
 
 ```bash
 # Run all tests in a test file
@@ -215,17 +212,14 @@ adesh run --test --format json tests/suite.adesh > results.json
 | Flag | Backend Mode | Description |
 |---|---|---|
 | `--interpreter` | Interpreter | Standard interpreter (default, 100% feature coverage) |
-| `--bytecode`, `--vm` | Bytecode VM | LIR stack-based bytecode virtual machine |
-| `--jit` | LIR JIT | Intermediate LIR JIT compiler |
 | `--jit-native`, `--njit` | Native Cranelift JIT | Compiles LIR directly to native x86_64/ARM machine code at runtime |
-| `--adaptive`, `--ajit` | Adaptive JIT | Tiered speculative optimization JIT |
 | `--gpu` | GPU MLIR | Experimental MLIR lowering target for CUDA/Vulkan (debug builds) |
 
 ---
 
 ## Environment Variables
 
-AdeshLang respects environment variables to configure toolchain execution, process watchdog limits, build defaults, and MLIR GPU pipeline tools.
+Adesh respects environment variables to configure toolchain execution, process watchdog limits, build defaults, and MLIR GPU pipeline tools.
 
 | Environment Variable | Description | Default / Format |
 |---|---|---|
@@ -234,7 +228,7 @@ AdeshLang respects environment variables to configure toolchain execution, proce
 | `ADESH_ENABLE_LTO` | Automatically enable Link-Time Optimization (LTO) for production builds. | `1` or `0` |
 | `ADESH_ENABLE_DCE` | Automatically enable Dead-Code Elimination (DCE) in linker for smaller binaries. | `1` or `0` |
 | `ADESH_VERBOSE` | Enable detailed compiler debug logging and linker command invocations. | `1` or `0` |
-| `ADESHLANG_HOME` | Custom root installation directory for AdeshLang libraries and package cache. | Path (e.g. `~/.adeshlang`) |
+| `ADESHLANG_HOME` | Custom root installation directory for Adesh libraries and package cache. | Path (e.g. `~/.adeshlang`) |
 | `ADESHLANG_TOOLCHAIN` | Path override for native linker and compiler toolchains (`clang`, `gcc`, `lld`). | Path |
 | `ADESH_USE_VIR` | Toggle whether JIT engine uses VIR (Value IR) or LIR (Low-level IR). | `1` (on) or `0` (off) |
 | `ADESH_MLIR_OPT` | Path override for `mlir-opt` tool in MLIR GPU backend pipeline. | Executable path |

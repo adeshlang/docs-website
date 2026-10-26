@@ -6,7 +6,7 @@ sidebar_label: AOT
 
 # AOT Compilation Backend
 
-The Ahead-Of-Time (AOT) compiler compiles AdeshLang source code into standalone native executables, static libraries, or shared libraries before execution.
+The Ahead-Of-Time (AOT) compiler compiles Adesh source code into standalone native executables, static libraries, or shared libraries before execution.
 
 ---
 

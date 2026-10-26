@@ -6,7 +6,7 @@ sidebar_label: GPU/MLIR
 
 # GPU/MLIR Compilation Backend
 
-The GPU/MLIR backend compiles AdeshLang code into high-performance GPU kernels using the LLVM/MLIR infrastructure. It targets CUDA, ROCm, Vulkan, and Metal, enabling massive parallelization for machine learning, tensor math, and scientific workloads.
+The GPU/MLIR backend compiles Adesh code into high-performance GPU kernels using the LLVM/MLIR infrastructure. It targets CUDA, ROCm, Vulkan, and Metal, enabling massive parallelization for machine learning, tensor math, and scientific workloads.
 
 :::note Status
 The GPU/MLIR backend is currently available in **debug builds** (`cargo build`) and is under active development.
@@ -19,7 +19,7 @@ The GPU/MLIR backend is currently available in **debug builds** (`cargo build`) 
 The compiler translates source code into machine code using a multi-step compilation and optimization pipeline:
 
 ```
-AdeshLang Source
+Adesh Source
       ↓
   HIR (High-Level IR)      ← Ownership & Borrow Checker
       ↓

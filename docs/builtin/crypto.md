@@ -6,7 +6,7 @@ sidebar_label: Crypto
 
 # Crypto Library
 
-The **Crypto** builtin library is a production-grade cryptography ecosystem for AdeshLang — secure by default, modern, and built around the principle of *difficulty-of-misuse*. It provides hashing, message authentication (HMAC), key derivation (HKDF), memory-hard password hashing (Argon2id), authenticated encryption (AEAD), CSPRNG tokens, Ed25519 signatures, X25519 key exchange, constant-time comparisons, hex/base64 encodings, X.509 certificate inspection, JWT/JWK, content identifiers, and encrypted file containers. Everything is implemented natively in Rust on top of audited crates (`aes-gcm`, `chacha20poly1305`, `argon2`, `ed25519-dalek`, `x25519-dalek`, `hkdf`, `blake3`, `sha2`, `sha3`, `rsa`, `jsonwebtoken`-style primitives, and the `zeroize` secure-memory crate).
+The **Crypto** builtin library is a production-grade cryptography ecosystem for Adesh — secure by default, modern, and built around the principle of *difficulty-of-misuse*. It provides hashing, message authentication (HMAC), key derivation (HKDF), memory-hard password hashing (Argon2id), authenticated encryption (AEAD), CSPRNG tokens, Ed25519 signatures, X25519 key exchange, constant-time comparisons, hex/base64 encodings, X.509 certificate inspection, JWT/JWK, content identifiers, and encrypted file containers. Everything is implemented natively in Rust on top of audited crates (`aes-gcm`, `chacha20poly1305`, `argon2`, `ed25519-dalek`, `x25519-dalek`, `hkdf`, `blake3`, `sha2`, `sha3`, `rsa`, `jsonwebtoken`-style primitives, and the `zeroize` secure-memory crate).
 
 ## Namespace
 
@@ -27,7 +27,7 @@ Hash string or byte-array data with SHA-2, SHA-3, BLAKE2, or BLAKE3, and hash fi
 ```adesh
 import Crypto;
 
-let message = "AdeshLang Production Cryptography Ecosystem 2026";
+let message = "Adesh Production Cryptography Ecosystem 2026";
 
 print(Crypto.sha256(message));   // hex digest
 print(Crypto.sha512(message));   // hex digest
@@ -281,7 +281,7 @@ let decrypted = Crypto.decryptFile(passphrase, payload);
 import Crypto;
 
 // 1. Hash a message
-let message = "AdeshLang Production Cryptography Ecosystem 2026";
+let message = "Adesh Production Cryptography Ecosystem 2026";
 print("SHA-256:", Crypto.sha256(message));
 
 // 2. Password hashing (Argon2id)

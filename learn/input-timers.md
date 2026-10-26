@@ -7,7 +7,7 @@ sidebar_label: 20. Interactive Input & Timers
 # Interactive Input & Timers
 
 So far our programs only *print*. Real programs also **read input** and
-**schedule work over time**. AdeshLang's input system handles everything
+**schedule work over time**. Adesh's input system handles everything
 from simple prompts to masked passwords, and its timers work like
 JavaScript's `setTimeout`/`setInterval`. The full menu of examples lives in
 [`examples/input/`](https://github.com/adeshlang/adeshlang/tree/main/examples/input)
@@ -93,7 +93,7 @@ Chosen city: Delhi
 
 ## Interactive TUI Widgets
 
-AdeshLang includes terminal widgets that render interactive UI in raw mode:
+Adesh includes terminal widgets that render interactive UI in raw mode:
 
 ### 1. 2D Table & Grid Selector (`input.table`)
 

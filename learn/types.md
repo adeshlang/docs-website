@@ -6,7 +6,7 @@ sidebar_label: 12. Types & Type System
 
 # Types & Type System — Numbers, Booleans, and More
 
-AdeshLang has a **static, explicit type system**: every value has a known type,
+Adesh has a **static, explicit type system**: every value has a known type,
 and you can (and often should) say what it is. This lesson teaches the type
 system using the exact code from the examples repository.
 
@@ -23,7 +23,7 @@ system using the exact code from the examples repository.
 | `[T]` | array of type T | `[1, 2, 3]` |
 | `T?` / `Option<T>` | nullable / maybe-a-value | `let age: i32? = null;` |
 
-AdeshLang infers types automatically, but lets you write them:
+Adesh infers types automatically, but lets you write them:
 
 ```adesh
 // Inference
@@ -70,7 +70,7 @@ object
 
 ## Numeric types and why they matter
 
-AdeshLang has the same wide range as Rust: choose the smallest type that
+Adesh has the same wide range as Rust: choose the smallest type that
 fits what you are storing.
 
 ```adesh
@@ -108,7 +108,7 @@ That exact pattern — casting in arithmetic to avoid overflow — comes from
 
 ## Strict vs loose equality
 
-AdeshLang supports both `==` (loose) and `===` (strict). From
+Adesh supports both `==` (loose) and `===` (strict). From
 `examples/operators/strict_equality.adesh`:
 
 ```adesh
@@ -191,7 +191,7 @@ From `examples/syntax/test_optional_chaining.adesh`.
 
 ## Union Types `T | U` and Empty-Container Literals
 
-AdeshLang supports **TypeScript-style union types** — a value can be one of several types. This is idiomatic for DSA and API code where a function may return a value *or* `null` / an empty container. From `examples/DSA/union_and_optional_types.adesh` and `examples/DSA/frequency_counter.adesh`:
+Adesh supports **TypeScript-style union types** — a value can be one of several types. This is idiomatic for DSA and API code where a function may return a value *or* `null` / an empty container. From `examples/DSA/union_and_optional_types.adesh` and `examples/DSA/frequency_counter.adesh`:
 
 ```adesh
 // Union return: index or null, array or empty []
@@ -222,7 +222,7 @@ fn describeValue(v: int | string | bool): string {
 let idx: int | null = findIndex([10, 20, 30], 30); // 2
 let pair: [int] | [] = findPair([10, 20, 30], 50);  // [20, 30]
 print(describeValue(42));          // Value is: 42
-print(describeValue("AdeshLang")); // Value is: AdeshLang
+print(describeValue("Adesh")); // Value is: Adesh
 
 // Another real example: top word or null
 fn getTopWord(freq: dict): string | null {
@@ -282,7 +282,7 @@ print(nested.value ?? "default"); // default
 
 ## Arrays: tiers, and why it matters
 
-AdeshLang's array system selects the best representation automatically
+Adesh's array system selects the best representation automatically
 (`examples/arrays/comprehensive_array_demo.adesh`):
 
 | Tier | When | Overhead |
@@ -364,7 +364,7 @@ print(findScore(scores, 200));   // 200
 
 ### Type annotation technique — `:` not `->` (except `extern "C"`)
 
-All AdeshLang type annotations use **colon** `:` — `let x: Type`, `param: Type`, `fn foo(a: t): Ret`. The arrow `->` is **only** for `extern "C"` FFI signatures (`extern "C" fn puts(s: *const u8) -> i32;`). Function-type aliases also use `:` : `type Cb = fn(x: i32): bool;` and generic instantiations like `fn(x: i64): i64` (see `examples/functions/02_higher_order.adesh`). Prefer `let s: set;` / `let d: dict;` default-decl syntax for containers (see `examples/DSA/container_constructors_and_defaults.adesh`).
+All Adesh type annotations use **colon** `:` — `let x: Type`, `param: Type`, `fn foo(a: t): Ret`. The arrow `->` is **only** for `extern "C"` FFI signatures (`extern "C" fn puts(s: *const u8) -> i32;`). Function-type aliases also use `:` : `type Cb = fn(x: i32): bool;` and generic instantiations like `fn(x: i64): i64` (see `examples/functions/02_higher_order.adesh`). Prefer `let s: set;` / `let d: dict;` default-decl syntax for containers (see `examples/DSA/container_constructors_and_defaults.adesh`).
 
 ```adesh
 fn add(a: i32, b: i32): i32 { return a + b; }          // ✅ colon

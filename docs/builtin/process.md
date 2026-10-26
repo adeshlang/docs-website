@@ -6,9 +6,9 @@ sidebar_label: Process
 
 # Process Library
 
-The **Process** builtin library is AdeshLang's API for spawning and controlling child operating-system processes. It can run a command and capture its output, start long-running background processes, wire stdout to stdin (`pipeline`), set the working directory and environment, enforce timeouts, redirect output to files, and even build process dependency graphs — all from a single `Process` namespace.
+The **Process** builtin library is Adesh's API for spawning and controlling child operating-system processes. It can run a command and capture its output, start long-running background processes, wire stdout to stdin (`pipeline`), set the working directory and environment, enforce timeouts, redirect output to files, and even build process dependency graphs — all from a single `Process` namespace.
 
-The high-level API is written in AdeshLang itself (`src/stdlib/Process.adesh`) and sits on top of native process primitives, so it behaves identically on the Interpreter, Bytecode VM, JIT, Native JIT, and AOT backends.
+The high-level API is written in Adesh itself (`src/stdlib/Process.adesh`) and sits on top of native process primitives, so it behaves identically on the Interpreter, Native JIT, and AOT targets.
 
 ## Namespaces
 
@@ -389,7 +389,7 @@ print("Quick run OK:", quick.success());
 - A run that hits `runTimeout` is killed; its `ExitStatus.timedOut()` is `true` and the code is `-2`.
 - `child.kill(sig)` takes a numeric code or a `Signal`. `Signal` codes follow POSIX (`SIGTERM`=15, `SIGKILL`=9) and map to `TerminateProcess` semantics on Windows.
 - `Process.shell` uses `cmd.exe /C` on Windows and `sh -c` elsewhere — it is convenient for one-liners but avoid it with untrusted input (quoting/escaping).
-- Backend parity: fully supported on Interpreter, Bytecode VM, JIT, Native JIT, and LLVM AOT. On WebAssembly, process spawning degrades gracefully.
+- Backend parity: fully supported on Interpreter, Native JIT, and AOT. On WebAssembly, process spawning degrades gracefully.
 - The API surfaces low-level builtins such as `processSpawn`, `processWait`, `processKill`, `processReadStdout` — prefer the high-level `Process` classes; the primitives are an implementation detail.
 - Always quote/sanitize arguments when the command is built from user input (never pass it through a shell).
 

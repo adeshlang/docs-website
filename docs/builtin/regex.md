@@ -6,7 +6,7 @@ sidebar_label: Regex
 
 # Regex Library
 
-The **Regex** builtin library gives AdeshLang production-grade regular expressions, powered by Rust's `regex` engine. It compiles patterns once and reuses them, supports named capture groups, safe `Result`-based dynamic compilation, and provides a full `Match` / `Captures` inspection API — all through a single `Regex` namespace.
+The **Regex** builtin library gives Adesh production-grade regular expressions, powered by Rust's `regex` engine. It compiles patterns once and reuses them, supports named capture groups, safe `Result`-based dynamic compilation, and provides a full `Match` / `Captures` inspection API — all through a single `Regex` namespace.
 
 ## Namespace
 

@@ -6,11 +6,11 @@ sidebar_label: Diagnostics & Error Tables
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang Compiler Diagnostics & Error Tables
+# Adesh Compiler Diagnostics & Error Tables
 
 <FeatureStatus status="STABLE" details="Production-quality compiler diagnostics with Rust error code equivalence and JSON reporting" />
 
-The AdeshLang compiler diagnostics system is built to the highest modern standard of clarity, actionability, and elegance. Inspired by the usability of the Rust compiler, it replaces ad-hoc print statements with a structured, multi-error diagnostic architecture featuring:
+The Adesh compiler diagnostics system is built to the highest modern standard of clarity, actionability, and elegance. Inspired by the usability of the Rust compiler, it replaces ad-hoc print statements with a structured, multi-error diagnostic architecture featuring:
 
 1. **Rust Error-Code Equivalence**: Canonical Rust error codes (`E0106`, `E0277`, `E0308`, `E0381`, `E0382`, `E0384`, `E0416`, `E0425`, `E0428`, `E0499`, `E0502`, `E0505`, `E0506`, `E0515`, `E0597`, `E0631`, `E0733`) are assigned to matching semantic conditions with verified rationale.
 2. **Distinct Adesh Namespace (`AD0001`–`AD0007`)**: Custom Adesh semantics (lexer tokens, parser recovery, async context, embedded heap prohibitions, ADOB binaries, and runtime traps) reside in a dedicated namespace.

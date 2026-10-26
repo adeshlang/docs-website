@@ -8,7 +8,7 @@ sidebar_label: URL
 
 The **URL** builtin library provides zero-allocation URL parsing, protocol/hostname/port extraction, normalization, WHATWG URL standard compliance, and query parameter search manipulation via `URLSearchParams`.
 
-It allows AdeshLang applications to inspect and construct URLs safely without regular expression hacking or unsafe string splitting. The implementation is backed by the native Rust `url` crate semantics and is available identically across all backends.
+It allows Adesh applications to inspect and construct URLs safely without regular expression hacking or unsafe string splitting. The implementation is backed by the native Rust `url` crate semantics and is available identically across all backends.
 
 ```
 ┌────────────────────────────────────────────────────────┐

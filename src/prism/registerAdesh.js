@@ -1,5 +1,5 @@
 /**
- * Client module that registers the custom AdeshLang Prism language definition.
+ * Client module that registers the custom Adesh Prism language definition.
  *
  * This file is loaded via a Docusaurus plugin's `getClientModules` hook,
  * ensuring the language is available before any code blocks are rendered.

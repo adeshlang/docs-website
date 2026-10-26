@@ -7,7 +7,7 @@ description: The raw keyword and raw string/array forms — verbatim text withou
 
 # `raw`
 
-`raw` is AdeshLang's escape hatch for **verbatim** storage: verbatim strings that treat escapes and interpolation literally, and contiguous `raw T[N]` arrays that map 1:1 to C arrays without the `DynArray` length/capacity header. Raw arrays show up in the interpreter as `Value::RawArray(type_name, elements)` (`src/parsing/ast.rs:978`) and are the correct target for FFI buffers, image planes, and any data that must be directly readable by foreign code.
+`raw` is Adesh's escape hatch for **verbatim** storage: verbatim strings that treat escapes and interpolation literally, and contiguous `raw T[N]` arrays that map 1:1 to C arrays without the `DynArray` length/capacity header. Raw arrays show up in the interpreter as `Value::RawArray(type_name, elements)` (`src/parsing/ast.rs:978`) and are the correct target for FFI buffers, image planes, and any data that must be directly readable by foreign code.
 
 > **Ground truth:** Lexer `TokenKind::Raw` (`src/parsing/lexer.rs:1006`, keyword `"raw"` and `r"..."`/`R"..."`/`r#"..."#` forms in `raw_string()` `lexer.rs:537`), AST `Value::RawArray(String, Vec<Value>)` (`ast.rs:978,1086`), `TokenKind::VecType` related SIMD forms, `ArrayElementType` (`ast.rs:102-116`) governs metadata sizing that `raw` opts out of.
 
@@ -110,8 +110,8 @@ DynArrays are preferred for growable sequences.
 
 ```adesh
 // Windows path — no double-escaping
-let path = r"C:\Users\Adesh\Projects\AdeshLang\src\parsing\lexer.rs";
-print(path); // C:\Users\Adesh\Projects\AdeshLang\src\parsing\lexer.rs
+let path = r"C:\Users\Adesh\Projects\Adesh\src\parsing\lexer.rs";
+print(path); // C:\Users\Adesh\Projects\Adesh\src\parsing\lexer.rs
 
 // Regex — reads literally, backslashes not consumed by lexer
 let pattern = raw"\d{3}-\d{2}-\d{4}"; // US SSN pattern — \d stays two chars

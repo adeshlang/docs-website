@@ -2,7 +2,7 @@
 id: tui-editor
 title: Bundled TUI Code Editor
 sidebar_label: TUI Code Editor
-description: Fast, lightweight, cross-platform terminal code editor bundled with AdeshLang featuring LSP diagnostics, multiple buffers, file explorer, and interactive backend runner.
+description: Fast, lightweight, cross-platform terminal code editor bundled with Adesh featuring LSP diagnostics, multiple buffers, file explorer, and interactive backend runner.
 ---
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
@@ -11,7 +11,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Native cross-platform terminal editor built with Rust, Ratatui, Crossterm, and Tokio" />
 
-AdeshLang includes a lightning-fast, full-featured **Terminal User Interface (TUI) Code Editor** built directly into the toolchain. It provides a complete IDE experience directly inside your terminal with sub-5ms cold startup, zero graphical dependencies, and a memory footprint under 15 MB.
+Adesh includes a lightning-fast, full-featured **Terminal User Interface (TUI) Code Editor** built directly into the toolchain. It provides a complete IDE experience directly inside your terminal with sub-5ms cold startup, zero graphical dependencies, and a memory footprint under 15 MB.
 
 :::tip Looking for the Browser Version?
 If you want an in-browser code editor without running a local terminal, check out the **[Online Web IDE (editor.adeshlang.org)](https://editor.adeshlang.org)** which executes 100% in WebAssembly with Monaco editor and live diagnostics.
@@ -33,7 +33,7 @@ If you want an in-browser code editor without running a local terminal, check ou
  │ ⚡ RUNNER [Cranelift JIT] — Status: Success (exit 0) — Execution time: 1.42ms    │
  │ Total: 100                                                                       │
  ├──────────────────────────────────────────────────────────────────────────────────┤
- │ NORMAL │ UTF-8 │ AdeshLang │ Ln 6, Col 24 │ Backend: Native JIT │ F5: Run │ Ctrl+P│
+ │ NORMAL │ UTF-8 │ Adesh │ Ln 6, Col 24 │ Backend: Native JIT │ F5: Run │ Ctrl+P│
  └──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -64,7 +64,7 @@ adesh editor --backend jit-native main.adesh
 - **Native Rust Engine**: Built on top of `ratatui` (v0.26), `crossterm` (v0.27), and `tokio` multi-threaded asynchronous runtime.
 - **ALS Language Server Protocol**: Embedded real-time diagnostics, type hover tooltips, code completion, and document formatting.
 - **Multi-Buffer Tab Bar**: Seamlessly switch between open files, split views, and scratch buffers.
-- **Built-in Execution Runner**: Execute your code directly within the editor using the **Interpreter**, **Bytecode VM**, **Cranelift Native JIT**, or **Native AOT** linker.
+- **Built-in Execution Runner**: Execute your code directly within the editor using the **Interpreter**, **Native JIT**, or **AOT Native Compilation**.
 - **Interactive Terminal & Output Panel**: Test CLI commands and view live streaming execution output without leaving the editor.
 - **Fuzzy Command Palette**: Quick access to all actions, files, themes, and configuration commands.
 - **Hybrid Input System**: Supports both modern desktop shortcuts (`Ctrl+S`, `Ctrl+P`, `Ctrl+F`) and classic modal navigation (`Normal`, `Insert`, `Visual`, `Command-Line`).
@@ -147,7 +147,7 @@ The editor features a familiar modal architecture with intuitive transitions:
 | <kbd>Ctrl</kbd>+<kbd>Y</kbd> / <kbd>Ctrl</kbd>+<kbd>R</kbd> | **Redo** | Redo previously undone action. |
 | <kbd>Ctrl</kbd>+<kbd>/</kbd> | **Toggle Comment** | Toggle line or block comments (`//` or `/* */`). |
 | <kbd>Ctrl</kbd>+<kbd>D</kbd> | **Duplicate Line** | Duplicate current line or selected block. |
-| <kbd>Ctrl</kbd>+<kbd>K</kbd>, <kbd>F</kbd> | **Format Code** | Auto-format current buffer using AdeshLang formatter. |
+| <kbd>Ctrl</kbd>+<kbd>K</kbd>, <kbd>F</kbd> | **Format Code** | Auto-format current buffer using Adesh formatter. |
 | <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> | **Indent / Outdent** | Shift line or visual selection by tab width. |
 
 ---
@@ -200,7 +200,7 @@ The bundled editor connects seamlessly with the **Adesh Language Server (ALS)** 
 Customize your editor preferences by creating or editing `~/.adesh/editor.toml` (Windows: `%USERPROFILE%\.adesh\editor.toml`):
 
 ```toml
-# AdeshLang TUI Editor Configuration
+# Adesh TUI Editor Configuration
 # Location: ~/.adesh/editor.toml
 
 [editor]
@@ -214,7 +214,7 @@ auto_close_brackets = true    # Auto-insert closing brackets and quotes
 format_on_save = true         # Format document on Ctrl+S
 
 [runner]
-default_backend = "jit-native"# Options: "interpreter", "bytecode-vm", "jit-native", "aot"
+default_backend = "jit-native"# Options: "interpreter", "jit-native", "aot"
 auto_open_output = true       # Automatically open output drawer on execution
 timeout_seconds = 15          # Watchdog execution timeout
 
@@ -234,7 +234,7 @@ default_width = 28            # Explorer sidebar width in columns
 
 | Theme Name | Style / Palette | Best For |
 |---|---|---|
-| **`emerald-dark`** *(default)* | Deep obsidian background (`#0B0F19`) with vibrant emerald green (`#10B981`) and cyan accents. | Official AdeshLang brand experience. |
+| **`emerald-dark`** *(default)* | Deep obsidian background (`#0B0F19`) with vibrant emerald green (`#10B981`) and cyan accents. | Official Adesh brand experience. |
 | **`dracula`** | Classic dark purple/violet palette with pink and yellow highlights. | Low-light coding environments. |
 | **`monokai`** | High-contrast dark charcoal with green, yellow, and magenta tones. | Maximum token contrast. |
 | **`nord`** | Calming arctic blue and frosted slate palette. | Minimalist, soothing aesthetic. |

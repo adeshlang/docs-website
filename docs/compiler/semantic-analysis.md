@@ -167,7 +167,7 @@ The semantic engine performs **type inference, type checking, and legality valid
 
 ### Type Inference
 
-AdeshLang infers types without annotations where possible:
+Adesh infers types without annotations where possible:
 
 ```adesh
 let count = 42;          // inferred: i32 (numeric default)

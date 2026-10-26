@@ -7,7 +7,7 @@ sidebar_label: 13. Structs, Enums & Matching
 # Structs, Enums & Pattern Matching — Modeling Data
 
 Real programs work with real-world data: products, orders, customers, messages,
-errors. AdeshLang models data with **structs**, **enums**, and **pattern
+errors. Adesh models data with **structs**, **enums**, and **pattern
 matching** — the same trio used by Rust, and proven in the examples
 repository's e-commerce demo.
 
@@ -120,7 +120,7 @@ Move
 
 ## `Option` and `Result`: the two enums you will use every day
 
-AdeshLang ships two enums that turn "a missing value" and "a possible failure"
+Adesh ships two enums that turn "a missing value" and "a possible failure"
 into types you must handle:
 
 ```adesh

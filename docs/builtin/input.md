@@ -6,7 +6,7 @@ sidebar_label: Input & TUI
 
 # Interactive Input & TUI Widgets
 
-AdeshLang includes a comprehensive, terminal-native **Interactive Input and TUI (Text User Interface)** subsystem. It provides everything from standard prompt reading and regex-validated forms to rich interactive terminal widgets such as calendar datepickers, datetime pickers, side-by-side visual diff editors, multi-column table selectors with property access, PIN/OTP pads, RGB color pickers, hotkey listeners, and collapsible trees.
+Adesh includes a comprehensive, terminal-native **Interactive Input and TUI (Text User Interface)** subsystem. It provides everything from standard prompt reading and regex-validated forms to rich interactive terminal widgets such as calendar datepickers, datetime pickers, side-by-side visual diff editors, multi-column table selectors with property access, PIN/OTP pads, RGB color pickers, hotkey listeners, and collapsible trees.
 
 All widgets are cross-platform (Windows PowerShell/CMD, Linux, macOS terminal), render in-place using ANSI escape codes and raw terminal mode, wait cleanly for user keyboard events, and automatically advance the cursor to the next line upon completion.
 
@@ -311,7 +311,7 @@ print("TLS Enabled:", config.ssl);
 
 ## 8. Headless Testing with `input.mock` & Chained `.mock()`
 
-When running automated test suites or CI/CD pipelines where no interactive terminal is present, AdeshLang provides two intuitive mocking paradigms:
+When running automated test suites or CI/CD pipelines where no interactive terminal is present, Adesh provides two intuitive mocking paradigms:
 
 ### A. Inline Chained `.mock()` (Recommended)
 You can directly chain `.mock(...)` next to any `input(...)` or `input.*` function for clear, self-documenting tests:
@@ -354,9 +354,9 @@ print(name, branch, pin, date);
 
 ## Summary & Best Practices
 
-1. **Terminal Cleanliness**: All AdeshLang TUI widgets automatically manage terminal cursor positioning, clear transient widget frames, and advance cleanly to the next line.
+1. **Terminal Cleanliness**: All Adesh TUI widgets automatically manage terminal cursor positioning, clear transient widget frames, and advance cleanly to the next line.
 2. **Deterministic Fallbacks**: In headless environments (or non-TTY pipes), widgets gracefully fallback or consume mock queue values.
-3. **Parity**: Interactive input methods are supported consistently across AdeshLang interpreters and runtimes.
+3. **Parity**: Interactive input methods are supported consistently across Adesh interpreters and runtimes.
 
 ---
 

@@ -7,7 +7,7 @@ sidebar_label: 25. Networking Deep Dive
 # Networking — TCP, UDP, DNS, URL, TLS & WebSockets
 
 The [Standard Library Tour](/learn/stdlib-tour) showed you a 15-line HTTP
-server. Beneath HTTP lies the full networking stack, and AdeshLang provides
+server. Beneath HTTP lies the full networking stack, and Adesh provides
 real, ergonomic APIs for every layer — TCP, UDP, DNS, URL, TLS, and
 WebSockets — with hundreds of examples under
 [`examples/Libraries/net/`](https://github.com/adeshlang/adeshlang/tree/main/examples/Libraries/net),
@@ -165,8 +165,8 @@ server.startEcho();
 let client = WebSocket.connect("ws://127.0.0.1:8099");
 print("Connected:", client.getState().toString());
 
-client.sendText("Hello from AdeshLang!");
-print("Sent text: 'Hello from AdeshLang!'");
+client.sendText("Hello from Adesh!");
+print("Sent text: 'Hello from Adesh!'");
 
 let msg = client.receive();
 print("Received:", msg.payload);
@@ -178,8 +178,8 @@ server.close();
 **Output:**
 ```
 Connected: Open
-Sent text: 'Hello from AdeshLang!'
-Received: Hello from AdeshLang!
+Sent text: 'Hello from Adesh!'
+Received: Hello from Adesh!
 ```
 
 ## Choosing the right protocol

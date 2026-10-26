@@ -10,13 +10,13 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Non-blocking async/await promises, multi-core work-stealing Parallel engine, and SIMD vector reductions" />
 
-AdeshLang provides single-threaded non-blocking asynchronous routines (`async`/`await`) alongside a production-grade multi-core work-stealing parallel computation library (`import Parallel;`).
+Adesh provides single-threaded non-blocking asynchronous routines (`async`/`await`) alongside a production-grade multi-core work-stealing parallel computation library (`import Parallel;`).
 
 ---
 
 ## 1. Asynchronous Functions & Promises (`async`, `await`)
 
-`async fn` defines non-blocking routines that suspend execution with `await` without locking the execution thread. When a program defines `async fn main()`, it is automatically invoked and awaited by the AdeshLang runtime.
+`async fn` defines non-blocking routines that suspend execution with `await` without locking the execution thread. When a program defines `async fn main()`, it is automatically invoked and awaited by the Adesh runtime.
 
 ### Code Example
 

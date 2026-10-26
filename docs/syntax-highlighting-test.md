@@ -1,6 +1,6 @@
 ---
 title: Syntax Highlighting Test
-description: Comprehensive test of AdeshLang syntax highlighting
+description: Comprehensive test of Adesh syntax highlighting
 # Hide from sidebar – this is for verification only
 ---
 

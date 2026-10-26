@@ -6,7 +6,7 @@ sidebar_label: 22. Testing
 
 # Testing — Assertions and `test` Functions
 
-Real code needs proof it works — forever. AdeshLang has a built-in testing
+Real code needs proof it works — forever. Adesh has a built-in testing
 system: `test fn` blocks with `assert`, `assert_eq`, and `assert_ne`, run
 with the `--test` flag. The authoritative examples are in
 [`examples/testing/`](https://github.com/adeshlang/adeshlang/tree/main/examples/testing).
@@ -209,6 +209,6 @@ All tests passed.
 
 ## Next Step
 
-Now the tour of everything AdeshLang ships — the **Standard Library**. Start
+Now the tour of everything Adesh ships — the **Standard Library**. Start
 with the tour of Math, JSON, FS, Regex, Time, Random, and Crypto.
 Continue to **[Standard Library Tour](/learn/stdlib-tour)** →

@@ -21,7 +21,7 @@ fn identity<T>(value: T): T {
 }
 
 let num: int = identity<int>(100);
-let str: string = identity<string>("AdeshLang Generics");
+let str: string = identity<string>("Adesh Generics");
 print(num);
 print(str);
 ```
@@ -29,7 +29,7 @@ print(str);
 **Output:**
 ```
 100
-AdeshLang Generics
+Adesh Generics
 ```
 
 From [`examples/generics/01_basic_generics.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/generics/01_basic_generics.adesh).
@@ -89,7 +89,7 @@ below come straight from `examples/Libraries/collections/`.
 import Collections;
 
 let map = Collections.HashMap();
-map.insert("name", "AdeshLang");
+map.insert("name", "Adesh");
 map.insert("author", "Ajay");
 map.insert("year", 2026);
 
@@ -104,7 +104,7 @@ print("Contains after remove:", map.containsKey("author"));
 **Output:**
 ```
 Len: 3
-Get 'name': AdeshLang
+Get 'name': Adesh
 Contains 'author': true
 Keys: [name, author, year]
 Removed 'author': Ajay

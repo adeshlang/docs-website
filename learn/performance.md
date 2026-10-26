@@ -6,29 +6,29 @@ sidebar_label: 26. Performance & Execution Backends
 
 # Performance — Backends, JIT, and Benchmarking
 
-AdeshLang's most distinctive feature is that the *same source code* runs on
-multiple **execution backends** — from a fast interpreter while you learn to
-a native JIT for 10–230× speedups. This lesson shows what that means, how to
-measure it, and where each backend shines. The raw numbers live in
+Adesh's most distinctive feature is that the *same source code* runs on
+multiple **execution targets** — the interpreter while you learn, and native
+JIT, AOT, or WASM builds when you need more. This lesson shows what that means,
+how to measure it, and where each target shines. While the native targets are
+experimental, no speedup guarantees are published — measure on your own
+hardware. Example programs live in
 [`examples/fib/`](https://github.com/adeshlang/adeshlang/tree/main/examples/fib),
 [`examples/backends/`](https://github.com/adeshlang/adeshlang/tree/main/examples/backends),
 and [`examples/benchmarks/`](https://github.com/adeshlang/adeshlang/tree/main/examples/benchmarks).
 
-## The backends
+## The execution targets
 
-| Flag | Backend | Use it when |
-|------|---------|-------------|
+| Flag | Target | Use it when |
+|------|--------|-------------|
 | *(default)* | Interpreter | learning, quick runs |
-| `--jit` | JIT compiler | real performance |
-| `--njit` | native JIT | maximum speed |
-| AOT | ahead-of-time | production binaries |
-| bytecode VM | `--bytecode` | portable compact run |
-| WASM | WebAssembly | running in the browser |
+| `--jit-native` | Native JIT | compute-heavy workloads |
+| `adesh build` | AOT native compilation | production binaries |
+| `--wasm` | WebAssembly | running in the browser |
+| `--gpu` | GPU (planned) | parallel workloads, future release |
 
 ```
-adesh run fib_dp.adesh          # interpreter
-adesh run --jit fib_dp.adesh    # JIT
-adesh run --njit fib_dp.adesh   # native JIT
+adesh run fib_dp.adesh              # interpreter
+adesh run --jit-native fib_dp.adesh # native JIT
 ```
 
 ## Measuring time with `clock()`
@@ -135,16 +135,16 @@ Found 2262 prime numbers up to 20000
 Time: 0.031 seconds
 ```
 
-Run the same file with `--jit` and `--njit` and watch the wall time drop.
+Run the same file with `--jit-native` and compare the wall time on your machine.
 
-## JIT tiers
+## Native JIT warm-up
 
 [`examples/jit/`](https://github.com/adeshlang/adeshlang/tree/main/examples/jit)
-shows the JIT warming up through tiers (interpreter → Tier1 → Tier2) as a
-function is called many times:
+shows the native JIT compiling a function the first time it runs, then executing
+the compiled machine code on later calls:
 
 ```adesh
-// tiered_demo.adesh - the JIT escalates hot functions
+// native_jit_demo.adesh - first call includes compilation cost
 fn hot_function(x) {
     let total = 0;
     for i in 0..1000 {
@@ -162,7 +162,7 @@ let end = clock();
 
 print("Checksum:", checksum);
 print("Total time:", end - start, "seconds");
-print("TIP: run with --jit or --njit for dramatic speedups");
+print("TIP: run with --jit-native for native code generation");
 ```
 
 **Output (timings vary):**
@@ -182,17 +182,16 @@ portable: **write clear code first, then flip a flag**:
 same .adesh file
      │
      ├─ adesh run file.adesh            → interpreter (learn)
-     ├─ adesh run --jit file.adesh      → JIT
-     ├─ adesh run --njit file.adesh     → native JIT (max speed)
-     ├─ adesh build --aot file.adesh    → ahead-of-time binary
-     └─ adesh build --wasm file.adesh   → WebAssembly module
+     ├─ adesh run --jit-native file.adesh → native JIT
+     ├─ adesh build file.adesh          → ahead-of-time binary
+     └─ adesh compile-wasm file.adesh   → WebAssembly module
 ```
 
 ## Benchmarking rules of thumb
 
 1. **Measure before optimizing** — use `clock()` around real work.
-2. **Compare the same code across backends** — the interpreter numbers are
-   not the JIT numbers.
+2. **Compare the same code across targets** — the interpreter numbers are
+   not the native JIT numbers.
 3. **Watch algorithmic complexity first** — naive vs DP beats any backend
    flag.
 4. **Run with a warm JIT** — the first call includes compilation costs.
@@ -201,7 +200,7 @@ same .adesh file
 
 ## Practice
 
-Write a benchmark that compares `--jit` vs `--njit` on your own machine:
+Write a benchmark that compares the interpreter with `--jit-native` on your own machine:
 
 ```adesh
 fn sum_to(n) {
@@ -223,7 +222,7 @@ Sum: 4999950000
 Time: 0.018 seconds
 ```
 
-Run it three ways: `adesh run`, `adesh run --jit`, `adesh run --njit`.
+Run it two ways: `adesh run` and `adesh run --jit-native`.
 
 ## Summary
 

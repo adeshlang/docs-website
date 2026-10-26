@@ -11,7 +11,7 @@ import BackendSupport from '@site/src/components/BackendSupport';
 
 <FeatureStatus status="STABLE" details="Explicit vector intrinsics, auto-vectorization, and the Simd namespace for high-throughput numeric arrays" />
 
-SIMD (**Single Instruction, Multiple Data**) lets AdeshLang execute arithmetic across contiguous datasets in dedicated CPU vector registers (x86_64 **AVX2 / AVX-512**, ARM **NEON**, WASM **SIMD128**). AdeshLang exposes SIMD through two surfaces:
+SIMD (**Single Instruction, Multiple Data**) lets Adesh execute arithmetic across contiguous datasets in dedicated CPU vector registers (x86_64 **AVX2 / AVX-512**, ARM **NEON**, WASM **SIMD128**). Adesh exposes SIMD through two surfaces:
 
 | Surface | Where | API | Status |
 |---|---|---|---|

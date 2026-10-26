@@ -11,7 +11,7 @@ The `adesh adob` command family provides inspection, validation, and diagnostic 
 ADOB uses format version 1.0.0. The writer validates structural consistency
 before serialization. These checks do not establish that the target backend,
 relocations, or generated machine code are fully supported. The native
-toolchain improvements are planned for AdeshLang v0.4.0; see the
+toolchain improvements are planned for Adesh v0.4.0; see the
 [native toolchain status](/docs/compiler/native-toolchain).
 
 ---

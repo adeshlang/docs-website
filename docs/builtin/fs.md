@@ -6,7 +6,7 @@ sidebar_label: FS
 
 # FS Library
 
-The **FS** builtin library is AdeshLang's unified filesystem and path API. It provides everything you need to read and write files, manage directories, list contents, compute hashes, watch for changes, work with paths, and even run transactional or batched file operations — all from a single `fs` namespace.
+The **FS** builtin library is Adesh's unified filesystem and path API. It provides everything you need to read and write files, manage directories, list contents, compute hashes, watch for changes, work with paths, and even run transactional or batched file operations — all from a single `fs` namespace.
 
 It is backed by the operating system (interpreter, JIT, Native JIT, AOT) and polyfilled with an in-memory virtual filesystem on WebAssembly, so the same code runs everywhere.
 
@@ -53,8 +53,8 @@ The core of the library — working with file **contents**.
 ```adesh
 import fs;
 
-fs.write("greeting.txt", "Hello, AdeshLang!");
-print(fs.read("greeting.txt"));          // Hello, AdeshLang!
+fs.write("greeting.txt", "Hello, Adesh!");
+print(fs.read("greeting.txt"));          // Hello, Adesh!
 
 // Atomic write is safer for config/log files:
 fs.writeAtomic("config.json", '{"port": 8080}');

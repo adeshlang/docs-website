@@ -7,7 +7,7 @@ description: High-performance concurrency primitives including threads, channels
 
 # Concurrency Module (`stdlib/concurrency`)
 
-The `concurrency` standard module provides low-level operating system thread primitives, lock-free synchronization, and message-passing channels. It is the foundation for parallel computation in AdeshLang — from simple `spawn`/`join` to bounded channels with backpressure and reader-writer locks.
+The `concurrency` standard module provides low-level operating system thread primitives, lock-free synchronization, and message-passing channels. It is the foundation for parallel computation in Adesh — from simple `spawn`/`join` to bounded channels with backpressure and reader-writer locks.
 
 ```
 ┌───────────────────────────────────────────────────────────┐
@@ -96,7 +96,7 @@ fn main() {
 
 ### Scheduler Internals
 
-AdeshLang's concurrency runtime sits on top of the OS scheduler — no green threads. Each `spawn` is a `std::thread::spawn` under the hood, with a worker-pool extension for `parallel_*` helpers.
+Adesh's concurrency runtime sits on top of the OS scheduler — no green threads. Each `spawn` is a `std::thread::spawn` under the hood, with a worker-pool extension for `parallel_*` helpers.
 
 ```
 spawn(|| work)
@@ -328,7 +328,7 @@ if (guard.isErr()) {
 
 ## 6. High-Speed Work-Stealing Parallel Engine (`import Parallel;`)
 
-For CPU-bound operations across multiple cores, AdeshLang provides the `Parallel` module backed by a Rayon work-stealing thread pool and SIMD vectorization:
+For CPU-bound operations across multiple cores, Adesh provides the `Parallel` module backed by a Rayon work-stealing thread pool and SIMD vectorization:
 
 ```adesh
 import Parallel;

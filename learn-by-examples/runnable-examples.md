@@ -6,11 +6,11 @@ sidebar_label: Runnable Examples
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang Runnable Code Examples Catalog
+# Adesh Runnable Code Examples Catalog
 
 <FeatureStatus status="STABLE" details="100+ verified runnable examples across all language features & standard libraries" />
 
-The AdeshLang repository contains an extensive suite of verified runnable examples in the [`examples/`](https://github.com/adeshlang/adeshlang/tree/main/examples) directory.
+The Adesh repository contains an extensive suite of verified runnable examples in the [`examples/`](https://github.com/adeshlang/adeshlang/tree/main/examples) directory.
 
 ---
 
@@ -22,11 +22,11 @@ Run any example directly using the `adesh` CLI tool:
 # Execute using default interpreter
 adesh run examples/Libraries/http/client.adesh
 
-# Execute using Native Cranelift JIT (10-230x speedup)
+# Execute using Native Cranelift JIT
 adesh run --jit-native examples/Libraries/math/all.adesh
 
-# Execute using Bytecode VM
-adesh run --bytecode examples/01_Basics/main.adesh
+# Execute using WebAssembly
+adesh run --wasm examples/01_Basics/main.adesh
 
 # Execute embedded unit tests
 adesh run --test examples/01_Basics/test.adesh

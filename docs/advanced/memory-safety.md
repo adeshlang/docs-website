@@ -6,7 +6,7 @@ sidebar_label: Memory Safety
 
 # Memory Safety Without Garbage Collection
 
-AdeshLang ensures memory safety at compile time without requiring a garbage collector, using an ownership-based system inspired by Rust.
+Adesh ensures memory safety at compile time without requiring a garbage collector, using an ownership-based system inspired by Rust.
 
 ## Core Concepts
 
@@ -211,7 +211,7 @@ region {
 
 ### Compile-Time Checks
 
-AdeshLang prevents these errors **at compile time**:
+Adesh prevents these errors **at compile time**:
 
 1. **Use After Free**
    ```adesh
@@ -264,7 +264,7 @@ Zero-cost abstractions - all checks happen at compile time:
 
 ### vs. Garbage-Collected Languages (Java, Python, Go)
 
-| Aspect | AdeshLang | GC Languages |
+| Aspect | Adesh | GC Languages |
 |--------|----------|--------------|
 | **Performance** | Zero runtime overhead | GC pauses, overhead |
 | **Memory** | Deterministic deallocation | Non-deterministic |
@@ -273,7 +273,7 @@ Zero-cost abstractions - all checks happen at compile time:
 
 ### vs. Manual Memory Management (C, C++)
 
-| Aspect | AdeshLang | C/C++ |
+| Aspect | Adesh | C/C++ |
 |--------|----------|-------|
 | **Safety** | Guaranteed safe | Manual correctness |
 | **Ease** | Automatic | Error-prone |
@@ -378,4 +378,4 @@ struct Node {
 - **[Concurrency](/docs/builtin/concurrency)** - Thread-safe memory sharing
 - **[Async/Await](/docs/advanced/async-await)** - Asynchronous memory patterns
 
-Master AdeshLang's memory system for writing safe, high-performance code! 🚀
+Master Adesh's memory system for writing safe, high-performance code! 🚀

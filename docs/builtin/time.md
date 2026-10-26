@@ -6,9 +6,9 @@ sidebar_label: Time
 
 # Time Library
 
-The **Time** builtin library is AdeshLang's production-grade date, time, and duration system. It provides monotonic **Instant** and wall-clock **SystemTime** measurements, ISO-style **Duration** math, naive **Date** / **TimeOfDay** / **DateTime**, timezone-aware **UTC**, **Offset**, and **Zoned** date-times, parsing and formatting, plus `Period`, `Stopwatch`, `Timer`, and interval helpers.
+The **Time** builtin library is Adesh's production-grade date, time, and duration system. It provides monotonic **Instant** and wall-clock **SystemTime** measurements, ISO-style **Duration** math, naive **Date** / **TimeOfDay** / **DateTime**, timezone-aware **UTC**, **Offset**, and **Zoned** date-times, parsing and formatting, plus `Period`, `Stopwatch`, `Timer`, and interval helpers.
 
-The API is written in AdeshLang itself (`src/stdlib/Time.adesh`) on top of native `time.*` primitives (system clock, monotonic clock, sleep, format/parse, and timezone lookup), so it works consistently across every backend.
+The API is written in Adesh itself (`src/stdlib/Time.adesh`) on top of native `time.*` primitives (system clock, monotonic clock, sleep, format/parse, and timezone lookup), so it works consistently across every backend.
 
 ## Classes
 

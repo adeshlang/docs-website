@@ -1,19 +1,19 @@
 ---
 id: variables
 title: "Variables, Storage Classes & Memory Layout"
-description: "Formal specification of variable declarations, mutability semantics, stack/heap storage classes, shadowing, and scope lifetimes in AdeshLang."
+description: "Formal specification of variable declarations, mutability semantics, stack/heap storage classes, shadowing, and scope lifetimes in Adesh."
 sidebar_label: "Variables & Storage"
 ---
 
 # Variables, Storage Classes & Memory Layout
 
-This specification defines the variable binding model, storage allocation classes, stack slot alignment, lexical scoping rules, and memory representations in AdeshLang.
+This specification defines the variable binding model, storage allocation classes, stack slot alignment, lexical scoping rules, and memory representations in Adesh.
 
 ---
 
 ## 1. Variable Binding Semantics
 
-In AdeshLang, variable bindings are introduced using the `let`, `const`, or `readonly` keywords.
+In Adesh, variable bindings are introduced using the `let`, `const`, or `readonly` keywords.
 
 ### 1.1 `let` Bindings (Mutable by Default)
 Variables declared with `let` create reassignable bindings within their enclosing lexical scope. No explicit `mut` keyword is required or permitted:
@@ -80,7 +80,7 @@ struct ArrayDescriptor {
 
 ## 3. Variable Shadowing Mechanics
 
-AdeshLang permits variable shadowing, where a new binding redeclares an existing identifier in the same or an inner lexical scope:
+Adesh permits variable shadowing, where a new binding redeclares an existing identifier in the same or an inner lexical scope:
 
 ```adesh
 let data: string = "  4096  ";
@@ -124,7 +124,7 @@ When execution leaves a lexical scope, the compiler automatically injects **Drop
 
 ## 5. Multi-Variable Unpacking & Register Swapping
 
-AdeshLang supports multi-variable declaration, destructuring, and zero-cost variable swapping:
+Adesh supports multi-variable declaration, destructuring, and zero-cost variable swapping:
 
 ```adesh
 // Declaration & Destructuring

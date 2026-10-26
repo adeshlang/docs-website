@@ -2,12 +2,12 @@
 id: interpreter
 title: AST Tree-Walking Interpreter
 sidebar_label: Interpreter & REPL
-description: Direct AST tree-walking interpreter, interactive REPL environment, and rapid prototyping in AdeshLang.
+description: Direct AST tree-walking interpreter, interactive REPL environment, and rapid prototyping in Adesh.
 ---
 
 # AST Tree-Walking Interpreter & REPL
 
-The **AdeshLang AST Tree-Walking Interpreter** evaluates the abstract syntax tree directly in memory without emitting intermediate bytecode or native machine code. It offers instantaneous execution startup, transparent stack introspection, and powers the interactive AdeshLang REPL.
+The **Adesh AST Tree-Walking Interpreter** evaluates the abstract syntax tree directly in memory without emitting intermediate bytecode or native machine code. It offers instantaneous execution startup, transparent stack introspection, and powers the interactive Adesh REPL.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -38,7 +38,7 @@ Launch the interactive REPL shell by running `adesh repl` or simply `adesh`:
 
 ```bash
 $ adesh repl
-Welcome to AdeshLang REPL v0.2.0
+Welcome to Adesh REPL v0.2.0
 Type :help for special commands, or press Ctrl+D / exit to quit.
 
 adesh> let x = 42;
@@ -88,5 +88,5 @@ adesh -i script.adesh
 | **Cold Start Time** | **< 1ms (Instant)** | 5ms - 50ms |
 | **Memory Overhead** | Minimal | Medium (CodeGen) |
 | **Debug Introspection**| Complete AST inspection | Stripped symbols |
-| **Execution Throughput**| Baseline | $30\times - 150\times$ faster |
+| **Execution Throughput**| Baseline (correctness reference) | Native code generation |
 | **Use Case** | Scripts, CLI tools, REPL | Heavy compute, servers |

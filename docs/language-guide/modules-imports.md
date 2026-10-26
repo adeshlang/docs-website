@@ -7,13 +7,13 @@ sidebar_label: "Modules & Import System"
 
 # Module System, Symbol Tables & Dependency Graph Specification
 
-This document specifies the module system architecture, file resolution rules, symbol table visibility, circular dependency detection algorithms, and cross-module optimization boundaries in AdeshLang.
+This document specifies the module system architecture, file resolution rules, symbol table visibility, circular dependency detection algorithms, and cross-module optimization boundaries in Adesh.
 
 ---
 
 ## 1. Compilation Unit & Module Hierarchy
 
-A module in AdeshLang corresponds to a distinct source file (`.adesh`) or directory package containing a module manifest. Every file creates an isolated, top-level **Lexical Symbol Namespace**.
+A module in Adesh corresponds to a distinct source file (`.adesh`) or directory package containing a module manifest. Every file creates an isolated, top-level **Lexical Symbol Namespace**.
 
 ```
 [ Root Module: main.adesh ]

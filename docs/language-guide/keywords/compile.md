@@ -7,7 +7,7 @@ description: The compile keyword — compile-time evaluation block and the compi
 
 # `compile`
 
-`compile` is AdeshLang's **compile-time execution** primitive. A `compile { ... }` block runs **during compilation** (not at runtime) and its effects — new bindings, computed constants, or AST transformations — are baked into the generated program. It is both a standalone metaprogramming block and the **first phase** inside a `decorator` definition.
+`compile` is Adesh's **compile-time execution** primitive. A `compile { ... }` block runs **during compilation** (not at runtime) and its effects — new bindings, computed constants, or AST transformations — are baked into the generated program. It is both a standalone metaprogramming block and the **first phase** inside a `decorator` definition.
 
 > **Ground truth:** Lexer `TokenKind::Compile` (`src/parsing/lexer.rs:1016`, keyword `"compile"` → `TokenKind::Compile` `lexer.rs:1016`, `ast.rs:2072`), AST `DecoratorPhase::Compile(Arc<Vec<Stmt>>)` (`src/parsing/ast.rs:698-708`), `DecoratorDef` (`ast.rs:711-718`) groups compile/runtime/typecheck/emit phases, statement `StmtKind::Decorator`.
 

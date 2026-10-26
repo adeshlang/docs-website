@@ -6,7 +6,7 @@ sidebar_label: Collections
 
 # Collections Library
 
-The **Collections** builtin library provides 15 high-performance, memory-safe data structures built around AdeshLang's ownership/RAII model — no garbage collector required. It ships as the `Collections` namespace with one constructor per type, plus fluent array methods `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, initial)`. All types are available identically across every backend (Interpreter, Bytecode VM, JIT, Native JIT, AOT, WASM).
+The **Collections** builtin library provides 15 high-performance, memory-safe data structures built around Adesh's ownership/RAII model — no garbage collector required. It ships as the `Collections` namespace with one constructor per type, plus fluent array methods `arr.map(fn)`, `arr.filter(fn)`, and `arr.reduce(fn, initial)`. All types are available identically across every backend (Interpreter, Native JIT, AOT, and WASM).
 
 ## Namespace
 
@@ -144,15 +144,15 @@ All three map types share the same method set. `HashMap` gives expected `O(1)` o
 import Collections;
 
 let map = Collections.HashMap();
-map.insert("language", "AdeshLang");
+map.insert("language", "Adesh");
 map.insert("version", "1.0.0");
 
-print(map.get("language"));       // AdeshLang
+print(map.get("language"));       // Adesh
 print(map.containsKey("version"));// true
 print(map.len());                 // 2
 print(map.keys());                // ["language", "version"]
-print(map.values());              // ["AdeshLang", "1.0.0"]
-print(map.entries());             // [["language", "AdeshLang"], ["version", "1.0.0"]]
+print(map.values());              // ["Adesh", "1.0.0"]
+print(map.entries());             // [["language", "Adesh"], ["version", "1.0.0"]]
 
 print(map.remove("version"));     // 1.0.0
 map.clear();
@@ -391,7 +391,7 @@ print(ring.pop());                    // event_2
 
 ## Array methods: `.map()`, `.filter()`, `.reduce()`
 
-AdeshLang arrays provide higher-order transformation methods. They accept a native function, user function, bound method, or closure.
+Adesh arrays provide higher-order transformation methods. They accept a native function, user function, bound method, or closure.
 
 ```adesh
 let xs = [1, 2, 3, 4, 5];

@@ -2,16 +2,16 @@
 id: ffi
 title: Foreign Function Interface (FFI)
 sidebar_label: FFI & C Interop
-description: Interoperating with C/C++ libraries, native system APIs, and external shared libraries in AdeshLang.
+description: Interoperating with C/C++ libraries, native system APIs, and external shared libraries in Adesh.
 ---
 
 # Foreign Function Interface (FFI)
 
-AdeshLang provides a zero-overhead **Foreign Function Interface (FFI)** to call native C functions and export AdeshLang functions with standard C calling conventions (`cdecl`, `stdcall`, `fastcall`).
+Adesh provides a zero-overhead **Foreign Function Interface (FFI)** to call native C functions and export Adesh functions with standard C calling conventions (`cdecl`, `stdcall`, `fastcall`).
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│                   AdeshLang Runtime                    │
+│                   Adesh Runtime                    │
 ├────────────────────────────────────────────────────────┤
 │  extern "C" fn printf(fmt: *const u8, ...) -> i32;     │
 └───────────────────────────┬────────────────────────────┘
@@ -27,9 +27,9 @@ AdeshLang provides a zero-overhead **Foreign Function Interface (FFI)** to call 
 
 ## 1. Type Mappings
 
-AdeshLang primitive types map directly to C ABI primitive types without translation overhead:
+Adesh primitive types map directly to C ABI primitive types without translation overhead:
 
-| AdeshLang Type | C Equivalent Type | Width / Details |
+| Adesh Type | C Equivalent Type | Width / Details |
 |----------------|-------------------|-----------------|
 | `i8` / `u8` | `int8_t` / `uint8_t` / `char` | 8-bit integer |
 | `i16` / `u16` | `int16_t` / `uint16_t` / `short` | 16-bit integer |
@@ -130,9 +130,9 @@ adesh build main.adesh -l sqlite3 -L /usr/local/lib
 
 ---
 
-## 5. Exporting AdeshLang Functions to C
+## 5. Exporting Adesh Functions to C
 
-You can export AdeshLang functions with C linkage for embedding into C/C++, Rust, Python, or Go hosts:
+You can export Adesh functions with C linkage for embedding into C/C++, Rust, Python, or Go hosts:
 
 ```adesh
 #[export_name("adesh_compute_hash")]
@@ -154,5 +154,5 @@ adesh build --crate-type=cdylib -o libadesh_math.so src/lib.adesh
 > [!CAUTION]
 > When working with FFI:
 > 1. **Null-termination**: Strings passed to C functions expecting `char*` must be null-terminated (`\0`).
-> 2. **Memory Allocation Ownership**: Never free memory in AdeshLang that was allocated by C `malloc()`, and never call C `free()` on memory managed by AdeshLang ARC.
-> 3. **Unsafe Isolation**: Wrap foreign FFI calls in safe idiomatic AdeshLang wrapper functions that validate inputs and return `Result<T, E>`.
+> 2. **Memory Allocation Ownership**: Never free memory in Adesh that was allocated by C `malloc()`, and never call C `free()` on memory managed by Adesh ARC.
+> 3. **Unsafe Isolation**: Wrap foreign FFI calls in safe idiomatic Adesh wrapper functions that validate inputs and return `Result<T, E>`.

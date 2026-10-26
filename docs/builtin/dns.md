@@ -6,7 +6,7 @@ sidebar_label: DNS
 
 # DNS Library
 
-The **DNS** builtin library is AdeshLang's production-grade, high-performance, secure DNS resolution and protocol subsystem. Designed cleanly on top of `Net`, it provides hostname resolution, record querying, service discovery, thread-safe LRU caching, and SSRF security policy sandboxing.
+The **DNS** builtin library is Adesh's production-grade, high-performance, secure DNS resolution and protocol subsystem. Designed cleanly on top of `Net`, it provides hostname resolution, record querying, service discovery, thread-safe LRU caching, and SSRF security policy sandboxing.
 
 All binary wire encoders and decoders operate under strict safety bounds — enforcing maximum domain label lengths (≤ 63 octets), full domain lengths (≤ 255 octets), and compression pointer loop protection with a maximum recursion depth of 16.
 

@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Reliable, ordered, multiplexed transport over UDP with Ed25519 identity, retry tokens, and stream-level framing" />
 
-ATP (**Adesh Transport Protocol**) is AdeshLang's custom reliable transport built on UDP — a QUIC-inspired, encrypted, multiplexed, stream-oriented protocol for game state sync, real-time collaboration, and high-throughput message buses. It provides **message framing, fragmentation/reassembly, ordered delivery, stream multiplexing, datagrams, acks, congestion control, and optional Ed25519 peer authentication** in a single `atp` module.
+ATP (**Adesh Transport Protocol**) is Adesh's custom reliable transport built on UDP — a QUIC-inspired, encrypted, multiplexed, stream-oriented protocol for game state sync, real-time collaboration, and high-throughput message buses. It provides **message framing, fragmentation/reassembly, ordered delivery, stream multiplexing, datagrams, acks, congestion control, and optional Ed25519 peer authentication** in a single `atp` module.
 
 ```
 ┌─────────────────────────────────────────────────────────┐

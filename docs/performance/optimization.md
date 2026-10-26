@@ -2,12 +2,12 @@
 id: optimization
 title: Compiler Optimization Passes & Techniques
 sidebar_label: Optimization
-description: Compiler optimization passes, zero-cost abstractions, data layout packing, and performance best practices in AdeshLang.
+description: Compiler optimization passes, zero-cost abstractions, data layout packing, and performance best practices in Adesh.
 ---
 
 # Compiler Optimization Passes & Techniques
 
-AdeshLang is designed around **zero-cost abstractions**: high-level syntax and ergonomic safety features compile down to the most efficient machine instructions possible without hidden runtime penalties.
+Adesh is designed around **zero-cost abstractions**: high-level syntax and ergonomic safety features compile down to the most efficient machine instructions possible without hidden runtime penalties.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -28,7 +28,7 @@ AdeshLang is designed around **zero-cost abstractions**: high-level syntax and e
 
 ## 1. High-Level Compiler Optimization Passes
 
-When compiling with optimization flags (`-O2` or `-O3`), the AdeshLang compiler executes several domain-specific optimization passes:
+When compiling with optimization flags (`-O2` or `-O3`), the Adesh compiler executes several domain-specific optimization passes:
 
 ### Constant Folding & Propagation
 Compile-time constant expressions are calculated during semantic analysis:

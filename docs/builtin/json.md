@@ -6,7 +6,7 @@ sidebar_label: JSON
 
 # JSON Library
 
-The **JSON** builtin library is AdeshLang's language-level JSON system. It parses JSON text into native values (objects, arrays, strings, numbers, booleans, `null`), serializes values back to JSON, validates input without throwing, and round-trips through files and byte arrays — all exposed on a single `JSON` namespace.
+The **JSON** builtin library is Adesh's language-level JSON system. It parses JSON text into native values (objects, arrays, strings, numbers, booleans, `null`), serializes values back to JSON, validates input without throwing, and round-trips through files and byte arrays — all exposed on a single `JSON` namespace.
 
 Because it is built into the runtime (backed by `serde_json`), it needs no external dependencies and works identically on every backend, including WebAssembly.
 
@@ -23,7 +23,7 @@ Because it is built into the runtime (backed by `serde_json`), it needs no exter
 `JSON` is **globally available** — no import is required:
 
 ```adesh
-let obj = JSON.parse('{"name": "AdeshLang"}');
+let obj = JSON.parse('{"name": "Adesh"}');
 ```
 
 Importing it is optional but makes the dependency explicit, and works case-insensitively:
@@ -41,7 +41,7 @@ The legacy low-level names `json_parse(text)` and `json_stringify(value)` are al
 
 ## Methods: Parse
 
-Turn JSON text into native AdeshLang values. JSON objects become objects (accessed with `.field`), arrays become arrays (indexed with `[i]`), and numbers keep their type (integers stay integers).
+Turn JSON text into native Adesh values. JSON objects become objects (accessed with `.field`), arrays become arrays (indexed with `[i]`), and numbers keep their type (integers stay integers).
 
 | Function | Description | Parameters | Returns |
 | :--- | :--- | :--- | :--- |
@@ -56,7 +56,7 @@ Turn JSON text into native AdeshLang values. JSON objects become objects (access
 // Parse with backtick template strings — no escaping needed:
 let text = `
 {
-    "name": "AdeshLang",
+    "name": "Adesh",
     "version": 3,
     "stable": true,
     "tags": ["lang", "fast"]
@@ -64,7 +64,7 @@ let text = `
 `;
 let lang = JSON.parse(text);
 
-print(lang.name);        // AdeshLang
+print(lang.name);        // Adesh
 print(lang.version);     // 3
 print(lang.stable);      // true
 print(lang.tags[0]);     // lang
@@ -222,7 +222,7 @@ print("guarded:", JSON.tryParse(bad) == null ? "returned null" : "unexpected");
 - **Depth limit**: parsing enforces a maximum nesting depth of **128** by default to prevent stack overflows from maliciously nested input. `JSON.parse`/`JSON.tryParse` accept an optional `maxDepth` override.
 - **Errors**: `JSON.parse` throws with `line`/`column` diagnostics; `JSON.tryParse` swallows errors and returns `null`; `JSON.isValid` never parses.
 - **Duplicate/order**: object key order is preserved on stringify; `JSON.isValid` is a pure syntax check.
-- **Backend parity**: fully supported on Interpreter, Bytecode VM, JIT, Native JIT, LLVM AOT, and WebAssembly.
+- **Backend parity**: fully supported on Interpreter, Native JIT, AOT, and WebAssembly.
 - **UTF-8**: `JSON.parseBytes`/`JSON.stringifyBytes` assume UTF-8; invalid UTF-8 in `parseBytes` is rejected with an error.
 - Always sanitize/validate JSON from untrusted sources before using it in security-sensitive paths (`JSON.tryParse` + explicit field checks).
 

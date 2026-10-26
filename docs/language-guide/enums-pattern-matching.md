@@ -1,13 +1,13 @@
 ---
 id: enums-pattern-matching
 title: "Enums, Tagged Unions & Pattern Lowering"
-description: "Formal specification of scalar enums, tagged union memory offsets, discriminant optimization, decision tree generation, and pattern lowering in AdeshLang."
+description: "Formal specification of scalar enums, tagged union memory offsets, discriminant optimization, decision tree generation, and pattern lowering in Adesh."
 sidebar_label: "Enums & Pattern Matching"
 ---
 
 # Enums, Tagged Unions & Pattern Lowering
 
-This document specifies the physical memory layouts of scalar enumerations and tagged unions (sum types), discriminant byte-width optimizations, decision tree generation algorithms, and pattern matching lowering in AdeshLang.
+This document specifies the physical memory layouts of scalar enumerations and tagged unions (sum types), discriminant byte-width optimizations, decision tree generation algorithms, and pattern matching lowering in Adesh.
 
 ---
 

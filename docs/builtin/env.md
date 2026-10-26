@@ -6,7 +6,7 @@ sidebar_label: Env
 
 # Env Library
 
-The **Env** builtin library gives AdeshLang access to environment variables, user/system directories, platform and process metadata, and command-line arguments — all through a single `Env` namespace. Directory and executable queries return `Path` instances so they chain fluently with the `Path` and `FS` libraries, and a runtime "environment" layer backs `.env` file support.
+The **Env** builtin library gives Adesh access to environment variables, user/system directories, platform and process metadata, and command-line arguments — all through a single `Env` namespace. Directory and executable queries return `Path` instances so they chain fluently with the `Path` and `FS` libraries, and a runtime "environment" layer backs `.env` file support.
 
 ## Namespace
 
@@ -110,7 +110,7 @@ The runtime keeps a separate "runtime environment" layer. `Env.load` populates i
 ```adesh
 import Env;
 
-// .env file:  APP_NAME=AdeshLang / APP_ENV=development
+// .env file:  APP_NAME=Adesh / APP_ENV=development
 let data = Env.fromFile(".env");
 for k in data {
     print(k + " = " + str(data[k]));

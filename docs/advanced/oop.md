@@ -6,7 +6,7 @@ sidebar_label: OOP
 
 # Object-Oriented Programming (OOP)
 
-AdeshLang provides a production-ready, highly optimized Object-Oriented Programming (OOP) system. It features state encapsulation, single inheritance, properties, interfaces, abstract classes, sealed classes, and a packed memory layout for class instances.
+Adesh provides a production-ready, highly optimized Object-Oriented Programming (OOP) system. It features state encapsulation, single inheritance, properties, interfaces, abstract classes, sealed classes, and a packed memory layout for class instances.
 
 ---
 
@@ -37,7 +37,7 @@ user.greet();
 
 ## 2. Inheritance and Super Calls
 
-AdeshLang supports single inheritance using the `extends` keyword. Child classes must delegate constructor arguments to parent constructors using `super(...)`.
+Adesh supports single inheritance using the `extends` keyword. Child classes must delegate constructor arguments to parent constructors using `super(...)`.
 
 ```adesh
 class Employee extends Person {
@@ -59,7 +59,7 @@ class Employee extends Person {
 
 ## 3. Visibility Modifiers
 
-To enforce encapsulation, AdeshLang supports member-level visibility modifiers for both fields and methods:
+To enforce encapsulation, Adesh supports member-level visibility modifiers for both fields and methods:
 
 | Modifier | Accessibility |
 | :--- | :--- |
@@ -184,11 +184,11 @@ class CustomConfig extends Config {}
 
 ## 7. Memory Optimization: Packed Contiguous Layout
 
-AdeshLang features transparent runtime layout optimization for class instances.
+Adesh features transparent runtime layout optimization for class instances.
 * ** HashMap Fallback**: Old class field storages historically used slow HashMaps (~100ns per lookup, 200+ bytes overhead).
 * **Packed Layout**: The runtime automatically packs primitive fields (`i8-i128`, `u8-u128`, `f32`, `f64`, `bool`, etc.) into a packed, contiguous memory buffer.
 * **Performance Impact**:
   * **Memory**: Overhead drops from 200+ bytes to **8–16 bytes** per instance (90%+ reduction).
-  * **Access Speed**: Field access is compiled to direct memory offsets, dropping to **5–10ns** (10-20x faster).
+  * **Access Speed**: Field access is compiled to direct memory offsets (single-digit nanoseconds).
   * **Locality**: Highly optimized CPU cache alignment.
   * **Transparent Fallback**: Complex reference types (e.g. `string`, arrays, objects, functions) seamlessly fall back to HashMap storage without changing any user-facing APIs.

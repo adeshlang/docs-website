@@ -504,10 +504,10 @@ types, and data modeling:
 |------|-------------|
 | **Next lesson** | [Strings & Text](/learn/strings) — interpolation, templates, methods |
 | **Language Guide** | [Basics](/docs/language-guide/basics) — Deep dive into syntax |
-| **Memory Safety** | [Ownership](/docs/advanced/memory-safety) — AdeshLang's superpower |
+| **Memory Safety** | [Ownership](/docs/advanced/memory-safety) — Adesh's superpower |
 | **OOP** | [Classes](/docs/advanced/oop) — Object-oriented programming |
 | **Async** | [Async/Await](/docs/advanced/async-await) — Concurrent programming |
-| **Backends** | [Native JIT](/docs/backends/native-jit) — 100x+ speedups |
+| **Backends** | [Native JIT](/docs/backends/native-jit) — runtime native code generation |
 | **Examples** | [400+ examples](/learn-by-examples/runnable-examples) — Learn by reading code |
 
 ## Final Challenge
@@ -521,8 +521,8 @@ Try building these on your own:
 
 ---
 
-**Congratulations!** 🎉 You've completed the "Learn Programming with AdeshLang" tutorial series. You now have the foundation to build real applications. Keep coding, keep exploring, and remember:
+**Congratulations!** 🎉 You've completed the "Learn Programming with Adesh" tutorial series. You now have the foundation to build real applications. Keep coding, keep exploring, and remember:
 
-> **आदेश (Adesh)** — Give the command. The machine obeys.
+> **Adesh** — Give the command. The machine obeys.
 
 Happy coding! 🚀

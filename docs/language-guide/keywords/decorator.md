@@ -7,7 +7,7 @@ description: The decorator keyword — multi-phase metaprogramming declarations 
 
 # `decorator`
 
-`decorator` declares a **multi-phase metaprogramming transform** that can wrap, constrain, and generate code for any declaration it annotates. A `decorator` definition bundles up to four phases — `compile`, `typecheck`, `runtime`, `emit` — and is applied concisely with the `@name` symbol form. Decorators are the backbone of AdeshLang's compile-time metaprogramming.
+`decorator` declares a **multi-phase metaprogramming transform** that can wrap, constrain, and generate code for any declaration it annotates. A `decorator` definition bundles up to four phases — `compile`, `typecheck`, `runtime`, `emit` — and is applied concisely with the `@name` symbol form. Decorators are the backbone of Adesh's compile-time metaprogramming.
 
 > **Ground truth:** Lexer `TokenKind::Decorator` (`src/parsing/lexer.rs:1004`, keyword `"decorator"`), `TokenKind::At` (`lexer.rs:400`, `"@"`), `StmtKind::Decorator(DecoratorDef, bool)` (`src/parsing/ast.rs:687`), `DecoratorDef { name, params, phases, requires_unsafe, is_new_style }` (`ast.rs:711-718`), `DecoratorPhase::{Compile,Runtime,Typecheck,Emit}(Arc<Vec<Stmt>>)` (`ast.rs:698-708`), `DecoratorPipeline`/`DecoratorPipelineStage` (`ast.rs:720-736`), applied via `@decorator` / `@decorator(args)`.
 

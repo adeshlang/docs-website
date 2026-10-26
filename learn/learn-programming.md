@@ -1,16 +1,16 @@
 ---
 id: learn-programming
-title: Learn AdeshLang
-description: The complete beginner-to-intermediate guide to programming fundamentals and the AdeshLang language, built from the official examples repository.
+title: Learn Adesh
+description: The complete beginner-to-intermediate guide to programming fundamentals and the Adesh language, built from the official examples repository.
 sidebar_label: Learning Roadmap
 slug: /
 ---
 
-# Learn AdeshLang
+# Learn Adesh
 
 Welcome. This page is the **language overview and roadmap** for the entire
 `/learn` course. Follow it top to bottom and you will go from
-**never written code before** to **building real programs** in AdeshLang —
+**never written code before** to **building real programs** in Adesh —
 with every concept grounded in the language's own [examples repository](https://github.com/adeshlang/adeshlang/tree/main/examples).
 
 > **Not a beginner?** Skip straight to [Quick Start](/learn/getting-started/quick-start),
@@ -18,21 +18,21 @@ with every concept grounded in the language's own [examples repository](https://
 
 ---
 
-## What is AdeshLang?
+## What is Adesh?
 
-AdeshLang (**आदेश** — Sanskrit/Hindi for *command*) is a modern programming
-language designed around one idea: **turn a command into code**. It combines:
+Adesh (meaning *command*) is a modern programming language designed around one
+idea: **turn a command into code**. It combines:
 
 - a **readable, beginner-friendly syntax** that looks close to plain English
 - **declarative typing** that teaches you data modeling while you code
-- **multiple execution backends** — from a fast interpreter for learning to a
-  native JIT (`--njit`) for 10–230× speedups
+- **multiple execution targets** — from a fast interpreter for learning to a
+  native JIT (`--njit`) for native machine-code execution
 - **compile-time memory safety** with ownership and borrowing checks
 - a **batteries-included standard library**: Math, JSON, FS, HTTP, regex, time,
   crypto, and more
 
 You do not need any prior programming experience. Each lesson below introduces
-one concept, then immediately shows you real AdeshLang code that uses it.
+one concept, then immediately shows you real Adesh code that uses it.
 
 ---
 
@@ -72,7 +72,7 @@ one concept, then immediately shows you real AdeshLang code that uses it.
 > The **10-lesson core** (lessons 1–10) is the same progression used by most
 > programming courses: output → data → operations → decisions → repetition →
 > functions → higher-order → recursion → collections → a complete project.
-> Lessons 11–26 then take you through AdeshLang's own way of doing things —
+> Lessons 11–26 then take you through Adesh's own way of doing things —
 > types, data modeling, OOP, errors, memory, concurrency, testing, the
 > standard library, networking, and performance — before the capstone ties it
 > all together.
@@ -82,7 +82,7 @@ one concept, then immediately shows you real AdeshLang code that uses it.
 ## How this course teaches
 
 Every lesson follows the same loop, and it is the loop used to build
-AdeshLang itself:
+Adesh itself:
 
 ```text
 1. Read a concept      → short, plain-English explanation
@@ -94,7 +94,7 @@ AdeshLang itself:
 7. Repeat
 ```
 
-No memorization required. AdeshLang's documentation philosophy is the same as
+No memorization required. Adesh's documentation philosophy is the same as
 the language's: **explicit over hidden**, every concept with a runnable proof
 and its exact output spelled out.
 
@@ -114,7 +114,7 @@ Depending on who you are, start at a different place:
 
 ---
 
-## Why AdeshLang is a good language to learn programming with
+## Why Adesh is a good language to learn programming with
 
 | Feature | Why it helps you learn |
 |---|---|
@@ -138,7 +138,7 @@ By finishing the course, you will have written, run, and reasoned about:
 - a **TLS-layered, JSON API server** (lessons 21 + 23, from `examples/Libraries/http/server.adesh`)
 - **concurrent worker programs** with threads, channels, and parallel map (lesson 21)
 
-And you will know enough programming fundamentals to read any AdeshLang
+And you will know enough programming fundamentals to read any Adesh
 program in the repository, and to learn any other language afterward.
 
 ---
@@ -149,5 +149,5 @@ program in the repository, and to learn any other language afterward.
 - **[Docs](/docs)** — the complete reference: [Language Guide](/docs/language-guide/basics), [Standard Library](/docs/builtin/overview), [Execution Backends](/docs/backends/overview).
 - **[FAQ](/docs/faq)** — answers to common questions.
 
-Start simple, stay curious, and keep building. **आदेश — Give the command. The
+Start simple, stay curious, and keep building. **Adesh — Give the command. The
 machine obeys.** 🚀

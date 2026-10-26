@@ -6,10 +6,10 @@ sidebar_label: 17. Manual Memory & unsafe
 
 # Manual Memory — `alloc`, `free`, and the `unsafe` escape hatch
 
-AdeshLang is **memory-safe by default**: ownership, borrowing, and automatic
+Adesh is **memory-safe by default**: ownership, borrowing, and automatic
 cleanup cover almost everything. But for systems programming (embedded
 devices, buffers, low-level protocols) you sometimes need **manual memory
-management** — and AdeshLang gives you an explicit, block-scoped `alloc` /
+management** — and Adesh gives you an explicit, block-scoped `alloc` /
 `free` pair, exactly like the real files in
 [`examples/unsafe/`](https://github.com/adeshlang/adeshlang/tree/main/examples/unsafe)
 and
@@ -155,7 +155,7 @@ Total outer allocations: 111
 | Interfacing with C (FFI) | letting C own pointers you passed |
 | Doing normal app logic | **nothing — automatic cleanup handles it** |
 
-The default is: **let AdeshLang manage memory for you**. Reach for
+The default is: **let Adesh manage memory for you**. Reach for
 `alloc`/`free` only when you genuinely need byte-level control.
 
 ## Practice

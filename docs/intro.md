@@ -1,60 +1,60 @@
 ---
 id: intro
-title: Welcome to AdeshLang
-description: A complete guide to AdeshLang, a Rust-inspired, multi-backend programming language built for clarity, safety, and performance.
+title: Welcome to Adesh
+description: A complete guide to Adesh, a Rust-inspired, multi-target programming language built for clarity, safety, and performance.
 sidebar_label: Introduction
 slug: /
 ---
 
-# Welcome to AdeshLang
+# Welcome to Adesh
 
 <div align="center">
-  <img src="/img/logo.svg" alt="AdeshLang logo" width="180" />
+  <img src="/img/logo.svg" alt="Adesh logo" width="180" />
 </div>
 
 **Command. Code. Create.**
 
-**आदेश (Adesh)** — Sanskrit/Hindi for command, instruction, direction, and guidance.
+**Adesh** — meaning command, instruction, direction, and guidance.
 
-AdeshLang is a modern systems-and-applications language designed around one simple idea: turn command into code and create meaningful software with clarity, power, and purpose. It blends readability, static safety, and high-performance backends into a single language model.
+Adesh is a modern systems-and-applications language designed around one simple idea: turn command into code and create meaningful software with clarity, power, and purpose. It blends readability, static safety, and high-performance backends into a single language model.
 
-> AdeshLang is not just another scripting language. It is a language for developers who want expressive syntax, predictable performance, and backend flexibility without sacrificing correctness.
+> Adesh is not just another scripting language. It is a language for developers who want expressive syntax, predictable performance, and backend flexibility without sacrificing correctness.
 
 :::warning Experimental Language Notice
-**AdeshLang is currently an Experimental Programming Language.** Features, APIs, and syntax are evolving as we refine language ergonomics and compiler architectures.
+**Adesh is currently an Experimental Programming Language.** Features, APIs, and syntax are evolving as we refine language ergonomics and compiler architectures.
 :::
 
 :::note Primary Execution Backend & Source of Truth
-The **Tree-Walk Interpreter** is currently the **main reference implementation** and reflection of AdeshLang. It represents the authoritative source of truth for language behavior, semantics, and standard library execution.
+The **Tree-Walk Interpreter** is currently the **main reference implementation** and reflection of Adesh. It represents the authoritative source of truth for language behavior, semantics, and standard library execution.
 
-Other execution backends — including **Cranelift Native JIT**, **AOT Native Compilation**, **Bytecode VM**, **WASM**, and **GPU MLIR** — are under **active development** (`EXPERIMENTAL` / `PARTIAL` status).
+Other execution targets — **Cranelift Native JIT**, **AOT Native Compilation**, **WASM**, and a **GPU** backend planned for a future release — are under **active development** (`EXPERIMENTAL` / `PARTIAL` status).
 :::
 
 :::tip Built with Rust & Community Shoutout
-🦀 **Built with Rust**: The AdeshLang compiler toolchain, lexer, parser, AST representation, and runtime systems are crafted in **Rust**.
+🦀 **Built with Rust**: The Adesh compiler toolchain, lexer, parser, AST representation, and runtime systems are crafted in **Rust**.
 
 A huge **shoutout and heartfelt thank-you** to the **Rust Core Team**, the **Rust Foundation**, and the entire **Rust Community**! Rust's zero-cost abstractions, fearless concurrency, memory safety, and incredible ecosystem (including crates like `cranelift`, `rustyline`, and `clap`) made building a modern language compiler possible.
 :::
 
 ## Purpose of the language
 
-AdeshLang was created to make programming more intentional and approachable. Its purpose is to help developers command machines with clean logic, write robust code with safety in mind, and create tools, apps, and systems that scale from simple scripts to serious software projects.
+Adesh was created to make programming more intentional and approachable. Its purpose is to help developers command machines with clean logic, write robust code with safety in mind, and create tools, apps, and systems that scale from simple scripts to serious software projects.
 
 It brings together the discipline of systems programming with the creativity of modern application development.
 
 ## About the creator
 
-AdeshLang was created by **Ajay Tainwala**, a developer driven by the idea that programming should be both powerful and human-friendly. The language reflects a vision of building software that is expressive, reliable, and deeply useful in real-world development.
+Adesh was created by **Ajay Tainwala**, a developer driven by the idea that programming should be both powerful and human-friendly. The language reflects a vision of building software that is expressive, reliable, and deeply useful in real-world development.
 
-## Made in Bharat, India
+## Made in India
 
-AdeshLang is proudly rooted in **Bharat (India)** — inspired by the spirit of innovation, resilience, and craftsmanship that comes from one of the world’s oldest and most vibrant knowledge traditions. It represents a modern technology vision built with Indian creativity and global ambition.
+Adesh is proudly rooted in **India** — inspired by the spirit of innovation, resilience, and craftsmanship that comes from one of the world’s oldest and most vibrant knowledge traditions. It represents a modern technology vision built with Indian creativity and global ambition.
 
 ---
 
-## Why AdeshLang exists
+## Why Adesh exists
 
-Most languages optimize for one dimension: either ease of learning, runtime speed, or safety. AdeshLang tries to balance all three.
+Most languages optimize for one dimension: either ease of learning, runtime speed, or safety. Adesh tries to balance all three.
 
 - It is designed to feel clean and approachable for beginners.
 - It gives you strong typing and compile-time checks for large programs.
@@ -68,13 +68,13 @@ This makes it useful both as a teaching language and as a serious implementation
 ## The philosophy behind the language
 
 ### 1. Clear instructions
-The language name itself reflects the core idea: a program is a set of precise instructions. AdeshLang prefers explicit code over hidden behavior.
+The language name itself reflects the core idea: a program is a set of precise instructions. Adesh prefers explicit code over hidden behavior.
 
 ### 2. Safety by default
 Memory safety, ownership awareness, and clear type rules are central. The compiler and runtime work together to catch mistakes early.
 
 ### 3. Performance with flexibility
-A program should not be locked into one execution strategy. AdeshLang can run through an interpreter, bytecode VM, JIT, native compilation, WASM, or a GPU-oriented pipeline depending on need.
+A program should not be locked into one execution strategy. Adesh can run through an interpreter, native JIT, AOT native compilation, WASM, or a GPU-oriented pipeline planned for a future release.
 
 ### 4. Progressive learning curve
 A beginner should be able to write a simple script quickly, while an advanced developer should still be able to work on performance-critical systems and compiler-related features.
@@ -90,7 +90,7 @@ The syntax is intentionally readable and close to natural expression. Basic code
 Static types, explicit rules, and compile-time checks reduce common runtime errors.
 
 ### Expressiveness
-AdeshLang supports functions, control flow, collections, objects, generics, async patterns, and more advanced features like pattern matching and decorators.
+Adesh supports functions, control flow, collections, objects, generics, async patterns, and more advanced features like pattern matching and decorators.
 
 ### Portability
 One source language can be deployed with different backends for local execution, web deployment, or optimized native delivery.
@@ -99,7 +99,7 @@ One source language can be deployed with different backends for local execution,
 
 ## High-level architecture
 
-AdeshLang separates the source language from the execution model.
+Adesh separates the source language from the execution model.
 
 ```mermaid
 flowchart LR
@@ -107,11 +107,10 @@ flowchart LR
     B --> C[Semantic Analysis]
     C --> D[IR / Runtime Model]
     D --> E[Interpreter]
-    D --> F[Bytecode VM]
-    D --> G[JIT Backend]
-    D --> H[Native AOT Backend]
-    D --> I[WASM Target]
-    D --> J[GPU / MLIR Backend]
+    D --> F[Native JIT]
+    D --> G[AOT Native]
+    D --> H[WASM Target]
+    D --> I[GPU Backend]
 ```
 
 This makes the language more modular: the same program can be interpreted quickly for development, compiled for production, or adapted to specialized hardware.
@@ -123,14 +122,12 @@ This makes the language more modular: the same program can be interpreted quickl
 | Backend | Best for | Characteristics |
 |---|---|---|
 | Interpreter | Learning, prototyping, debugging | Fast startup, flexible behavior |
-| Bytecode VM | Development and tooling | Better performance than pure interpretation |
-| JIT | Long-running compute | Runtime optimization and speedups |
-| Native JIT | High-performance numeric work | Strong compile/runtime optimization |
-| AOT | Production binaries | Optimized standalone executables |
+| Native JIT | Long-running compute | Runtime native code generation |
+| AOT Native Compilation | Production binaries | Optimized standalone executables |
 | WASM | Browser and edge deployment | Portable sandboxed execution |
-| GPU / MLIR | Parallel tasks and acceleration | Specialized hardware targeting |
+| GPU (planned) | Parallel tasks and acceleration | Specialized hardware targeting |
 
-This backend model is one of AdeshLang’s defining strengths.
+This backend model is one of Adesh’s defining strengths.
 
 ---
 
@@ -163,7 +160,7 @@ This example shows the language’s core character:
 
 ## The mental model
 
-A new AdeshLang program usually follows this pattern:
+A new Adesh program usually follows this pattern:
 
 1. Declare data with variables or constants.
 2. Define functions to structure logic.
@@ -171,7 +168,7 @@ A new AdeshLang program usually follows this pattern:
 4. Use collections and objects to model real data.
 5. Compile or run the program through the desired backend.
 
-This approach is familiar to developers from many languages, but AdeshLang adds a strong emphasis on explicitness and performance-aware design.
+This approach is familiar to developers from many languages, but Adesh adds a strong emphasis on explicitness and performance-aware design.
 
 ---
 
@@ -188,7 +185,7 @@ Pick the path that matches what you want to do right now:
 | **Explore execution backends** | [Backends Overview](/docs/backends/overview) |
 | **See how the compiler works** | [Compiler Architecture](/docs/compiler/overview) — from lexer to codegen |
 | **Look up the standard library** | [Stdlib Overview](/docs/builtin/overview) |
-| **Contribute to AdeshLang** | [Contributing Guide](/docs/contributing) |
+| **Contribute to Adesh** | [Contributing Guide](/docs/contributing) |
 | **Get a question answered** | [FAQ](/docs/faq) |
 
 ---

@@ -2,12 +2,12 @@
 id: arc
 title: ARC — Automatic Reference Counting
 sidebar_label: ARC
-description: A complete guide to AdeshLang ARC, covering share, strong, weak, lifecycle, cycle breaking, and the example programs under examples/arc.
+description: A complete guide to Adesh ARC, covering share, strong, weak, lifecycle, cycle breaking, and the example programs under examples/arc.
 ---
 
 # ARC — Automatic Reference Counting
 
-ARC is AdeshLang's shared-ownership memory model. It lets one heap value be safely held by multiple owners at the same time, without a garbage collector.
+ARC is Adesh's shared-ownership memory model. It lets one heap value be safely held by multiple owners at the same time, without a garbage collector.
 
 The idea is simple:
 
@@ -16,7 +16,7 @@ The idea is simple:
 - each weak reference tracks liveness without owning the object
 - when the last strong reference disappears, the value is freed immediately
 
-This gives AdeshLang deterministic cleanup, which makes it easier to reason about lifetime, scopes, and resource ownership.
+This gives Adesh deterministic cleanup, which makes it easier to reason about lifetime, scopes, and resource ownership.
 
 > ARC is grounded in the example programs under `examples/arc`. Each file below is a concrete demonstration of the same model in action.
 
@@ -31,13 +31,13 @@ Not every object should be owned by one variable only. In real programs, you oft
 - graph-like or tree-like structures with common subnodes
 - observer patterns where listeners need to check liveness without forcing the object to stay alive
 
-Without ARC, one object would need either single ownership or a full garbage collector. AdeshLang chooses a middle ground: shared ownership with reference counting and weak references.
+Without ARC, one object would need either single ownership or a full garbage collector. Adesh chooses a middle ground: shared ownership with reference counting and weak references.
 
 ---
 
 ## The three ARC concepts
 
-AdeshLang exposes exactly three relevant ideas:
+Adesh exposes exactly three relevant ideas:
 
 ### 1. `share`
 
@@ -150,7 +150,7 @@ if (maybe != null) {
 }
 ```
 
-This is how AdeshLang safely navigates from a non-owning observer back to a live object.
+This is how Adesh safely navigates from a non-owning observer back to a live object.
 
 ---
 
@@ -334,7 +334,7 @@ This file explains the central reason for `weak`: to keep object graphs acyclic 
 
 ### 09_arc_with_classes.adesh
 
-This file bridges the memory model with object-oriented programming in AdeshLang.
+This file bridges the memory model with object-oriented programming in Adesh.
 
 What it demonstrates:
 
@@ -343,7 +343,7 @@ What it demonstrates:
 - weak refs can observe a class instance without keeping it alive
 - an event-bus pattern can be built where subscribers use weak references and upgrade only when needed
 
-This is the most direct evidence that ARC is not an isolated feature: it integrates naturally with AdeshLang's user-defined object model.
+This is the most direct evidence that ARC is not an isolated feature: it integrates naturally with Adesh's user-defined object model.
 
 ### 10_edge_cases.adesh
 
@@ -403,7 +403,7 @@ The child can observe the parent without creating a cycle.
 
 ## ARC and safety
 
-ARC is one of AdeshLang's core safety features. It does not use a tracing collector, and it does not require manual `free()`. Instead, it lets the runtime enforce a clear ownership model.
+ARC is one of Adesh's core safety features. It does not use a tracing collector, and it does not require manual `free()`. Instead, it lets the runtime enforce a clear ownership model.
 
 This yields a few major benefits:
 
@@ -419,7 +419,7 @@ At the same time, ARC users still need to be aware of weak refs when modeling cy
 
 ## Summary
 
-ARC in AdeshLang is best understood as a balance between ownership and convenience:
+ARC in Adesh is best understood as a balance between ownership and convenience:
 
 - `share` creates a heap-managed value
 - `strong` adds a live owner
@@ -440,4 +440,4 @@ The full mental model is visible in the repo's example suite:
 - `09_arc_with_classes.adesh` — object-oriented ownership
 - `10_edge_cases.adesh` — unusual but important lifetimes
 
-If you understand these examples, you understand ARC in AdeshLang.
+If you understand these examples, you understand ARC in Adesh.

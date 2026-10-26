@@ -1,23 +1,23 @@
 ---
 id: type-system
 title: "Type System Specification & Memory Mapping"
-description: "Formal specification of AdeshLang type taxonomy, memory representations, Hindley-Milner type inference, casting semantics, and null safety opcodes."
+description: "Formal specification of Adesh type taxonomy, memory representations, Hindley-Milner type inference, casting semantics, and null safety opcodes."
 sidebar_label: "Type System & Memory Mapping"
 ---
 
 # Type System Specification & Memory Mapping
 
-This document provides a formal specification of the AdeshLang type system, physical memory representations, type inference engine, explicit conversion semantics, and null-safety opcodes.
+This document provides a formal specification of the Adesh type system, physical memory representations, type inference engine, explicit conversion semantics, and null-safety opcodes.
 
 ---
 
 ## 1. Type System Classification
 
-AdeshLang employs a strongly typed, static type system with local type inference. The type system combines **nominal subtyping** for classes and interfaces with **structural subtyping** for tuples, records, and function types.
+Adesh employs a strongly typed, static type system with local type inference. The type system combines **nominal subtyping** for classes and interfaces with **structural subtyping** for tuples, records, and function types.
 
 ```
                                  +------------------+
-                                 |  AdeshLang Type  |
+                                 |  Adesh Type  |
                                  +------------------+
                                           |
                    +----------------------+----------------------+
@@ -95,7 +95,7 @@ Byte 8..15: [ 0x123456789ABCDEF0 ] (u64)
 
 ## 4. Hindley-Milner Type Inference Engine
 
-AdeshLang implements local bidirectional type inference. When type annotations are omitted, the compiler synthesizes type variables and propagates constraints through the AST:
+Adesh implements local bidirectional type inference. When type annotations are omitted, the compiler synthesizes type variables and propagates constraints through the AST:
 
 ```adesh
 let count = 42;             // Inferred as i64
@@ -135,7 +135,7 @@ let int_val: i64 = float_val as i64; // Truncation toward zero (`cvttsd2si` in x
 
 ## 6. Null Safety Opcodes & Short-Circuit Semantics
 
-AdeshLang enforces explicit null safety. Nullable types operate through explicit short-circuiting opcodes.
+Adesh enforces explicit null safety. Nullable types operate through explicit short-circuiting opcodes.
 
 ### 6.1 Optional Chaining (`?.`)
 The `?.` operator compiles into a conditional branch instruction (`JUMP_IF_NULL`). If the target pointer is `0x00`, execution jumps directly to the end of the chain, yielding `null`:

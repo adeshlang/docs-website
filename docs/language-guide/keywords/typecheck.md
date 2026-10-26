@@ -7,7 +7,7 @@ description: The typecheck keyword — compile-time type assertions and the type
 
 # `typecheck`
 
-`typecheck` is the **type-constraint phase** of AdeshLang's metaprogramming system. `typecheck(expr)` / `typecheck(expr) is Type` and the `typecheck { ... }` decorator phase run **at compile time** during type resolution — they verify that an expression has the expected type and **fail the build** if it does not. Unlike `require` (value preconditions) or `compile` (AST rewriting), `typecheck` operates purely on the type table.
+`typecheck` is the **type-constraint phase** of Adesh's metaprogramming system. `typecheck(expr)` / `typecheck(expr) is Type` and the `typecheck { ... }` decorator phase run **at compile time** during type resolution — they verify that an expression has the expected type and **fail the build** if it does not. Unlike `require` (value preconditions) or `compile` (AST rewriting), `typecheck` operates purely on the type table.
 
 > **Ground truth:** Lexer `TokenKind::Typecheck` (`src/parsing/lexer.rs:1018`, keyword `"typecheck"`), AST `DecoratorPhase::Typecheck(Arc<Vec<Stmt>>)` (`src/parsing/ast.rs:705-706`), `DecoratorDef` (`ast.rs:711-718`), `StmtKind::Decorator`, `TypeAliasDecl`/`StructDecl` type annotation strings used by the checker.
 
@@ -131,7 +131,7 @@ decorator clamp<N: Numeric>(target)
 ```adesh
 // Validate assumptions about inferred types — documents intent and catches drift.
 let count = 42;
-typecheck count is i64;   // AdeshLang infers i64 for integer literals (ast.rs:444 fallthrough)
+typecheck count is i64;   // Adesh infers i64 for integer literals (ast.rs:444 fallthrough)
 typecheck count is i8;    // ← TypeError: expected 'i8', found 'i64'
 
 struct Config { host: string, port: u16 }

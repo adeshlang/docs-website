@@ -33,102 +33,102 @@ interface FormattedSearchResult {
 
 const POPULAR_QUICK_LINKS = [
   {
-    title: 'Learn AdeshLang',
-    path: '/learn',
-    description: 'The guided roadmap — install, first program, and core concepts',
-    category: 'Learn',
-    icon: '🚀',
+    title: 'Native Toolchain',
+    path: '/docs/compiler/native-toolchain',
+    description: 'v0.4.0 preview — HIR, Machine IR, ADOB v3 objects, and adeshlink',
+    category: 'Coming soon',
+    icon: 'developer_board',
   },
   {
     title: 'Quick Start',
     path: '/learn/getting-started/quick-start',
-    description: 'Get started with AdeshLang CLI, compiler, and tools in 5 minutes',
+    description: 'Install the toolchain and run your first program in minutes',
     category: 'Learn',
-    icon: '⚡',
+    icon: 'bolt',
   },
   {
     title: 'Installation Guide',
     path: '/docs/install',
-    description: 'Install prebuilt binaries or compile from source on Windows, macOS, and Linux',
+    description: 'Prebuilt binaries and source builds for Windows, macOS, and Linux',
     category: 'Install',
-    icon: '📦',
+    icon: 'download',
   },
   {
-    title: 'Language Basics',
-    path: '/docs/language-guide/basics',
-    description: 'Variables, types, control flow, functions, and pattern matching',
-    category: 'Docs',
-    icon: '📖',
-  },
-  {
-    title: 'Learn by Examples',
-    path: '/learn-by-examples',
-    description: 'Complete runnable programs with terminal output for every feature',
-    category: 'Examples',
-    icon: '🧩',
+    title: 'Type Aliases',
+    path: '/docs/language-guide/type-aliases',
+    description: 'Zero-cost aliases, structural records, and the type keyword',
+    category: 'Language',
+    icon: 'label',
   },
   {
     title: 'Cranelift Native JIT',
     path: '/docs/backends/native-jit',
-    description: 'High-performance native JIT backend with 10–230× speedups',
+    description: 'Native runtime code generation for compute-heavy workloads',
     category: 'Backends',
-    icon: '⚙️',
+    icon: 'speed',
+  },
+  {
+    title: 'ADOB v3 Objects',
+    path: '/docs/compiler/adob',
+    description: 'Validated native object format with symbols and relocations',
+    category: 'Compiler',
+    icon: 'inventory_2',
+  },
+  {
+    title: 'adeshlink',
+    path: '/docs/compiler/linker',
+    description: 'Native linker with GC, ICF, and relocation support',
+    category: 'Compiler',
+    icon: 'link',
   },
   {
     title: 'Hardware SIMD',
-    path: '/docs/simd/simd-overview',
-    description: 'Parallel vector arithmetic with AVX2 and ARM Neon acceleration',
+    path: '/docs/simd/overview',
+    description: 'Vector arithmetic with AVX2 and ARM Neon acceleration',
     category: 'Docs',
-    icon: '🏎️',
+    icon: 'memory',
   },
   {
-    title: 'Memory Safety Model',
-    path: '/docs/advanced/memory-safety',
-    description: 'Zero-cost compile-time memory safety without garbage collector',
-    category: 'Docs',
-    icon: '🛡️',
-  },
-  {
-    title: 'WebAssembly (WASM)',
-    path: '/docs/backends/webassembly',
-    description: 'Compile and run AdeshLang directly in web browsers and WASI runtimes',
-    category: 'Backends',
-    icon: '🌐',
-  },
-  {
-    title: 'Bytecode VM & Opcodes',
-    path: '/docs/backends/bytecode-vm',
-    description: 'Stack-based virtual machine execution engine architecture',
-    category: 'Backends',
-    icon: '💻',
+    title: 'FFI & C ABI',
+    path: '/docs/tools/ffi',
+    description: 'Call C libraries with extern "C" and native calling conventions',
+    category: 'Interop',
+    icon: 'code_blocks',
   },
   {
     title: 'Networking & HTTP',
     path: '/docs/builtin/http',
-    description: 'Builtin TCP, UDP, async HTTP client, and WebSocket libraries',
+    description: 'TCP, UDP, HTTP, WebSocket, DNS, and TLS modules',
     category: 'Stdlib',
-    icon: '🔌',
+    icon: 'lan',
   },
   {
-    title: 'Standard Library Overview',
-    path: '/docs/builtin/overview',
-    description: 'Builtin libraries: math, JSON, FS, HTTP, crypto, regex, and more',
-    category: 'Stdlib',
-    icon: '📚',
+    title: 'Package Manager (ADL)',
+    path: '/docs/tools/adl/adl-overview',
+    description: 'Resolve, install, and publish Adesh packages',
+    category: 'Tools',
+    icon: 'package_2',
+  },
+  {
+    title: 'Language Server (ALS)',
+    path: '/docs/tools/als',
+    description: 'Diagnostics, completion, and navigation for editors',
+    category: 'Tools',
+    icon: 'neurology',
   },
   {
     title: 'TUI Code Editor',
     path: '/docs/tools/tui-editor',
-    description: 'Fast, native cross-platform terminal editor with LSP, runner, and file tree',
+    description: 'Native terminal editor with LSP, runner, and file tree',
     category: 'Tools',
-    icon: '🖥️',
+    icon: 'terminal',
   },
   {
-    title: 'About AdeshLang',
+    title: 'About Adesh',
     path: '/about',
-    description: 'Project mission, architectural pillars, creator story, and roadmap',
+    description: 'Mission, architecture, creator story, and the v0.4.0 roadmap',
     category: 'Overview',
-    icon: 'ℹ️',
+    icon: 'info',
   },
 ];
 
@@ -430,7 +430,7 @@ export default function SearchBar(): JSX.Element {
               onClick={e => e.stopPropagation()}
               role="dialog"
               aria-modal="true"
-              aria-label="Search AdeshLang Documentation"
+              aria-label="Search Adesh Documentation"
             >
               {/* Modal Header / Search Box */}
               <div className="adesh-search-modal-header">
@@ -564,7 +564,8 @@ export default function SearchBar(): JSX.Element {
                       No results for "<strong>{query}</strong>"
                     </div>
                     <p className="adesh-search-empty-desc">
-                      Try searching with different keywords like <code>jit</code>, <code>simd</code>, <code>fn</code>, <code>bytecode</code>, or check your spelling.
+                      Try searching with different keywords like <code>native</code>, <code>adob</code>,{' '}
+                      <code>type alias</code>, <code>ffi</code>, or check your spelling.
                     </p>
                   </div>
                 )}
@@ -586,7 +587,9 @@ export default function SearchBar(): JSX.Element {
                             onClick={() => handleSelectResult(item.path)}
                             onMouseEnter={() => setSelectedIndex(idx)}
                           >
-                            <span className="adesh-search-card-icon">{item.icon}</span>
+                            <span className="adesh-search-card-icon material-symbols-rounded" aria-hidden="true">
+                              {item.icon}
+                            </span>
                             <div className="adesh-search-card-info">
                               <div className="adesh-search-card-title">{item.title}</div>
                               <div className="adesh-search-card-desc">{item.description}</div>
@@ -614,7 +617,7 @@ export default function SearchBar(): JSX.Element {
                   </span>
                 </div>
                 <div className="adesh-search-footer-brand">
-                  <span>AdeshLang FlexiSearch</span>
+                  <span>Adesh FlexiSearch</span>
                 </div>
               </div>
             </div>

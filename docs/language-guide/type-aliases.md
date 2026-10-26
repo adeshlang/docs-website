@@ -1,19 +1,19 @@
 ---
 id: type-aliases
 title: "Type Aliases & Higher-Kinded Function Signatures"
-description: "Formal specification of type alias expansion, generic type aliases, record literals, optional fields, defaults, and closure function pointer memory representations in AdeshLang."
+description: "Formal specification of type alias expansion, generic type aliases, record literals, optional fields, defaults, and closure function pointer memory representations in Adesh."
 sidebar_label: "Type Aliases & Signatures"
 ---
 
 # Type Aliases & Higher-Kinded Function Signatures
 
-This document defines the formal rules for compile-time type alias expansion, record literal syntax `type Foo = { ... }`, generic and optional-field type aliases, default values, and the memory representation of higher-kinded function pointers in AdeshLang.
+This document defines the formal rules for compile-time type alias expansion, record literal syntax `type Foo = { ... }`, generic and optional-field type aliases, default values, and the memory representation of higher-kinded function pointers in Adesh.
 
 ---
 
 ## 1. Type Alias Expansion Mechanics
 
-A type alias introduces a new identifier for an existing type expression using the `type` keyword. AdeshLang supports three forms:
+A type alias introduces a new identifier for an existing type expression using the `type` keyword. Adesh supports three forms:
 
 ```adesh
 type Kilobytes = u64;                          // (1) alias to existing type
@@ -78,7 +78,7 @@ Use cases: domain modeling, shortening deeply nested generics, API clarity.
 
 ## 2. Record-Literal Type Alias `type Foo = { ... }`
 
-AdeshLang's idiomatic way to define structural records is `type` with an inline object literal:
+Adesh's idiomatic way to define structural records is `type` with an inline object literal:
 
 ```adesh
 type User = {
@@ -307,7 +307,7 @@ type Mapper<A, B> = fn(value: A): B;
 
 ### 5.1 Function Pointer Memory Layout (16-Byte Fat Pointer)
 
-Function types in AdeshLang (`fn(A): B`) are stored in memory as **16-byte fat pointers** consisting of a code address pointer and an environment context pointer:
+Function types in Adesh (`fn(A): B`) are stored in memory as **16-byte fat pointers** consisting of a code address pointer and an environment context pointer:
 
 ```
 Function Pointer / Closure Layout (16 bytes)
@@ -335,7 +335,7 @@ call fn_ptr:
 
 ### 5.2 Higher-Kinded Aliases (Type Constructors as Parameters)
 
-While AdeshLang does not support full higher-kinded types (HKT) in the Haskell sense, generic aliases that wrap type constructors are idiomatic:
+While Adesh does not support full higher-kinded types (HKT) in the Haskell sense, generic aliases that wrap type constructors are idiomatic:
 
 ```adesh
 type Handler<T> = fn(T): Result<T, string>;

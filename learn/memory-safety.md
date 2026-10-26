@@ -6,7 +6,7 @@ sidebar_label: 16. Memory Safety & Ownership
 
 # Memory Safety, Ownership & Borrowing
 
-This is where AdeshLang (like Rust) is genuinely different: the **compiler
+This is where Adesh (like Rust) is genuinely different: the **compiler
 proves your program has no use-after-free, no double-free, no data races** —
 before you even run it. This lesson explains the mental model using the
 repository's own valid and failing borrow examples.
@@ -208,7 +208,7 @@ parent) that would otherwise leak memory forever.
 
 ## The practical takeaway for beginners
 
-You rarely manage memory by hand in AdeshLang. The mental model is:
+You rarely manage memory by hand in Adesh. The mental model is:
 
 - **Own**: every value has exactly one owner (its variable).
 - **Borrow**: pass `&value` to *read* without transferring ownership.

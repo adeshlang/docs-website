@@ -7,7 +7,7 @@ description: The `for` keyword begins iterator loops over arrays, ranges, maps, 
 
 # `for`
 
-`for` begins an **iterator loop**. It binds one or two loop variables to each element produced by an iterable and runs the body once per element. AdeshLang currently supports `for ... in ...` (keys/elements) and the reserved `for ... of ...` (values) forms; both desugar to the iterator protocol (`into_iter` / `next`). Range loops (`for i in 0..N` / `0..=N`) are specially optimized to hardware counter loops without heap allocation.
+`for` begins an **iterator loop**. It binds one or two loop variables to each element produced by an iterable and runs the body once per element. Adesh currently supports `for ... in ...` (keys/elements) and the reserved `for ... of ...` (values) forms; both desugar to the iterator protocol (`into_iter` / `next`). Range loops (`for i in 0..N` / `0..=N`) are specially optimized to hardware counter loops without heap allocation.
 
 > **Ground truth:** Lexer `TokenKind::For` (`src/parsing/lexer.rs:940`), AST `StmtKind::ForIn` / `ForOf` family, hover doc *For-in loop over collections/ranges* (`als/src/hover.rs:347`), lowering documented in `control-flow.md:2.2`.
 

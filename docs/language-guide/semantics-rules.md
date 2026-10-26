@@ -1,19 +1,19 @@
 ---
 id: semantics-rules
 title: "Formal Memory Safety & Borrow Checker Specification"
-description: "Formal specification of AdeshLang ownership semantics, destructive move invariants, Drop glue, Aliasing XOR Mutability theorem, and Non-Lexical Lifetimes (NLL)."
+description: "Formal specification of Adesh ownership semantics, destructive move invariants, Drop glue, Aliasing XOR Mutability theorem, and Non-Lexical Lifetimes (NLL)."
 sidebar_label: "Memory Safety & Borrow Checker"
 ---
 
 # Formal Memory Safety & Borrow Checker Specification
 
-This document provides the formal mathematical and architectural specification of AdeshLang's compile-time memory safety invariants, destructive move semantics, Drop glue generation, and Borrow Checker specification.
+This document provides the formal mathematical and architectural specification of Adesh's compile-time memory safety invariants, destructive move semantics, Drop glue generation, and Borrow Checker specification.
 
 ---
 
 ## 1. Ownership System Invariants
 
-Memory safety in AdeshLang is guaranteed at compile time without a Garbage Collector (GC) through strict enforcement of three core ownership invariants. The implementation spans `src/parsing/ownership.rs`, `src/parsing/ownership_enhanced.rs`, `src/parsing/borrow_check.rs`, and the unified pass `src/parsing/unified_safety_pass.rs`.
+Memory safety in Adesh is guaranteed at compile time without a Garbage Collector (GC) through strict enforcement of three core ownership invariants. The implementation spans `src/parsing/ownership.rs`, `src/parsing/ownership_enhanced.rs`, `src/parsing/borrow_check.rs`, and the unified pass `src/parsing/unified_safety_pass.rs`.
 
 1. **Single Owner Invariant**: Every value has exactly one owner binding at any point.
 2. **Deterministic Lifetime Invariant**: When the owner goes out of scope, heap memory is deterministically deallocated via Drop glue.
@@ -168,7 +168,7 @@ r2.push(42);
 
 ## 4. Non-Lexical Lifetimes (NLL) Analysis Graph
 
-AdeshLang utilizes **Non-Lexical Lifetimes (NLL)**. A reference's lifetime is not restricted to its enclosing lexical block `{ ... }`. It is the **Control Flow Graph (CFG)** region from creation to last actual use:
+Adesh utilizes **Non-Lexical Lifetimes (NLL)**. A reference's lifetime is not restricted to its enclosing lexical block `{ ... }`. It is the **Control Flow Graph (CFG)** region from creation to last actual use:
 
 ```adesh
 fn process() {
@@ -205,7 +205,7 @@ For branches, `L(r)` unions across successor blocks until the last use on each p
 
 ### 4.2 Lifetime Elision & Annotations (where applicable)
 
-References in function signatures have lifetimes tracked by the borrow checker. While AdeshLang's syntax largely elides explicit lifetime parameters, the compiler internally assigns lifetime variables and solves constraints; escaping a local reference is caught:
+References in function signatures have lifetimes tracked by the borrow checker. While Adesh's syntax largely elides explicit lifetime parameters, the compiler internally assigns lifetime variables and solves constraints; escaping a local reference is caught:
 
 ```adesh
 fn bad(): &i64 {

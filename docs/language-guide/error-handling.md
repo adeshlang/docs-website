@@ -1,19 +1,19 @@
 ---
 id: error-handling
 title: "Monadic Error Model vs Stack Unwinding Architecture"
-description: "Formal specification of AdeshLang error handling architectures: Result/Option monadic zero-cost error propagation vs native DWARF/SEH stack unwinding exceptions."
+description: "Formal specification of Adesh error handling architectures: Result/Option monadic zero-cost error propagation vs native DWARF/SEH stack unwinding exceptions."
 sidebar_label: "Error Handling Architecture"
 ---
 
 # Monadic Error Model vs Stack Unwinding Architecture
 
-This document specifies AdeshLang's dual error handling models: zero-cost monadic error propagation using `Result<T, E>` / `Option<T>` and target-native stack unwinding exception tables (`try`/`catch`/`throw`).
+This document specifies Adesh's dual error handling models: zero-cost monadic error propagation using `Result<T, E>` / `Option<T>` and target-native stack unwinding exception tables (`try`/`catch`/`throw`).
 
 ---
 
 ## 1. Dual Error Handling Model Overview
 
-AdeshLang provides two complementary error handling mechanisms suited for different operational requirements. Both integrate with `defer` and ownership (see `semantics-rules.md`, `defer-statement.md`):
+Adesh provides two complementary error handling mechanisms suited for different operational requirements. Both integrate with `defer` and ownership (see `semantics-rules.md`, `defer-statement.md`):
 
 ```
                                    +-----------------------+
@@ -197,7 +197,7 @@ ThrowStmt ::= "throw" Expr ";"
 
 ## 4. Native Stack Unwinding Exception Architecture (`try` / `catch` / `throw`)
 
-For unexpected runtime faults, invariant violations, or deep call-stack errors, AdeshLang implements native unwinding exceptions that propagate out-of-band:
+For unexpected runtime faults, invariant violations, or deep call-stack errors, Adesh implements native unwinding exceptions that propagate out-of-band:
 
 ```adesh
 try {

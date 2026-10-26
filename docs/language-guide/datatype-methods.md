@@ -1,19 +1,19 @@
 ---
 id: datatype-methods
 title: "Built-in Data Structure Operations & Dispatch Semantics"
-description: "Formal specification of memory layouts, growth algorithms, Swiss-table hashing, and method dispatch mechanics for AdeshLang built-in collections."
+description: "Formal specification of memory layouts, growth algorithms, Swiss-table hashing, and method dispatch mechanics for Adesh built-in collections."
 sidebar_label: "Data Structure Operations"
 ---
 
 # Built-in Data Structure Operations & Dispatch Semantics
 
-This document specifies the internal memory layouts, allocation algorithms, hash table architectures, and compiler method dispatch mechanisms for AdeshLang's core collection types.
+This document specifies the internal memory layouts, allocation algorithms, hash table architectures, and compiler method dispatch mechanisms for Adesh's core collection types.
 
 ---
 
 ## 1. Array / Vector (`[T]`) Memory Architecture
 
-Arrays in AdeshLang are stored as contiguous dynamic heap buffers governed by a 24-byte stack descriptor:
+Arrays in Adesh are stored as contiguous dynamic heap buffers governed by a 24-byte stack descriptor:
 
 ```
 Stack Descriptor (24 bytes)                  Heap Allocation Buffer
@@ -47,7 +47,7 @@ If `index >= length`, the execution environment emits fatal error `E0012: Out of
 
 ## 2. HashMap Hashing Architecture (Swiss Table Layout)
 
-AdeshLang `HashMap<K, V>` collections implement the **Swiss Table** hash table architecture utilizing SIMD-accelerated control byte metadata probing.
+Adesh `HashMap<K, V>` collections implement the **Swiss Table** hash table architecture utilizing SIMD-accelerated control byte metadata probing.
 
 ```
 Control Byte Metadata Array (ctrl_ptr)

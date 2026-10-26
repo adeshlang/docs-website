@@ -6,19 +6,19 @@ sidebar_label: TLS
 
 # TLS Library
 
-The **TLS** builtin library gives AdeshLang secure encrypted transport using the Rust `rustls` engine. It is the foundation for private HTTP, STARTTLS upgrades, service-to-service mTLS, and secure sockets without exposing low-level crypto concerns to application code.
+The **TLS** builtin library gives Adesh secure encrypted transport using the Rust `rustls` engine. It is the foundation for private HTTP, STARTTLS upgrades, service-to-service mTLS, and secure sockets without exposing low-level crypto concerns to application code.
 
 At a high level, the TLS library is designed around three principles:
 
 - **Secure by default**: certificate verification, hostname checks, and modern protocol enforcement are enabled unless you intentionally opt out.
 - **Minimal surface area**: the library exposes a small, predictable API around connections, policies, and secure streams.
-- **Runtime integration**: it plugs directly into AdeshLang's networking layer (`Net`), so it can wrap raw sockets, accept TLS listeners, and support server/client flows cleanly.
+- **Runtime integration**: it plugs directly into Adesh's networking layer (`Net`), so it can wrap raw sockets, accept TLS listeners, and support server/client flows cleanly.
 
 This library is not just a wrapper around a raw socket. It owns the handshake state, negotiated protocol version, ALPN selection, certificate inspection, and connection lifecycle—all while keeping the user-facing API simple and object-oriented.
 
 ## Meaning and role
 
-TLS stands for Transport Layer Security. It protects data in transit between two endpoints, preventing eavesdropping, tampering, and impersonation. In AdeshLang, the `TLS` namespace is the standard library entry point for:
+TLS stands for Transport Layer Security. It protects data in transit between two endpoints, preventing eavesdropping, tampering, and impersonation. In Adesh, the `TLS` namespace is the standard library entry point for:
 
 - HTTPS-style client connections
 - server-side TLS listeners
@@ -466,7 +466,7 @@ TLS operations fail closed. If the certificate is invalid, the hostname mismatch
 
 ### Performance
 
-The TLS library is designed to be lightweight and native. Handshake work is delegated to the Rust `rustls` backend, while the AdeshLang API remains simple and high-level.
+The TLS library is designed to be lightweight and native. Handshake work is delegated to the Rust `rustls` backend, while the Adesh API remains simple and high-level.
 
 ### Integration with other libs
 

@@ -6,7 +6,7 @@ sidebar_label: Installation
 
 # Installation Guide
 
-Comprehensive setup guide for AdeshLang across all supported platforms.
+Comprehensive setup guide for Adesh across all supported platforms.
 
 ## 🚀 Quick Setup & Installation Flow
 
@@ -192,7 +192,7 @@ sudo dnf install gcc gcc-c++ make
 sudo dnf install llvm-devel mlir-tools clang
 ```
 
-## Building AdeshLang from Source
+## Building Adesh from Source
 
 ### Step 1: Clone the Repository
 
@@ -243,7 +243,7 @@ source ~/.bashrc
 
 ```powershell
 # Get the release directory path
-$adeshPath = "D:\Projects\AdeshLang\target\release"
+$adeshPath = "D:\Projects\Adesh\target\release"
 
 # Add to user PATH
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
@@ -294,7 +294,7 @@ cargo install wasm-pack
 After installation, verify everything works:
 
 ```bash
-# 1. Check AdeshLang version
+# 1. Check Adesh version
 adesh --version
 
 # 2. Run a simple test from the real examples tree
@@ -359,14 +359,14 @@ export PATH="/path/to/llvm/bin:$PATH"
 
 After successful installation:
 
-1. **[Quick Start](/learn/getting-started/quick-start)** - Your first AdeshLang program
+1. **[Quick Start](/learn/getting-started/quick-start)** - Your first Adesh program
 2. **[First Program](/learn/getting-started/first-program)** - Build a complete application
 3. **[Language Basics](/docs/language-guide/basics)** - Learn the syntax
 
 Happy coding! 🚀
 ## Recommended installation
 
-Download the installer or package for your operating system from the [AdeshLang v0.3.1 Release](https://github.com/adeshlang/adeshlang/releases/tag/v0.3.1) or check the detailed [Installation Page](/docs/install):
+Download the installer or package for your operating system from the [Adesh v0.3.1 Release](https://github.com/adeshlang/adeshlang/releases/tag/v0.3.1) or check the detailed [Installation Page](/docs/install):
 
 - **🪟 Windows (x86_64)**: [Download Windows Setup (.exe)](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-setup.exe) | [Portable ZIP](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-x86_64-windows-portable.zip)
 - **🍏 macOS (Apple Silicon)**: [Download macOS PKG Installer](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.pkg) | [DMG Image](https://github.com/adeshlang/adeshlang/releases/download/v0.3.1/AdeshLang-0.3.0-aarch64-macos.dmg)
@@ -385,10 +385,10 @@ adesh doctor
 adesh env --json
 ```
 
-AdeshLang bundles and manages its own compatible LLVM/Clang/LLD toolchain in
+Adesh bundles and manages its own compatible LLVM/Clang/LLD toolchain in
 `toolchain/llvm`. Existing LLVM, Clang, GCC, MSYS2, and Visual Studio
 installations are not overwritten or added to the global PATH. Only the
-AdeshLang `bin` directory is added by an installer; portable archives do not
+Adesh `bin` directory is added by an installer; portable archives do not
 modify PATH.
 
 The installed tools are `adesh` (language CLI), `adl` (package manager),

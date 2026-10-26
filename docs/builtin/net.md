@@ -6,9 +6,9 @@ sidebar_label: Net
 
 # Net Library
 
-The **Net** builtin library is AdeshLang's production-grade networking foundation. It provides cross-platform, zero-GC, RAII-safe networking primitives for TCP client and server streams, UDP datagram sockets, IP addressing, socket address formatting, network interface enumeration, and capability-based security policy sandboxing for SSRF defense.
+The **Net** builtin library is Adesh's production-grade networking foundation. It provides cross-platform, zero-GC, RAII-safe networking primitives for TCP client and server streams, UDP datagram sockets, IP addressing, socket address formatting, network interface enumeration, and capability-based security policy sandboxing for SSRF defense.
 
-All socket handles follow AdeshLang's zero-GC ownership and borrowing semantics — streams are closed deterministically upon scope exit or object drops, preventing resource leaks.
+All socket handles follow Adesh's zero-GC ownership and borrowing semantics — streams are closed deterministically upon scope exit or object drops, preventing resource leaks.
 
 ## Namespace
 
@@ -29,7 +29,7 @@ import { tcpConnect, tcpListen, udpBind, IPAddress, NetworkPolicy } from Net;
 ```
 
 :::tip
-All `Net` network operations execute non-blocking, capability-aware system calls with explicit error returns using AdeshLang's `Result` / `Option` primitives.
+All `Net` network operations execute non-blocking, capability-aware system calls with explicit error returns using Adesh's `Result` / `Option` primitives.
 :::
 
 ---

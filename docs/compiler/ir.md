@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="HIR -> MIR -> VIR lowering, SSA, constant folding, DCE, inlining, SIMD pass" />
 
-Between the frontend and the execution backends, AdeshLang uses a layered
+Between the frontend and the execution backends, Adesh uses a layered
 **intermediate representation (IR)** pipeline. Each layer strips away more
 high-level detail while adding information the next stage needs:
 
@@ -22,7 +22,7 @@ AST ──► HIR ──► MIR ──► VIR ──► [Interpreter | Bytecode 
 ```
 
 > The **Core Invariant**: VIR is the unified input for the Interpreter,
-> Bytecode VM, JIT, and AOT targets — one lowering, many backends.
+> Native JIT, AOT, and WASM targets — one lowering, many targets.
 
 ---
 

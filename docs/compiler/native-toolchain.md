@@ -16,8 +16,8 @@ Machine IR, emits an ADOB object, and uses `adeshlink` to produce a native
 executable.
 
 > **Planned for v0.4.0:** The native compiler and linker improvements described
-> here are planned for the AdeshLang v0.4.0 release. They are not part of the
-> current v0.3.0 release. This does not mean every target or feature listed on
+> here are planned for the Adesh v0.4.0 release. They are not part of the
+> current public release. This does not mean every target or feature listed on
 > this page will be production-ready in v0.4.0.
 
 ## Pipeline

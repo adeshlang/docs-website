@@ -2,7 +2,7 @@
 id: type
 title: type
 sidebar_label: type
-description: The `type` keyword declares a type alias or custom type in AdeshLang.
+description: The `type` keyword declares a type alias or custom type in Adesh.
 ---
 
 # `type`

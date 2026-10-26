@@ -7,7 +7,7 @@ sidebar_label: 14. OOP
 # Object-Oriented Programming — Classes, Inheritance, and More
 
 Object-oriented programming (OOP) bundles **data and behavior** into objects.
-AdeshLang supports classes, inheritance, visibility modifiers, interfaces,
+Adesh supports classes, inheritance, visibility modifiers, interfaces,
 extension methods, and decorators — all demonstrated in the examples
 repository.
 
@@ -292,5 +292,5 @@ book.stamp();
 
 ## Next Step
 
-Programs fail. Let's learn how AdeshLang handles failure gracefully with
+Programs fail. Let's learn how Adesh handles failure gracefully with
 **error handling** and `defer`. Continue to **[Error Handling](/learn/error-handling)** →

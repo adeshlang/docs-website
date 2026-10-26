@@ -6,11 +6,11 @@ sidebar_label: Architecture Overview
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# AdeshLang Compiler Architecture
+# Adesh Compiler Architecture
 
 <FeatureStatus status="PARTIAL" details="Compiler stages and backend feature coverage vary; the native ADOB toolchain is partial" />
 
-The AdeshLang compiler has a shared front end and multiple backend paths. The
+The Adesh compiler has a shared front end and multiple backend paths. The
 interpreter, bytecode, and existing JIT/AOT paths consume VIR. The newer native
 ADOB path is separate: it lowers a supported subset of HIR into Machine IR,
 emits ADOB, and links with `adeshlink`. These paths do not yet provide identical

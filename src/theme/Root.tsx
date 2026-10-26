@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from '@docusaurus/Head';
+import ScrollToTop from '../components/ScrollToTop';
 import {
   organizationSchema,
   websiteSchema,
@@ -15,7 +16,7 @@ import {
  *  - Organization (with founder Ajay Tainwala, logo, location)
  *  - WebSite (with SearchAction → sitelinks searchbox + hasPart sub-pages)
  *  - SiteNavigationElement ItemList (enables Google Sitelinks & sub-links visibility)
- *  - SoftwareApplication (AdeshLang as a programming language / developer tool)
+ *  - SoftwareApplication (Adesh Lang as a programming language / developer tool)
  *
  * Page-specific schemas (TechArticle, Breadcrumb, FAQ, HowTo, Person) are
  * injected per-page via JsonLd / SEO components.
@@ -48,6 +49,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         />
       </Head>
       {children}
+      <ScrollToTop />
     </>
   );
 }

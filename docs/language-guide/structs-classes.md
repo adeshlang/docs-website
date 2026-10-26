@@ -7,7 +7,7 @@ sidebar_label: "Structs, Classes & Extensions"
 
 # Structs, Classes, Inheritance & Retroactive Extensions
 
-This document defines the physical memory layouts, field alignment rules, class inheritance semantics (`extends`), retroactive type extension (`extend on`), interface implementation (`implements`), class modifiers (`abstract`, `sealed`), and Virtual Table (VTable) dynamic dispatch in AdeshLang.
+This document defines the physical memory layouts, field alignment rules, class inheritance semantics (`extends`), retroactive type extension (`extend on`), interface implementation (`implements`), class modifiers (`abstract`, `sealed`), and Virtual Table (VTable) dynamic dispatch in Adesh.
 
 ---
 
@@ -118,7 +118,7 @@ This layout allows functions expecting a parent pointer `&Vehicle` to accept a c
 
 ## 4. Retroactive Type Extension (`extend ... on` Block)
 
-AdeshLang allows developers to extend existing built-in or user-defined types with additional methods retroactively without modifying the original declaration or wrapper structs:
+Adesh allows developers to extend existing built-in or user-defined types with additional methods retroactively without modifying the original declaration or wrapper structs:
 
 ```adesh
 // Add custom method to built-in string type

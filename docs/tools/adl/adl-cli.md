@@ -215,8 +215,8 @@ Example output file:
 lock {
   version = "1"
   generated-at = "2026-07-01T00:00:00Z"
-  compiler-version = "0.3.0"
-  adl-version = "0.3.0"
+  compiler-version = "0.4.0"
+  adl-version = "0.4.0"
   package-id = "my_app"
   dependencies = [
     {
@@ -386,7 +386,7 @@ ADL respects the same Toolchain environment variables as the Adesh CLI:
 
 | Variable | Description | Default |
 |---|---|---|
-| `ADESHLANG_HOME` | Custom root for AdeshLang libraries and the package cache | `~/.adeshlang` |
+| `ADESHLANG_HOME` | Custom root for Adesh libraries and the package cache | `~/.adeshlang` |
 | `ADESHLANG_TOOLCHAIN` | Override for native linker/compiler toolchain paths | auto-detected |
 | `ADESH_VERBOSE` | Verbose resolver/command logging | `0` |
 | `ADESH_FAST_COMPILE` | Default to fast compile mode | `0` |

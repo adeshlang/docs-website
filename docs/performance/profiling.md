@@ -2,12 +2,12 @@
 id: profiling
 title: Performance Profiling
 sidebar_label: Profiling
-description: Comprehensive CPU, memory, allocation, and flamegraph profiling tools in AdeshLang.
+description: Comprehensive CPU, memory, allocation, and flamegraph profiling tools in Adesh.
 ---
 
 # Performance Profiling
 
-AdeshLang provides native profiling tools to diagnose CPU bottlenecks, analyze memory allocations, and generate interactive visual **flamegraphs** for mission-critical code.
+Adesh provides native profiling tools to diagnose CPU bottlenecks, analyze memory allocations, and generate interactive visual **flamegraphs** for mission-critical code.
 
 ```
 ┌───────────────────────────────────────────────────────────┐
@@ -40,7 +40,7 @@ adesh run --trace-alloc src/main.adesh
 
 ```text
 ========================================================================
-                      AdeshLang Execution Profile                       
+                      Adesh Execution Profile
 ========================================================================
 Total Execution Time:    142.35 ms
 Sampling Frequency:      10,000 Hz
@@ -84,7 +84,7 @@ adesh run --profile-memory app.adesh
 
 ## 3. Integration with OS-Level Profilers
 
-AOT-compiled AdeshLang binaries produce standard DWARF and PDB debug symbols compatible with system profilers:
+AOT-compiled Adesh binaries produce standard DWARF and PDB debug symbols compatible with system profilers:
 
 ### Linux (`perf`):
 ```bash
@@ -105,4 +105,4 @@ xcrun xctrace record --template 'Time Profiler' --launch -- ./server
 ```
 
 ### Windows (`ETW` / Visual Studio):
-AdeshLang emits native PDB symbols that open directly in Visual Studio Profiler and Windows Performance Analyzer (WPA).
+Adesh emits native PDB symbols that open directly in Visual Studio Profiler and Windows Performance Analyzer (WPA).

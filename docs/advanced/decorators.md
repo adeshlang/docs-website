@@ -2,12 +2,12 @@
 id: decorators
 title: Decorators & Metaprogramming
 sidebar_label: Decorators
-description: Compile-time and runtime metaprogramming in AdeshLang with multi-phase decorators and pipeline fusion.
+description: Compile-time and runtime metaprogramming in Adesh with multi-phase decorators and pipeline fusion.
 ---
 
 # Decorators & Metaprogramming
 
-AdeshLang features an advanced, zero-overhead **Decorator Pipeline System**. Decorators in AdeshLang extend beyond runtime function wrapping—they are full **multi-phase metaprogramming constructs** that execute across typechecking, compile-time AST transformation/metadata injection, and runtime execution.
+Adesh features an advanced, zero-overhead **Decorator Pipeline System**. Decorators in Adesh extend beyond runtime function wrapping—they are full **multi-phase metaprogramming constructs** that execute across typechecking, compile-time AST transformation/metadata injection, and runtime execution.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -23,7 +23,7 @@ AdeshLang features an advanced, zero-overhead **Decorator Pipeline System**. Dec
 
 ## 1. Built-in Decorators
 
-AdeshLang provides several high-performance built-in decorators optimized directly by the compiler.
+Adesh provides several high-performance built-in decorators optimized directly by the compiler.
 
 | Decorator | Target | Phase | Description |
 |-----------|--------|-------|-------------|
@@ -114,7 +114,7 @@ fn transfer_funds(from_account: string, to_account: string, amount: f64): bool {
 
 ## 3. Simplified Runtime Decorators
 
-For standard runtime wrapper use cases, AdeshLang supports a concise syntax:
+For standard runtime wrapper use cases, Adesh supports a concise syntax:
 
 ```adesh
 decorator log_calls(target, meta) {
@@ -138,7 +138,7 @@ fn calculate_hash(data: string): string {
 
 ## 4. Decorator Pipeline & Fusion Optimization
 
-When multiple decorators are applied to a single function or class, AdeshLang builds a **Decorator Pipeline**:
+When multiple decorators are applied to a single function or class, Adesh builds a **Decorator Pipeline**:
 
 ```adesh
 @auth("admin")

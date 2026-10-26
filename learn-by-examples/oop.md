@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Classes, single inheritance, super constructors, nominal structs, and extend on extension blocks" />
 
-AdeshLang supports object-oriented programming via classes, inheritance (`extends`), `super` constructor delegation, nominal struct records, and static or instance extension blocks (`extend on`).
+Adesh supports object-oriented programming via classes, inheritance (`extends`), `super` constructor delegation, nominal struct records, and static or instance extension blocks (`extend on`).
 
 ---
 

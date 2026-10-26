@@ -6,13 +6,13 @@ sidebar_label: Overview
 
 # Standard Libraries
 
-AdeshLang ships a set of **builtin libraries** — namespaces that are compiled directly into the runtime and available in every program without downloading anything. They provide high-performance, ready-to-use functionality for numeric math, complex numbers, random numbers, file access, JSON, HTTP, concurrency, and more.
+Adesh ships a set of **builtin libraries** — namespaces that are compiled directly into the runtime and available in every program without downloading anything. They provide high-performance, ready-to-use functionality for numeric math, complex numbers, random numbers, file access, JSON, HTTP, concurrency, and more.
 
 Unlike modules you write yourself or pull from a package registry, builtin libraries:
 
 - Are always available — no external files, manifests, or network access required.
 - Are **case-insensitive to import** and resolve to the registered namespace (`import Math` and `import math` both work).
-- Are implemented natively (in Rust) for speed, with the same behavior across every backend (Interpreter, Bytecode VM, JIT, Native JIT, AOT, WebAssembly, GPU/MLIR).
+- Are implemented natively (in Rust) for speed, with the same behavior across every backend (Interpreter, Native JIT, AOT, WebAssembly, and GPU (planned)).
 
 ## How to use a builtin library
 

@@ -177,8 +177,6 @@ const sidebars: SidebarsConfig = {
       items: [
         'backends/overview',
         'backends/interpreter',
-        'backends/bytecode-vm',
-        'backends/jit',
         'backends/native-jit',
         'backends/aot',
         'backends/webassembly',

@@ -8,9 +8,9 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 # Data Structures & Algorithms
 
-<FeatureStatus status="STABLE" details="Practical algorithm implementations in AdeshLang: Two Sum, LRU Cache, Linked Lists, Union/Optional type techniques, and Container constructors" />
+<FeatureStatus status="STABLE" details="Practical algorithm implementations in Adesh: Two Sum, LRU Cache, Linked Lists, Union/Optional type techniques, and Container constructors" />
 
-This section demonstrates how to implement classic algorithms and data structures cleanly and idiomatically in AdeshLang — now with **TypeScript-style type annotations** (`:` not `->` except `extern "C"`), **union / optional types**, and **modern container syntax**.
+This section demonstrates how to implement classic algorithms and data structures cleanly and idiomatically in Adesh — now with **TypeScript-style type annotations** (`:` not `->` except `extern "C"`), **union / optional types**, and **modern container syntax**.
 
 > **Annotation style:** All signatures use `: ReturnType` (e.g. `fn foo(nums: [int], target: int): [int]`). Only `extern "C"` uses `->` (`extern "C" fn puts(s: *const u8) -> i32;`). See `learn/types`.
 
@@ -72,7 +72,7 @@ Values: 2 + 7 = 9
 
 ## 2. Union & Optional Types (TypeScript-style, from `examples/DSA/union_and_optional_types.adesh`)
 
-AdeshLang now supports **`T | U` unions**, **`T?` optional postfix**, **empty-container union members** (`[]` / `{}`), and **nullable returns** — ideal for DSA helpers.
+Adesh now supports **`T | U` unions**, **`T?` optional postfix**, **empty-container union members** (`[]` / `{}`), and **nullable returns** — ideal for DSA helpers.
 
 ### Code Example
 

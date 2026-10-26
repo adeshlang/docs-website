@@ -27,6 +27,9 @@ function listMdStems(dir: string, prefix = ''): string[] {
     if (entry.isDirectory()) {
       stems.push(...listMdStems(full, rel));
     } else if (entry.name.endsWith('.md')) {
+      // Drafts are not built, so redirecting to them would fail validation
+      const source = fs.readFileSync(full, 'utf8');
+      if (/^---\r?\n[\s\S]*?^draft:\s*true\s*$/m.test(source)) continue;
       stems.push(rel.replace(/\.md$/, ''));
     }
   }

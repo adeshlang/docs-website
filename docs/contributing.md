@@ -1,10 +1,10 @@
 ---
 id: contributing
-title: Contributing to AdeshLang
+title: Contributing to Adesh
 sidebar_label: Contributing
 ---
 
-# Contributing to AdeshLang
+# Contributing to Adesh
 
 We welcome contributions from the community! This guide will help you get started.
 
@@ -22,7 +22,7 @@ We welcome contributions from the community! This guide will help you get starte
 Found a bug? Help us by creating a detailed issue report:
 
 **Include:**
-- ✅ AdeshLang version (`adesh --version`)
+- ✅ Adesh version (`adesh --version`)
 - ✅ Platform (OS, version)
 - ✅ Steps to reproduce
 - ✅ Expected vs actual behavior
@@ -34,7 +34,7 @@ Found a bug? Help us by creating a detailed issue report:
 Compiler crashes when using nested generics with Option type
 
 ### Version
-AdeshLang v0.3.0
+Adesh v0.4.0
 
 ### Platform
 Windows 11, Rust 1.75
@@ -113,7 +113,7 @@ cargo build --release
 
 ### 4. Documentation Improvements
 
-Help make AdeshLang more accessible:
+Help make Adesh more accessible:
 
 - 📝 Fix typos and clarify explanations
 - 📖 Add new examples
@@ -127,7 +127,7 @@ Help make AdeshLang more accessible:
 
 ### 5. Examples & Tutorials
 
-Create examples demonstrating AdeshLang features:
+Create examples demonstrating Adesh features:
 
 **Guidelines:**
 - 📌 Clear, descriptive names
@@ -202,7 +202,7 @@ cargo test -- --nocapture
 
 **VS Code:**
 1. Install Rust Analyzer extension
-2. Install AdeshLang extension (if available)
+2. Install Adesh extension (if available)
 3. Open project folder
 
 **Other editors:**

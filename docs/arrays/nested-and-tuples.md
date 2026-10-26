@@ -10,13 +10,13 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" />
 
-AdeshLang provides powerful constructs for modeling complex data: **Nested Arrays** for homogeneous multidimensional data (matrices, grids, tables) and **Tuples** for fixed-length heterogeneous collections with destructuring assignment.
+Adesh provides powerful constructs for modeling complex data: **Nested Arrays** for homogeneous multidimensional data (matrices, grids, tables) and **Tuples** for fixed-length heterogeneous collections with destructuring assignment.
 
 ---
 
 ## 1. Nested Arrays (Matrices & Grids)
 
-A nested array is an array whose elements are themselves arrays. In AdeshLang, nested arrays maintain contiguous rows for 2D/3D numerical algorithms:
+A nested array is an array whose elements are themselves arrays. In Adesh, nested arrays maintain contiguous rows for 2D/3D numerical algorithms:
 
 ```adesh
 // 3x3 Matrix representation
@@ -73,7 +73,7 @@ print("Tuple element 3 (float):  ", tup[3]); // 3.14
 You can explicitly enforce primitive element types for every field in a tuple:
 
 ```adesh
-let record: (u8, i32, f64, string) = (42u8, 1000i32, 3.14159, "AdeshLang");
+let record: (u8, i32, f64, string) = (42u8, 1000i32, 3.14159, "Adesh");
 
 print("Type of element 0: ", typeof(record[0])); // u8
 print("Type of element 1: ", typeof(record[1])); // i32
@@ -85,7 +85,7 @@ print("Type of element 3: ", typeof(record[3])); // string
 
 ## 3. Tuple Destructuring Assignment
 
-AdeshLang supports clean tuple destructuring to unpack multiple values into individual variables in a single statement:
+Adesh supports clean tuple destructuring to unpack multiple values into individual variables in a single statement:
 
 ```adesh
 // Destructuring with implicit types

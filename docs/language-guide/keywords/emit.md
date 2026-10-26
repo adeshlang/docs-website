@@ -7,7 +7,7 @@ description: The emit keyword — backend code generation hook and directive emi
 
 # `emit`
 
-`emit` is the **code-generation** primitive of AdeshLang's metaprogramming system. From within a `compile { ... }` block or an `emit { ... }` decorator phase, `emit` injects source, declarations, or backend IR directives into the program being built. It is the only way compile-time logic materializes as runtime code.
+`emit` is the **code-generation** primitive of Adesh's metaprogramming system. From within a `compile { ... }` block or an `emit { ... }` decorator phase, `emit` injects source, declarations, or backend IR directives into the program being built. It is the only way compile-time logic materializes as runtime code.
 
 > **Ground truth:** Lexer `TokenKind::Emit` (`src/parsing/lexer.rs:1019`, keyword `"emit"`), AST `DecoratorPhase::Emit(Arc<Vec<Stmt>>)` (`src/parsing/ast.rs:707-708`), `DecoratorDef` (`ast.rs:711-718`), HIR/LIR lowering handles emit output, `StmtKind::Decorator` phases capture `emit {}` bodies.
 

@@ -11,7 +11,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Comprehensive, runnable code catalog divided into dedicated topic pages" />
 
-Welcome to the **Learn by Examples Catalog** — the fastest way to see how AdeshLang actually looks and behaves. Instead of explaining rules in the abstract, every topic is organized into its own dedicated page featuring **complete, runnable programs**, **verified terminal outputs**, and detailed **engineering breakdowns**.
+Welcome to the **Learn by Examples Catalog** — the fastest way to see how Adesh actually looks and behaves. Instead of explaining rules in the abstract, every topic is organized into its own dedicated page featuring **complete, runnable programs**, **verified terminal outputs**, and detailed **engineering breakdowns**.
 
 ---
 
@@ -43,11 +43,11 @@ Run any code snippet locally using the `adesh` CLI tool:
 # Execute using default interpreter
 adesh run my_program.adesh
 
-# Execute using Native Cranelift JIT (10-230x speedup)
+# Execute using Native Cranelift JIT
 adesh run --jit-native my_program.adesh
 
-# Execute using Bytecode VM
-adesh run --bytecode my_program.adesh
+# Execute using WebAssembly
+adesh run --wasm my_program.adesh
 
 # Execute embedded unit tests
 adesh run --test my_program.adesh

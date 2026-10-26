@@ -1,13 +1,13 @@
 ---
 id: defer-statement
 title: "Defer Statement Architecture & Scope-Exit Unwinding"
-description: "Formal specification of AdeshLang defer statement execution order, LIFO unwinding stacks, AST cleanup block injection, and RAII resource guarantees."
+description: "Formal specification of Adesh defer statement execution order, LIFO unwinding stacks, AST cleanup block injection, and RAII resource guarantees."
 sidebar_label: "Defer & Scope Exit"
 ---
 
 # Defer Statement Architecture & Scope-Exit Unwinding
 
-This document specifies the execution order, compiler AST lowering, LIFO unwinding stack, and RAII resource safety guarantees for the `defer` statement in AdeshLang.
+This document specifies the execution order, compiler AST lowering, LIFO unwinding stack, and RAII resource safety guarantees for the `defer` statement in Adesh.
 
 ---
 

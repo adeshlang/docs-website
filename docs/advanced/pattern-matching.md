@@ -2,12 +2,12 @@
 id: pattern-matching
 title: Advanced Pattern Matching
 sidebar_label: Pattern Matching
-description: Exhaustive pattern matching, destructuring, range patterns, guards, and algebraic data type matching in AdeshLang.
+description: Exhaustive pattern matching, destructuring, range patterns, guards, and algebraic data type matching in Adesh.
 ---
 
 # Advanced Pattern Matching
 
-AdeshLang provides powerful, expressive, and compile-time exhaustive **Pattern Matching** via the `match` expression and destructuring syntax.
+Adesh provides powerful, expressive, and compile-time exhaustive **Pattern Matching** via the `match` expression and destructuring syntax.
 
 ```adesh
 let message = match status_code {
@@ -98,7 +98,7 @@ fn check_access(user: &User): string {
 
 ## 3. Matching Algebraic Data Types (Enums with Data)
 
-Enums in AdeshLang can carry arbitrary payloads. Pattern matching safely unpacks payloads:
+Enums in Adesh can carry arbitrary payloads. Pattern matching safely unpacks payloads:
 
 ```adesh
 enum NetworkEvent {
@@ -165,7 +165,7 @@ fn process_message(code: i64): string {
 
 ## 6. Compile-Time Exhaustiveness Checking
 
-The AdeshLang compiler verifies that every `match` expression covers all possible cases:
+The Adesh compiler verifies that every `match` expression covers all possible cases:
 
 ```adesh
 enum Color { Red, Green, Blue }

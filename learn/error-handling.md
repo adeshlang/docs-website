@@ -7,7 +7,7 @@ sidebar_label: 15. Error Handling
 # Error Handling & Cleanup — `try`, `catch`, `throw`, `defer`
 
 Real programs fail: files are missing, inputs are invalid, servers time out.
-AdeshLang gives you a clear, explicit toolkit — **throw, try/catch, defer** —
+Adesh gives you a clear, explicit toolkit — **throw, try/catch, defer** —
 all proven in the examples repository.
 
 ## What can go wrong?
@@ -194,7 +194,7 @@ resource before the outer one.
 
 ## Some/None and Result: errors as values
 
-AdeshLang also models "maybe a value" and "maybe a failure" as types you match
+Adesh also models "maybe a value" and "maybe a failure" as types you match
 on, instead of throwing:
 
 ```adesh
@@ -278,5 +278,5 @@ run even when an exception is thrown.
 
 ## Next Step
 
-Now let's understand what makes AdeshLang special under the hood — **memory
+Now let's understand what makes Adesh special under the hood — **memory
 safety, ownership, and borrowing**. Continue to **[Memory Safety](/learn/memory-safety)** →

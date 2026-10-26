@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="First-class functions, parameter and return type annotations, recursive calls, closures, and environment capture" />
 
-Functions in AdeshLang are first-class values. They can be passed as arguments, returned from other functions, stored in variables, and capture variables from their lexical outer environment.
+Functions in Adesh are first-class values. They can be passed as arguments, returned from other functions, stored in variables, and capture variables from their lexical outer environment.
 
 ---
 

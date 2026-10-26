@@ -7,7 +7,7 @@ sidebar_label: 7. Higher-Order Functions
 # Higher-Order Functions — Functions That Use Functions
 
 A **higher-order function** is a function that takes another function as a
-parameter, returns a function, or both. This is one of AdeshLang's most
+parameter, returns a function, or both. This is one of Adesh's most
 powerful tools — and the full tour lives in
 [`examples/functions/02_higher_order.adesh`](https://github.com/adeshlang/adeshlang/blob/main/examples/functions/02_higher_order.adesh).
 
@@ -190,7 +190,7 @@ print(execute_if(false, get_value));   // 0
 
 ## Array transformations (the real-world win)
 
-AdeshLang array methods like `.map()`, `.filter()`, and `.reduce()` are higher-order methods — pass them callback functions to transform collections:
+Adesh array methods like `.map()`, `.filter()`, and `.reduce()` are higher-order methods — pass them callback functions to transform collections:
 
 ```adesh
 let arr = [1, 2, 3, 4, 5, 6];

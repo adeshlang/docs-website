@@ -1,9 +1,9 @@
 // @ts-check
 import 'dotenv/config';
-import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import buildRedirects from './redirects';
+import { adeshCodeTheme } from './src/theme/adeshCodeTheme';
 
 function pluginAdeshPrism() {
   return {
@@ -18,16 +18,15 @@ function pluginAdeshPrism() {
 // SEO & GEO — Central site metadata
 // ---------------------------------------------------------------------------
 const SITE_URL = 'https://www.adeshlang.org';
-const SITE_TITLE = 'AdeshLang';
+const SITE_TITLE = 'Adesh Lang';
 const SITE_TAGLINE =
-  'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language';
+  'Adesh — Command. Code. Create. | Native-Speed, Memory-Safe Programming';
 const SITE_DESCRIPTION =
-  'AdeshLang (आदेश) — a Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedup), memory safety, SIMD, and networking.';
+  'Adesh is a Rust-inspired programming language with a native compiler and linker, Cranelift JIT, compile-time memory safety, SIMD, type aliases, FFI, and batteries-included networking.';
 const SITE_KEYWORDS = [
-  'AdeshLang',
+  'Adesh',
   'Adesh programming language',
   'Adesh Lang',
-  'आदेश',
   'Rust-inspired language',
   'Cranelift JIT',
   'Cranelift Native JIT',
@@ -38,7 +37,6 @@ const SITE_KEYWORDS = [
   'AVX2',
   'ARM Neon',
   'AOT compilation',
-  'Bytecode VM',
   'Tree-Walk Interpreter',
   'WebAssembly',
   'WASM compiler',
@@ -57,7 +55,7 @@ const SITE_KEYWORDS = [
   'ADL package manager',
   'TUI Code Editor',
   'India programming language',
-  'Bharat',
+  'Bengaluru',
   'Bengaluru software',
   'Ajay Tainwala',
 ].join(', ');
@@ -83,6 +81,15 @@ const config: Config = {
 
   // SEO & GEO: Ideal head hygiene — canonical, hreflang handled by Docusaurus core
   headTags: [
+    // Identity backlinks to the creator's canonical profile.
+    {
+      tagName: 'link',
+      attributes: { rel: 'me', href: 'https://www.ajaytainwala.dev' },
+    },
+    {
+      tagName: 'link',
+      attributes: { rel: 'author', href: 'https://www.ajaytainwala.dev' },
+    },
     // Primary SEO
     {
       tagName: 'meta',
@@ -98,7 +105,7 @@ const config: Config = {
     },
     {
       tagName: 'meta',
-      attributes: { name: 'publisher', content: 'AdeshLang Project' },
+      attributes: { name: 'publisher', content: 'Adesh Project' },
     },
     {
       tagName: 'meta',
@@ -144,7 +151,7 @@ const config: Config = {
     },
     {
       tagName: 'meta',
-      attributes: { name: 'DC.publisher', content: 'AdeshLang Project' },
+      attributes: { name: 'DC.publisher', content: 'Adesh Project' },
     },
     {
       tagName: 'meta',
@@ -159,10 +166,10 @@ const config: Config = {
       tagName: 'meta',
       attributes: { name: 'ai-content-declaration', content: 'ai-crawl-allowed' },
     },
-    // Theme
+    // Theme — Material 3 tonal seed
     {
       tagName: 'meta',
-      attributes: { name: 'theme-color', content: '#10b981' },
+      attributes: { name: 'theme-color', content: '#006c4c' },
     },
     {
       tagName: 'meta',
@@ -208,19 +215,20 @@ const config: Config = {
       attributes: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
     },
     // Performance: Non-blocking asynchronous Google Fonts stylesheet
+    // Roboto = Material 3 type system, Roboto Mono = code, Material Symbols = icons.
     {
       tagName: 'link',
       attributes: {
         rel: 'preload',
         as: 'style',
-        href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700;900&display=swap',
       },
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700;900&display=swap',
         media: 'print',
         onload: "this.media='all'",
       },
@@ -237,11 +245,11 @@ const config: Config = {
     // GEO: Discoverability for LLMs — llms.txt & ai.txt
     {
       tagName: 'link',
-      attributes: { rel: 'alternate', type: 'text/plain', title: 'LLMs.txt — AdeshLang for AI', href: '/llms.txt' },
+      attributes: { rel: 'alternate', type: 'text/plain', title: 'LLMs.txt — Adesh for AI', href: '/llms.txt' },
     },
     {
       tagName: 'link',
-      attributes: { rel: 'alternate', type: 'text/plain', title: 'AI.txt — AdeshLang Agentic Web', href: '/ai.txt' },
+      attributes: { rel: 'alternate', type: 'text/plain', title: 'AI.txt — Adesh Agentic Web', href: '/ai.txt' },
     },
     // Verification placeholders — set via env or replace with real tokens
     ...(process.env.GOOGLE_SITE_VERIFICATION
@@ -383,8 +391,8 @@ const config: Config = {
           editUrl: 'https://github.com/adeshlang/docs-website/tree/main/',
           feedOptions: {
             type: ['rss', 'atom'],
-            title: 'AdeshLang Blog',
-            description: 'Engineering deep-dives on AdeshLang language design, compiler, and tooling.',
+            title: 'Adesh Blog',
+            description: 'Engineering deep-dives on Adesh language design, compiler, and tooling.',
             language: 'en',
           },
           onInlineTags: 'warn',
@@ -468,6 +476,14 @@ const config: Config = {
 
   themeConfig: {
     image: SOCIAL_IMAGE,
+    announcementBar: {
+      id: 'adesh-v040-native',
+      content:
+        '<span class="announcement-pill">COMING SOON</span> <span class="announcement-copy announcement-copy--full"><strong>Adesh v0.4.0</strong> brings the native compiler, ADOB v3 objects, and adeshlink. <a href="/docs/compiler/native-toolchain">Explore the native toolchain</a></span><span class="announcement-copy announcement-copy--compact"><strong>Adesh v0.4.0</strong> native toolchain <a href="/docs/compiler/native-toolchain">coming soon</a></span>',
+      backgroundColor: '#005236',
+      textColor: '#9ff5c9',
+      isCloseable: true,
+    },
     metadata: [
       { name: 'keywords', content: SITE_KEYWORDS },
       { name: 'author', content: SITE_AUTHOR },
@@ -487,9 +503,9 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'AdeshLang',
+      title: 'Adesh Lang',
       logo: {
-        alt: 'AdeshLang Logo',
+        alt: 'Adesh Lang Logo',
         src: 'img/logo.svg',
         width: 32,
         height: 32,
@@ -570,8 +586,8 @@ const config: Config = {
               href: 'https://github.com/adeshlang/adeshlang',
             },
             {
-              label: 'Creator Portfolio',
-              href: 'https://ajaytainwala.vercel.app',
+              label: 'Ajay Tainwala — Creator',
+              href: 'https://www.ajaytainwala.dev',
             },
           ],
         },
@@ -607,12 +623,12 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} AdeshLang Project. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Adesh Project. Built with Docusaurus.`,
     },
 
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: adeshCodeTheme,
+      darkTheme: adeshCodeTheme,
       additionalLanguages: ['rust', 'bash', 'powershell'],
     },
     ...(process.env.ALGOLIA_APP_ID

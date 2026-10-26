@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Native Rust standard library modules: Math, Crypto, JSON, and File System (FS)" />
 
-AdeshLang includes built-in standard libraries written natively in Rust for performance, covering mathematics (`Math`), cryptography (`Crypto`), serialization (`JSON`), file operations (`FS`), and HTTP networking.
+Adesh includes built-in standard libraries written natively in Rust for performance, covering mathematics (`Math`), cryptography (`Crypto`), serialization (`JSON`), file operations (`FS`), and HTTP networking.
 
 ---
 
@@ -56,7 +56,7 @@ Native Rust implementations of SHA-256, SHA-3, BLAKE3, AES-GCM, and key pair gen
 ```adesh
 import Crypto;
 
-let payload = "AdeshLang Standard Library 2026";
+let payload = "Adesh Standard Library 2026";
 
 // SHA-256 Hash
 let sha256Digest = Crypto.sha256(payload);
@@ -118,13 +118,13 @@ Parsed First Role: admin
 ### Breakdown
 
 * **`JSON.stringify(obj)`**: Converts native maps/structs/objects into JSON string representation.
-* **`JSON.parse(str)`**: Decodes JSON strings back into dynamic AdeshLang value structures.
+* **`JSON.parse(str)`**: Decodes JSON strings back into dynamic Adesh value structures.
 
 ---
 
 ## 4. Interactive Input & TUI Widgets (`input.*`)
 
-AdeshLang provides terminal-native TUI widgets: table grid selectors, date/datetime pickers, visual diff editors, and security PIN verification.
+Adesh provides terminal-native TUI widgets: table grid selectors, date/datetime pickers, visual diff editors, and security PIN verification.
 
 ### Code Example
 

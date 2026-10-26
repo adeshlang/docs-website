@@ -2,12 +2,12 @@
 id: webassembly
 title: WebAssembly Backend (WASM & WASI)
 sidebar_label: WebAssembly (WASM)
-description: Compiling AdeshLang to WebAssembly for high-performance browser execution and serverless WASI runtimes.
+description: Compiling Adesh to WebAssembly for high-performance browser execution and serverless WASI runtimes.
 ---
 
 # WebAssembly Backend (WASM & WASI)
 
-AdeshLang can be compiled directly to compact, sandboxed **WebAssembly (WASM)** binaries. Because AdeshLang operates with **zero garbage collection** and uses compile-time memory safety with 2ns ARC, WASM binaries require **no runtime GC engine**—resulting in tiny binary sizes (as small as 15KB) and deterministic performance.
+Adesh can be compiled directly to compact, sandboxed **WebAssembly (WASM)** binaries. Because Adesh operates with **zero garbage collection** and uses compile-time memory safety with 2ns ARC, WASM binaries require **no runtime GC engine**—resulting in tiny binary sizes (as small as 15KB) and deterministic performance.
 
 :::info Interactive Web Playground
 You can test the WebAssembly engine live right now in your browser without installing anything at **[editor.adeshlang.org](https://editor.adeshlang.org)**.
@@ -15,7 +15,7 @@ You can test the WebAssembly engine live right now in your browser without insta
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│                   AdeshLang WASM Target                  │
+│                   Adesh WASM Target                  │
 ├──────────────────────────────────────────────────────────┤
 │  Adesh Source (.adesh) ──► LLVM WASM Emitter ──► .wasm   │
 │                                              │           │
@@ -29,7 +29,7 @@ You can test the WebAssembly engine live right now in your browser without insta
 
 ## 1. Supported Targets
 
-AdeshLang supports two primary WebAssembly targets:
+Adesh supports two primary WebAssembly targets:
 
 1. **`wasm32-unknown-unknown`**: Pure browser target for frontend UI, games, cryptography, and client-side processing.
 2. **`wasm32-wasi`**: WebAssembly System Interface target for serverless functions, edge compute (Cloudflare Workers, Fastly), and sandboxed microservices.
@@ -53,9 +53,9 @@ adesh build --target=wasm32 --release --wasm-opt=z -o dist/module.min.wasm
 
 ## 3. JavaScript & Browser Interoperability
 
-Export AdeshLang functions to JavaScript using the `#[export_name]` attribute:
+Export Adesh functions to JavaScript using the `#[export_name]` attribute:
 
-### AdeshLang Code (`src/crypto_module.adesh`):
+### Adesh Code (`src/crypto_module.adesh`):
 ```adesh
 #[export_name("adesh_sha256")]
 pub fn adesh_sha256(input: string): string {
@@ -73,10 +73,10 @@ pub fn add_numbers(a: i32, b: i32): i32 {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AdeshLang in WebAssembly</title>
+    <title>Adesh in WebAssembly</title>
 </head>
 <body>
-    <h1>AdeshLang WASM Demo</h1>
+    <h1>Adesh WASM Demo</h1>
     <script type="module">
         const response = await fetch("./module.wasm");
         const bytes = await response.arrayBuffer();
@@ -87,7 +87,7 @@ pub fn add_numbers(a: i32, b: i32): i32 {
         });
 
         const result = instance.exports.add_numbers(15, 27);
-        console.log("Result from AdeshLang WASM:", result); // Output: 42
+        console.log("Result from Adesh WASM:", result); // Output: 42
     </script>
 </body>
 </html>
@@ -112,8 +112,8 @@ node --experimental-wasi-unstable-preview1 index.js
 
 ---
 
-## 5. Why AdeshLang Excels on WebAssembly
+## 5. Why Adesh Excels on WebAssembly
 
-- 🚀 **No GC Bloat**: Unlike Go, Java, or C#, AdeshLang does not bundle a garbage collection runtime into the WASM payload.
+- 🚀 **No GC Bloat**: Unlike Go, Java, or C#, Adesh does not bundle a garbage collection runtime into the WASM payload.
 - ⚡ **Instant Cold Start**: Millisecond initialization time for serverless edge computing.
 - 🔒 **Sandbox Security**: Runs inside standard WebAssembly linear memory isolation with compile-time memory safety proofs.

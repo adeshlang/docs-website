@@ -8,7 +8,7 @@ sidebar_label: 21. Async & Concurrency
 
 Modern programs do many things at once: download files while painting a UI,
 serve thousands of HTTP requests, process a million rows in parallel.
-AdeshLang supports all three flavors — **threads**, **async/await**, and
+Adesh supports all three flavors — **threads**, **async/await**, and
 **parallel iteration** — using the exact patterns from the examples
 repository.
 
@@ -151,7 +151,7 @@ pool.shutdown();
 99
 ```
 
-And for data-parallel work, AdeshLang includes the high-performance work-stealing `Parallel` module:
+And for data-parallel work, Adesh includes the high-performance work-stealing `Parallel` module:
 
 ```adesh
 import Parallel;
@@ -256,8 +256,7 @@ fn fib_dp(n) {
 }
 ```
 
-Combine that with `--njit` and you get the 10–230× speedups the docs brag
-about.
+Combine that with `--njit` to run the same code through the native JIT.
 
 ## Summary
 

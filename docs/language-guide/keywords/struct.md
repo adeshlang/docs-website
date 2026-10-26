@@ -7,7 +7,7 @@ description: The `struct` keyword declares a structure type.
 
 # `struct`
 
-The `struct` keyword declares a structure: a nominal record type with named fields and (optionally) methods. Structs are the primary data-modelling construct in AdeshLang.
+The `struct` keyword declares a structure: a nominal record type with named fields and (optionally) methods. Structs are the primary data-modelling construct in Adesh.
 
 ---
 

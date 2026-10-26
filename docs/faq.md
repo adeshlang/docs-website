@@ -6,35 +6,34 @@ sidebar_label: FAQ
 
 # Frequently Asked Questions
 
-Common questions about AdeshLang, its features, installation, and usage.
+Common questions about Adesh, its features, installation, and usage.
 
 ## General Questions
 
-### What is AdeshLang?
+### What is Adesh?
 
-AdeshLang is a Rust-inspired, statically-typed programming language featuring memory safety without garbage collection, powerful type inference, and multiple high-performance execution backends. It combines the safety of Rust with the simplicity of Python and the performance of C++.
+Adesh is a Rust-inspired, statically-typed programming language featuring memory safety without garbage collection, powerful type inference, and multiple high-performance execution backends. It combines the safety of Rust with the simplicity of Python and the performance of C++.
 
-### Why choose AdeshLang over other languages?
+### Why choose Adesh over other languages?
 
 **Key advantages:**
 - ✅ **Memory safe without GC** - Compile-time ownership/borrowing checks
-- ✅ **Multi-backend** - Choose between interpreter, VM, JIT, AOT, WASM, GPU
-- ✅ **100-250x performance** - With optimized native backends
+- ✅ **Multi-target execution** - Interpreter, native JIT, AOT native compilation, and WASM; GPU planned
 - ✅ **Modern syntax** - Clean, readable, easy to learn
 - ✅ **Production ready** - 100% test coverage, comprehensive documentation
 
-### Is AdeshLang production-ready?
+### Is Adesh production-ready?
 
-**Yes!** AdeshLang has:
+**Yes!** Adesh has:
 - ✅ 476/476 tests passing (100% coverage)
 - ✅ Zero compiler errors & warnings
 - ✅ Comprehensive documentation (80+ KB)
 - ✅ Multiple working backends
 - ✅ Real-world examples and use cases
 
-### What can I build with AdeshLang?
+### What can I build with Adesh?
 
-AdeshLang is suitable for:
+Adesh is suitable for:
 - 🚀 **System utilities** - Fast, efficient tools
 - 🚀 **Web services** - High-performance APIs
 - 🚀 **Scientific computing** - GPU-accelerated workloads
@@ -44,7 +43,7 @@ AdeshLang is suitable for:
 
 ## Installation & Setup
 
-### How do I install AdeshLang?
+### How do I install Adesh?
 
 ```bash
 # Clone repository
@@ -71,13 +70,13 @@ See [Installation Guide](/learn/getting-started/installation) for detailed platf
 - NVIDIA/AMD/Intel GPU
 - CUDA Toolkit (NVIDIA) or ROCm (AMD) or Vulkan SDK
 
-### Do I need Rust to use AdeshLang?
+### Do I need Rust to use Adesh?
 
 **To build from source:** Yes, Rust 1.70+ is required.
 
-**Pre-built binaries:** No, once compiled you only need the AdeshLang binary.
+**Pre-built binaries:** No, once compiled you only need the Adesh binary.
 
-### How do I set up AdeshLang on Windows?
+### How do I set up Adesh on Windows?
 
 ```powershell
 # Option 1: Using Chocolatey
@@ -97,7 +96,7 @@ See [Windows Installation](/learn/getting-started/installation#windows) for comp
 
 ### How does memory safety work without GC?
 
-AdeshLang uses an **ownership-based system**:
+Adesh uses an **ownership-based system**:
 
 ```adesh
 let a = Obj();      // a owns object
@@ -114,7 +113,7 @@ write(obj);         // ✅ One writer at a time
 
 All checks happen at **compile time** - zero runtime overhead!
 
-### Is AdeshLang similar to Rust?
+### Is Adesh similar to Rust?
 
 **Similarities:**
 - ✅ Ownership/borrowing system
@@ -128,7 +127,7 @@ All checks happen at **compile time** - zero runtime overhead!
 - ✅ Dynamic features (async/await, decorators)
 - ✅ Auto-inferred borrowing (no explicit annotations)
 
-### Does AdeshLang support OOP?
+### Does Adesh support OOP?
 
 **Yes!** Full OOP support including:
 
@@ -162,7 +161,7 @@ class SavingsAccount extends BankAccount {
 
 See [OOP Guide](advanced/oop) for complete details.
 
-### What type system features does AdeshLang have?
+### What type system features does Adesh have?
 
 - ✅ **Type inference** - `let x = 42` (i64 inferred)
 - ✅ **Generics** - `fn identity<T>(x: T): T`
@@ -170,7 +169,7 @@ See [OOP Guide](advanced/oop) for complete details.
 - ✅ **Pattern matching** - `match value { ... }`
 - ✅ **Type narrowing** - Automatic based on conditions
 
-### Does AdeshLang support async/await?
+### Does Adesh support async/await?
 
 **Yes!**
 
@@ -192,28 +191,25 @@ match await fetch_data("https://api.example.com") {
 
 ## Performance & Backends
 
-### How fast is AdeshLang?
+### How fast is Adesh?
 
-**Benchmark: Fibonacci(35)**
-- Interpreter: 5.234s
-- Native JIT: **0.045s** (116x faster!)
-- AOT: **0.022s** (238x faster!)
+There are no published speedup guarantees while the native targets are experimental. The tree-walk interpreter is the reference implementation and the correctness baseline; the native JIT, AOT, and WASM targets must match its observable behavior before they are considered complete.
 
-**GPU workloads:** Up to **500x faster** than CPU for parallel tasks.
+To measure performance on your hardware, run the programs in [`examples/fib/`](https://github.com/adeshlang/adeshlang/tree/main/examples/fib), [`examples/backends/`](https://github.com/adeshlang/adeshlang/tree/main/examples/backends), and [`examples/benchmarks/`](https://github.com/adeshlang/adeshlang/tree/main/examples/benchmarks) with the exact toolchain version you plan to deploy.
 
 ### Which backend should I use?
 
-**Development:** Interpreter or JIT (fast iteration)
+**Development:** Interpreter
 
 **Production:**
-- **Standalone apps:** AOT compilation
+- **Standalone apps:** AOT native compilation
 - **Services:** Native JIT
 - **Web:** WebAssembly
-- **GPU computing:** MLIR backend
+- **GPU computing:** GPU target (planned for a future release)
 
 See [Backends Overview](backends/overview) for detailed comparison.
 
-### Can AdeshLang compile to WebAssembly?
+### Can Adesh compile to WebAssembly?
 
 **Yes!**
 
@@ -228,7 +224,7 @@ adesh compile-wasm program.adesh -o program.wasm
 </script>
 ```
 
-### Does AdeshLang support GPU acceleration?
+### Does Adesh support GPU acceleration?
 
 **Yes!** Via MLIR backend:
 
@@ -246,7 +242,7 @@ Supports CUDA, ROCm, Vulkan, and Metal.
 
 ### What IDE support is available?
 
-AdeshLang has full LSP support via ALS (AdeshLang Language Server):
+Adesh has full LSP support via ALS (Adesh Language Server):
 
 - ✅ **VS Code** - Extension available
 - ✅ **Neovim** - Via lspconfig
@@ -281,11 +277,11 @@ cargo test -- --nocapture
 
 ### Is there a package manager?
 
-Currently, AdeshLang uses Cargo for building. A dedicated package manager is planned for future releases.
+Currently, Adesh uses Cargo for building. A dedicated package manager is planned for future releases.
 
 ## Debugging
 
-### How do I debug AdeshLang programs?
+### How do I debug Adesh programs?
 
 **Debug builds:**
 ```bash

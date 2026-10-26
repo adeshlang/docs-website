@@ -10,17 +10,17 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" />
 
-AdeshLang provides an expressive, type-safe array system that balances convenience with total memory control. This document explains **type annotations**, **element type inference rules**, **immutability modifiers**, and the **physical memory layouts** used by the compiler.
+Adesh provides an expressive, type-safe array system that balances convenience with total memory control. This document explains **type annotations**, **element type inference rules**, **immutability modifiers**, and the **physical memory layouts** used by the compiler.
 
 ---
 
 ## Array Type Annotations
 
-AdeshLang supports four primary array type shapes:
+Adesh supports four primary array type shapes:
 
 ### 1. Inferred Dynamic Array (`[T]`)
 
-When you declare an array literal without an explicit type, AdeshLang automatically inspects all element values and selects the smallest fitting primitive type:
+When you declare an array literal without an explicit type, Adesh automatically inspects all element values and selects the smallest fitting primitive type:
 
 ```adesh
 let numbers = [10, 20, 30, 40, 50]; // Inferred element type u8
@@ -93,7 +93,7 @@ try {
 
 ## Readonly & Immutability Syntax
 
-AdeshLang provides two clean syntaxes for declaring immutable array variables:
+Adesh provides two clean syntaxes for declaring immutable array variables:
 
 ```adesh
 // Prefix readonly syntax
@@ -111,7 +111,7 @@ Reassigning or modifying a `readonly` array variable produces a compile-time or 
 
 ## Element Type Specialization & Inference Algorithm
 
-AdeshLang automatically optimizes unannotated array literals using value-range inspection:
+Adesh automatically optimizes unannotated array literals using value-range inspection:
 
 ```adesh
 let auto_u8: [u8] = [1, 2, 3, 255];          // 0 <= val <= 255 -> u8

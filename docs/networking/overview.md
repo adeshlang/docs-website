@@ -6,15 +6,15 @@ sidebar_label: Networking Overview
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# Networking & Internet Protocols in AdeshLang
+# Networking & Internet Protocols in Adesh
 
 <FeatureStatus status="STABLE" details="Includes TCP, UDP, HTTP Client/Server, WebSockets, DNS, and TLS" />
 
-AdeshLang provides a high-throughput, low-latency networking stack with first-class support for both low-level socket programming and modern application-layer web protocols. Built on top of non-blocking asynchronous event loops (`epoll`, `kqueue`, `IOCP`), AdeshLang achieves industry-leading concurrent connection handling with **zero garbage collection jitter**.
+Adesh provides a high-throughput, low-latency networking stack with first-class support for both low-level socket programming and modern application-layer web protocols. Built on top of non-blocking asynchronous event loops (`epoll`, `kqueue`, `IOCP`), Adesh achieves industry-leading concurrent connection handling with **zero garbage collection jitter**.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│              AdeshLang Networking Architecture           │
+│              Adesh Networking Architecture           │
 ├──────────────────────────────────────────────────────────┤
 │ Application:  [ HTTP/1.1 & HTTP/2 ]   [ WebSockets (WSS) ]│
 │                       │                       │          │

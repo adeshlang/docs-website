@@ -10,13 +10,13 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Primitive types, multi-variable declarations, explicit casting, null-coalescing, and runtime type introspection" />
 
-This section covers the fundamental building blocks of AdeshLang programs: variable declarations, primitive types, type safety, multi-variable assignment and swapping, casting with `as`, null safety with `??`, and type introspection.
+This section covers the fundamental building blocks of Adesh programs: variable declarations, primitive types, type safety, multi-variable assignment and swapping, casting with `as`, null safety with `??`, and type introspection.
 
 ---
 
 ## 1. Primitive Variable Declarations & Type Annotations
 
-AdeshLang is statically typed with powerful type inference. You can let the compiler infer variable types or supply explicit type annotations (`i8`-`i128`, `u8`-`u128`, `f32`, `f64`, `bool`, `string`).
+Adesh is statically typed with powerful type inference. You can let the compiler infer variable types or supply explicit type annotations (`i8`-`i128`, `u8`-`u128`, `f32`, `f64`, `bool`, `string`).
 
 ### Code Example
 
@@ -25,7 +25,7 @@ AdeshLang is statically typed with powerful type inference. You can let the comp
 let age: i32 = 25;
 let price: f64 = 99.99;
 let active: bool = true;
-let greeting: string = "Hello, AdeshLang!";
+let greeting: string = "Hello, Adesh!";
 
 // Type inference (compiler automatically deduces types)
 let count = 42;          // inferred as i32
@@ -45,7 +45,7 @@ print("Count:", count, "| Ratio:", ratio, "| Ready:", isReady);
 Age: 25
 Price: 99.99
 Active: true
-Greeting: Hello, AdeshLang!
+Greeting: Hello, Adesh!
 Count: 42 | Ratio: 3.14159 | Ready: false
 ```
 
@@ -59,7 +59,7 @@ Count: 42 | Ratio: 3.14159 | Ready: false
 
 ## 2. Multi-Variable Declaration & In-Place Swapping
 
-AdeshLang supports unparenthesized multi-variable declarations and tuple-free variable swapping without temporary variables or allocations.
+Adesh supports unparenthesized multi-variable declarations and tuple-free variable swapping without temporary variables or allocations.
 
 ### Code Example
 
@@ -133,7 +133,7 @@ String representation: 42
 
 ## 4. Null Safety & Null-Coalescing Operator (`??`)
 
-AdeshLang handles optional or missing data safely without null pointer exceptions. The null-coalescing operator `??` provides a concise fallback mechanism.
+Adesh handles optional or missing data safely without null pointer exceptions. The null-coalescing operator `??` provides a concise fallback mechanism.
 
 ### Code Example
 
@@ -166,14 +166,14 @@ Active Port: 8080
 
 ## 5. Runtime Introspection (`type()`)
 
-AdeshLang provides reflection and type introspection utilities to verify types dynamically at runtime.
+Adesh provides reflection and type introspection utilities to verify types dynamically at runtime.
 
 ### Code Example
 
 ```adesh
 let valInt = 500;
 let valFloat = 12.34;
-let valStr = "AdeshLang";
+let valStr = "Adesh";
 let valArr = [1, 2, 3];
 
 print("type(valInt):", type(valInt));

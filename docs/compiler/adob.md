@@ -17,7 +17,7 @@ a particular target; using the format does not imply that code generation or
 linking is implemented for every architecture or device.
 
 > **Planned for v0.4.0:** The native compiler and linker improvements using
-> ADOB are planned for AdeshLang v0.4.0. ADOB v1.0 and its tools exist in the
+> ADOB are planned for Adesh v0.4.0. ADOB v1.0 and its tools exist in the
 > current codebase, but the full native toolchain is not yet a generally
 > supported release feature.
 

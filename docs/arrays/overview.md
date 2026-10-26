@@ -6,13 +6,13 @@ sidebar_label: Overview
 
 import FeatureStatus from '@site/src/components/FeatureStatus';
 
-# Arrays in AdeshLang
+# Arrays in Adesh
 
 <FeatureStatus status="STABLE" />
 
-Arrays in **AdeshLang** are continuous, memory-efficient data structures designed for everything from high-level data processing pipelines to low-level zero-overhead C-like systems programming. 
+Arrays in **Adesh** are continuous, memory-efficient data structures designed for everything from high-level data processing pipelines to low-level zero-overhead C-like systems programming.
 
-Unlike traditional dynamically-typed languages that wrap every element in object pointers or heap allocations, AdeshLang features an advanced **Multi-Tier Array Memory Engine** written in Rust. It automatically selects optimal physical storage layouts and primitive element sizes at compile time.
+Unlike traditional dynamically-typed languages that wrap every element in object pointers or heap allocations, Adesh features an advanced **Multi-Tier Array Memory Engine** written in Rust. It automatically selects optimal physical storage layouts and primitive element sizes at compile time.
 
 ---
 
@@ -30,7 +30,7 @@ Unlike traditional dynamically-typed languages that wrap every element in object
 
 ### 1. Beginner: Simple Dynamic Arrays
 
-If you omit type annotations, AdeshLang automatically inspects array literal values and creates an inferred dynamic array:
+If you omit type annotations, Adesh automatically inspects array literal values and creates an inferred dynamic array:
 
 ```adesh
 // Auto-inferred integer array
@@ -60,7 +60,7 @@ buffer = buffer.append(5); // Works! Length becomes 5
 
 ### 3. Advanced: The 4 Physical Memory Tiers
 
-AdeshLang provides four distinct physical memory layouts depending on element annotations and size thresholds:
+Adesh provides four distinct physical memory layouts depending on element annotations and size thresholds:
 
 | Memory Tier | Type Annotation | Storage Location | Metadata Size | Max Elements | Use Case |
 | :--- | :--- | :--- | :--- | :--- | :--- |

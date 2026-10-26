@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Ownership tracking, borrow inference, CFG lifetime validation, drop insertion" />
 
-AdeshLang's most distinctive safety feature is enforced **at compile time**:
+Adesh's most distinctive safety feature is enforced **at compile time**:
 every value has an owner, every borrow is tracked, and illegal moves or
 aliases are rejected **before** any code runs. This page is the
 behind-the-scenes companion to the [Memory Safety guide](/docs/advanced/memory-safety):
@@ -48,7 +48,7 @@ let b = a;          // move! 'a' is now invalid
 ([`borrow_inference.rs`](file:///d:/Projects/AdeshLang/src/parsing/borrow_inference.rs))
 
 Unlike languages that require explicit `&mut` annotations everywhere,
-AdeshLang **auto-infers borrows**: the compiler observes how a reference is
+Adesh **auto-infers borrows**: the compiler observes how a reference is
 used and classifies it:
 
 - **Read-only borrow** — the reference is only read → many concurrent

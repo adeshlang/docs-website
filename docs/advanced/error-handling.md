@@ -2,12 +2,12 @@
 id: error-handling
 title: Robust Error Handling
 sidebar_label: Error Handling
-description: Deterministic error handling in AdeshLang with Result, Option, the ? operator, custom errors, and defer cleanup.
+description: Deterministic error handling in Adesh with Result, Option, the ? operator, custom errors, and defer cleanup.
 ---
 
 # Robust Error Handling
 
-AdeshLang avoids hidden runtime exceptions in favor of **explicit, type-safe, and zero-overhead error handling** via `Result<T, E>` and `Option<T>`, combined with ergonomic propagation through the `?` operator.
+Adesh avoids hidden runtime exceptions in favor of **explicit, type-safe, and zero-overhead error handling** via `Result<T, E>` and `Option<T>`, combined with ergonomic propagation through the `?` operator.
 
 ```
 ┌──────────────────────────────────────────────────────────┐

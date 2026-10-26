@@ -202,7 +202,7 @@ if target == "wasm" {
 // Profile-specific dependencies
 if debug {
   [dependencies]
-  DebugUtils = "~0.3.0"
+  DebugUtils = "~0.4.0"
 } else {
   [dependencies]
   Profiler = "^2.0.0"

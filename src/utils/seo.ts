@@ -7,14 +7,22 @@
 // Site constants — keep in sync with docusaurus.config.ts
 // ---------------------------------------------------------------------------
 export const SITE_URL = 'https://www.adeshlang.org';
-export const SITE_NAME = 'AdeshLang';
-export const SITE_TITLE = 'AdeshLang — High-Performance Memory-Safe Language';
+export const SITE_NAME = 'Adesh Lang';
+export const SITE_TITLE = 'Adesh Lang — Native-Speed, Memory-Safe Language';
 export const SITE_TAGLINE =
-  'आदेश (Adesh) — Command. Code. Create. | High-Performance, Memory-Safe Programming Language';
+  'Adesh — Command. Code. Create. | Native-Speed, Memory-Safe Programming';
 export const SITE_DESCRIPTION =
-  'AdeshLang (आदेश) — a Rust-inspired, high-performance programming language with Cranelift native JIT (10–230× speedup), memory safety, SIMD, and networking.';
+  'Adesh is a Rust-inspired programming language with a native compiler and linker, Cranelift JIT, compile-time memory safety, SIMD, type aliases, FFI, and batteries-included networking.';
 export const SITE_AUTHOR = 'Ajay Tainwala';
-export const SITE_AUTHOR_URL = 'https://ajaytainwala.vercel.app';
+export const SITE_AUTHOR_URL = 'https://www.ajaytainwala.dev';
+export const SITE_AUTHOR_GITHUB = 'https://github.com/ajaytainwala-dev';
+export const SITE_AUTHOR_LINKEDIN = 'https://in.linkedin.com/in/ajay-tainwala';
+export const SITE_AUTHOR_IMAGE = `${SITE_URL}/img/ajay-tainwala.jpg`;
+export const SITE_AUTHOR_SAME_AS = [
+  SITE_AUTHOR_URL,
+  SITE_AUTHOR_GITHUB,
+  SITE_AUTHOR_LINKEDIN,
+];
 export const GITHUB_URL = 'https://github.com/adeshlang/adeshlang';
 export const EDITOR_URL = 'https://editor.adeshlang.org';
 export const SOCIAL_IMAGE = `${SITE_URL}/img/social-card.jpg`;
@@ -22,13 +30,18 @@ export const LOGO_URL = `${SITE_URL}/img/logo.svg`;
 export const FAVICON_URL = `${SITE_URL}/img/favicon.ico`;
 
 export const SITE_KEYWORDS = [
-  'AdeshLang',
+  'Adesh',
   'Adesh programming language',
   'Adesh Lang',
-  'आदेश',
   'Rust-inspired language',
   'Cranelift JIT',
   'Cranelift Native JIT',
+  'native compiler',
+  'native linker',
+  'ADOB object format',
+  'adeshlink',
+  'FFI',
+  'type aliases',
   'memory-safe language',
   'systems programming',
   'zero-cost abstractions',
@@ -36,7 +49,6 @@ export const SITE_KEYWORDS = [
   'AVX2',
   'ARM Neon',
   'AOT compilation',
-  'Bytecode VM',
   'Tree-Walk Interpreter',
   'WebAssembly',
   'WASM compiler',
@@ -55,7 +67,7 @@ export const SITE_KEYWORDS = [
   'ADL package manager',
   'TUI Code Editor',
   'India programming language',
-  'Bharat',
+  'Bengaluru',
   'Bengaluru software',
   'Ajay Tainwala',
 ];
@@ -79,28 +91,31 @@ export interface BreadcrumbItem {
   url: string;
 }
 
+/** Canonical author entity shared by every schema for stronger name association. */
+function authorRef() {
+  return {
+    '@type': 'Person',
+    name: SITE_AUTHOR,
+    url: SITE_AUTHOR_URL,
+    image: SITE_AUTHOR_IMAGE,
+    sameAs: SITE_AUTHOR_SAME_AS,
+  };
+}
+
 /** Organization — GEO: who maintains the project */
 export function organizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'AdeshLang Project',
+    name: 'Adesh Project',
     url: SITE_URL,
     logo: LOGO_URL,
     image: SOCIAL_IMAGE,
     description: SITE_DESCRIPTION,
     foundingLocation: { '@type': 'Place', name: 'Bengaluru, India' },
     founder: {
-      '@type': 'Person',
-      name: SITE_AUTHOR,
-      url: SITE_AUTHOR_URL,
-      jobTitle: 'Creator & Lead Architect of AdeshLang',
-      sameAs: [
-        'https://github.com/ajaytainwala-dev',
-        'https://in.linkedin.com/in/ajay-tainwala',
-        SITE_AUTHOR_URL,
-        GITHUB_URL,
-      ],
+      ...authorRef(),
+      jobTitle: 'Creator & Lead Architect of Adesh',
     },
     sameAs: [GITHUB_URL, SITE_AUTHOR_URL],
   };
@@ -111,20 +126,20 @@ export function siteNavigationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'AdeshLang Navigation & Core Sections',
+    name: 'Adesh Navigation & Core Sections',
     itemListElement: [
       {
         '@type': 'SiteNavigationElement',
         position: 1,
-        name: 'Learn AdeshLang',
-        description: 'Guided progressive roadmap for learning AdeshLang programming from basics to advanced systems.',
+        name: 'Learn Adesh',
+        description: 'Guided progressive roadmap for learning Adesh programming from basics to advanced systems.',
         url: `${SITE_URL}/learn`,
       },
       {
         '@type': 'SiteNavigationElement',
         position: 2,
         name: 'Quick Start Guide',
-        description: 'Install AdeshLang and run your first program in under 5 minutes.',
+        description: 'Install Adesh and run your first program in under 5 minutes.',
         url: `${SITE_URL}/learn/getting-started/quick-start`,
       },
       {
@@ -159,7 +174,7 @@ export function siteNavigationSchema() {
         '@type': 'SiteNavigationElement',
         position: 7,
         name: 'Cranelift Native JIT',
-        description: 'High-performance native JIT execution backend with 10–230× speedups.',
+        description: 'High-performance native JIT execution backend for compute-heavy workloads.',
         url: `${SITE_URL}/docs/backends/native-jit`,
       },
       {
@@ -180,14 +195,14 @@ export function siteNavigationSchema() {
         '@type': 'SiteNavigationElement',
         position: 10,
         name: 'Online Web Editor',
-        description: 'Interactive online playground to write and run AdeshLang code in the browser.',
+        description: 'Interactive online playground to write and run Adesh code in the browser.',
         url: EDITOR_URL,
       },
       {
         '@type': 'SiteNavigationElement',
         position: 11,
         name: 'About Creator & Project',
-        description: 'Meet creator Ajay Tainwala and learn about the design philosophy of AdeshLang.',
+        description: 'Meet creator Ajay Tainwala and learn about the design philosophy of Adesh.',
         url: `${SITE_URL}/about`,
       },
       {
@@ -210,7 +225,7 @@ export function websiteSchema() {
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     inLanguage: 'en',
-    publisher: { '@type': 'Organization', name: 'AdeshLang Project', logo: { '@type': 'ImageObject', url: LOGO_URL } },
+    publisher: { '@type': 'Organization', name: 'Adesh Project', logo: { '@type': 'ImageObject', url: LOGO_URL } },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -223,21 +238,21 @@ export function websiteSchema() {
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/learn`,
-        name: 'Learn AdeshLang',
-        description: 'Guided progressive roadmap for learning AdeshLang programming.',
+        name: 'Learn Adesh',
+        description: 'Guided progressive roadmap for learning Adesh programming.',
         url: `${SITE_URL}/learn`,
       },
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/learn/getting-started/quick-start`,
         name: 'Quick Start',
-        description: '5-minute quick start tutorial for AdeshLang.',
+        description: '5-minute quick start tutorial for Adesh.',
         url: `${SITE_URL}/learn/getting-started/quick-start`,
       },
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/docs/install`,
-        name: 'Install AdeshLang',
+        name: 'Install Adesh',
         description: 'Installation instructions for all supported operating systems.',
         url: `${SITE_URL}/docs/install`,
       },
@@ -265,14 +280,14 @@ export function websiteSchema() {
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/about`,
-        name: 'About AdeshLang',
-        description: 'About the AdeshLang project mission and creator Ajay Tainwala.',
+        name: 'About Adesh',
+        description: 'About the Adesh project mission and creator Ajay Tainwala.',
         url: `${SITE_URL}/about`,
       },
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/blog`,
-        name: 'AdeshLang Blog',
+        name: 'Adesh Blog',
         description: 'Engineering deep-dives and compiler updates.',
         url: `${SITE_URL}/blog`,
       },
@@ -286,35 +301,34 @@ export function softwareApplicationSchema() {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: SITE_NAME,
-    alternateName: 'AdeshLang Programming Language',
+    alternateName: 'Adesh Programming Language',
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     image: SOCIAL_IMAGE,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Windows, macOS, Linux',
     programmingLanguage: 'Rust',
-    author: {
-      '@type': 'Person',
-      name: SITE_AUTHOR,
-      url: SITE_AUTHOR_URL,
-    },
+    author: authorRef(),
     maintainer: {
       '@type': 'Organization',
-      name: 'AdeshLang Project',
+      name: 'Adesh Project',
       url: SITE_URL,
     },
     license: 'https://github.com/adeshlang/adeshlang/blob/main/LICENSE',
     codeRepository: GITHUB_URL,
-    softwareVersion: '0.3.0',
+    softwareVersion: '0.4.0-preview',
     isAccessibleForFree: true,
     keywords: SITE_KEYWORDS.join(', '),
     featureList: [
-      'Cranelift native JIT (10–230× speedup)',
+      'Native compiler pipeline: HIR → Machine IR → ADOB v3 → adeshlink',
+      'Cranelift native JIT',
       'Zero-cost compile-time memory safety',
+      'Type aliases, record types, and the `type` keyword',
+      'Foreign Function Interface with C ABI calling conventions',
       'Hardware SIMD (AVX2, ARM Neon)',
-      'Multi-backend execution (Interpreter, JIT, AOT, WASM, GPU MLIR)',
+      'Multi-target execution (Interpreter, Native JIT, AOT, WASM, GPU planned)',
       'Batteries-included networking (TCP, UDP, HTTP, WebSocket, TLS, DNS)',
-      'Integrated formatter, package manager ADL, LSP (ALS), test harness',
+      'Integrated formatter, package manager ADL, LSP (ALS), and test harness',
     ],
     offers: {
       '@type': 'Offer',
@@ -340,10 +354,10 @@ export function techArticleSchema(opts: {
     description: opts.description,
     url: absoluteUrl(opts.url),
     image: opts.image ? absoluteUrl(opts.image) : SOCIAL_IMAGE,
-    author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_AUTHOR_URL },
+    author: authorRef(),
     publisher: {
       '@type': 'Organization',
-      name: 'AdeshLang Project',
+      name: 'Adesh Project',
       logo: { '@type': 'ImageObject', url: LOGO_URL },
     },
     inLanguage: 'en',
@@ -410,17 +424,16 @@ export function personSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${SITE_URL}/about#ajay-tainwala`,
     name: SITE_AUTHOR,
     url: SITE_AUTHOR_URL,
-    image: 'https://ajaytainwala.vercel.app/Profile/AjayTainwala.jpg',
-    jobTitle: 'Creator & Lead Architect of AdeshLang',
-    worksFor: { '@type': 'Organization', name: 'AdeshLang Project', url: SITE_URL },
-    sameAs: [
-      'https://github.com/ajaytainwala-dev',
-      'https://in.linkedin.com/in/ajay-tainwala',
-      GITHUB_URL,
-      SITE_AUTHOR_URL,
-    ],
+    image: SITE_AUTHOR_IMAGE,
+    description:
+      'Ajay Tainwala is a software engineer, full-stack developer, and compiler enthusiast in Bengaluru, India. He is the creator of Adesh.',
+    jobTitle: 'Creator & Lead Architect of Adesh',
+    worksFor: { '@type': 'Organization', name: 'Adesh Project', url: SITE_URL },
+    mainEntityOfPage: { '@type': 'ProfilePage', '@id': `${SITE_URL}/about` },
+    sameAs: SITE_AUTHOR_SAME_AS,
     knowsAbout: ['Programming Languages', 'Compilers', 'Rust', 'Systems Programming', 'JIT Compilation'],
   };
 }
@@ -437,12 +450,12 @@ export function softwareSourceCodeSchema(opts: {
     '@type': 'SoftwareSourceCode',
     name: opts.name,
     description: opts.description,
-    programmingLanguage: 'AdeshLang',
+    programmingLanguage: 'Adesh',
     runtimePlatform: 'Adesh Runtime (x86_64, AArch64, WASM)',
     codeRepository: GITHUB_URL,
     url: absoluteUrl(opts.url),
     text: opts.codeSample,
-    author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_AUTHOR_URL },
+    author: authorRef(),
   };
 }
 
@@ -459,7 +472,7 @@ export function courseSchema(opts: {
     description: opts.description,
     provider: {
       '@type': 'Organization',
-      name: 'AdeshLang Project',
+      name: 'Adesh Project',
       sameAs: SITE_URL,
     },
     url: absoluteUrl(opts.url),

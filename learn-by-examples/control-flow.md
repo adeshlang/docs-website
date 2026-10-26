@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="if/elif/else branching, ternary expressions, 3-part for loops, do-while loops, and built-in array iterators" />
 
-AdeshLang provides powerful control flow constructs, including boolean branching (`if`/`elif`/`else`), ternary selection (`? :`), `while` loops, guaranteed-execution `do-while` loops, classic 3-part `for` loops, and multi-variable loop initialization.
+Adesh provides powerful control flow constructs, including boolean branching (`if`/`elif`/`else`), ternary selection (`? :`), `while` loops, guaranteed-execution `do-while` loops, classic 3-part `for` loops, and multi-variable loop initialization.
 
 ---
 
@@ -55,7 +55,7 @@ Evaluation Status: PASS
 
 ## 2. Classic & Multi-Variable C-Style For Loops
 
-AdeshLang supports traditional 3-part `for` loops (`init; condition; post-step`), as well as multi-variable initializers and multi-step updates.
+Adesh supports traditional 3-part `for` loops (`init; condition; post-step`), as well as multi-variable initializers and multi-step updates.
 
 ### Code Example
 

@@ -112,7 +112,7 @@ if (WebSocket.isError(client)) {
     print("Connected! State:", client.getState().toString());
 
     // Send text frame
-    client.sendText("Hello from AdeshLang!");
+    client.sendText("Hello from Adesh!");
 
     // Send binary frame
     client.sendBinary([0x01, 0x02, 0x03]);
@@ -352,7 +352,7 @@ import WebSocket;
 let server = WebSocket.server({ port: 8099, bind_address: "127.0.0.1" });
 server.onConnection(fn(conn) {
     print(f"Client {conn.id} connected from {conn.remoteAddr}");
-    conn.sendText("Welcome to AdeshLang chat!");
+    conn.sendText("Welcome to Adesh chat!");
     while (conn.isConnected()) {
         let msg = conn.receive();
         if (msg.type == "text") {

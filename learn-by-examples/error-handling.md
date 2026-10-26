@@ -10,7 +10,7 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 <FeatureStatus status="STABLE" details="Structured exception guarding with try, catch, and throw statements" />
 
-AdeshLang provides exception handling constructs (`try`, `catch`, `throw`) to raise, intercept, and gracefully recover from runtime errors.
+Adesh provides exception handling constructs (`try`, `catch`, `throw`) to raise, intercept, and gracefully recover from runtime errors.
 
 ---
 

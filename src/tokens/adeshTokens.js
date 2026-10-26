@@ -1,5 +1,5 @@
 /**
- * Shared token definitions for AdeshLang syntax highlighting.
+ * Shared token definitions for Adesh syntax highlighting.
  *
  * To add new keywords or language constructs, update the relevant
  * array below. Both the Prism and TextMate grammars reference

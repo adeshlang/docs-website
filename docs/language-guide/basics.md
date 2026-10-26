@@ -1,20 +1,20 @@
 ---
 id: basics
 title: "Language Syntax & Execution Model"
-description: "Formal specification of AdeshLang lexical structure, tokenization, statement grammar, evaluation order, and compilation pipeline."
+description: "Formal specification of Adesh lexical structure, tokenization, statement grammar, evaluation order, and compilation pipeline."
 sidebar_label: "Syntax & Execution Model"
 ---
 
 # Language Syntax & Execution Model
 
-This specification details the formal lexical grammar, statement termination rules, expression evaluation order, and compiler processing stages for AdeshLang programs.
+This specification details the formal lexical grammar, statement termination rules, expression evaluation order, and compiler processing stages for Adesh programs.
 
 ---
 
 ## 1. Lexical Architecture
 
 ### 1.1 Source Character Encoding
-AdeshLang source code is represented as a stream of UTF-8 encoded bytes. Non-UTF-8 byte sequences encountered during lexing trigger a fatal compile-time error (`E0001: Invalid UTF-8 sequence`).
+Adesh source code is represented as a stream of UTF-8 encoded bytes. Non-UTF-8 byte sequences encountered during lexing trigger a fatal compile-time error (`E0001: Invalid UTF-8 sequence`).
 
 ### 1.2 Whitespace and Line Terminators
 Whitespace characters (Space `U+0020`, Horizontal Tab `U+0009`, Carriage Return `U+000D`, and Line Feed `U+000A`) serve to separate tokens and are otherwise ignored by the lexer, except when enclosed in string literals.
@@ -27,13 +27,13 @@ The lexer recognizes two forms of comments:
 ### 1.4 Identifiers and Keywords
 Identifiers must begin with an ASCII letter (`a-z`, `A-Z`) or an underscore (`_`), followed by zero or more alphanumeric ASCII characters or underscores. 
 
-AdeshLang reserves **83 identifier spellings** as language keywords. When the lexer encounters an identifier matching a reserved spelling, it emits a dedicated keyword token rather than a general `Token::Identifier`. See [Keywords Reference](./keywords) for the complete table.
+Adesh reserves **83 identifier spellings** as language keywords. When the lexer encounters an identifier matching a reserved spelling, it emits a dedicated keyword token rather than a general `Token::Identifier`. See [Keywords Reference](./keywords) for the complete table.
 
 ---
 
 ## 2. Compiler Execution Pipeline
 
-AdeshLang source code undergoes four discrete compilation phases prior to target execution:
+Adesh source code undergoes four discrete compilation phases prior to target execution:
 
 ```
 +------------------+     +------------------+     +------------------+     +------------------+
@@ -51,14 +51,14 @@ AdeshLang source code undergoes four discrete compilation phases prior to target
 1. **Lexical Analysis**: Converted into a high-density, contiguous token array with source location metadata (line, column, byte offset).
 2. **Abstract Syntax Tree (AST) Parsing**: Top-down operator precedence (Pratt) parsing constructs an immutable AST graph validating block structure, operator associativity, and grammar correctness.
 3. **Semantic Analysis & Symbol Resolution**: Scopes are checked, symbols resolved in lexical environments, and Hindley-Milner bidirectional type inference determines type bounds and verifies borrow invariants.
-4. **Target Code Generation**: Lowered into AdeshLang Bytecode VM instructions or Cranelift JIT Intermediate Representation (IR) nodes depending on execution target flags (`--jit`, `--bytecode`, `--aot`).
+4. **Target Code Generation**: Lowered into native machine code through the Cranelift JIT, AOT compilation, or the WASM target depending on execution flags (`--jit-native`, `--aot`, `--wasm`).
 
 ---
 
 ## 3. Statement Grammar & Semicolon Rules
 
 ### 3.1 Statement Termination
-AdeshLang utilizes explicit semicolon termination for expression statements, variable bindings, imports, and control flow exits:
+Adesh utilizes explicit semicolon termination for expression statements, variable bindings, imports, and control flow exits:
 
 ```adesh
 let total: f64 = 100.0; // Binding statement
@@ -117,7 +117,7 @@ This guarantees complete isolation during variable mutation and prevents aliasin
 | Binary Integer | `0b1010_1100` | Exact bit pattern |
 | Typed Suffix | `255u8`, `-10i32` | Explicit bit-width encoding (`u8`, `i32`) |
 | IEEE Floating-Point | `3.14159`, `1.2e-5` | 64-bit IEEE 754 double precision (`f64`) |
-| UTF-8 String | `"AdeshLang\n"` | Heap string buffer pointer descriptor |
+| UTF-8 String | `"Adesh\n"` | Heap string buffer pointer descriptor |
 | Raw String | `raw"C:\System\Path"` | Verbatim character sequence, escape chars ignored |
 | Boolean | `true`, `false` | 8-bit byte (`0x01` = true, `0x00` = false) |
 | Null Sentinel | `null` | Zero pointer (`0x0000000000000000`) |

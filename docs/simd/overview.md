@@ -7,11 +7,11 @@ sidebar_label: SIMD Overview
 import FeatureStatus from '@site/src/components/FeatureStatus';
 import BackendSupport from '@site/src/components/BackendSupport';
 
-# SIMD & Vectorized Computing in AdeshLang
+# SIMD & Vectorized Computing in Adesh
 
 <FeatureStatus status="STABLE" details="Explicit vector intrinsics and auto-vectorization passes" />
 
-SIMD (**Single Instruction, Multiple Data**) allows AdeshLang to execute arithmetic, logical, and bitwise operations across contiguous vector datasets simultaneously using dedicated CPU vector registers (x86_64 **AVX2 / AVX-512**, ARM **NEON**, and WebAssembly **SIMD128**).
+SIMD (**Single Instruction, Multiple Data**) allows Adesh to execute arithmetic, logical, and bitwise operations across contiguous vector datasets simultaneously using dedicated CPU vector registers (x86_64 **AVX2 / AVX-512**, ARM **NEON**, and WebAssembly **SIMD128**).
 
 :::info Two SIMD surfaces
 The interpreter and JIT expose SIMD through two surfaces:
@@ -48,7 +48,7 @@ The interpreter and JIT expose SIMD through two surfaces:
 
 ## 1. Supported Vector Types
 
-AdeshLang provides first-class native vector types mapped directly to 128-bit, 256-bit, and 512-bit hardware vector registers:
+Adesh provides first-class native vector types mapped directly to 128-bit, 256-bit, and 512-bit hardware vector registers:
 
 | Vector Type | Element Type | Lanes (Elements) | Total Register Width |
 |-------------|--------------|------------------|----------------------|
@@ -88,7 +88,7 @@ let fma_res = a.fma(b, scalar_factor);
 
 ## 3. High-Performance Vector Computations
 
-### SIMD Dot Product (8x Speedup)
+### SIMD Dot Product
 ```adesh
 @pure
 @noalloc
@@ -136,7 +136,7 @@ fn blend_rgba_chunk(foreground: &[u8; 32], background: &[u8; 32], alpha: u8): [u
 
 ## 4. Array Vector Operations
 
-AdeshLang also provides high-level array vector helpers for rapid prototyping.
+Adesh also provides high-level array vector helpers for rapid prototyping.
 Plain arrays support **element-wise operators**, and the `Simd` namespace
 offers reductions. All of the following run in the interpreter and are
 SIMD-vectorized by the compiler:
@@ -178,8 +178,6 @@ These come straight from
 
 <BackendSupport
   interpreter="full"
-  bytecodeVm="full"
-  jit="full"
   nativeJit="full"
   aot="full"
   wasm="partial"

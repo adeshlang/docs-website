@@ -7,7 +7,7 @@ description: The `match` keyword begins exhaustive pattern matching over enums, 
 
 # `match`
 
-`match` begins a **pattern-matching expression**. It evaluates a selector value, compares it against a series of **pattern arms**, and runs the first arm whose pattern matches, binding any captured sub-values for use in that arm. AdeshLang checks **exhaustiveness** (all variants/cases covered or an explicit wildcard `_`) and supports **or-patterns** (`|`), **range patterns**, **guard clauses** (`if`), and **destructuring** of enums, structs, and tuples.
+`match` begins a **pattern-matching expression**. It evaluates a selector value, compares it against a series of **pattern arms**, and runs the first arm whose pattern matches, binding any captured sub-values for use in that arm. Adesh checks **exhaustiveness** (all variants/cases covered or an explicit wildcard `_`) and supports **or-patterns** (`|`), **range patterns**, **guard clauses** (`if`), and **destructuring** of enums, structs, and tuples.
 
 > **Ground truth:** Lexer `TokenKind::Match` (`src/parsing/lexer.rs:955`), AST `ExprKind::Match { selector, arms }`, hover doc *Pattern matching expression with exhaustive arms* (`als/src/hover.rs:341`), memory layout and lowering in `enums-pattern-matching.md:3`.
 

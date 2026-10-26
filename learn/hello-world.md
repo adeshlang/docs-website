@@ -36,7 +36,7 @@ adesh run hello.adesh
 Hello, World!
 ```
 
-🎉 You just ran your first AdeshLang program!
+🎉 You just ran your first Adesh program!
 
 ## What Just Happened?
 
@@ -51,14 +51,14 @@ Hello, World!
 Change the message and run again:
 
 ```adesh
-print("Hello, AdeshLang!");
+print("Hello, Adesh!");
 print("I'm learning to code!");
 print("This is fun!");
 ```
 
 **Output:**
 ```
-Hello, AdeshLang!
+Hello, Adesh!
 I'm learning to code!
 This is fun!
 ```
@@ -99,7 +99,7 @@ Use double quotes `"` for strings. Single quotes `'` are for single characters.
 
 ### Statements and Semicolons
 
-Each line of action ends with `;`. It tells AdeshLang "this instruction is complete."
+Each line of action ends with `;`. It tells Adesh "this instruction is complete."
 
 ```adesh
 print("Line 1");    // Statement 1
@@ -114,7 +114,7 @@ Line 2
 Line 3
 ```
 
-Without `;`, AdeshLang gets confused about where one instruction ends and the next begins.
+Without `;`, Adesh gets confused about where one instruction ends and the next begins.
 
 ## Common Mistakes
 
