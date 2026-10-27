@@ -15,14 +15,14 @@ Between the frontend and the execution backends, Adesh uses a layered
 high-level detail while adding information the next stage needs:
 
 ```
-AST ──► HIR ──► MIR ──► VIR ──► [Interpreter | Bytecode | JIT | AOT | WASM]
+AST ──► HIR ──► MIR ──► VIR ──► [Interpreter | JIT Compiler | AOT Native | WASM]
         │        │        │
      resolved  ownership  SSA + optimized
      & clean   annotated  low-level ops
 ```
 
 > The **Core Invariant**: VIR is the unified input for the Interpreter,
-> Native JIT, AOT, and WASM targets — one lowering, many targets.
+> JIT Compiler, AOT Native, and WASM targets — one lowering, many targets.
 
 ---
 

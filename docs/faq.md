@@ -18,7 +18,7 @@ Adesh is a Rust-inspired, statically-typed programming language featuring memory
 
 **Key advantages:**
 - ✅ **Memory safe without GC** - Compile-time ownership/borrowing checks
-- ✅ **Multi-target execution** - Interpreter, native JIT, AOT native compilation, and WASM; GPU planned
+- ✅ **Multi-target execution** - Interpreter, JIT compiler, AOT native compilation (zero LLVM dependency), and WASM
 - ✅ **Modern syntax** - Clean, readable, easy to learn
 - ✅ **Production ready** - 100% test coverage, comprehensive documentation
 
@@ -202,10 +202,10 @@ To measure performance on your hardware, run the programs in [`examples/fib/`](h
 **Development:** Interpreter
 
 **Production:**
-- **Standalone apps:** AOT native compilation
-- **Services:** Native JIT
+- **Standalone apps:** AOT native compilation (without LLVM or external dependencies)
+- **Services & compute:** JIT Compiler
 - **Web:** WebAssembly
-- **GPU computing:** GPU target (planned for a future release)
+
 
 See [Backends Overview](backends/overview) for detailed comparison.
 

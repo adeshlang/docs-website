@@ -20,7 +20,7 @@ const facts = [
   },
   {
     icon: 'bolt',
-    title: 'Cranelift JIT',
+    title: 'JIT Compiler',
     body: 'Runtime native code generation for compute-heavy workloads.',
   },
   {
@@ -104,9 +104,9 @@ export default function About(): JSX.Element {
           <p>
             <strong>v0.4.0 is coming soon</strong> and focuses on native execution: a complete
             pipeline from typed HIR through Machine IR to ADOB v3 object files, linked into
-            standalone executables by <code>adeshlink</code>. The native JIT, AOT, and WASM
-            targets continue to evolve alongside it, with GPU acceleration planned for a future
-            release.
+            standalone executables by <code>adeshlink</code> without LLVM or external dependencies.
+            The JIT compiler, AOT (native compilation without any LLVM or other dependency), and WASM
+            targets continue to evolve alongside it.
           </p>
           <p>
             <strong>Made with Rust:</strong> the entire toolchain — lexer, parser, AST, IR

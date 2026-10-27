@@ -175,9 +175,9 @@ print("vector sum:", result);`,
   },
   {
     id: 'njit',
-    label: 'Native JIT',
-    title: 'Cranelift native machine-code execution',
-    code: `// adesh build run --jit-native main.adesh
+    label: 'JIT Compiler',
+    title: 'JIT Compiler: native machine-code execution',
+    code: `// adesh run --njit main.adesh
 
 fn fibonacci(n) {
   if (n <= 1) { return n; }
@@ -197,12 +197,12 @@ const features = [
   {
     icon: 'deployed_code',
     title: 'Native compiler pipeline',
-    body: 'HIR lowers to Machine IR, then validated <code>ADOB v3</code> objects are linked by <code>adeshlink</code> into PE, ELF, and Mach-O targets. Landing in <strong>v0.4.0</strong>.',
+    body: 'HIR lowers to Machine IR, then validated <code>ADOB v3</code> objects are linked by <code>adeshlink</code> into PE, ELF, and Mach-O targets without LLVM or external dependencies.',
     badge: 'v0.4.0',
   },
   {
     icon: 'bolt',
-    title: 'Cranelift native JIT',
+    title: 'JIT Compiler',
     body: 'Executes LIR as native x86-64 / ARM64 machine code at runtime for compute-heavy workloads.',
   },
   {
@@ -228,7 +228,7 @@ const features = [
 ];
 
 const stats = [
-  { value: '5', label: 'Execution targets' },
+  { value: '4', label: 'Execution targets' },
   { value: '23', label: 'Platform builds' },
   { value: '0', label: 'GC pauses' },
   { value: '100%', label: 'Open source' },
@@ -246,7 +246,7 @@ const roadmap = [
   {
     icon: 'link',
     title: 'adeshlink native linker',
-    detail: 'Parse → GC → ICF → resolve → relocate, with PE, ELF, and Mach-O writers.',
+    detail: 'Parse → GC → ICF → resolve → relocate, with PE, ELF, and Mach-O writers without external dependencies.',
     status: 'preview',
     label: 'Preview',
     progress: 82,
@@ -294,11 +294,10 @@ const backends: Array<{
   progress: number;
   meta: string;
 }> = [
-  { name: 'Interpreter', status: 'full', tag: 'Reference', progress: 100, meta: 'Full language semantics' },
-  { name: 'Native JIT', status: 'partial', tag: 'Maturing', progress: 72, meta: 'Cranelift x86-64 / ARM64' },
-  { name: 'WebAssembly', status: 'partial', tag: 'In progress', progress: 45, meta: 'Browser + Node runtime' },
-  { name: 'AOT Native', status: 'partial', tag: 'Maturing', progress: 66, meta: 'Adesh native compilation' },
-  { name: 'GPU', status: 'planned', tag: 'Planned', progress: 15, meta: 'Parallel compute' },
+  { name: 'Interpreter', status: 'full', tag: 'Reference', progress: 100, meta: 'Full language semantics & source of truth' },
+  { name: 'JIT Compiler', status: 'partial', tag: 'Maturing', progress: 75, meta: 'Native machine code at runtime' },
+  { name: 'AOT (Native)', status: 'partial', tag: 'Maturing', progress: 80, meta: 'Native compilation without LLVM or external dependencies' },
+  { name: 'WebAssembly', status: 'partial', tag: 'In progress', progress: 50, meta: 'Browser + WASI runtime' },
 ];
 
 const tools = [
@@ -334,7 +333,7 @@ const tools = [
     icon: 'science',
     title: 'Test harness',
     description: 'Embedded tests, name filters, fail-fast runs, and backend checks.',
-    command: 'adesh run --test',
+    command: 'adesh test',
     href: '/docs/tools/testing',
   },
   {
@@ -464,27 +463,27 @@ export default function Home(): JSX.Element {
     {
       question: 'What is Adesh?',
       answer:
-        'Adesh (Command) is a Rust-inspired, high-performance programming language with a native compiler and linker, Cranelift native JIT, zero-cost compile-time memory safety, hardware SIMD, FFI, type aliases, and batteries-included networking. It is experimental and built with Rust in Bengaluru, India by Ajay Tainwala.',
+        'Adesh (Command) is a Rust-inspired, high-performance programming language with self-contained native compilation, JIT compiler, zero-cost compile-time memory safety, hardware SIMD, FFI, type aliases, and batteries-included networking. It is experimental and built with Rust in Bengaluru, India by Ajay Tainwala.',
     },
     {
       question: 'Is Adesh production-ready?',
       answer:
-        'No. Adesh is experimental. The Tree-Walk Interpreter is the primary face of development and source of truth. The native compiler, ADOB v3 object format, adeshlink, and the other execution backends are under active development and are not all production-ready yet.',
+        'No. Adesh is experimental. The Tree-Walk Interpreter is the primary face of development and source of truth. The self-contained native compiler, ADOB v3 object format, adeshlink, and the other execution backends are under active development and are not all production-ready yet.',
     },
     {
       question: 'What is coming in Adesh v0.4.0?',
       answer:
-        'Adesh v0.4.0 is focused on native features: the native compiler pipeline (HIR to Machine IR), the ADOB v3 object format, the adeshlink native linker, and continued work on AArch64, RISC-V, WebAssembly, and macOS targets. Preview documentation is available today.',
+        'Adesh v0.4.0 is focused on native features: the native compiler pipeline (HIR to Machine IR), the ADOB v3 object format, the adeshlink native linker (producing binaries without LLVM or external toolchains), and continued work on AArch64, RISC-V, WebAssembly, and macOS targets. Preview documentation is available today.',
     },
     {
       question: 'What makes Adesh fast?',
       answer:
-        'Native Cranelift JIT compiles LIR to native x86-64 and ARM64 machine code at runtime, AOT builds go through ADOB and adeshlink, and explicit SIMD vectorization uses AVX2 and ARM Neon.',
+        'The JIT compiler compiles code to native x86-64 and ARM64 machine code at runtime, AOT builds generate native binaries via ADOB and adeshlink without LLVM or other dependencies, and explicit SIMD vectorization uses AVX2 and ARM Neon.',
     },
     {
       question: 'How do I install Adesh?',
       answer:
-        'Download the latest release from GitHub Releases for Windows, macOS, Linux, or Android, or follow the installation guide on adeshlang.org. Adesh v0.4.0, with the native compiler and linker, is coming soon.',
+        'Download the latest release from GitHub Releases for Windows, macOS, Linux, or Android, or follow the installation guide on adeshlang.org.',
     },
     {
       question: 'Is Adesh memory-safe without garbage collection?',
@@ -513,11 +512,11 @@ export default function Home(): JSX.Element {
       },
       {
         name: 'Run with the interpreter',
-        text: 'Execute adesh build run main.adesh to see the output.',
+        text: 'Execute adesh run main.adesh to see the output.',
       },
       {
         name: 'Try native execution',
-        text: 'Execute adesh run --jit-native main.adesh to run on the native JIT, or adesh build for the native pipeline.',
+        text: 'Execute adesh run --njit main.adesh to run on the JIT compiler, or adesh build for zero-dependency AOT native compilation.',
       },
     ],
   });
@@ -535,13 +534,13 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title="Adesh Lang — Native-Speed, Memory-Safe Language"
-      description="Adesh is a Rust-inspired language with type aliases, Cranelift JIT, SIMD, FFI, and a native compiler and linker coming in v0.4.0."
+      description="Adesh is a Rust-inspired language with type aliases, JIT compiler, SIMD, FFI, and zero-dependency native compilation."
     >
       <Head>
         <link rel="canonical" href={`${SITE_URL}/`} />
         <meta
           name="keywords"
-          content="Adesh Lang, Adesh, programming language, Rust-inspired, native compiler, ADOB, adeshlink, Cranelift JIT, type aliases, FFI, memory-safe, SIMD, AOT, WASM, systems programming"
+          content="Adesh Lang, Adesh, programming language, Rust-inspired, native compiler, ADOB, adeshlink, JIT compiler, type aliases, FFI, memory-safe, SIMD, AOT, WASM, systems programming"
         />
         <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(navJsonLd)}</script>
@@ -591,9 +590,9 @@ export default function Home(): JSX.Element {
               </h1>
 
               <p className="hero-lead">
-                A Rust-inspired systems language with compile-time memory safety, Cranelift native
-                JIT, SIMD, type aliases, FFI, and batteries-included networking — with a native
-                compiler and linker on the way.
+                A Rust-inspired systems language with compile-time memory safety, JIT compiler,
+                SIMD, type aliases, FFI, and batteries-included networking — with zero-dependency
+                native AOT compilation.
               </p>
 
               <div className="hero-actions">

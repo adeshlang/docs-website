@@ -301,8 +301,9 @@ Download and install the official package for your platform using the [Direct Do
 :::tip Out-of-the-Box Execution (Zero External Dependencies)
 Adesh's core features run immediately after Step 1 with **zero external dependencies**:
 * **`adesh repl`** — Interactive REPL shell.
-* **`adesh run <file.adesh>`** — Tree-walk bytecode interpreter.
-* **`adesh run --njit <file.adesh>`** — Cranelift Native JIT engine.
+* **`adesh run <file.adesh>`** — Tree-walk reference interpreter.
+* **`adesh run --njit <file.adesh>`** — JIT Compiler (native machine code).
+* **`adesh build <file.adesh>`** — AOT native compilation without LLVM or external dependencies.
 * **`adesh check` & `adesh fmt`** — Static analysis, borrow-checker, and formatting.
 * **`als` / `adesh lsp`** — Language server for real-time IDE diagnostics.
 :::

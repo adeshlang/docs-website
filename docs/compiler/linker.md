@@ -24,11 +24,11 @@ sections, applies supported relocations, and writes a target binary.
 
 | Format/path | Verified scope | Important limits |
 |---|---|---|
-| **Windows PE32+** | Static x86-64 executables; produced binaries have been executed in end-to-end tests | Shared-library output is unsupported; some PE features are incomplete |
-| **ELF** | Static executable emission | No dynamic linker support; output has not been execution-tested |
-| **Mach-O** | Basic headers and load-command scaffolding | Skeletal; lacks the dynamic-loader support needed for normal macOS system-library linking |
-| **WASM** | Linker writer exists | Stub-level output; use the separate compiler WASM backend for the compiler's WASM path |
-| **Static archives** | GNU `ar` archive reading and writing | Archives written by `adeshlink ar` do not include a symbol-index member |
+| **Windows PE32+** | Static & DLL x86-64 executables; produced binaries have been executed in end-to-end tests with real CRT imports | In-tree execution tested on Windows x86-64 |
+| **ELF** | Static & dynamic x86-64 executables execution-tested; shared libraries (`.so`) verified via `dlopen`/`dlsym` | x86-64 Linux execution-tested; AArch64 pending hardware tests |
+| **Mach-O** | 64-bit Mach-O headers, `LC_SEGMENT_64`, and dyld binding structures verified by decoders | Dynamic linking execution pending macOS CI runner |
+| **WASM** | Linker writer exists | Use the compiler's WASM backend for runnable WebAssembly modules |
+| **Static archives** | GNU `ar` archive reading and writing | Multi-member archive resolution |
 
 The native code generator is also target-limited. x86-64 has a substantial
 integer GPR subset; AArch64 and RISC-V emit only a small proof-of-concept

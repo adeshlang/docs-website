@@ -116,19 +116,19 @@ Run your script instantly using the default interpreter:
 adesh run main.adesh
 ```
 
-### Try Native JIT Compilation
+### Try the JIT Compiler
 
-To execute with native machine-code generation, pass the `--jit-native` flag:
+To execute with native machine-code generation at runtime, pass the `--njit` flag:
 
 ```bash
-adesh run --jit-native main.adesh
+adesh run --njit main.adesh
 ```
 
 ---
 
-## 5. Compile to Standalone Native Executable
+## 5. Compile to Standalone Native Executable (AOT)
 
-Build a production-ready binary executable directly with `adesh build`:
+Build a standalone native binary directly with `adesh build` without requiring LLVM, Clang, or any external toolchain:
 
 ```bash
 adesh build main.adesh -o my_app.exe
@@ -154,7 +154,7 @@ adesh run --test --test-name test_counter main.adesh
 # Stop execution on the first failure
 adesh run --test --fail-fast main.adesh
 
-# Benchmark across backends (Interpreter vs JIT vs Native JIT)
+# Benchmark across backends (Interpreter vs JIT Compiler vs AOT Native)
 adesh run --test --backend-check main.adesh
 ```
 
@@ -163,5 +163,5 @@ adesh run --test --backend-check main.adesh
 ## What's Next?
 
 - Explore [Learn Programming](/learn) for a step-by-step introduction to programming concepts.
-- Read [Execution Backends](/docs/backends/overview) to understand the Interpreter, Native JIT, and AOT native compilation targets.
+- Read [Execution Backends](/docs/backends/overview) to understand the Interpreter, JIT Compiler, and AOT native compilation targets.
 - Browse the [Standard Library Reference](/docs/builtin/overview) to see built-in networking, file system, and cryptography modules.

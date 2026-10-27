@@ -8,37 +8,35 @@ import FeatureStatus from '@site/src/components/FeatureStatus';
 
 # ADOB — Adesh Native Object Binary
 
-<FeatureStatus status="PARTIAL" details="Version 1.0 format and validation are implemented; target codegen and linker support vary" />
+<FeatureStatus status="IMPLEMENTED" details="ADOB v3 format, symmetric writer/reader, strict validation, and linker integration are implemented" />
 
 **ADOB** (*Adesh Native Object Binary*) is Adesh's relocatable object format.
 It stores a target descriptor, sections, symbols, imports and exports,
-relocations, and metadata in a common container. An ADOB object still describes
-a particular target; using the format does not imply that code generation or
-linking is implemented for every architecture or device.
+relocations, and metadata in a self-contained binary container.
 
-> **Planned for v0.4.0:** The native compiler and linker improvements using
-> ADOB are planned for Adesh v0.4.0. ADOB v1.0 and its tools exist in the
-> current codebase, but the full native toolchain is not yet a generally
-> supported release feature.
+> **Native Toolchain in v0.4.0:** The native compiler and linker pipeline
+> uses ADOB v3 as the standard object file format. Validated ADOB v3 files
+> are emitted directly by native codegen and linked by `adeshlink` into native
+> executables without LLVM or external tools.
 
 ```text
-Adesh source → partial native lowering → Machine IR → ADOB object → adeshlink → target output
+Adesh source → Frontend & HIR → Machine IR → ADOB v3 object → adeshlink → Native Executable
 ```
 
 ---
 
 ## What the format contains
 
-ADOB objects use format version **1.0.0**. The serialized data includes:
+ADOB objects use format version **3.0** (with backward-compatible support for v2). The serialized container includes:
 
 | Part | Contents |
 |---|---|
-| Header | Magic `ADOB`, format version, flags, and entry counts |
-| Target descriptor | Device, architecture, operating system, environment, ABI, pointer width, endianness, and target features |
-| Sections | Section names, kinds, permissions/flags, alignment, payload bytes, and relocations |
-| Symbols | Defined and undefined symbols with binding, visibility, kind, and section information |
-| Imports and exports | External dependency names and exported symbol names |
-| Metadata | Optional safety, security, threading, optimization, debug, unwind, accelerator, memory-region, extension, and build metadata |
+| Header | Magic `ADOB`, format version, flags, and section/symbol entry counts |
+| Target descriptor | Architecture (x86-64, AArch64, RISC-V), OS (Windows, Linux, macOS), ABI, pointer width, endianness, and target features |
+| Sections | Explicit per-section sizes (ensuring zero-fill `.bss` and `.tbss` preservation), distinct TLS section kinds, permissions/flags, alignment, and relocations |
+| Symbols | Defined and undefined symbols with binding, visibility, kind, and section references |
+| Imports and exports | External dependency names (e.g. `kernel32.dll`, `msvcrt.dll`, `libc.so.6`) and exported symbols |
+| Metadata | Optional safety, security, threading, unwind info (`UNWIND_INFO`, `.eh_frame`), and debug metadata |
 
 The library also has an `AdobBundle` container for grouping objects. Bundling
 objects does not provide missing device code generation or runtime support.

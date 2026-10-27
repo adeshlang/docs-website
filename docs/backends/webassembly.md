@@ -17,7 +17,7 @@ You can test the WebAssembly engine live right now in your browser without insta
 ┌──────────────────────────────────────────────────────────┐
 │                   Adesh WASM Target                  │
 ├──────────────────────────────────────────────────────────┤
-│  Adesh Source (.adesh) ──► LLVM WASM Emitter ──► .wasm   │
+│  Adesh Source (.adesh) ──► WASM Emitter ──► .wasm        │
 │                                              │           │
 │                    ┌─────────────────────────┴─────────┐ │
 │                    ▼                                   ▼ │

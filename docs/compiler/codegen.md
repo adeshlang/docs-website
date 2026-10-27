@@ -52,11 +52,11 @@ Source → Lexer → Parser → AST → HIR → MIR/Borrow → VIR ──► VIR
                                                       │
                                           ┌───────────┼───────────────┐
                                           ▼           ▼               ▼
-                                      Interpreter  Cranelift       Bytecode/WASM
+                                      Interpreter  JIT Compiler    WASM
                                       (reference)  (native)        (portable)
 ```
 
-The ADOB native path is separate: HIR → Machine IR → ADOB → `adeshlink`.
+The native AOT path is self-contained: HIR → Machine IR → Native Codegen → ADOB v3 → `adeshlink` → Executable (without any LLVM or external toolchain dependencies).
 Backend interfaces and supported language features vary.
 
 ---
@@ -66,11 +66,11 @@ Backend interfaces and supported language features vary.
 | Backend | Status | CLI Flag | Source Path | Best For |
 |---|---|---|---|---|
 | **Interpreter** | ✅ Full | `adesh run` (default) | `src/execution/`, `src/backends/interpreter_backend/` | dev, debugging, REPL |
-| **Native Cranelift JIT** | 🟡 Partial | `--jit-native` / `--native-jit` / `--njit` | `src/backends/jit/cranelift/`, `src/backends/jit/native/` | compute-intensive |
-| **AOT Native (Cranelift)** | 🟡 Partial | `--codegen=cranelift` | `src/backends/aot/` — `abi.rs`, `cache.rs`, `module_linking.rs`, `object_gen.rs`, `static_linker.rs`, `cranelift/` | alternative AOT path (opt-in) |
-| **ADOB native toolchain** | 🟠 Partial — **the default executable path** | `adesh build` (default) / `--emit-adob` | `src/backends/native/`, `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | native codegen and linking (execution-verified on Windows x64 only) |
+| **JIT Compiler** | 🟡 Partial | `--njit` / `--jit-native` / `--native-jit` | `src/backends/jit/cranelift/`, `src/backends/jit/native/` | compute-intensive |
+| **AOT Native** | 🟠 Active (Default Build) | `adesh build` (default) / `--emit-adob` | `crates/adesh-codegen/`, `crates/adesh-object/`, `linker/` | standalone native compilation without LLVM or external dependencies |
+
 | **WebAssembly** | 🟡 Partial | `--wasm` | `src/backends/wasm_backend/`, `src/backends/wasm/` | browser, edge |
-| **GPU / MLIR** | 🔵 Planned | `--gpu` | `src/backends/mlir/` | CUDA/Vulkan kernels |
+
 
 `adesh build` uses the **native pipeline** (HIR → Machine IR → ADOB →
 `adeshlink`) as its default executable path; Cranelift is opt-in via
@@ -147,11 +147,11 @@ VIR instruction ──► interpreter dispatch (match on opcode)
 
 ---
 
-## Native JIT (Cranelift)
+## JIT Compiler
 
 **Sources:** `src/backends/jit/cranelift/`, `src/backends/jit/native/`, `src/backends/jit/array_ops/`, `src/backends/jit/optimizations/`, `src/backends/jit/mod.rs`
 
-The native JIT lowers VIR to Cranelift IR at runtime and executes the result from executable memory.
+The JIT compiler lowers VIR to Cranelift IR at runtime and executes the result from executable memory.
 
 ### Native code path
 
@@ -265,10 +265,10 @@ This is the most experimental path; the docs describe the pipeline, not stabilit
 | Flag | Backend | Meaning |
 |---|---|---|
 | (none) | Interpreter | default; `adesh run file.adesh` |
-| `--jit-native`, `--native-jit`, `--njit` | Cranelift Native JIT | full native codegen via Cranelift |
-| `--aot` | AOT | ahead-of-time native binary |
+| `--njit`, `--jit-native`, `--native-jit` | JIT Compiler | native machine-code compilation at runtime |
+| `adesh build` | AOT Native | standalone native binary (zero LLVM / external dependency) |
 | `--wasm` | WASM | WebAssembly emission |
-| `--gpu` | MLIR/GPU | GPU kernel emission |
+
 | `--emit=hir\|mir\|vir\|cfg` | (debug) | dump IR at that stage and exit |
 | `--backend=interpreter` | Interpreter | explicit selection |
 

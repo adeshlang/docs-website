@@ -27,7 +27,7 @@ Adesh is a modern systems-and-applications language designed around one simple i
 :::note Primary Execution Backend & Source of Truth
 The **Tree-Walk Interpreter** is currently the **main reference implementation** and reflection of Adesh. It represents the authoritative source of truth for language behavior, semantics, and standard library execution.
 
-Other execution targets — **Cranelift Native JIT**, **AOT Native Compilation**, **WASM**, and a **GPU** backend planned for a future release — are under **active development** (`EXPERIMENTAL` / `PARTIAL` status).
+Other execution targets — **JIT Compiler**, **AOT Native Compilation** (zero-dependency native compilation without LLVM), and **WASM** — are under **active development** (`EXPERIMENTAL` / `PARTIAL` status).
 :::
 
 :::tip Built with Rust & Community Shoutout
@@ -74,7 +74,7 @@ The language name itself reflects the core idea: a program is a set of precise i
 Memory safety, ownership awareness, and clear type rules are central. The compiler and runtime work together to catch mistakes early.
 
 ### 3. Performance with flexibility
-A program should not be locked into one execution strategy. Adesh can run through an interpreter, native JIT, AOT native compilation, WASM, or a GPU-oriented pipeline planned for a future release.
+A program should not be locked into one execution strategy. Adesh can run through an interpreter, JIT compiler, zero-dependency AOT native compilation, or WASM.
 
 ### 4. Progressive learning curve
 A beginner should be able to write a simple script quickly, while an advanced developer should still be able to work on performance-critical systems and compiler-related features.
@@ -107,13 +107,12 @@ flowchart LR
     B --> C[Semantic Analysis]
     C --> D[IR / Runtime Model]
     D --> E[Interpreter]
-    D --> F[Native JIT]
-    D --> G[AOT Native]
+    D --> F[JIT Compiler]
+    D --> G["AOT Native (Self-Contained)"]
     D --> H[WASM Target]
-    D --> I[GPU Backend]
 ```
 
-This makes the language more modular: the same program can be interpreted quickly for development, compiled for production, or adapted to specialized hardware.
+This makes the language more modular: the same program can be interpreted quickly for development, compiled for production, or adapted to specialized environments.
 
 ---
 
@@ -121,11 +120,10 @@ This makes the language more modular: the same program can be interpreted quickl
 
 | Backend | Best for | Characteristics |
 |---|---|---|
-| Interpreter | Learning, prototyping, debugging | Fast startup, flexible behavior |
-| Native JIT | Long-running compute | Runtime native code generation |
-| AOT Native Compilation | Production binaries | Optimized standalone executables |
+| Interpreter | Learning, prototyping, debugging | Fast startup, flexible behavior, primary reference |
+| JIT Compiler | Long-running compute | Runtime native code generation |
+| AOT Native Compilation | Production binaries | Standalone native executables without LLVM or external dependencies |
 | WASM | Browser and edge deployment | Portable sandboxed execution |
-| GPU (planned) | Parallel tasks and acceleration | Specialized hardware targeting |
 
 This backend model is one of Adesh’s defining strengths.
 

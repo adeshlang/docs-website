@@ -74,6 +74,12 @@ export function buildRedirects(): { from: string; to: string }[] {
   redirects.push({ from: '/learn/learn-by-examples', to: '/learn-by-examples' });
   redirects.push({ from: '/examples', to: '/learn-by-examples/runnable-examples' });
 
+  // 6) Legacy backend redirects
+  redirects.push({ from: '/docs/backends/bytecode-vm', to: '/docs/backends/overview' });
+  redirects.push({ from: '/backends/bytecode-vm', to: '/docs/backends/overview' });
+  redirects.push({ from: '/docs/backends/jit', to: '/docs/backends/native-jit' });
+  redirects.push({ from: '/backends/jit', to: '/docs/backends/native-jit' });
+
   return redirects;
 }
 

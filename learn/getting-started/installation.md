@@ -14,10 +14,10 @@ Get started in 3 simple steps:
 
 1. **Download & Install Core Package**: Choose your platform below or see the complete [Installation Downloads & Checksums](/docs/install).
 2. **Verify Environment**: Run `adesh doctor` to inspect compiler backends, PATH, and JIT runtime.
-3. **Setup Optional LLVM Toolchain**: Run `adesh toolchain install --use-system-packages` if you require AOT binary compilation (`adesh build`).
+3. **Start Coding & Compiling**: Run scripts with `adesh run`, accelerate with the JIT compiler (`adesh run --njit`), or compile standalone native binaries with `adesh build`—with zero external LLVM or C toolchain dependencies!
 
-:::tip Instant Out-of-the-Box Execution
-You can run programs (`adesh run file.adesh`), enter the REPL (`adesh repl`), and use the lightning-fast Cranelift JIT (`adesh run --njit file.adesh`) immediately after installing the core package without needing external LLVM toolchains!
+:::tip Instant Out-of-the-Box Execution (Zero External Dependencies)
+Adesh includes a self-contained compiler and native linker (`adeshlink`). You can run programs (`adesh run file.adesh`), enter the REPL (`adesh repl`), use the JIT compiler (`adesh run --njit file.adesh`), and compile standalone native executables (`adesh build file.adesh`) immediately without needing external LLVM or C toolchains!
 :::
 
 ### Pre-built Packages (v0.3.1)

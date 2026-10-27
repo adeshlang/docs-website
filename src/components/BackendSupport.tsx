@@ -2,10 +2,10 @@ import React from 'react';
 
 interface BackendSupportProps {
   interpreter?: 'full' | 'partial' | 'no';
+  jit?: 'full' | 'partial' | 'no';
   nativeJit?: 'full' | 'partial' | 'no';
   aot?: 'full' | 'partial' | 'no';
   wasm?: 'full' | 'partial' | 'no';
-  gpu?: 'full' | 'partial' | 'no';
 }
 
 const badgeMap = {
@@ -16,17 +16,17 @@ const badgeMap = {
 
 export default function BackendSupport({
   interpreter = 'full',
+  jit,
   nativeJit = 'partial',
   aot = 'partial',
   wasm = 'partial',
-  gpu = 'no',
 }: BackendSupportProps) {
+  const jitStatus = jit ?? nativeJit;
   const backends = [
     { name: 'Interpreter', status: interpreter },
-    { name: 'Native JIT', status: nativeJit },
-    { name: 'AOT Native', status: aot },
+    { name: 'JIT Compiler', status: jitStatus },
+    { name: 'AOT (Native)', status: aot },
     { name: 'WASM', status: wasm },
-    { name: 'GPU', status: gpu },
   ];
 
   return (

@@ -180,7 +180,6 @@ const sidebars: SidebarsConfig = {
         'backends/native-jit',
         'backends/aot',
         'backends/webassembly',
-        'backends/gpu-mlir',
       ],
     },
     {

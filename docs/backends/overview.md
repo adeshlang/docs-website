@@ -6,14 +6,20 @@ sidebar_label: Overview
 
 # Execution Backends Overview
 
-Adesh separates the source language from the execution model, so the same program can run in the interpreter during development or be compiled for a native, browser, or accelerated target.
+Adesh separates the source language from the execution model, so the same program can run in the interpreter during development or be compiled for a native or web target.
 
 :::important Primary Execution Reference & Experimental Status
 **Adesh is an Experimental Programming Language.**
 
 The **Tree-Walk Interpreter** (`adesh run file.adesh`) is currently the **main reflection and primary source of truth** for Adesh execution, evaluation logic, and standard library behavior.
 
-The execution targets are **Interpreter**, **Native JIT**, **AOT Native Compilation**, **WASM**, and **GPU** (planned for a future release). The native, WASM, and GPU targets are under **active development** (`EXPERIMENTAL` / `PARTIAL` status). No stable performance claims are published until these targets reach a stable release.
+The supported execution targets are:
+1. **Interpreter** (Reference implementation & source of truth)
+2. **JIT Compiler** (Native machine code generation at runtime)
+3. **AOT Native Compilation** (Self-contained native compilation without LLVM or external toolchain dependencies)
+4. **WASM** (WebAssembly for browser and edge deployment)
+
+The JIT compiler, native AOT, and WASM targets are under **active development** (`EXPERIMENTAL` / `PARTIAL` status).
 :::
 
 ## Execution targets
@@ -21,12 +27,11 @@ The execution targets are **Interpreter**, **Native JIT**, **AOT Native Compilat
 | Target | Status | Best For | Command |
 |--------|--------|----------|---------|
 | **Interpreter** | Reference | Development, debugging, REPL | `adesh run file.adesh` |
-| **Native JIT** | Partial | Compute-heavy workloads | `adesh run --jit-native file.adesh` |
-| **AOT Native Compilation** | Partial | Standalone native binaries | `adesh build file.adesh` |
+| **JIT Compiler** | Partial | Compute-heavy workloads | `adesh run --njit file.adesh` |
+| **AOT Native Compilation** | Partial | Standalone native binaries (zero LLVM dependency) | `adesh build file.adesh` |
 | **WASM** | Partial | Web and edge deployment | `adesh compile-wasm file.adesh` |
-| **GPU** | Planned | Parallel workloads | `adesh run --gpu file.adesh` |
 
-## Performance
+## Performance & Baseline
 
 No speedup guarantees are published while the native targets are experimental. Run the bundled programs on your own hardware with the exact toolchain version you plan to deploy:
 
@@ -50,15 +55,15 @@ Instant startup, the best diagnostics, and the easiest debugging experience.
 
 ### Compute-heavy workloads
 
-**Native JIT**
+**JIT Compiler**
 
 ```bash
-adesh run --jit-native src/main.adesh
+adesh run --njit src/main.adesh
 ```
 
-Compiles hot code to native machine code at runtime without a separate build step.
+Compiles hot code to native machine code at runtime without requiring an ahead-of-time build step.
 
-### Distribution
+### Standalone Distribution
 
 **AOT Native Compilation**
 
@@ -67,9 +72,9 @@ adesh build src/main.adesh -o myapp
 ./myapp
 ```
 
-Produces a standalone executable with no runtime dependency on the Adesh toolchain.
+Produces a standalone native executable using the built-in compiler, ADOB v3 object format, and `adeshlink` linker—with **no dependency on LLVM, Clang, GCC, MSVC, or external linkers**.
 
-### Web and edge
+### Web and Edge
 
 **WASM**
 
@@ -86,98 +91,75 @@ adesh compile-wasm src/lib.adesh -o lib.wasm
 
 Sandboxed execution that runs in browsers and edge runtimes.
 
-### GPU acceleration (planned)
-
-The GPU target is planned for a future release. The `--gpu` flag exists in preview builds and lowers parallel work through MLIR to GPU kernels:
-
-```bash
-adesh run --gpu program.adesh
-```
-
 ## Backend Architecture
 
-### Compilation Pipeline
+### Native Compilation Pipeline
 
 ```
 Source Code (.adesh)
     ↓
-┌─────────────────────────────────────┐
-│ Frontend                            │
-│  • Lexer → Parser → AST             │
-│  • Type checking                    │
-│  • Ownership/borrow analysis        │
-└─────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ Frontend (src/parsing/)                 │
+│  • Lexer → Parser → AST                 │
+│  • Type checking & Semantic Analysis    │
+└─────────────────────────────────────────┘
     ↓
-┌─────────────────────────────────────┐
-│ HIR (High-level IR)                 │
-│  • Semantic analysis                │
-│  • Optimization passes              │
-└─────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ High-Level IR (HIR)                     │
+│  • Desugaring & Scope Explicitation     │
+│  • Constant Folding                     │
+└─────────────────────────────────────────┘
     ↓
-┌─────────────────────────────────────┐
-│ LIR (Low-level IR)                  │
-│  • SSA form                         │
-│  • Type specialization              │
-│  • Dead code elimination            │
-└─────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ Borrow Checker & MIR                    │
+│  • Ownership Graph & ARC Insertion      │
+│  • Move Analysis (Compile-Time Safety)  │
+└─────────────────────────────────────────┘
     ↓
-┌───────────┬────────────┬──────┬──────┬──────┐
-│ Interp    │ Native JIT │ AOT  │ WASM │ GPU  │
-└───────────┴────────────┴──────┴──────┴──────┘
+┌──────────────────────────────────────────────────┐
+│ Target Selection                                 │
+├──────────────┬──────────────┬─────────────┬──────┤
+│ Interpreter  │ JIT Compiler │ AOT Native  │ WASM │
+└──────────────┴──────────────┴─────────────┴──────┘
 ```
+
+For the **AOT Native Compilation** path, lowering proceeds through Machine IR directly into the **ADOB v3** binary container and links via `adeshlink` into native PE, ELF, and Mach-O executables without invoking any external compiler or linker.
 
 ### Key Components
 
-1. **Frontend** (`src/frontend/`)
-   - Lexer: Tokenization
-   - Parser: AST generation
-   - Type checker: Static type verification
+1. **Frontend** (`src/parsing/`)
+   - Lexer: Tokenization and source tracking
+   - Parser: Typed Abstract Syntax Tree generation
+   - Semantic Engine: Static type inference, generic resolution, and safety verification
 
-2. **IR Layers** (`src/ir/`)
-   - HIR: High-level intermediate representation
-   - LIR: Low-level intermediate representation (SSA form)
+2. **IR Layers**
+   - HIR (`src/ir/hir/`): High-level intermediate representation
+   - MIR (`src/ir/mir/`): Middle-level IR for borrow checking and move semantics
+   - Machine IR (`crates/adesh-codegen/`): Platform register allocation and instruction emission
 
-3. **Execution targets** (`src/backends/`)
-   - Interpreter: tree-walk interpreter
-   - Native JIT: in-memory native compiler (Cranelift)
-   - AOT: standalone ahead-of-time native compilation
-   - WASM: WebAssembly target
-   - GPU: MLIR-based GPU compiler (planned)
+3. **Execution targets**
+   - **Interpreter**: AST tree-walk reference interpreter
+   - **JIT Compiler**: Runtime machine code generator (Cranelift)
+   - **AOT Native**: Self-contained native compilation toolchain (ADOB v3 + `adeshlink`)
+   - **WASM**: Standalone WebAssembly emitter
 
 ## Usage Examples
 
 ### Switching targets
 
 ```bash
-# Same code, different execution targets
-adesh run compute.adesh              # Interpreter
-adesh run --jit-native compute.adesh # Native JIT
+# Development: run via the interpreter
+adesh run compute.adesh
 
-# Compile to a native binary
+# Compute acceleration: run via the JIT compiler
+adesh run --njit compute.adesh
+
+# Compile to a standalone native binary (zero LLVM/C dependencies)
 adesh build compute.adesh -o compute
 ./compute
 
 # Compile to WebAssembly
 adesh compile-wasm compute.adesh -o compute.wasm
-wasmtime compute.wasm
-```
-
-### GPU Backend Usage
-
-```bash
-# Auto-detect GPU (CUDA > ROCm > Vulkan > Metal)
-adesh run --gpu kernel.adesh
-
-# Specify GPU target
-adesh run --gpu --gpu-target=cuda kernel.adesh
-adesh run --gpu --gpu-target=rocm kernel.adesh
-adesh run --gpu --gpu-target=vulkan kernel.adesh
-
-# Custom thread configuration
-adesh run --gpu --gpu-grid=256,1,1 --gpu-block=128,1,1 kernel.adesh
-
-# Inspect generated MLIR
-adesh run --gpu --dump-mlir kernel.adesh
 ```
 
 ### Profiling and Analysis
@@ -186,7 +168,6 @@ adesh run --gpu --dump-mlir kernel.adesh
 # Dump intermediate representations
 adesh run --dump-ast program.adesh
 adesh run --dump-hir program.adesh
-adesh run --dump-lir program.adesh
 
 # Performance profiling
 adesh run --profile program.adesh
@@ -195,32 +176,20 @@ adesh run --profile program.adesh
 adesh run --trace program.adesh
 ```
 
-### Cross-compilation
-
-Compile for different targets:
+### Optimization Levels for Native Builds
 
 ```bash
-# Windows target from Linux
-adesh build program.adesh -o program.exe --target=x86_64-pc-windows-msvc
-
-# Linux target from macOS
-adesh build program.adesh -o program --target=x86_64-unknown-linux-gnu
-
-# WebAssembly
-adesh compile-wasm program.adesh -o program.wasm --target=wasm32-unknown-unknown
-```
-
-### Optimization levels
-
-```bash
-# No optimization (fastest compilation)
-adesh run --opt-level=0 program.adesh
+# Debug / fast compilation
+adesh build -O0 program.adesh -o program
 
 # Default optimizations
-adesh run --opt-level=2 program.adesh
+adesh build -O2 program.adesh -o program
 
-# Maximum optimization (slowest compilation, fastest runtime)
-adesh build program.adesh -o program --opt-level=3
+# Maximum optimization (inlining, linker ICF & GC sections)
+adesh build -O3 program.adesh -o program
+
+# Size-optimized binary
+adesh build -Os program.adesh -o program
 ```
 
 ## Target-specific considerations
@@ -229,76 +198,57 @@ adesh build program.adesh -o program --opt-level=3
 
 **Pros:**
 - ✅ Instant startup
-- ✅ Best error messages
-- ✅ Easy debugging
+- ✅ Authoritative source of truth and best diagnostics
+- ✅ Easy debugging and full REPL environment
 
 **Cons:**
-- ❌ Slowest execution
+- ❌ Slower execution for tight numeric loops
 - ❌ Higher memory per operation
 
-**Best for:** Development, learning, prototyping
+**Best for:** Development, prototyping, testing, scripts
 
-### Native JIT
+### JIT Compiler
 
 **Pros:**
 - ✅ Runtime native code generation
-- ✅ No separate build step
-- ✅ Good fit for long-running processes
+- ✅ No manual build step required
+- ✅ Native CPU execution speed for compute-intensive functions
 
 **Cons:**
-- ❌ Requires the JIT runtime
-- ❌ Larger memory footprint
-- ❌ Still experimental
+- ❌ JIT runtime compilation overhead on startup
+- ❌ Memory footprint from in-memory code generation
 
-**Best for:** Compute-heavy services and long-running applications
+**Best for:** Compute-heavy scripts and server workloads
 
 ### AOT Native Compilation
 
 **Pros:**
-- ✅ Standalone executables
-- ✅ No runtime dependencies
-- ✅ Instant startup
+- ✅ Standalone native executables with instant startup
+- ✅ Zero external dependencies: no LLVM, Clang, GCC, or MSVC needed
+- ✅ Compact binaries (Windows PE from ~4 KB)
+- ✅ Zero runtime garbage collection
 
 **Cons:**
-- ❌ Longer compilation time
-- ❌ Platform-specific binary
-- ❌ Native pipeline still maturing
+- ❌ Ahead-of-time compile step required
+- ❌ Platform-specific binaries
 
-**Best for:** Distribution, CLIs, production binaries
+**Best for:** CLI tools, distributed applications, systems software
 
 ### WASM
 
 **Pros:**
 - ✅ Browser and edge deployment
 - ✅ Sandboxed security
-- ✅ Portable output
+- ✅ Portable bytecode execution
 
 **Cons:**
-- ❌ WASM runtime required
-- ❌ Some platform limitations
+- ❌ Requires a WebAssembly host runtime or browser environment
 
-**Best for:** Web apps, edge computing
-
-### GPU (planned)
-
-**Pros:**
-- ✅ Designed for parallel workloads
-- ✅ Multiple GPU backend targets planned
-- ✅ Aimed at ML and scientific computing
-
-**Cons:**
-- ❌ Not yet available for general use
-- ❌ Requires GPU hardware
-- ❌ Only beneficial for parallel workloads
-
-**Best for:** Future GPU computing, ML, and scientific simulations
+**Best for:** Web applications, serverless edge computing
 
 ## Next steps
 
-- **[Interpreter](interpreter)** — Direct interpretation details
-- **[Native JIT](native-jit)** — Native Cranelift JIT
-- **[AOT](aot)** — Ahead-of-time native compilation
-- **[WebAssembly](webassembly)** — WASM compilation
-- **[GPU](gpu-mlir)** — Planned GPU acceleration
-
-Learn more about each target's implementation, use cases, and optimization strategies in the following sections.
+- **[Interpreter](interpreter)** — Direct tree-walk interpretation & REPL details
+- **[JIT Compiler](native-jit)** — Runtime native machine code compilation
+- **[AOT (Native)](aot)** — Ahead-of-time native compilation without LLVM or external tools
+- **[WebAssembly](webassembly)** — WASM compilation and browser integration
