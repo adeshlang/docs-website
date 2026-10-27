@@ -5,9 +5,18 @@ sidebar_label: Install
 description: Official installation packages, binaries, and direct downloads for Windows, macOS, Linux, and Android.
 ---
 
+import InstallCommand from '@site/src/components/InstallCommand';
+
 # Install Adesh
 
 Official pre-built binaries, installers, and packages for **Adesh v0.3.1** are available for **Windows**, **macOS**, **Linux**, and **Android**.
+
+## One-Line Install
+
+The command below matches the operating system you are browsing from. It fetches the pinned
+installer from GitHub Releases, detects your architecture, and puts `adesh` on your `PATH`.
+
+<InstallCommand />
 
 ---
 
@@ -291,7 +300,7 @@ flowchart LR
 
 ### Step 1: Install Adesh Core Package
 
-Download and install the official package for your platform using the [Direct Downloads](#direct-downloads-v030) or [Platform-Specific Instructions](#installation-instructions) below:
+Download and install the official package for your platform using the [Direct Downloads](#direct-downloads-v031) or [Platform-Specific Instructions](#installation-instructions) below:
 
 * **🪟 Windows**: Run `AdeshLang-0.3.0-x86_64-windows-setup.exe` (or extract portable ZIP).
 * **🍏 macOS**: Run `AdeshLang-0.3.0-*.pkg` or open `.dmg`.

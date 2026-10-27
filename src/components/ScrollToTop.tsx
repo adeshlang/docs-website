@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 const SHOW_AFTER_PROGRESS = 0.35;
+const DOCK_GAP = 16;
+const TOC_MIN_WIDTH = 997;
 
 export default function ScrollToTop(): JSX.Element {
   const [visible, setVisible] = useState(false);
+  const [right, setRight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     let frame = 0;
@@ -16,6 +19,14 @@ export default function ScrollToTop(): JSX.Element {
       const footerInView = footer
         ? footer.getBoundingClientRect().top < window.innerHeight
         : false;
+
+      const toc = document.querySelector<HTMLElement>('.table-of-contents');
+      const box = toc?.getBoundingClientRect();
+      if (box && box.width > 0 && window.innerWidth >= TOC_MIN_WIDTH) {
+        setRight(window.innerWidth - box.left + DOCK_GAP);
+      } else {
+        setRight(undefined);
+      }
 
       setVisible(progress >= SHOW_AFTER_PROGRESS && !footerInView);
     };
@@ -44,6 +55,7 @@ export default function ScrollToTop(): JSX.Element {
     <button
       type="button"
       className={`scroll-top-btn${visible ? ' scroll-top-btn--visible' : ''}`}
+      style={right === undefined ? undefined : { right: `${right}px` }}
       onClick={handleClick}
       aria-label="Scroll back to top"
       aria-hidden={!visible}

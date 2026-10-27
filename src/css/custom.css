@@ -219,7 +219,7 @@
 [data-theme='dark'] {
   /* ── Material 3 color roles · dark ── */
   --md-primary: #4fd8e8;
-  --md-on-primary: #00363d;
+  --md-on-primary: #00191f;
   --md-primary-container: #004f58;
   --md-on-primary-container: #97f0ff;
   --md-secondary: #b0cbd0;
@@ -390,6 +390,66 @@ img {
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
 
+/* ── Themed scrollbars ── */
+:root {
+  --scrollbar-size: 11px;
+  --scrollbar-track: color-mix(in srgb, var(--md-surface-container) 65%, transparent);
+  --scrollbar-thumb: color-mix(in srgb, var(--md-primary) 48%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--md-primary) 78%, transparent);
+  --scrollbar-thumb-active: var(--md-primary);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: 3px solid transparent;
+  border-radius: var(--shape-full);
+  background-clip: padding-box;
+  min-height: 44px;
+  transition: background-color 0.16s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-thumb-active);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* Horizontal strips inside cards read better without a painted track. */
+.demo-card::-webkit-scrollbar-track,
+.install-cmd__field::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* Docusaurus skip link */
 div[class*='skipToContent'] {
   background: var(--md-primary);
@@ -419,6 +479,9 @@ div[class*='skipToContent'] {
   font-weight: 600;
   letter-spacing: 0.00625em;
   text-transform: none;
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: break-word;
   transition:
     background-color var(--dur-short4) var(--ease-standard),
     box-shadow var(--dur-short4) var(--ease-standard),
@@ -438,6 +501,9 @@ div[class*='skipToContent'] {
   background: var(--md-primary);
   border-color: var(--md-primary);
   color: var(--md-on-primary) !important;
+  /* Docusaurus paints the label with -webkit-text-fill-color, which ignores
+     an overridden `color` and leaves white text on the filled surface. */
+  -webkit-text-fill-color: var(--md-on-primary);
   box-shadow: var(--elev-1);
 }
 
@@ -445,6 +511,13 @@ div[class*='skipToContent'] {
   background: color-mix(in srgb, var(--md-primary) 90%, var(--md-on-primary));
   border-color: transparent;
   box-shadow: var(--elev-2);
+}
+
+/* Release-download buttons carry long "name — size" labels, so they need
+   tighter gutters than a generic pill. */
+.card__footer .button {
+  padding-inline: 0.875rem;
+  line-height: 1.35;
 }
 
 .button--secondary {
@@ -792,7 +865,10 @@ div[class*='announcementBar_'] .announcement-copy {
   display: inline;
 }
 
-div[class*='announcementBar_'] .announcement-copy--compact {
+/* The two class names on purpose: the minifier regroups rules by declaration
+   block, which can move this `display: none` ahead of the plain
+   `.announcement-copy { display: inline }` below and un-hide the compact copy. */
+div[class*='announcementBar_'] .announcement-copy.announcement-copy--compact {
   display: none;
 }
 
@@ -859,11 +935,11 @@ button[class*='announcementBarClose']:hover {
     display: none;
   }
 
-  div[class*='announcementBar_'] .announcement-copy--full {
+  div[class*='announcementBar_'] .announcement-copy.announcement-copy--full {
     display: none;
   }
 
-  div[class*='announcementBar_'] .announcement-copy--compact {
+  div[class*='announcementBar_'] .announcement-copy.announcement-copy--compact {
     display: inline;
   }
 }
@@ -878,7 +954,7 @@ button[class*='announcementBarClose']:hover {
 }
 
 .navbar__inner {
-  max-width: 1440px;
+  max-width: var(--shell-width);
   margin: 0 auto;
 }
 
@@ -1083,6 +1159,7 @@ div[class*='sidebarViewport'] {
   display: block;
   padding: 0.25rem 0.5rem;
   border-radius: var(--shape-xs);
+  text-decoration: none;
   transition:
     color var(--dur-short3) var(--ease-standard),
     background-color var(--dur-short3) var(--ease-standard);
@@ -1091,7 +1168,8 @@ div[class*='sidebarViewport'] {
 .table-of-contents__link:hover {
   color: var(--md-on-surface);
   background: color-mix(in srgb, var(--md-on-surface) 6%, transparent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .table-of-contents__link--active,
@@ -1099,6 +1177,7 @@ div[class*='sidebarViewport'] {
   color: var(--md-primary);
   font-weight: 600;
   background: color-mix(in srgb, var(--md-primary) 8%, transparent);
+  text-decoration: none;
 }
 
 /* Breadcrumbs */
@@ -1577,6 +1656,34 @@ details summary {
    6. LANDING PAGE
    ═══════════════════════════════════════════════════════════════════ */
 
+/* One shell width for every full-bleed band, the navbar and the landing
+   sections, so nothing drifts out of alignment when the viewport grows past a
+   laptop. Docs keep Infima's floor and widen in the same steps. */
+:root {
+  --shell-width: 1200px;
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --shell-width: 1440px;
+    --ifm-container-width-xl: 1440px;
+  }
+}
+
+@media (min-width: 1900px) {
+  :root {
+    --shell-width: 1600px;
+    --ifm-container-width-xl: 1600px;
+  }
+}
+
+@media (min-width: 2300px) {
+  :root {
+    --shell-width: 1760px;
+    --ifm-container-width-xl: 1760px;
+  }
+}
+
 .landing-page {
   font-family: var(--font-base);
   color: var(--md-on-surface);
@@ -1586,7 +1693,7 @@ details summary {
 }
 
 .landing-container {
-  width: min(100% - 2.5rem, 1200px);
+  width: min(100% - 2.5rem, var(--shell-width));
   margin-inline: auto;
 }
 
@@ -1642,7 +1749,7 @@ details summary {
 /* Hero */
 .hero-m3 {
   position: relative;
-  padding: clamp(0.75rem, 1.75vw, 1.5rem) 1.25rem 3rem;
+  padding: clamp(0.5rem, 1vw, 0.875rem) 1.25rem 3rem;
   background:
     radial-gradient(ellipse 70% 55% at 85% 5%, var(--hero-tint), transparent 70%),
     var(--md-surface);
@@ -1663,12 +1770,16 @@ details summary {
 .hero-m3__inner {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
   gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: center;
+  align-items: start;
+}
+
+.hero-m3__copy {
+  padding-top: 0.25rem;
 }
 
 .hero-brand {
@@ -1763,6 +1874,7 @@ details summary {
 .hero-visual {
   position: relative;
   min-width: 0;
+  align-self: center;
 }
 
 .demo-card {
@@ -2088,7 +2200,7 @@ details summary {
 .install-card {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin: 2.75rem auto 0;
   padding: 1rem 1.25rem;
   display: flex;
@@ -2169,7 +2281,7 @@ details summary {
 }
 
 .stats-band__inner {
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -3151,7 +3263,7 @@ details summary {
 }
 
 .cta-card {
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin-inline: auto;
   padding: clamp(2rem, 5vw, 3.5rem);
   border-radius: var(--shape-xl);
@@ -3472,7 +3584,7 @@ details summary {
 
 .footer-inner {
   position: relative;
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin-inline: auto;
   padding: 3rem 1.25rem 2rem;
   display: grid;
@@ -3616,7 +3728,7 @@ details summary {
 }
 
 .footer-bottom-inner {
-  max-width: 1200px;
+  max-width: var(--shell-width);
   margin-inline: auto;
   padding: 1.25rem;
   display: flex;
@@ -4692,6 +4804,227 @@ body[class*='docs-doc'] .landing-footer,
 
   .cta-card h2 {
     font-size: 2rem;
+  }
+}
+
+/* ──────────────────────────────────────────────
+   OS-aware install command
+   ────────────────────────────────────────────── */
+
+.install-cmd {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.install-cmd__tabs {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.25rem;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--shape-full);
+  background: var(--md-surface-container-low);
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.install-cmd__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.install-cmd__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-family: var(--font-base);
+  font-size: var(--type-label-l);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.4375rem 0.9375rem;
+  border-radius: var(--shape-full);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.install-cmd__tab .material-symbols-rounded,
+.install-cmd__glyph {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.install-cmd__tab:hover {
+  background: color-mix(in srgb, var(--md-on-surface) 6%, transparent);
+  color: var(--md-on-surface);
+}
+
+.install-cmd__tab--active {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.install-cmd__tab--active:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 88%, var(--md-on-secondary-container));
+  color: var(--md-on-secondary-container);
+}
+
+.install-cmd__tab:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+.install-cmd__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--shape-full);
+  background: var(--md-primary);
+  flex: 0 0 auto;
+}
+
+.install-cmd__field {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  padding: 0.125rem 0.125rem 0.125rem 0.875rem;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--shape-lg);
+  background: var(--md-surface-container-highest);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.install-cmd__field:focus-within {
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 1px var(--md-primary);
+}
+
+.install-cmd__prompt {
+  flex: 0 0 auto;
+  color: var(--md-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.install-cmd__command {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--md-on-surface);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.install-cmd--hero .install-cmd__command {
+  font-size: 0.75rem;
+}
+
+.install-cmd__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: var(--shape-lg);
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.install-cmd__copy:hover {
+  background: color-mix(in srgb, var(--md-primary) 88%, var(--md-on-primary));
+}
+
+.install-cmd__copy:active {
+  transform: scale(0.94);
+}
+
+.install-cmd__copy:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+.install-cmd__copy .material-symbols-rounded {
+  font-size: 1.25rem;
+}
+
+.install-cmd__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4375rem;
+  margin: 0;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-s);
+  line-height: 1.5;
+}
+
+.install-cmd__note .material-symbols-rounded {
+  font-size: 1rem;
+  margin-top: 0.125rem;
+  flex: 0 0 auto;
+}
+
+.install-cmd__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.install-cmd__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex: 0 0 auto;
+  color: var(--md-primary);
+  font-size: var(--type-label-l);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.install-cmd__download:hover {
+  text-decoration: underline;
+  color: var(--md-primary);
+}
+
+.install-cmd__download .material-symbols-rounded {
+  font-size: 1.125rem;
+}
+
+html[data-theme='dark'] .install-cmd__field {
+  background: #0b1416;
+}
+
+html[data-theme='dark'] .install-cmd__command {
+  color: var(--md-on-surface);
+}
+
+@media (max-width: 600px) {
+  .install-cmd__tabs {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .install-cmd__tab {
+    padding: 0.375rem 0.75rem;
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import BundledTools from '../components/BundledTools';
+import InstallCommand from '../components/InstallCommand';
 import Head from '@docusaurus/Head';
 import { Highlight } from 'prism-react-renderer';
 import { adeshCodeTheme } from '../theme/adeshCodeTheme';
@@ -534,7 +535,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title="Adesh Lang — Native-Speed, Memory-Safe Language"
-      description="Adesh is a Rust-inspired language with type aliases, JIT compiler, SIMD, FFI, and zero-dependency native compilation."
+      description="Adesh is a memory-safe compiled systems language. One source file in, a standalone native binary out — no runtime, no garbage collector, no external toolchain."
     >
       <Head>
         <link rel="canonical" href={`${SITE_URL}/`} />
@@ -590,9 +591,9 @@ export default function Home(): JSX.Element {
               </h1>
 
               <p className="hero-lead">
-                A Rust-inspired systems language with compile-time memory safety, JIT compiler,
-                SIMD, type aliases, FFI, and batteries-included networking — with zero-dependency
-                native AOT compilation.
+                Adesh compiles a single source file straight into a standalone native binary — no
+                runtime, no garbage collector, no external toolchain. Memory safety is proven at
+                compile time, and the same code runs interpreted, JIT-compiled, or AOT-built.
               </p>
 
               <div className="hero-actions">
@@ -619,6 +620,8 @@ export default function Home(): JSX.Element {
                   <Icon name="north_east" />
                 </a>
               </div>
+
+              <InstallCommand variant="hero" />
 
               <ul className="hero-facts">
                 <li>
