@@ -287,13 +287,14 @@ All official packages and binaries are cryptographically signed and checksummed 
 Follow this 4-step flow to set up Adesh on your system, verify diagnostics, configure optional toolchains, and begin coding.
 
 ```mermaid
-flowchart LR
-    A["Step 1: Install Core<br/>(Win/Mac/Linux/Android)"] --> B["Step 2: Verify Diagnostics<br/><code>adesh doctor</code>"]
-    B --> C{"Need AOT / GPU?"}
-    C -- "No (REPL/JIT/Scripts)" --> D["Ready to Code!<br/><code>adesh repl</code> / <code>adesh run</code>"]
-    C -- "Yes (adesh build/MLIR)" --> E["Step 3: Toolchain Setup<br/><code>adesh toolchain install</code>"]
-    E --> D
-    D --> F["Step 4: Editor & Extensions<br/>VS Code / ALS / TUI Editor"]
+flowchart TD
+    A["Step 1: Install Core<br/>Windows · macOS · Linux · Android"] --> B["Step 2: Verify Diagnostics<br/><code>adesh doctor</code>"]
+    B --> D["Ready to Code<br/><code>adesh repl</code> · <code>adesh run</code><br/><code>adesh run --njit</code>"]
+    D --> G["AOT Native Binaries<br/><code>adesh build</code> with bundled <code>adeshlink</code>"]
+    G --> C{"Need GPU / MLIR kernels<br/>or an external linker?"}
+    C -- "No" --> F["Step 4: Editor & Extensions<br/>VS Code · ALS · TUI Editor"]
+    C -- "Yes" --> E["Step 3: Toolchain Setup<br/><code>adesh toolchain install</code>"]
+    E --> F
 ```
 
 ---
@@ -339,7 +340,9 @@ adesh env --json
 
 ### Step 3: Toolchain Setup (`adesh toolchain install`) *(Optional)*
 
-The optional LLVM/MLIR toolchain is only required if you plan to use **AOT static compilation** (`adesh build <file.adesh>`) or **GPU MLIR kernels**. 
+The LLVM/MLIR toolchain is **not** needed for `adesh build` — native AOT compilation uses the bundled
+Adesh codegen and the `adeshlink` native linker. Install it only if you plan to use **GPU / MLIR
+kernels**, or the opt-in external-linker path (`adesh build --codegen=cranelift --external-linker`).
 
 ```bash
 # Recommended on Linux (Ubuntu/Debian/Fedora/Arch) & macOS (Homebrew):
@@ -402,7 +405,7 @@ docker run -it --rm -v "$(pwd):/app" adeshlang/adeshlang:latest adesh run /app/m
 | Command | Category | Description & Usage |
 |---|---|---|
 | `adesh doctor` | **Diagnostics** | Run complete health check on compiler, backends, environment, and AI hardware acceleration drivers. |
-| `adesh toolchain install` | **Toolchain** | Provision, download, or bind LLVM, Clang, LLD, and MLIR native compilation backends. |
+| `adesh toolchain install` | **Toolchain** | Provision, download, or bind LLVM, Clang, LLD, and MLIR for GPU kernels or the opt-in external-linker path. |
 | `adesh toolchain current` | **Toolchain** | Inspect the active compiler backend, sysroot, and tool locations. |
 | `adesh repl` | **Execution** | Launch the interactive Adesh REPL shell with multiline support. |
 | `adesh run <file.adesh>` | **Execution** | Execute Adesh source with the standard tree-walk interpreter. |

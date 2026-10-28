@@ -32,7 +32,8 @@ Adesh includes a self-contained compiler and native linker (`adeshlink`). You ca
 
 ## Toolchain Management (`adesh toolchain`)
 
-For AOT compilation and advanced MLIR/GPU workflows:
+Only needed for GPU/MLIR kernels and the opt-in external-linker path — native AOT (`adesh build`)
+uses the bundled codegen and `adeshlink`, so no external LLVM is required:
 
 ```bash
 # Recommended on Linux / macOS (uses system package manager)

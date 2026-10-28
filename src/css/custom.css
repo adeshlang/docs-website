@@ -1363,15 +1363,17 @@ pre[class*='language-'] {
   line-height: 1.7;
   border-radius: 0;
   margin: 0;
+  padding: 0;
 }
 
 .theme-code-block code,
 pre[class*='language-'] code {
   background: transparent !important;
   border: 0;
-  padding: 0;
   color: inherit;
   font-size: inherit;
+  /* Docusaurus puts a block's inner padding on this <code> child, not the <pre>. */
+  padding: var(--ifm-pre-padding);
 }
 
 div[class*='codeBlockTitle'] {
